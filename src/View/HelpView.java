@@ -1,0 +1,5 @@
+package View;
+
+class HelpView {
+
+}
