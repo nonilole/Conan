@@ -334,7 +334,7 @@
                      </children>
                   </VBox>
                </children></AnchorPane>
-            <TabPane tabClosingPolicy="ALL_TABS">
+            <TabPane fx:id="tabPane" tabClosingPolicy="ALL_TABS">
               <tabs>
                 <Tab text="A ∧ B ⊢ A">
                   <content>
