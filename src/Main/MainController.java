@@ -1,13 +1,20 @@
 package Main;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+
+import java.util.Stack;
+
 import javafx.event.ActionEvent;
 
 public class MainController {
 
+	Stack<Tab> tabs = new Stack<Tab>();
+	int counter = 0;
+	
     @FXML
     private TabPane tabPane;
 
@@ -19,7 +26,8 @@ public class MainController {
 
     @FXML
     void newProof(ActionEvent event) {
-        //create tab, add it to tabPane....Create proof object?
+    	tabs.push(new Tab(""+counter++));
+        tabPane.getTabs().add(tabs.peek());
     }
 
     @FXML
