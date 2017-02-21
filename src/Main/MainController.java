@@ -37,14 +37,16 @@ public class MainController {
     	tableColumnLeft.setMaxWidth(5000);
     	tableColumnLeft.setMinWidth(10);
     	tableColumnLeft.setEditable(true);
-    	//tableColumnLeft.setPrefWidth(356);
+    	tableColumnLeft.setPrefWidth(356);
+    	
     	
     	TableColumn tableColumnRight = new TableColumn();
     	tableColumnRight.setText("Type");
     	tableColumnRight.setMaxWidth(5000);
     	tableColumnRight.setMinWidth(10);
     	tableColumnRight.setEditable(true);
-    	//tableColumnRight.setPrefWidth(356);
+    	tableColumnRight.setPrefWidth(356);
+    	
     	
     	TableView tableView = new TableView();
     	tableView.setPadding(new Insets(0, 0, 0, 0));
