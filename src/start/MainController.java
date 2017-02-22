@@ -1,4 +1,4 @@
-package Main;
+package start;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -9,10 +9,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import view.ProofView;
 
 import java.util.Stack;
 
-import View.ProofView;
 import javafx.event.ActionEvent;
 
 public class MainController {

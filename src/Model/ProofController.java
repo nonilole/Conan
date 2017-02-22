@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 class ProofController{
     public void addRow(String formula,String rule){}//covered by insertRow?

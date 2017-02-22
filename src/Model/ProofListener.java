@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 public interface ProofListener{
     //Move to proper folder, should be in Model!

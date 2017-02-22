@@ -1,13 +1,13 @@
-package View;
+package view;
 import java.util.Stack;
 
-import Model.ProofListener;
 import javafx.geometry.Insets;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
+import model.ProofListener;
 
 public class ProofView implements ProofListener{
 	
