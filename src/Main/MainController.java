@@ -12,12 +12,12 @@ import javafx.scene.text.Font;
 
 import java.util.Stack;
 
+import View.ProofView;
 import javafx.event.ActionEvent;
 
 public class MainController {
-
-	Stack<Tab> tabs = new Stack<Tab>();
-	int counter = 0;
+	
+	
 	
     @FXML
     private TabPane tabPane;
@@ -30,40 +30,7 @@ public class MainController {
 
     @FXML
     void newProof(ActionEvent event) {
-    	Tab tab = new Tab(""+counter++);
-    	
-    	TableColumn tableColumnLeft = new TableColumn();
-    	tableColumnLeft.setText("Expression");
-    	tableColumnLeft.setMaxWidth(5000);
-    	tableColumnLeft.setMinWidth(10);
-    	tableColumnLeft.setEditable(true);
-    	tableColumnLeft.setPrefWidth(356);
-    	
-    	
-    	TableColumn tableColumnRight = new TableColumn();
-    	tableColumnRight.setText("Type");
-    	tableColumnRight.setMaxWidth(5000);
-    	tableColumnRight.setMinWidth(10);
-    	tableColumnRight.setEditable(true);
-    	tableColumnRight.setPrefWidth(356);
-    	
-    	
-    	TableView tableView = new TableView();
-    	tableView.setPadding(new Insets(0, 0, 0, 0));
-    	tableView.getColumns().addAll(tableColumnLeft, tableColumnRight);
-    	
-    	AnchorPane anchorPane = new AnchorPane(tableView);
-    	anchorPane.setPrefWidth(714);
-    	anchorPane.setPrefHeight(460);
-    	anchorPane.setPadding(new Insets(0, 0, 0, 0));
-    	anchorPane.setScaleShape(true);
-    	anchorPane.setCacheShape(true);
-    	anchorPane.setCenterShape(true);
-    	
-    	tab.setContent(anchorPane);
-    	tabs.push(tab);
-    	tabPane.setPadding(new Insets(0, 0, 0, 0));
-        tabPane.getTabs().add(tabs.peek());
+    	ProofView.newProof(tabPane);
         
     }
 
