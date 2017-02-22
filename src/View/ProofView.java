@@ -24,18 +24,12 @@ public class ProofView implements ProofListener{
     	
     	TableColumn tableColumnLeft = new TableColumn();
     	tableColumnLeft.setText("Expression");
-    	tableColumnLeft.setMaxWidth(5000);
-    	tableColumnLeft.setMinWidth(10);
     	tableColumnLeft.setEditable(true);
-    	tableColumnLeft.setPrefWidth(356);
     	
     	
     	TableColumn tableColumnRight = new TableColumn();
     	tableColumnRight.setText("Type");
-    	tableColumnRight.setMaxWidth(5000);
-    	tableColumnRight.setMinWidth(10);
     	tableColumnRight.setEditable(true);
-    	tableColumnRight.setPrefWidth(356);
     	
     	
     	TableView tableView = new TableView();
@@ -43,12 +37,17 @@ public class ProofView implements ProofListener{
     	tableView.getColumns().addAll(tableColumnLeft, tableColumnRight);
     	
     	AnchorPane anchorPane = new AnchorPane(tableView);
-    	anchorPane.setPrefWidth(714);
-    	anchorPane.setPrefHeight(460);
     	anchorPane.setPadding(new Insets(0, 0, 0, 0));
     	anchorPane.setScaleShape(true);
     	anchorPane.setCacheShape(true);
     	anchorPane.setCenterShape(true);
+    	
+    	anchorPane.setTopAnchor(tableView, 0.0);
+    	anchorPane.setRightAnchor(tableView, 0.0);
+    	anchorPane.setLeftAnchor(tableView, 0.0);
+    	anchorPane.setBottomAnchor(tableView, 0.0);
+
+    	tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     	
     	tab.setContent(anchorPane);
     	tabPane.setPadding(new Insets(0, 0, 0, 0));
