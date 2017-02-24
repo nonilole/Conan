@@ -76,9 +76,9 @@
       </ToolBar>
     <SplitPane dividerPositions="0.2" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" scaleShape="false" VBox.vgrow="ALWAYS">
       <items>
-        <AnchorPane minWidth="170.0">
+        <AnchorPane maxWidth="250.0" minWidth="170.0">
                <children>
-                  <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <VBox maxWidth="176.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <ScrollPane fitToWidth="true" hbarPolicy="NEVER" VBox.vgrow="ALWAYS">
                           <content>
@@ -262,123 +262,123 @@
                                                 </GridPane>
                                              </content>
                                           </TitledPane>
+                                          <TitledPane animated="false" text="Symbols">
+                                             <content>
+                                                <GridPane prefHeight="173.0" prefWidth="233.0">
+                                                   <columnConstraints>
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                                                   </rowConstraints>
+                                                   <children>
+                                                      <AnchorPane>
+                                                         <children>
+                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="→" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane GridPane.columnIndex="1">
+                                                         <children>
+                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="∧" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane GridPane.columnIndex="2">
+                                                         <children>
+                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="∨" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane GridPane.rowIndex="1">
+                                                         <children>
+                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="73.0" text="¬" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                         <children>
+                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="73.0" text="∀" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                         <children>
+                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="∃" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane GridPane.rowIndex="2">
+                                                         <children>
+                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="α" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                         <children>
+                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="β" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                         <children>
+                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="ϑ" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane GridPane.rowIndex="3">
+                                                         <children>
+                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="Α" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                         <children>
+                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="Β" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                                         <children>
+                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="ϴ" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane GridPane.rowIndex="4">
+                                                         <children>
+                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="φ" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                         <children>
+                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="ω" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                                         <children>
+                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="χ" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane GridPane.rowIndex="5">
+                                                         <children>
+                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="Φ" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                                         <children>
+                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="Ω" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                                         <children>
+                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="Χ" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </GridPane>
+                                             </content>
+                                          </TitledPane>
                                        </children>
                                     </VBox>
                                  </children>
                               </AnchorPane>
                           </content>
                         </ScrollPane>
-                        <TitledPane animated="false" text="Symbols">
-                           <content>
-                              <GridPane prefHeight="173.0" prefWidth="233.0">
-                                 <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                 </columnConstraints>
-                                 <rowConstraints>
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
-                                 </rowConstraints>
-                                 <children>
-                                    <AnchorPane>
-                                       <children>
-                                          <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="→" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane GridPane.columnIndex="1">
-                                       <children>
-                                          <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="∧" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane GridPane.columnIndex="2">
-                                       <children>
-                                          <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="∨" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane GridPane.rowIndex="1">
-                                       <children>
-                                          <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="73.0" text="¬" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                       <children>
-                                          <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="73.0" text="∀" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                       <children>
-                                          <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="∃" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane GridPane.rowIndex="2">
-                                       <children>
-                                          <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="α" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                       <children>
-                                          <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="β" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                       <children>
-                                          <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="ϑ" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane GridPane.rowIndex="3">
-                                       <children>
-                                          <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="Α" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                       <children>
-                                          <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="Β" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="3">
-                                       <children>
-                                          <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="ϴ" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane GridPane.rowIndex="4">
-                                       <children>
-                                          <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="φ" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                       <children>
-                                          <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="ω" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="4">
-                                       <children>
-                                          <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="χ" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane GridPane.rowIndex="5">
-                                       <children>
-                                          <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="Φ" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                       <children>
-                                          <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="Ω" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="5">
-                                       <children>
-                                          <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="Χ" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                 </children>
-                              </GridPane>
-                           </content>
-                        </TitledPane>
                      </children>
                   </VBox>
                </children></AnchorPane>
