@@ -1,6 +1,6 @@
 package model;
 
-public interface ProofListener{
+public interface ProofListener {
     //Move to proper folder, should be in Model!
     public void boxOpened();
     public void boxClosed();

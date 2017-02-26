@@ -25,7 +25,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="start.MainController">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="start.MainController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -72,6 +72,9 @@
           <Button mnemonicParsing="false" text="Save" />
             <Button mnemonicParsing="false" text="Load" />
             <Button mnemonicParsing="false" text="Tree view" />
+            <Button layoutX="118.0" layoutY="11.0" mnemonicParsing="false" onAction="#newRow" text="newRow" />
+            <Button layoutX="204.0" layoutY="11.0" mnemonicParsing="false" onAction="#openBox" text="openBox" />
+            <Button layoutX="281.0" layoutY="11.0" mnemonicParsing="false" onAction="#closeBox" text="closeBox" />
         </items>
       </ToolBar>
     <SplitPane dividerPositions="0.2" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" scaleShape="false" VBox.vgrow="ALWAYS">

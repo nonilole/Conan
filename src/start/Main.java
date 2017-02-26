@@ -13,13 +13,10 @@ import javafx.scene.Parent;
 public class Main extends Application {
     
     @Override
-    public void start(Stage stage) throws Exception{
-
-        Parent root = FXMLLoader.load(getClass().getResource
-        ("sketch.fxml"));
-    
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("sketch.fxml"));
         Scene scene = new Scene(root, 900, 500);
-    
+        scene.getStylesheets().add("style.css");
         stage.setTitle("Conan");
         stage.setScene(scene);
         stage.show();
