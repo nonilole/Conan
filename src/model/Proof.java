@@ -1,9 +1,9 @@
 package model;
 
-class ProofController{
-    public void addRow(String formula,String rule){}//covered by insertRow?
+class Proof {
+    public void addRow(String formula, String rule) {}
     public void deleteRow(int rowNumber, boolean cascade){}
-    public void insertRow(String formula,String rule,int rowNumber){}
+    public void insertRow(String formula, String rule, int rowNumber){}
     public void updateRow(String formula, String rule, int rowNumber){}
     public void saveProof(String filepath){}
     public void loadProof(String filepath){}

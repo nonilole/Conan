@@ -1,26 +1,23 @@
 package start;
 
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.scene.control.Tab;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import model.ProofTab;
 import view.ProofView;
-
-import java.util.Stack;
 
 import javafx.event.ActionEvent;
 
-public class MainController {
-	
-	
-	
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class MainController implements Initializable {
     @FXML
     private TabPane tabPane;
+
+    private ProofView currentProof;
 
     @FXML
     private Font x3;
@@ -29,15 +26,31 @@ public class MainController {
     private Color x4;
 
     @FXML
-    void newProof(ActionEvent event) {
-    	ProofView.newProof(tabPane);
-        
+    void newProof(ActionEvent event) {new ProofView(tabPane);}
+
+    @FXML
+    void newRow(ActionEvent event) {
+        if (currentProof != null) {
+            currentProof.newRow();
+        }
     }
 
     @FXML
-    void openInstructions(ActionEvent event) {
-
+    void openBox(ActionEvent event) { // Remove this later
+        if (currentProof != null) {
+            currentProof.openBox();
+        }
     }
+
+    @FXML
+    void closeBox(ActionEvent event) { // Remove this later
+        if (currentProof != null) {
+            currentProof.closeBox();
+        }
+    }
+
+    @FXML
+    void openInstructions(ActionEvent event) { }
 
     @FXML
     void ruleButtonPressed(ActionEvent event) {
@@ -49,5 +62,15 @@ public class MainController {
 
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources){
+        tabPane.getSelectionModel().selectedItemProperty().addListener((ov, oldTab, newTab) -> {
+            if (newTab instanceof ProofTab) {
+                ProofTab temp = (ProofTab) newTab;
+                currentProof = temp.getView();
+            }
+        }
+        );
+    }
 }
 
