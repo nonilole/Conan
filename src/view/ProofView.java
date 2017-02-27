@@ -44,6 +44,7 @@ public class ProofView implements ProofListener{
         tf2.getStyleClass().add("myText");
         tf2.setAlignment(Pos.CENTER);
         tf2.setEditable(false);
+        tf2.setFocusTraversable(false);
         TextField tf3 = new TextField();
         tf3.getStyleClass().add("myText");
         threeCells.add(tf1, 0, 0);
