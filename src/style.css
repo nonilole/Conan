@@ -2,7 +2,7 @@
   -fx-font-family: Monospace;
   -fx-font-size: 14px;
   -fx-border-radius: 0;
-  -fx-border-size: 0px;
+  -fx-border-size: 0;
   -fx-text-box-border: transparent;
 }
 .fit {
