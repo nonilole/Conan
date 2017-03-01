@@ -39,14 +39,14 @@ public class ProofView implements ProofListener{
     };
 
     private AnchorPane createBar() {
-        GridPane threeCells = new GridPane();
+        GridPane premisesAndConclusion = new GridPane();
         ColumnConstraints column1 = new ColumnConstraints();
         ColumnConstraints column2 = new ColumnConstraints();
         ColumnConstraints column3 = new ColumnConstraints();
         column1.setPercentWidth(45);
         column2.setPercentWidth(10);
         column3.setPercentWidth(45);
-        threeCells.getColumnConstraints().addAll(column1,column2,column3);
+        premisesAndConclusion.getColumnConstraints().addAll(column1,column2,column3);
         TextField premises = new TextField();
         premises.getStyleClass().add("myText");
         TextField turnstile = new TextField("⊢");
@@ -56,15 +56,15 @@ public class ProofView implements ProofListener{
         turnstile.setFocusTraversable(false);
         TextField conclusion = new TextField();
         conclusion.getStyleClass().add("myText");
-        threeCells.add(premises, 0, 0);
-        threeCells.add(turnstile, 1, 0);
-        threeCells.add(conclusion, 2, 0);
+        premisesAndConclusion.add(premises, 0, 0);
+        premisesAndConclusion.add(turnstile, 1, 0);
+        premisesAndConclusion.add(conclusion, 2, 0);
 
-        AnchorPane bar = new AnchorPane(threeCells);
-        bar.setTopAnchor(threeCells, 0.0);
-        bar.setRightAnchor(threeCells, 20.0);
-        bar.setLeftAnchor(threeCells, 20.0);
-        bar.setBottomAnchor(threeCells, 0.0);
+        AnchorPane bar = new AnchorPane(premisesAndConclusion);
+        bar.setTopAnchor(premisesAndConclusion, 0.0);
+        bar.setRightAnchor(premisesAndConclusion, 20.0);
+        bar.setLeftAnchor(premisesAndConclusion, 20.0);
+        bar.setBottomAnchor(premisesAndConclusion, 0.0);
         bar.setPrefHeight(barHeight);
         bar.setMinHeight(barHeight);
         bar.setMaxHeight(barHeight);
