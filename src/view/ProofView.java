@@ -47,18 +47,18 @@ public class ProofView implements ProofListener{
         column2.setPercentWidth(10);
         column3.setPercentWidth(45);
         threeCells.getColumnConstraints().addAll(column1,column2,column3);
-        TextField tf1 = new TextField();
-        tf1.getStyleClass().add("myText");
-        TextField tf2 = new TextField("⊢");
-        tf2.getStyleClass().add("myText");
-        tf2.setAlignment(Pos.CENTER);
-        tf2.setEditable(false);
-        tf2.setFocusTraversable(false);
-        TextField tf3 = new TextField();
-        tf3.getStyleClass().add("myText");
-        threeCells.add(tf1, 0, 0);
-        threeCells.add(tf2, 1, 0);
-        threeCells.add(tf3, 2, 0);
+        TextField premises = new TextField();
+        premises.getStyleClass().add("myText");
+        TextField turnstile = new TextField("⊢");
+        turnstile.getStyleClass().add("myText");
+        turnstile.setAlignment(Pos.CENTER);
+        turnstile.setEditable(false);
+        turnstile.setFocusTraversable(false);
+        TextField conclusion = new TextField();
+        conclusion.getStyleClass().add("myText");
+        threeCells.add(premises, 0, 0);
+        threeCells.add(turnstile, 1, 0);
+        threeCells.add(conclusion, 2, 0);
 
         AnchorPane bar = new AnchorPane(threeCells);
         bar.setTopAnchor(threeCells, 0.0);
@@ -202,7 +202,6 @@ public class ProofView implements ProofListener{
     public void boxClosed(){}
     public void rowUpdated(){}
     public void conclusionReached(){}
-
     public void rowDeleted(){
 
         int lastRow=rowList.get(0).getChildren().size()-1;
