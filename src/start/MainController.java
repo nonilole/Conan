@@ -50,11 +50,26 @@ public class MainController implements Initializable {
     }
 
     @FXML
+    void deleteLastRow(ActionEvent event) { // Remove this later
+        if (currentProof != null) {
+            currentProof.closeBox();
+        }
+    }
+
+    @FXML
+    ProofView newProofButton(ActionEvent event) { // Remove this later
+
+            return new ProofView(tabPane);
+
+    }
+
+
+    @FXML
     void openInstructions(ActionEvent event) { }
 
     @FXML
     void ruleButtonPressed(ActionEvent event) {
-        System.out.println("Yay!");
+        currentProof.rowDeleted();
     }
 
     @FXML

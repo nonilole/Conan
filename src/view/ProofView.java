@@ -1,11 +1,13 @@
 package view;
-import java.util.Stack;
+import java.util.*;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import model.ProofListener;
@@ -17,8 +19,15 @@ public class ProofView implements ProofListener{
     static final int carryAddClose = 5; // Maybe have to calculate this from padding and font size?
     static final int barHeight = 29;
     private Stack<VBox> stack = new Stack<>();
+
+
+    private List<BorderPane> rList = new LinkedList<>();
+    private List<VBox> rowList = new LinkedList<VBox>();
+    private List<VBox> lineNoList = new ArrayList<VBox>();
+    int index=0;
     private int counter = 1;
     private int carry = 0;
+
 
     private ScrollPane scrollPane;
     private VBox lineNo;
@@ -90,6 +99,10 @@ public class ProofView implements ProofListener{
         proofPane.setRightAnchor(sp, 0.0);
         proofPane.setLeftAnchor(sp, 0.0);
         proofPane.setBottomAnchor(sp, 0.0);
+
+        rowList.add(rows);
+        lineNoList.add(lineNo);
+
         return proofPane;
     }
 
@@ -117,6 +130,7 @@ public class ProofView implements ProofListener{
             vb.getStyleClass().clear();
             vb.getStyleClass().add("closedBox");
             carry += carryAddClose;
+            index--;
         }
     }
 
@@ -137,6 +151,10 @@ public class ProofView implements ProofListener{
         tf2.getStyleClass().add("myText");
         bp.setCenter(tf1);
         bp.setRight(tf2);
+        System.out.println("newrow "+tf1.toString());
+
+        rList.add(bp);
+
         return bp;
     }
     Label createLabel() {
@@ -158,6 +176,8 @@ public class ProofView implements ProofListener{
         TextField tempTf = (TextField) bp.getCenter();
         lastTf = tempTf;
         lastTf.textProperty().addListener((ChangeListener<? super String>) lastTfListener);
+
+
     }
 
     public void openBox() {
@@ -166,6 +186,9 @@ public class ProofView implements ProofListener{
         carry += carryAddOpen;
         checkAndAdd(vb);
         stack.push(vb);
+        rowList.add(rows);
+        lineNoList.add(lineNo);
+        index++;
         newRow();
     }
 
@@ -179,7 +202,81 @@ public class ProofView implements ProofListener{
     public void boxClosed(){}
     public void rowUpdated(){}
     public void conclusionReached(){}
-    public void rowDeleted(){}
+
+    public void rowDeleted(){
+
+        int lastRow=rowList.get(0).getChildren().size()-1;
+        Pane n2=null;
+
+        if(rowList.get(0).getChildren().get(lastRow) instanceof BorderPane)
+        {
+           rowList.get(0).getChildren().remove(lastRow);
+           lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
+           counter--;
+        }
+        else if(rowList.get(0).getChildren().get(lastRow) instanceof VBox)
+        {
+           n2=(VBox) rowList.get(0).getChildren().get(lastRow);
+        }
+        //Go deeper when encountering a VBox
+        while(n2 instanceof VBox){
+           lastRow=n2.getChildren().size()-1;
+           //The case when only the open box is left
+           if(n2.getChildren().size()==0)
+           {
+              int last=((VBox)n2.getParent()).getChildren().size()-1;
+              ((VBox)n2.getParent()).getChildren().remove(last);
+              //carry -= carryAddOpen;
+              if(!stack.isEmpty())
+                 stack.pop();
+              break;
+           }
+           //Deletes the row
+           else if(n2.getChildren().get(lastRow) instanceof BorderPane)
+           {
+              n2.getChildren().remove(lastRow);
+              lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
+              counter--;
+              break;
+           }
+
+            //Traverse to the final line
+            n2 = (VBox) n2.getChildren().get(lastRow);
+
+        }
+
+
+        //delete closed boxes
+        if(n2!=null&&n2.getStyleClass().toString().equals("closedBox"))
+        {
+            VBox vb= (VBox) n2;
+            vb.getStyleClass().clear();
+            vb.getStyleClass().add("openBox");
+            stack.push(vb);
+            carry -= carryAddClose;
+
+            System.out.println("closed");
+        }
+
+
+
+
+
+/*
+        System.out.println(rList.get(rList.size()-1).getChildren().size());
+        int a=0;
+        if(rList.get(rList.size()-1).getParent().getParent() !=null)
+        {
+            a=rList.get(rList.size()-1).getParent().getChildrenUnmodifiable().size()-1;
+            ((VBox) rList.get(rList.size()-1).getParent()).getChildren().remove(a);
+        }
+
+        System.out.println(rList.get(rList.size()-1));
+*/
+    }
+
+
+    public void rowDeleteLastRow(){}
     public void rowInserted(){}
 
 }
