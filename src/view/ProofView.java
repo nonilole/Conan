@@ -274,6 +274,9 @@ public class ProofView implements ProofListener{
 */
     }
 
+    public void addSymbol() {
+    	System.out.println("tjena");
+    }
 
     public void rowDeleteLastRow(){}
     public void rowInserted(){}
