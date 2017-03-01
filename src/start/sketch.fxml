@@ -276,11 +276,8 @@
                                                    </rowConstraints>
                                                    <children>
                                                       <AnchorPane>
-                                                         <padding>
-                                                            <Insets bottom="1.0" right="1.0" />
-                                                         </padding>
                                                          <children>
-                                                            <Button layoutX="6.0" layoutY="1.0" mnemonicParsing="false" text="→" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="→" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane GridPane.columnIndex="1">
