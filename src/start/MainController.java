@@ -72,7 +72,9 @@ public class MainController implements Initializable {
 
     @FXML
     void symbolButtonPressed(ActionEvent event) {
-
+    	if(currentProof != null) {
+    		currentProof.addSymbol();
+    	}
     }
 
     @Override
