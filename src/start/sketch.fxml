@@ -73,6 +73,7 @@
             <Button layoutX="204.0" layoutY="11.0" mnemonicParsing="false" onAction="#openBox" text="openBox" />
             <Button layoutX="281.0" layoutY="11.0" mnemonicParsing="false" onAction="#closeBox" text="closeBox" />
             <Button mnemonicParsing="false" onAction="#newProof" text="newProofButton" />
+            <Button mnemonicParsing="false" onAction="#deleteLastRow" text="deleteLastRow" />
         </items>
       </ToolBar>
     <SplitPane dividerPositions="0.2" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" scaleShape="false" VBox.vgrow="ALWAYS">

@@ -52,7 +52,7 @@ public class MainController implements Initializable {
     @FXML
     void deleteLastRow(ActionEvent event) { // Remove this later
         if (currentProof != null) {
-            currentProof.closeBox();
+            currentProof.rowDeleteLastRow();
         }
     }
 
@@ -69,7 +69,7 @@ public class MainController implements Initializable {
 
     @FXML
     void ruleButtonPressed(ActionEvent event) {
-        currentProof.rowDeleted();
+
     }
 
     @FXML

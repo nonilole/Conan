@@ -151,9 +151,7 @@ public class ProofView implements ProofListener{
         tf2.getStyleClass().add("myText");
         bp.setCenter(tf1);
         bp.setRight(tf2);
-        System.out.println("newrow "+tf1.toString());
 
-        rList.add(bp);
 
         return bp;
     }
@@ -202,80 +200,58 @@ public class ProofView implements ProofListener{
     public void boxClosed(){}
     public void rowUpdated(){}
     public void conclusionReached(){}
-    public void rowDeleted(){
+    public void rowDeleted(){}
 
+
+    public void rowDeleteLastRow(){
         int lastRow=rowList.get(0).getChildren().size()-1;
-        Pane n2=null;
-
-        if(rowList.get(0).getChildren().get(lastRow) instanceof BorderPane)
+        Pane node=null;
+        if(lastRow!=-1)
         {
-           rowList.get(0).getChildren().remove(lastRow);
-           lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
-           counter--;
+            if (rowList.get(0).getChildren().get(lastRow) instanceof BorderPane) {
+                rowList.get(0).getChildren().remove(lastRow);
+                lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
+                counter--;
+            } else if (rowList.get(0).getChildren().get(lastRow) instanceof VBox) {
+                node = (VBox) rowList.get(0).getChildren().get(lastRow);
+            }
+            //Go deeper when encountering a VBox
+            while (node instanceof VBox) {
+                lastRow = node.getChildren().size() - 1;
+                //The case when only the open box is left
+                if (node.getChildren().size() == 0) {
+                    int last = ((VBox) node.getParent()).getChildren().size() - 1;
+                    ((VBox) node.getParent()).getChildren().remove(last);
+                    //carry -= carryAddOpen;
+                    if (!stack.isEmpty())
+                        stack.pop();
+                    break;
+                }
+                //Deletes the row
+                else if (node.getChildren().get(lastRow) instanceof BorderPane) {
+                    node.getChildren().remove(lastRow);
+                    lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
+                    counter--;
+                    break;
+                }
+
+                //Traverse to the final line
+                node = (VBox) node.getChildren().get(lastRow);
+
+            }
+
+
+            //delete closed boxes
+            if (node != null && node.getStyleClass().toString().equals("closedBox")) {
+                VBox vb = (VBox) node;
+                vb.getStyleClass().clear();
+                vb.getStyleClass().add("openBox");
+                stack.push(vb);
+                carry -= carryAddClose;
+            }
+
         }
-        else if(rowList.get(0).getChildren().get(lastRow) instanceof VBox)
-        {
-           n2=(VBox) rowList.get(0).getChildren().get(lastRow);
-        }
-        //Go deeper when encountering a VBox
-        while(n2 instanceof VBox){
-           lastRow=n2.getChildren().size()-1;
-           //The case when only the open box is left
-           if(n2.getChildren().size()==0)
-           {
-              int last=((VBox)n2.getParent()).getChildren().size()-1;
-              ((VBox)n2.getParent()).getChildren().remove(last);
-              //carry -= carryAddOpen;
-              if(!stack.isEmpty())
-                 stack.pop();
-              break;
-           }
-           //Deletes the row
-           else if(n2.getChildren().get(lastRow) instanceof BorderPane)
-           {
-              n2.getChildren().remove(lastRow);
-              lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
-              counter--;
-              break;
-           }
-
-            //Traverse to the final line
-            n2 = (VBox) n2.getChildren().get(lastRow);
-
-        }
-
-
-        //delete closed boxes
-        if(n2!=null&&n2.getStyleClass().toString().equals("closedBox"))
-        {
-            VBox vb= (VBox) n2;
-            vb.getStyleClass().clear();
-            vb.getStyleClass().add("openBox");
-            stack.push(vb);
-            carry -= carryAddClose;
-
-            System.out.println("closed");
-        }
-
-
-
-
-
-/*
-        System.out.println(rList.get(rList.size()-1).getChildren().size());
-        int a=0;
-        if(rList.get(rList.size()-1).getParent().getParent() !=null)
-        {
-            a=rList.get(rList.size()-1).getParent().getChildrenUnmodifiable().size()-1;
-            ((VBox) rList.get(rList.size()-1).getParent()).getChildren().remove(a);
-        }
-
-        System.out.println(rList.get(rList.size()-1));
-*/
     }
-
-
-    public void rowDeleteLastRow(){}
     public void rowInserted(){}
 
 }
