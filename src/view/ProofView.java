@@ -24,7 +24,6 @@ public class ProofView implements ProofListener{
     private List<BorderPane> rList = new LinkedList<>();
     private List<VBox> rowList = new LinkedList<VBox>();
     private List<VBox> lineNoList = new ArrayList<VBox>();
-    int index=0;
     private int counter = 1;
     private int carry = 0;
 
@@ -130,7 +129,7 @@ public class ProofView implements ProofListener{
             vb.getStyleClass().clear();
             vb.getStyleClass().add("closedBox");
             carry += carryAddClose;
-            index--;
+
         }
     }
 
@@ -187,7 +186,7 @@ public class ProofView implements ProofListener{
         stack.push(vb);
         rowList.add(rows);
         lineNoList.add(lineNo);
-        index++;
+
         newRow();
     }
 
@@ -253,36 +252,47 @@ public class ProofView implements ProofListener{
             }
 
         }*/
-        System.out.println(rList.get(rList.size()-1).getParent().getChildrenUnmodifiable().size());
+//        System.out.println(rList.get(rList.size()-1).getParent().getChildrenUnmodifiable().size());
+        //todo make sure that the lines gets updated correctly
 
-        if(rList.size()==1){
-            ((VBox)rList.get(0).getParent()).getChildren().clear();
-            counter--;
-            lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
+        if(rList.size()==0){
 
         }
-        //closed
+        //delete the closing part of the box
         else if(rList.get(rList.size()-1).getParent().getStyleClass().toString().equals("closedBox")){
             System.out.println("cl");
-            VBox vb=(VBox)rList.get(rList.size()-1).getParent();
-            vb.getStyleClass().clear();
-            vb.getStyleClass().add("openBox");
-            stack.push(vb);
-           carry-=carryAddClose;
+            ArrayList<VBox>vl=new ArrayList<>();
+            VBox node=(VBox)rList.get(rList.size()-1).getParent();
+            //Remove all the closing part of boxes that encloses the last row
+            while(node.getParent() instanceof VBox){
+                node.getStyleClass().clear();
+                node.getStyleClass().add("openBox");
+                vl.add(node);
+               // carry-=carryAddOpen;
+                node = (VBox) node.getParent();
+            }
+
+            //the boxes gets deleted in wrong order so we have to push it in reverse
+            for(int i=0;i<vl.size();i++){
+                node=vl.get((vl.size()-1)-i);
+                stack.push(node);
+
+            }
         }
-        //open
-        else if(rList.get(rList.size()-1).getParent().getChildrenUnmodifiable().size()==1){
+        //delete open part of the box
+        else if(rList.get(rList.size()-1).getParent().getChildrenUnmodifiable().size()==1&&
+                rList.get(rList.size()-1).getParent().getStyleClass().toString().equals("openBox")){
             System.out.println("op");
             ((VBox)rList.get(rList.size()-1).getParent().getParent()).getChildren().remove(((VBox) rList.get(rList.size()-1).getParent().getParent()).getChildren().size()-1);
             rList.remove(rList.size()-1);
             lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
             counter--;
-            carry-=carryAddOpen;
+         //   carry-=carryAddClose;
             if (!stack.isEmpty())
                 stack.pop();
 
         }
-
+        //delete row
         else if(rList.get(rList.size()-1).getParent().getChildrenUnmodifiable().size()>0){
             System.out.println("remove");
             ((VBox)rList.get(rList.size()-1).getParent()).getChildren().remove(((VBox) rList.get(rList.size()-1).getParent()).getChildren().size()-1);
