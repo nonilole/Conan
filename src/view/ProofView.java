@@ -262,23 +262,23 @@ public class ProofView implements ProofListener{
         else if(rList.get(rList.size()-1).getParent().getStyleClass().toString().equals("closedBox")){
             System.out.println("cl");
             ArrayList<VBox>vl=new ArrayList<>();
+
             VBox node=(VBox)rList.get(rList.size()-1).getParent();
+            
+            stack.push(node);
+
             //Remove all the closing part of boxes that encloses the last row
             while(node.getParent() instanceof VBox){
                 node.getStyleClass().clear();
                 node.getStyleClass().add("openBox");
-                vl.add(node);
+
+
                // carry-=carryAddOpen;
                 node = (VBox) node.getParent();
             }
 
-            //the boxes gets deleted in wrong order so we have to push it in reverse
-            for(int i=0;i<vl.size();i++){
-                node=vl.get((vl.size()-1)-i);
-                if(node.getStyleClass().toString().equals("closeBox"))
-                   stack.push(node);
 
-            }
+
         }
         //delete open part of the box
         else if(rList.get(rList.size()-1).getParent().getChildrenUnmodifiable().size()==1&&
