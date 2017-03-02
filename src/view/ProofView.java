@@ -202,7 +202,7 @@ public class ProofView implements ProofListener{
     public void conclusionReached(){}
     public void rowDeleted(){}
 
-
+    /**Deletes the last row*/
     public void rowDeleteLastRow(){
         //todo make sure that the lines gets updated correctly + refactor the code
 
@@ -214,9 +214,12 @@ public class ProofView implements ProofListener{
         //delete the closing part of the box
         else if(rList.get(rList.size()-1).getParent().getStyleClass().toString().equals("closedBox")){
             VBox node=(VBox)rList.get(rList.size()-1).getParent();
-
             //pushes the box for the last row
             stack.push(node);
+
+            //used for pushing back the closed boxes
+            ArrayList<VBox>v=new ArrayList<>();
+            v.add(node);
 
             //Remove all the closing part of boxes that encloses the last row
             while(node.getParent() instanceof VBox){
@@ -225,7 +228,13 @@ public class ProofView implements ProofListener{
 
                // carry-=carryAddOpen;
                 node = (VBox) node.getParent();
+
+                v.add(node);
+
             }
+            //pushes back the closed boxes to the stack in reverse
+            for(int i=0;i<v.size();i++)
+                stack.push(v.get((v.size()-1)-i));
 
         }
         //delete open part of the box
@@ -243,8 +252,8 @@ public class ProofView implements ProofListener{
 
         }
         //delete row
-        else if(rList.get(rList.size()-1).getParent().getChildrenUnmodifiable().size()>0){
-            ((VBox)rList.get(rList.size()-1).getParent()).getChildren().remove(((VBox) rList.get(rList.size()-1).getParent()).getChildren().size()-1);
+        else if(rList.get(lastRow).getParent().getChildrenUnmodifiable().size()>0){
+            ((VBox)rList.get(lastRow).getParent()).getChildren().remove(((VBox) rList.get(lastRow).getParent()).getChildren().size()-1);
             rList.remove(rList.size()-1);
             counter--;
             lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
