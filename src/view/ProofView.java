@@ -275,7 +275,8 @@ public class ProofView implements ProofListener{
             //the boxes gets deleted in wrong order so we have to push it in reverse
             for(int i=0;i<vl.size();i++){
                 node=vl.get((vl.size()-1)-i);
-                stack.push(node);
+                if(node.getStyleClass().toString().equals("closeBox"))
+                   stack.push(node);
 
             }
         }
