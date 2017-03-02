@@ -204,67 +204,18 @@ public class ProofView implements ProofListener{
 
 
     public void rowDeleteLastRow(){
-        /*
-        int lastRow=rowList.get(0).getChildren().size()-1;
-        Pane node=null;
-        if(lastRow!=-1)
-        {
-            if (rowList.get(0).getChildren().get(lastRow) instanceof BorderPane) {
-                rowList.get(0).getChildren().remove(lastRow);
-                lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
-                counter--;
-            } else if (rowList.get(0).getChildren().get(lastRow) instanceof VBox) {
-                node = (VBox) rowList.get(0).getChildren().get(lastRow);
-            }
-            //Go deeper when encountering a VBox
-            while (node instanceof VBox) {
-                lastRow = node.getChildren().size() - 1;
-                //The case when only the open box is left
-                if (node.getChildren().size() == 0) {
-                    int last = ((VBox) node.getParent()).getChildren().size() - 1;
-                    ((VBox) node.getParent()).getChildren().remove(last);
-                    //carry -= carryAddOpen;
-                    if (!stack.isEmpty())
-                        stack.pop();
-                    break;
-                }
-                //Deletes the row
-                else if (node.getChildren().get(lastRow) instanceof BorderPane) {
-                    node.getChildren().remove(lastRow);
-                    lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
-                    counter--;
-                    break;
-                }
+        //todo make sure that the lines gets updated correctly + refactor the code
 
-                //Traverse to the final line
-                node = (VBox) node.getChildren().get(lastRow);
-
-            }
-
-
-            //delete closed boxes
-            if (node != null && node.getStyleClass().toString().equals("closedBox")) {
-                VBox vb = (VBox) node;
-                vb.getStyleClass().clear();
-                vb.getStyleClass().add("openBox");
-                stack.push(vb);
-                carry -= carryAddClose;
-            }
-
-        }*/
-//        System.out.println(rList.get(rList.size()-1).getParent().getChildrenUnmodifiable().size());
-        //todo make sure that the lines gets updated correctly
-
+        int lastRow=rList.size()-1;
+        //Do nothing when no row is present
         if(rList.size()==0){
 
         }
         //delete the closing part of the box
         else if(rList.get(rList.size()-1).getParent().getStyleClass().toString().equals("closedBox")){
-            System.out.println("cl");
-            ArrayList<VBox>vl=new ArrayList<>();
-
             VBox node=(VBox)rList.get(rList.size()-1).getParent();
-            
+
+            //pushes the box for the last row
             stack.push(node);
 
             //Remove all the closing part of boxes that encloses the last row
@@ -272,19 +223,17 @@ public class ProofView implements ProofListener{
                 node.getStyleClass().clear();
                 node.getStyleClass().add("openBox");
 
-
                // carry-=carryAddOpen;
                 node = (VBox) node.getParent();
             }
 
-
-
         }
         //delete open part of the box
-        else if(rList.get(rList.size()-1).getParent().getChildrenUnmodifiable().size()==1&&
-                rList.get(rList.size()-1).getParent().getStyleClass().toString().equals("openBox")){
-            System.out.println("op");
-            ((VBox)rList.get(rList.size()-1).getParent().getParent()).getChildren().remove(((VBox) rList.get(rList.size()-1).getParent().getParent()).getChildren().size()-1);
+        else if(rList.get(lastRow).getParent().getChildrenUnmodifiable().size()==1 &&
+                rList.get(lastRow).getParent().getStyleClass().toString().equals("openBox")){
+
+            VBox grandParentBox=((VBox)rList.get(rList.size()-1).getParent().getParent());
+            grandParentBox.getChildren().remove(grandParentBox.getChildren().size()-1);
             rList.remove(rList.size()-1);
             lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
             counter--;
@@ -295,7 +244,6 @@ public class ProofView implements ProofListener{
         }
         //delete row
         else if(rList.get(rList.size()-1).getParent().getChildrenUnmodifiable().size()>0){
-            System.out.println("remove");
             ((VBox)rList.get(rList.size()-1).getParent()).getChildren().remove(((VBox) rList.get(rList.size()-1).getParent()).getChildren().size()-1);
             rList.remove(rList.size()-1);
             counter--;
