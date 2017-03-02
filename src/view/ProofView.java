@@ -152,7 +152,6 @@ public class ProofView implements ProofListener{
         bp.setCenter(tf1);
         bp.setRight(tf2);
 
-
         return bp;
     }
     Label createLabel() {
@@ -174,6 +173,8 @@ public class ProofView implements ProofListener{
         TextField tempTf = (TextField) bp.getCenter();
         lastTf = tempTf;
         lastTf.textProperty().addListener((ChangeListener<? super String>) lastTfListener);
+
+        rList.add(bp);
 
 
     }
@@ -204,6 +205,7 @@ public class ProofView implements ProofListener{
 
 
     public void rowDeleteLastRow(){
+        /*
         int lastRow=rowList.get(0).getChildren().size()-1;
         Pane node=null;
         if(lastRow!=-1)
@@ -250,7 +252,47 @@ public class ProofView implements ProofListener{
                 carry -= carryAddClose;
             }
 
+        }*/
+        System.out.println(rList.get(rList.size()-1).getParent().getChildrenUnmodifiable().size());
+
+        if(rList.size()==1){
+            ((VBox)rList.get(0).getParent()).getChildren().clear();
+            counter--;
+            lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
+
         }
+        //closed
+        else if(rList.get(rList.size()-1).getParent().getStyleClass().toString().equals("closedBox")){
+            System.out.println("cl");
+            VBox vb=(VBox)rList.get(rList.size()-1).getParent();
+            vb.getStyleClass().clear();
+            vb.getStyleClass().add("openBox");
+            stack.push(vb);
+           carry-=carryAddClose;
+        }
+        //open
+        else if(rList.get(rList.size()-1).getParent().getChildrenUnmodifiable().size()==1){
+            System.out.println("op");
+            ((VBox)rList.get(rList.size()-1).getParent().getParent()).getChildren().remove(((VBox) rList.get(rList.size()-1).getParent().getParent()).getChildren().size()-1);
+            rList.remove(rList.size()-1);
+            lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
+            counter--;
+            carry-=carryAddOpen;
+            if (!stack.isEmpty())
+                stack.pop();
+
+        }
+
+        else if(rList.get(rList.size()-1).getParent().getChildrenUnmodifiable().size()>0){
+            System.out.println("remove");
+            ((VBox)rList.get(rList.size()-1).getParent()).getChildren().remove(((VBox) rList.get(rList.size()-1).getParent()).getChildren().size()-1);
+            rList.remove(rList.size()-1);
+            counter--;
+            lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
+
+        }
+
+
     }
     public void rowInserted(){}
 
