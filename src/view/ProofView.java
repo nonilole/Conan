@@ -1,13 +1,9 @@
 package view;
 import java.util.*;
 
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import model.ProofListener;
@@ -17,7 +13,10 @@ import model.ProofTab;
 public class ProofView implements ProofListener{
     static final int carryAddOpen = 3; // Magic
     static final int carryAddClose = 5; // Maybe have to calculate this from padding and font size?
-    static final int barHeight = 29;
+
+    private TextField premises;
+    private TextField conclusion;
+
     private Stack<VBox> stack = new Stack<>();
 
 
@@ -38,39 +37,6 @@ public class ProofView implements ProofListener{
         newRow();
     };
 
-    private AnchorPane createBar() {
-        GridPane premisesAndConclusion = new GridPane();
-        ColumnConstraints column1 = new ColumnConstraints();
-        ColumnConstraints column2 = new ColumnConstraints();
-        ColumnConstraints column3 = new ColumnConstraints();
-        column1.setPercentWidth(45);
-        column2.setPercentWidth(10);
-        column3.setPercentWidth(45);
-        premisesAndConclusion.getColumnConstraints().addAll(column1,column2,column3);
-        TextField premises = new TextField();
-        premises.getStyleClass().add("myText");
-        TextField turnstile = new TextField("⊢");
-        turnstile.getStyleClass().add("myText");
-        turnstile.setAlignment(Pos.CENTER);
-        turnstile.setEditable(false);
-        turnstile.setFocusTraversable(false);
-        TextField conclusion = new TextField();
-        conclusion.getStyleClass().add("myText");
-        premisesAndConclusion.add(premises, 0, 0);
-        premisesAndConclusion.add(turnstile, 1, 0);
-        premisesAndConclusion.add(conclusion, 2, 0);
-
-        AnchorPane bar = new AnchorPane(premisesAndConclusion);
-        bar.setTopAnchor(premisesAndConclusion, 0.0);
-        bar.setRightAnchor(premisesAndConclusion, 20.0);
-        bar.setLeftAnchor(premisesAndConclusion, 20.0);
-        bar.setBottomAnchor(premisesAndConclusion, 0.0);
-        bar.setPrefHeight(barHeight);
-        bar.setMinHeight(barHeight);
-        bar.setMaxHeight(barHeight);
-        return bar;
-    }
-
     private AnchorPane createProofPane() {
         lineNo = new VBox();
         rows = new VBox();
@@ -80,34 +46,29 @@ public class ProofView implements ProofListener{
         hb.setHgrow(rows, Priority.ALWAYS);
         hb.getChildren().addAll(lineNo, rows);
         hb.setPadding(new Insets(5, 5, 5, 5));
-        AnchorPane ap = new AnchorPane(hb);
-        ScrollPane sp = new ScrollPane();
+        ScrollPane sp = new ScrollPane(hb);
         sp.getStyleClass().add("fit");
-        ap.setTopAnchor(hb, 0.0);
-        ap.setRightAnchor(hb, 0.0);
-        ap.setLeftAnchor(hb, 0.0);
-        ap.setBottomAnchor(hb, 0.0);
         scrollPane = sp;
         hb.heightProperty().addListener((ov, oldValue, newValue) -> {
             if (newValue.doubleValue() > oldValue.doubleValue()) { // Change this to only trigger on new row!!
                 sp.setVvalue(1.0);                                 // Otherwise it will scroll down when you insert a row in the middle
             }
         });
-        sp.setContent(ap);
         AnchorPane proofPane = new AnchorPane(sp);
         proofPane.setTopAnchor(sp, 0.0);
         proofPane.setRightAnchor(sp, 0.0);
         proofPane.setLeftAnchor(sp, 0.0);
         proofPane.setBottomAnchor(sp, 0.0);
-
         rowList.add(rows);
         lineNoList.add(lineNo);
 
         return proofPane;
     }
 
-    public ProofView(TabPane tabPane) {
-        SplitPane sp = new SplitPane(createBar(), createProofPane());
+    public ProofView(TabPane tabPane, HBox premisesAndConclusion) {
+        this.premises = (TextField) premisesAndConclusion.getChildren().get(0);
+        this.conclusion = (TextField) premisesAndConclusion.getChildren().get(2);
+        SplitPane sp = new SplitPane(premisesAndConclusion, createProofPane());
         sp.setOrientation(Orientation.VERTICAL);
         sp.setDividerPosition(0, 0.1);
         AnchorPane anchorPane = new AnchorPane(sp);
@@ -115,12 +76,17 @@ public class ProofView implements ProofListener{
         anchorPane.setRightAnchor(sp, 0.0);
         anchorPane.setLeftAnchor(sp, 0.0);
         anchorPane.setBottomAnchor(sp, 0.0);
-
         ProofTab tab = new ProofTab("Proof", this);
         tab.setContent(anchorPane);
         tabPane.getTabs().add(tab);
         tabPane.getSelectionModel().select(tab); // Byt till den nya tabben
         newRow();
+    }
+    public ProofView(TabPane tabPane) {
+        this(tabPane, CommonPanes.premisesAndConclusion());
+    }
+    public ProofView(TabPane tabPane, String sPremises, String sConclusion) {
+        this(tabPane, CommonPanes.premisesAndConclusion(sPremises, sConclusion));
     }
 
 
