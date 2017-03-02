@@ -5,6 +5,11 @@
   -fx-border-size: 0;
   -fx-text-box-border: transparent;
 }
+
+.myTitle {
+  -fx-font-family: Monospace;
+  -fx-font-size: 25px;
+}
 .fit {
   -fx-fit-to-height: true;
   -fx-fit-to-width: true;
