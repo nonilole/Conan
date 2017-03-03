@@ -7,7 +7,6 @@ import javafx.geometry.Orientation;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import model.ProofListener;
-import view.ProofTab;
 
 
 public class ProofView implements ProofListener{
@@ -17,7 +16,7 @@ public class ProofView implements ProofListener{
     private TextField premises;
     private TextField conclusion;
 
-    private Stack<VBox> stack = new Stack<>();
+    private Stack<VBox> deepestBox = new Stack<>();
 
 
     private List<BorderPane> rList = new LinkedList<>();
@@ -86,8 +85,8 @@ public class ProofView implements ProofListener{
 
 
     public void closeBox() {
-        if (!stack.isEmpty()) {
-            VBox vb = stack.pop();
+        if (!deepestBox.isEmpty()) {
+            VBox vb = deepestBox.pop();
             vb.getStyleClass().clear();
             vb.getStyleClass().add("closedBox");
             carry += carryAddClose;
@@ -97,10 +96,10 @@ public class ProofView implements ProofListener{
 
 
     private void checkAndAdd(Region item) {
-        if (stack.isEmpty()) {
+        if (deepestBox.isEmpty()) {
             rows.getChildren().add(item);
         } else {
-            VBox temp = stack.peek();
+            VBox temp = deepestBox.peek();
             temp.getChildren().add(item);
         }
     }
@@ -146,7 +145,7 @@ public class ProofView implements ProofListener{
         vb.getStyleClass().add("openBox");
         carry += carryAddOpen;
         checkAndAdd(vb);
-        stack.push(vb);
+        deepestBox.push(vb);
 
         newRow();
     }
@@ -176,7 +175,7 @@ public class ProofView implements ProofListener{
         else if(rList.get(rList.size()-1).getParent().getStyleClass().toString().equals("closedBox")){
             VBox node=(VBox)rList.get(rList.size()-1).getParent();
             //pushes the box for the last row
-            stack.push(node);
+            deepestBox.push(node);
 
             //used for pushing back the closed boxes
             ArrayList<VBox>v=new ArrayList<>();
@@ -202,7 +201,7 @@ public class ProofView implements ProofListener{
 
             //pushes back the closed boxes to the stack in reverse
             for(int i=0;i<v.size();i++){
-                stack.push(v.get((v.size()-1)-i));
+                deepestBox.push(v.get((v.size()-1)-i));
             }
 
         }
@@ -217,8 +216,8 @@ public class ProofView implements ProofListener{
             rList.remove(rList.size()-1);
             lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
             counter--;
-            if (!stack.isEmpty()){
-                stack.pop();
+            if (!deepestBox.isEmpty()){
+                deepestBox.pop();
             }
 
         }
