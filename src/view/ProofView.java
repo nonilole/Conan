@@ -153,6 +153,7 @@ public class ProofView implements ProofListener{
         Label lbl = new Label(""+counter++);
         lbl.getStyleClass().add("lineNo");
         lbl.setPadding(new Insets(8+carry,2,2,2));
+
         carry = 0;
         return lbl;
     }
@@ -217,32 +218,42 @@ public class ProofView implements ProofListener{
 
             //Remove all the closing part of boxes that encloses the last row
             while(node.getParent() instanceof VBox){
+
+                if(node.getStyleClass().toString().equals("closedBox"))
+                {
+                    carry-=carryAddClose;
+                }
+
                 node.getStyleClass().clear();
                 node.getStyleClass().add("openBox");
 
-               // carry-=carryAddOpen;
                 node = (VBox) node.getParent();
 
                 v.add(node);
 
+
             }
+
             //pushes back the closed boxes to the stack in reverse
-            for(int i=0;i<v.size();i++)
+            for(int i=0;i<v.size();i++){
                 stack.push(v.get((v.size()-1)-i));
+            }
 
         }
         //delete open part of the box
         else if(rList.get(lastRow).getParent().getChildrenUnmodifiable().size()==1 &&
                 rList.get(lastRow).getParent().getStyleClass().toString().equals("openBox")){
 
+;
+
             VBox grandParentBox=((VBox)rList.get(rList.size()-1).getParent().getParent());
             grandParentBox.getChildren().remove(grandParentBox.getChildren().size()-1);
             rList.remove(rList.size()-1);
             lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
             counter--;
-         //   carry-=carryAddClose;
-            if (!stack.isEmpty())
+            if (!stack.isEmpty()){
                 stack.pop();
+            }
 
         }
         //delete row
