@@ -1,7 +1,6 @@
-package model;
+package view;
 
 import javafx.scene.control.Tab;
-import view.ProofView;
 
 public class ProofTab extends Tab {
     private ProofView view;
