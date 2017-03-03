@@ -22,9 +22,6 @@ public class ProofView implements ProofListener{
 
 
     private List<BorderPane> rList = new LinkedList<>();
-    private List<VBox> rowList = new LinkedList<VBox>();
-    private List<VBox> lineNoList = new ArrayList<VBox>();
-    int index=0;
     private int counter = 1;
     private int carry = 0;
 
@@ -100,8 +97,6 @@ public class ProofView implements ProofListener{
         proofPane.setLeftAnchor(sp, 0.0);
         proofPane.setBottomAnchor(sp, 0.0);
 
-        rowList.add(rows);
-        lineNoList.add(lineNo);
 
         return proofPane;
     }
@@ -130,7 +125,7 @@ public class ProofView implements ProofListener{
             vb.getStyleClass().clear();
             vb.getStyleClass().add("closedBox");
             carry += carryAddClose;
-            index--;
+
         }
     }
 
@@ -152,13 +147,13 @@ public class ProofView implements ProofListener{
         bp.setCenter(tf1);
         bp.setRight(tf2);
 
-
         return bp;
     }
     Label createLabel() {
         Label lbl = new Label(""+counter++);
         lbl.getStyleClass().add("lineNo");
         lbl.setPadding(new Insets(8+carry,2,2,2));
+
         carry = 0;
         return lbl;
     }
@@ -175,6 +170,8 @@ public class ProofView implements ProofListener{
         lastTf = tempTf;
         lastTf.textProperty().addListener((ChangeListener<? super String>) lastTfListener);
 
+        rList.add(bp);
+
 
     }
 
@@ -184,9 +181,7 @@ public class ProofView implements ProofListener{
         carry += carryAddOpen;
         checkAndAdd(vb);
         stack.push(vb);
-        rowList.add(rows);
-        lineNoList.add(lineNo);
-        index++;
+
         newRow();
     }
 
@@ -202,55 +197,75 @@ public class ProofView implements ProofListener{
     public void conclusionReached(){}
     public void rowDeleted(){}
 
-
+    /**Deletes the last row*/
     public void rowDeleteLastRow(){
-        int lastRow=rowList.get(0).getChildren().size()-1;
-        Pane node=null;
-        if(lastRow!=-1)
-        {
-            if (rowList.get(0).getChildren().get(lastRow) instanceof BorderPane) {
-                rowList.get(0).getChildren().remove(lastRow);
-                lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
-                counter--;
-            } else if (rowList.get(0).getChildren().get(lastRow) instanceof VBox) {
-                node = (VBox) rowList.get(0).getChildren().get(lastRow);
-            }
-            //Go deeper when encountering a VBox
-            while (node instanceof VBox) {
-                lastRow = node.getChildren().size() - 1;
-                //The case when only the open box is left
-                if (node.getChildren().size() == 0) {
-                    int last = ((VBox) node.getParent()).getChildren().size() - 1;
-                    ((VBox) node.getParent()).getChildren().remove(last);
-                    //carry -= carryAddOpen;
-                    if (!stack.isEmpty())
-                        stack.pop();
-                    break;
-                }
-                //Deletes the row
-                else if (node.getChildren().get(lastRow) instanceof BorderPane) {
-                    node.getChildren().remove(lastRow);
-                    lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
-                    counter--;
-                    break;
+        //todo make sure that the lines gets updated correctly + refactor the code
+
+        int lastRow=rList.size()-1;
+        //Do nothing when no row is present
+        if(rList.size()==0){
+
+        }
+        //delete the closing part of the box
+        else if(rList.get(rList.size()-1).getParent().getStyleClass().toString().equals("closedBox")){
+            VBox node=(VBox)rList.get(rList.size()-1).getParent();
+            //pushes the box for the last row
+            stack.push(node);
+
+            //used for pushing back the closed boxes
+            ArrayList<VBox>v=new ArrayList<>();
+            v.add(node);
+
+            //Remove all the closing part of boxes that encloses the last row
+            while(node.getParent() instanceof VBox){
+
+                if(node.getStyleClass().toString().equals("closedBox"))
+                {
+                    carry-=carryAddClose;
                 }
 
-                //Traverse to the final line
-                node = (VBox) node.getChildren().get(lastRow);
+                node.getStyleClass().clear();
+                node.getStyleClass().add("openBox");
+
+                node = (VBox) node.getParent();
+
+                v.add(node);
+
 
             }
 
-
-            //delete closed boxes
-            if (node != null && node.getStyleClass().toString().equals("closedBox")) {
-                VBox vb = (VBox) node;
-                vb.getStyleClass().clear();
-                vb.getStyleClass().add("openBox");
-                stack.push(vb);
-                carry -= carryAddClose;
+            //pushes back the closed boxes to the stack in reverse
+            for(int i=0;i<v.size();i++){
+                stack.push(v.get((v.size()-1)-i));
             }
 
         }
+        //delete open part of the box
+        else if(rList.get(lastRow).getParent().getChildrenUnmodifiable().size()==1 &&
+                rList.get(lastRow).getParent().getStyleClass().toString().equals("openBox")){
+
+;
+
+            VBox grandParentBox=((VBox)rList.get(rList.size()-1).getParent().getParent());
+            grandParentBox.getChildren().remove(grandParentBox.getChildren().size()-1);
+            rList.remove(rList.size()-1);
+            lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
+            counter--;
+            if (!stack.isEmpty()){
+                stack.pop();
+            }
+
+        }
+        //delete row
+        else if(rList.get(lastRow).getParent().getChildrenUnmodifiable().size()>0){
+            ((VBox)rList.get(lastRow).getParent()).getChildren().remove(((VBox) rList.get(lastRow).getParent()).getChildren().size()-1);
+            rList.remove(rList.size()-1);
+            counter--;
+            lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
+
+        }
+
+
     }
     public void rowInserted(){}
 
