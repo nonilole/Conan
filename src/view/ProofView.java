@@ -22,8 +22,6 @@ public class ProofView implements ProofListener{
 
 
     private List<BorderPane> rList = new LinkedList<>();
-    private List<VBox> rowList = new LinkedList<VBox>();
-    private List<VBox> lineNoList = new ArrayList<VBox>();
     private int counter = 1;
     private int carry = 0;
 
@@ -99,8 +97,6 @@ public class ProofView implements ProofListener{
         proofPane.setLeftAnchor(sp, 0.0);
         proofPane.setBottomAnchor(sp, 0.0);
 
-        rowList.add(rows);
-        lineNoList.add(lineNo);
 
         return proofPane;
     }
@@ -184,8 +180,6 @@ public class ProofView implements ProofListener{
         carry += carryAddOpen;
         checkAndAdd(vb);
         stack.push(vb);
-        rowList.add(rows);
-        lineNoList.add(lineNo);
 
         newRow();
     }
