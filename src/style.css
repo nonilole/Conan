@@ -5,13 +5,18 @@
   -fx-border-size: 0;
   -fx-text-box-border: transparent;
 }
+
+.myTitle {
+  -fx-font-family: Monospace;
+  -fx-font-size: 25px;
+}
 .fit {
   -fx-fit-to-height: true;
   -fx-fit-to-width: true;
 }
 
 .openBox, .closedBox {
-  -fx-padding: 1 4 3 3;
+  -fx-padding: 1 0 3 3;
   -fx-border-style: solid;
   -fx-border-color: #696969;
   -fx-border-width: 2 2 0 2;

@@ -5,8 +5,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TabPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import model.ProofTab;
+import view.ProofTab;
 import view.ProofView;
+import view.WelcomeView;
 
 import javafx.event.ActionEvent;
 
@@ -52,15 +53,13 @@ public class MainController implements Initializable {
     @FXML
     void deleteLastRow(ActionEvent event) { // Remove this later
         if (currentProof != null) {
-            currentProof.closeBox();
+            currentProof.rowDeleteLastRow();
         }
     }
 
     @FXML
-    ProofView newProofButton(ActionEvent event) { // Remove this later
-
-            return new ProofView(tabPane);
-
+    void newProofButton(ActionEvent event) { // Remove this later
+        new WelcomeView(tabPane);
     }
 
 
@@ -69,7 +68,6 @@ public class MainController implements Initializable {
 
     @FXML
     void ruleButtonPressed(ActionEvent event) {
-        currentProof.rowDeleted();
     }
 
     @FXML
@@ -86,6 +84,7 @@ public class MainController implements Initializable {
             }
         }
         );
+        new WelcomeView(tabPane);
     }
 }
 
