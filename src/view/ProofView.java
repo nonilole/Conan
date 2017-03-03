@@ -229,7 +229,6 @@ public class ProofView implements ProofListener{
             lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
 
         }
-
     }
     
     public void addSymbol() {
