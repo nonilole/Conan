@@ -17,7 +17,6 @@ public class Proof {
      * @param rule
      */
     public void addRow(String formula, String rule) {
-        System.out.println(parser.parse("A ∧ B"));
         try {
             rows.add(new ProofRow(parser.parse(formula), rule));
         } catch(Exception ParseException) {
