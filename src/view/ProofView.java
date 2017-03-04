@@ -10,6 +10,7 @@ import model.ProofListener;
 
 
 public class ProofView implements ProofListener{
+
     static final int carryAddOpen = 3; // Magic
     static final int carryAddClose = 5; // Maybe have to calculate this from padding and font size?
 

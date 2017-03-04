@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 
 public class MainController implements Initializable {
     @FXML
@@ -77,14 +78,16 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
+        Preferences prefs = Preferences.userRoot().node("General");
         tabPane.getSelectionModel().selectedItemProperty().addListener((ov, oldTab, newTab) -> {
             if (newTab instanceof ProofTab) {
                 ProofTab temp = (ProofTab) newTab;
                 currentProof = temp.getView();
             }
+        });
+        if (prefs.getBoolean("showWelcome", true)) {
+            new WelcomeView(tabPane);
         }
-        );
-        new WelcomeView(tabPane);
     }
 }
 
