@@ -35,12 +35,17 @@ public class Proof {
     public void updateFormulaRow(String formula, int rowNumber){
         int rowIndex = rowNumber-1;
         ProofRow row = rows.get(rowIndex);
+        boolean wellFormed = true;
         try {
             row.setFormula(parser.parse(formula));
-            listener.rowUpdated(true, rowNumber);
         } catch(Exception ParseException) {
+            wellFormed = false;
+        }
+        if (!wellFormed && !formula.equals("")) {
             row.setFormula(null);
             listener.rowUpdated(false, rowNumber);
+        } else {
+            listener.rowUpdated(true, rowNumber);
         }
     }
     public void updateRuleRow(String rule, int rowNumber){}
