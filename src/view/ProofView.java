@@ -6,13 +6,15 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import model.Proof;
 import model.ProofListener;
 
 
 public class ProofView implements ProofListener{
-
     static final int carryAddOpen = 3; // Magic
     static final int carryAddClose = 5; // Maybe have to calculate this from padding and font size?
+
+    private Proof proof;
 
     private TextField premises;
     private TextField conclusion;
@@ -61,6 +63,7 @@ public class ProofView implements ProofListener{
     }
 
     public ProofView(TabPane tabPane, HBox premisesAndConclusion) {
+        proof = new Proof(this);
         this.premises = (TextField) premisesAndConclusion.getChildren().get(0);
         this.conclusion = (TextField) premisesAndConclusion.getChildren().get(2);
         SplitPane sp = new SplitPane(premisesAndConclusion, createProofPane());
@@ -128,17 +131,23 @@ public class ProofView implements ProofListener{
         BorderPane bp = createRow();
         checkAndAdd(bp);
         BorderPane tf = bp;
+        int curRowNo = counter;
         lineNo.getChildren().add(createLabel());
         if (lastTf != null) {
             lastTf.textProperty().removeListener((ChangeListener<? super String>) lastTfListener);
         }
         TextField tempTf = (TextField) bp.getCenter();
+        proof.addRow("","");
         lastTf = tempTf;
         lastTf.textProperty().addListener((ChangeListener<? super String>) lastTfListener);
-
+        lastTf.textProperty().addListener((ov, oldValue, newValue) -> {
+            proof.updateFormulaRow(newValue, curRowNo);
+        });
+        TextField rule = (TextField) bp.getRight();
+        rule.textProperty().addListener((ov, oldValue, newValue) -> {
+            proof.updateRuleRow(newValue, curRowNo);
+        });
         rList.add(bp);
-
-
     }
 
     public void openBox() {
@@ -159,7 +168,14 @@ public class ProofView implements ProofListener{
 
     public void boxOpened(){}
     public void boxClosed(){}
-    public void rowUpdated(){}
+    public void rowUpdated(boolean wellFormed, int lineNo) {
+        TextField expression = (TextField) rList.get(lineNo-1).getCenter();
+        if (wellFormed) {
+            expression.getStyleClass().removeIf((s) -> s.equals("bad")); // Remove the bad-class from textField.
+        } else {
+            expression.getStyleClass().add("bad");
+        }
+    }
     public void conclusionReached(){}
     public void rowDeleted(){}
 
