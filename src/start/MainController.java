@@ -78,14 +78,14 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
-        Preferences prefs = Preferences.userRoot().node("General");
+        Preferences prefs = Preferences.userRoot().node("General"); // Inställningar i noden "General"
         tabPane.getSelectionModel().selectedItemProperty().addListener((ov, oldTab, newTab) -> {
             if (newTab instanceof ProofTab) {
                 ProofTab temp = (ProofTab) newTab;
                 currentProof = temp.getView();
             }
         });
-        if (prefs.getBoolean("showWelcome", true)) {
+        if (prefs.getBoolean("showWelcome", true)) { // Om showWelcome-paret ej existerar, returnera true
             new WelcomeView(tabPane);
         }
     }
