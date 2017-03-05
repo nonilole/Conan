@@ -29,12 +29,12 @@
         <Menu mnemonicParsing="false" text="File">
           <items>
             <MenuItem mnemonicParsing="false" onAction="#newProof" text="New" />
-            <MenuItem mnemonicParsing="false" text="Open…" />
+            <MenuItem mnemonicParsing="false" onAction="#openProof" text="Open…" />
             <Menu mnemonicParsing="false" text="Open Recent" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" text="Close" />
-            <MenuItem mnemonicParsing="false" text="Save" />
-            <MenuItem mnemonicParsing="false" text="Save As…" />
+            <MenuItem mnemonicParsing="false" onAction="#saveProof" text="Save" />
+            <MenuItem mnemonicParsing="false" onAction="#saveProofAs" text="Save As…" />
             <MenuItem mnemonicParsing="false" text="Revert" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" text="Preferences…" />
@@ -66,8 +66,8 @@
     </MenuBar>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-          <Button mnemonicParsing="false" text="Save" />
-            <Button mnemonicParsing="false" text="Load" />
+          <Button mnemonicParsing="false" onAction="#saveProof" text="Save" />
+            <Button mnemonicParsing="false" onAction="#openProof" text="Load" />
             <Button mnemonicParsing="false" text="Tree view" />
             <Button layoutX="118.0" layoutY="11.0" mnemonicParsing="false" onAction="#newRow" text="newRow" />
             <Button layoutX="204.0" layoutY="11.0" mnemonicParsing="false" onAction="#openBox" text="openBox" />
