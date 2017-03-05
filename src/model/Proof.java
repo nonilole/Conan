@@ -3,11 +3,12 @@ package model;
 import java.util.ArrayList;
 
 public class Proof {
-    private ProofListener listener;
-    ArrayList<ProofRow> rows = new ArrayList();
+    private ArrayList<ProofListener> listeners;
+    private ArrayList<ProofRow> rows = new ArrayList();
     private Parser parser;
-    public Proof(ProofListener listener) {
-        this.listener = listener;
+
+    public Proof() {
+        listeners = new ArrayList();
         parser = new Parser();
     }
 
@@ -22,14 +23,25 @@ public class Proof {
         } catch(Exception ParseException) {
             rows.add(new ProofRow(null, rule));
         }
+        for (ProofListener listener : this.listeners) {
+            listener.rowInserted();
+        }
     }
     public void deleteRow(int rowNumber){}
-    public void deleteRow(){rows.remove(rows.size()-1);}
+    public void deleteRow(){
+        if (rows.size() >= 0) {
+            rows.remove(rows.size() - 1);
+            for (ProofListener listener : this.listeners) {
+                listener.rowDeleted();
+            }
+        }
+
+    }
     public void insertRow(String formula, String rule, int rowNumber){}
     public void updateRow(String formula, String rule, int rowNumber){}
 
     /**
-     * Alert the listener about the row.
+     * Alert the listeners about the row.
      * @param formula
      * @param rowNumber
      */
@@ -44,9 +56,13 @@ public class Proof {
         }
         if (!wellFormed && !formula.equals("")) {
             row.setFormula(null);
-            listener.rowUpdated(false, rowNumber);
+            for (ProofListener listener : this.listeners) {
+                listener.rowUpdated(false, rowNumber);
+            }
         } else {
-            listener.rowUpdated(true, rowNumber);
+            for (ProofListener listener : this.listeners) {
+                listener.rowUpdated(true, rowNumber);
+            }
         }
     }
     public void updateRuleRow(String rule, int rowNumber){}
@@ -56,6 +72,8 @@ public class Proof {
     public boolean verifyRow(int rowNumber){return true;}
     public void closeBox(){}
     public void verifyConclusion(){}
-    public void registerProofListener(/*ProofListener pl*/){}
+    public void registerProofListener(ProofListener listener){
+        this.listeners.add(listener);
+    }
     public Rule createCustomRule(){return null;}
 }

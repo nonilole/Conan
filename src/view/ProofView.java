@@ -63,7 +63,8 @@ public class ProofView implements ProofListener{
     }
 
     public ProofView(TabPane tabPane, HBox premisesAndConclusion) {
-        proof = new Proof(this);
+        proof = new Proof();
+        proof.registerProofListener(this);
         this.premises = (TextField) premisesAndConclusion.getChildren().get(0);
         this.conclusion = (TextField) premisesAndConclusion.getChildren().get(2);
         SplitPane sp = new SplitPane(premisesAndConclusion, createProofPane());
@@ -128,6 +129,10 @@ public class ProofView implements ProofListener{
     }
 
     public void newRow() {
+        proof.addRow("", "");
+    }
+
+    public void rowInserted() {
         BorderPane bp = createRow();
         checkAndAdd(bp);
         BorderPane tf = bp;
@@ -137,7 +142,6 @@ public class ProofView implements ProofListener{
             lastTf.textProperty().removeListener((ChangeListener<? super String>) lastTfListener);
         }
         TextField tempTf = (TextField) bp.getCenter();
-        proof.addRow("","");
         lastTf = tempTf;
         lastTf.textProperty().addListener((ChangeListener<? super String>) lastTfListener);
         lastTf.textProperty().addListener((ov, oldValue, newValue) -> {
@@ -156,7 +160,6 @@ public class ProofView implements ProofListener{
         carry += carryAddOpen;
         checkAndAdd(vb);
         curBoxDepth.push(vb);
-
         newRow();
     }
 
@@ -177,10 +180,12 @@ public class ProofView implements ProofListener{
         }
     }
     public void conclusionReached(){}
-    public void rowDeleted(){}
 
-    /**Deletes the last row*/
     public void rowDeleteLastRow(){
+        proof.deleteRow();
+    }
+    /**Deletes the last row*/
+    public void rowDeleted(){
         //todo make sure that the lines gets updated correctly + refactor the code
 
         int lastRow=rList.size()-1;
@@ -244,7 +249,6 @@ public class ProofView implements ProofListener{
             rList.remove(rList.size()-1);
             counter--;
             lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
-            proof.deleteRow();
             BorderPane lastBP = rList.get(rList.size()-1);
             lastTf = (TextField) lastBP.getCenter();
             lastTf.textProperty().addListener((ChangeListener<? super String>) lastTfListener);
@@ -252,6 +256,5 @@ public class ProofView implements ProofListener{
 
 
     }
-    public void rowInserted(){}
 
 }
