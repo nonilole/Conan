@@ -9,26 +9,73 @@ import javafx.scene.layout.*;
 import model.ProofListener;
 
 
+/***
+ * The ProofView panes consists of two VBoxes
+ *
+ * One for lineNumbers and one for the rows with TextFields.
+ *
+ * LineNo | rows
+ * -------------------
+ * 1      | BorderPane
+ * 2      | BorderPane
+ * 3      | BorderPane
+ * 4      | BorderPane
+ *
+ * The row is a BorderPane and consists of two TextFields
+ *
+ * Row
+ * =============
+ * |center|right
+ *
+ * These can be reached by calling the BorderPanes method's getCenter() and getRight().
+ * Remember to cast these to TextFields.
+ * E.g. (TextField) rList.get(rList.size()-1).getCenter()
+ *
+ * Keep in mind, that each child of rows is not a BorderPane. Boxes are additional VBoxes, with styling.
+ * E.g.
+ * rows
+ * ====
+ * Box
+ *      BorderPane
+ *      BorderPane
+ *      Box
+ *          BorderPane
+ *      BorderPane
+ * BorderPane
+ */
 public class ProofView implements ProofListener{
-    static final int carryAddOpen = 3; // Magic
-    static final int carryAddClose = 5; // Maybe have to calculate this from padding and font size?
+    /**
+     * These are magic constants that decide the lineNo padding.
+     * Margin can't be changed as a property, so the solution is to take into account how much the border
+     * and the padding increases the distance between rows and add the padding to the line numbers accordingly.
+     */
+    static final int carryAddOpen = 3;
+    static final int carryAddClose = 5;
 
+
+    /**
+     * TextFields of the premises and conclusion for quick access
+     */
     private TextField premises;
     private TextField conclusion;
 
     private Stack<VBox> curBoxDepth = new Stack<>();
 
-
+    /**
+     * This is a list of BorderPanes, which are the "lines" of the proof.
+     */
     private List<BorderPane> rList = new LinkedList<>();
     private int counter = 1;
     private int carry = 0;
 
 
-    private ScrollPane scrollPane;
     private VBox lineNo;
     private VBox rows;
-
     private TextField lastTf;
+
+    /**
+     * This ia listener that is applied to the last textField. It creates a new row, each time the value of the textField is changed.
+     */
     private ChangeListener<? extends String> lastTfListener = (ov, oldValue, newValue) -> {
         newRow();
     };
@@ -44,7 +91,6 @@ public class ProofView implements ProofListener{
         hb.setPadding(new Insets(5, 5, 5, 5));
         ScrollPane sp = new ScrollPane(hb);
         sp.getStyleClass().add("fit");
-        scrollPane = sp;
         hb.heightProperty().addListener((ov, oldValue, newValue) -> {
             if (newValue.doubleValue() > oldValue.doubleValue()) { // Change this to only trigger on new row!!
                 sp.setVvalue(1.0);                                 // Otherwise it will scroll down when you insert a row in the middle
