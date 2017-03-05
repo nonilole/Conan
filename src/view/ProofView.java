@@ -45,7 +45,7 @@ import model.ProofListener;
  * BorderPane
  */
 public class ProofView implements ProofListener, View{
-    /**
+    /*
      * These are magic constants that decide the lineNo padding.
      * Margin can't be changed as a property, so the solution is to take into account how much the border
      * and the padding increases the distance between rows and add the padding to the line numbers accordingly.
@@ -54,17 +54,13 @@ public class ProofView implements ProofListener, View{
     static final int carryAddClose = 5;
 
 
-    /**
-     * TextFields of the premises and conclusion for quick access
-     */
+    // TextFields of the premises and conclusion for quick access
     private TextField premises;
     private TextField conclusion;
 
     private Stack<VBox> curBoxDepth = new Stack<>();
 
-    /**
-     * This is a list of BorderPanes, which are the "lines" of the proof.
-     */
+    // This is a list of BorderPanes, which are the "lines" of the proof.
     private List<BorderPane> rList = new LinkedList<>();
     private int counter = 1;
     private int carry = 0;
