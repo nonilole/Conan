@@ -24,7 +24,11 @@ import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+<<<<<<< HEAD
 import model.Proof;
+=======
+import java.util.prefs.Preferences;
+>>>>>>> wellFormedExpressions
 
 public class MainController implements Initializable {
 	
@@ -45,9 +49,13 @@ public class MainController implements Initializable {
 
     @FXML
     void newProof(ActionEvent event) {
+<<<<<<< HEAD
     	View view = new ProofView(tabPane, new Proof());
     	activeViews.put(view.getTab(), view);
     	//TODO: remove mapping when tab is closed
+=======
+        new ProofView(tabPane);
+>>>>>>> wellFormedExpressions
     }
 
     @FXML
@@ -166,14 +174,16 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
+        Preferences prefs = Preferences.userRoot().node("General"); // Inställningar i noden "General"
         tabPane.getSelectionModel().selectedItemProperty().addListener((ov, oldTab, newTab) -> {
             if (newTab instanceof ProofTab) {
                 ProofTab temp = (ProofTab) newTab;
                 currentProof = temp.getView();
             }
+        });
+        if (prefs.getBoolean("showWelcome", true)) { // Om showWelcome-paret ej existerar, returnera true
+            new WelcomeView(tabPane);
         }
-        );
-        new WelcomeView(tabPane);
     }
     
     //Get the view corresponding to the currently active tab

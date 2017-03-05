@@ -9,10 +9,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 
+import java.util.prefs.Preferences;
+
 public class WelcomeView {
     Tab tabItem;
     TextField premises;
     TextField conclusion;
+    CheckBox notAgain;
+
     public WelcomeView(TabPane tabPane) {
         GridPane gridPane = new GridPane();
         gridPane.setVgap(20.0);
@@ -41,10 +45,14 @@ public class WelcomeView {
         this.conclusion = (TextField) premisesAndConclusion.getChildren().get(2);
 
         Hyperlink help = new Hyperlink("Help me!");
-        CheckBox notAgain = new CheckBox("Do not show again");
+        this.notAgain = new CheckBox("Do not show again");
         Button butNext = new Button("Continue");
         butNext.setOnAction(event -> {
+            Preferences prefs = Preferences.userRoot().node("General");
             TabPane tabPane1 = tabItem.getTabPane();
+            if (!this.notAgain.isIndeterminate() && this.notAgain.selectedProperty().getValue()) {
+                prefs.putBoolean("showWelcome", false); // Om knappen är checked, visa inte välkomsttabben.
+            }
             tabPane1.getTabs().remove(tabItem);
             new ProofView(tabPane1, premises.getText(), conclusion.getText());
         });
@@ -53,7 +61,7 @@ public class WelcomeView {
         gridPane.add(help, 0, 1);
         gridPane.add(welcomeText, 0, 2);
         gridPane.add(premisesAndConclusion, 0, 3);
-        gridPane.add(notAgain, 0, 4);
+        gridPane.add(this.notAgain, 0, 4);
         gridPane.add(butNext, 0, 4);
         gridPane.setHalignment(title, HPos.CENTER);
         gridPane.setValignment(title, VPos.CENTER);

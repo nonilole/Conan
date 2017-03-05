@@ -76,9 +76,8 @@ class Parser{
             System.out.format("parseFormula2, %c\n",(char)peek());
         Formula prev = parseFormula3();
         char next = (char)peek();
-        
+
         while(next == '∧' || next == '∨'){
-            next(); //Just to consume it from the stream
             if(next == '∧')         ignore('∧');
             else/*if(next == '∨')*/ ignore('∨');
             if( next == '∨'){

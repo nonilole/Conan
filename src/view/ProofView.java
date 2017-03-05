@@ -120,6 +120,8 @@ public class ProofView implements ProofListener, View{
     }
 
     public ProofView(TabPane tabPane, HBox premisesAndConclusion) {
+        proof = new Proof();
+        proof.registerProofListener(this);
         this.premises = (TextField) premisesAndConclusion.getChildren().get(0);
         this.conclusion = (TextField) premisesAndConclusion.getChildren().get(2);
         SplitPane sp = new SplitPane(premisesAndConclusion, createProofPane());
@@ -186,9 +188,14 @@ public class ProofView implements ProofListener, View{
     }
 
     public void newRow() {
+        proof.addRow("", "");
+    }
+
+    public void rowInserted() {
         BorderPane bp = createRow();
         checkAndAdd(bp);
         BorderPane tf = bp;
+        int curRowNo = counter;
         lineNo.getChildren().add(createLabel());
         if (lastTf != null) {
             lastTf.textProperty().removeListener((ChangeListener<? super String>) lastTfListener);
@@ -196,10 +203,14 @@ public class ProofView implements ProofListener, View{
         TextField tempTf = (TextField) bp.getCenter();
         lastTf = tempTf;
         lastTf.textProperty().addListener((ChangeListener<? super String>) lastTfListener);
-
+        lastTf.textProperty().addListener((ov, oldValue, newValue) -> {
+            proof.updateFormulaRow(newValue, curRowNo);
+        });
+        TextField rule = (TextField) bp.getRight();
+        rule.textProperty().addListener((ov, oldValue, newValue) -> {
+            proof.updateRuleRow(newValue, curRowNo);
+        });
         rList.add(bp);
-
-
     }
 
     public void openBox() {
@@ -208,7 +219,6 @@ public class ProofView implements ProofListener, View{
         carry += carryAddOpen;
         checkAndAdd(vb);
         curBoxDepth.push(vb);
-
         newRow();
     }
 
@@ -220,12 +230,21 @@ public class ProofView implements ProofListener, View{
 
     public void boxOpened(){}
     public void boxClosed(){}
-    public void rowUpdated(){}
+    public void rowUpdated(boolean wellFormed, int lineNo) {
+        TextField expression = (TextField) rList.get(lineNo-1).getCenter();
+        if (wellFormed) {
+            expression.getStyleClass().removeIf((s) -> s.equals("bad")); // Remove the bad-class from textField.
+        } else {
+            expression.getStyleClass().add("bad");
+        }
+    }
     public void conclusionReached(){}
-    public void rowDeleted(){}
 
-    /**Deletes the last row*/
     public void rowDeleteLastRow(){
+        proof.deleteRow();
+    }
+    /**Deletes the last row*/
+    public void rowDeleted(){
         //todo make sure that the lines gets updated correctly + refactor the code
 
         int lastRow=rList.size()-1;
@@ -289,13 +308,14 @@ public class ProofView implements ProofListener, View{
             rList.remove(rList.size()-1);
             counter--;
             lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
-
+            BorderPane lastBP = rList.get(rList.size()-1);
+            lastTf = (TextField) lastBP.getCenter();
+            lastTf.textProperty().addListener((ChangeListener<? super String>) lastTfListener);
         }
 
 
     }
     public void rowInserted(){}
-    
     public Tab getTab(){ return tab;}
     public Proof getProof(){ return proof;}
     public String getPath(){ return path;}

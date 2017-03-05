@@ -36,3 +36,7 @@
   -fx-text-box-border: transparent;
 }
 
+
+.bad {
+  -fx-background-color: pink;
+}
