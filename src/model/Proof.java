@@ -7,10 +7,12 @@ public class Proof implements Serializable{
     private ArrayList<ProofListener> listeners;
     private ArrayList<ProofRow> rows = new ArrayList();
     private Parser parser;
+    private int curDepth;
 
     public Proof() {
         listeners = new ArrayList();
         parser = new Parser();
+        curDepth = 0;
     }
 
     /***
@@ -20,9 +22,9 @@ public class Proof implements Serializable{
      */
     public void addRow(String formula, String rule) {
         try {
-            rows.add(new ProofRow(parser.parse(formula), rule));
+            rows.add(new ProofRow(parser.parse(formula), rule, curDepth));
         } catch(Exception ParseException) {
-            rows.add(new ProofRow(null, rule));
+            rows.add(new ProofRow(null, rule, curDepth));
         }
         for (ProofListener listener : this.listeners) {
             listener.rowInserted();
@@ -71,7 +73,20 @@ public class Proof implements Serializable{
     public void loadProof(String filepath){}
     public boolean verifyProof(int start){return true;}
     public boolean verifyRow(int rowNumber){return true;}
-    public void closeBox(){}
+    public void openBox() {
+        curDepth++;
+        for (ProofListener listener : this.listeners) {
+            listener.boxOpened();
+        }
+    }
+    public void closeBox(){
+        if (curDepth < 0)
+            return;
+        --curDepth;
+        for (ProofListener listener : this.listeners) {
+            listener.boxClosed();
+        }
+    }
     public void verifyConclusion(){}
     public void registerProofListener(ProofListener listener){
         this.listeners.add(listener);

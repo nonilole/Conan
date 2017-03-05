@@ -147,15 +147,20 @@ public class ProofView implements ProofListener, View{
     }
 
 
-    public void closeBox() {
-        if (!curBoxDepth.isEmpty()) {
-            VBox vb = curBoxDepth.pop();
-            vb.getStyleClass().clear();
-            vb.getStyleClass().add("closedBox");
-            carry += carryAddClose;
-
-        }
+    /* Controller begin */
+    public void openBox() {
+        proof.openBox();
     }
+    public void closeBox() {
+        proof.closeBox();
+    }
+    public void newRow() {
+        proof.addRow("", "");
+    }
+    public void rowDeleteLastRow(){
+        proof.deleteRow();
+    }
+    /* End of controller */
 
 
     private void checkAndAdd(Region item) {
@@ -186,9 +191,6 @@ public class ProofView implements ProofListener, View{
         return lbl;
     }
 
-    public void newRow() {
-        proof.addRow("", "");
-    }
 
     public void rowInserted() {
         BorderPane bp = createRow();
@@ -211,14 +213,6 @@ public class ProofView implements ProofListener, View{
         rList.add(bp);
     }
 
-    public void openBox() {
-        VBox vb = new VBox();
-        vb.getStyleClass().add("openBox");
-        carry += carryAddOpen;
-        checkAndAdd(vb);
-        curBoxDepth.push(vb);
-        newRow();
-    }
 
    // public void focus() { // Save the last focused textfield here for quick resuming?
    //     Platform.runLater(() -> lastTf.requestFocus());
@@ -226,8 +220,23 @@ public class ProofView implements ProofListener, View{
 
 
 
-    public void boxOpened(){}
-    public void boxClosed(){}
+    public void boxOpened(){
+        VBox vb = new VBox();
+        vb.getStyleClass().add("openBox");
+        carry += carryAddOpen;
+        checkAndAdd(vb);
+        curBoxDepth.push(vb);
+        newRow();
+    }
+    public void boxClosed(){
+        if (!curBoxDepth.isEmpty()) {
+            VBox vb = curBoxDepth.pop();
+            vb.getStyleClass().clear();
+            vb.getStyleClass().add("closedBox");
+            carry += carryAddClose;
+
+        }
+    }
     public void rowUpdated(boolean wellFormed, int lineNo) {
         TextField expression = (TextField) rList.get(lineNo-1).getCenter();
         if (wellFormed) {
@@ -238,9 +247,6 @@ public class ProofView implements ProofListener, View{
     }
     public void conclusionReached(){}
 
-    public void rowDeleteLastRow(){
-        proof.deleteRow();
-    }
     /**Deletes the last row*/
     public void rowDeleted(){
         //todo make sure that the lines gets updated correctly + refactor the code
@@ -319,5 +325,4 @@ public class ProofView implements ProofListener, View{
     public void setPath(String path){ this.path = path; }
     public String getName(){ return name;}
     public void setName(String name){ this.name = name; }
-
 }

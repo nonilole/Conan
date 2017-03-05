@@ -7,11 +7,14 @@ import model.formulas.Formula;
 public class ProofRow {
     private Formula formula;
     private String rule;
+    private int depth;
 
-    public ProofRow(Formula formula, String rule) {
+    public ProofRow(Formula formula, String rule, int depth) {
         this.formula = formula;
         this.rule = rule;
+        this.depth = depth;
     }
+
     public void setFormula(Formula formula) {
         this.formula = formula;
     }
@@ -27,4 +30,5 @@ public class ProofRow {
     public String getRule() {
         return this.rule;
     }
+    public int getDepth() { return this.depth; }
 }
