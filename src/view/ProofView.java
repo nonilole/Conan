@@ -6,10 +6,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import model.Proof;
 import model.ProofListener;
 
 
-public class ProofView implements ProofListener{
+public class ProofView implements ProofListener, View{
     static final int carryAddOpen = 3; // Magic
     static final int carryAddClose = 5; // Maybe have to calculate this from padding and font size?
 
@@ -27,6 +28,18 @@ public class ProofView implements ProofListener{
     private ScrollPane scrollPane;
     private VBox lineNo;
     private VBox rows;
+    
+    //The tab object of this view
+    private Tab tab;
+    
+    //The proof displayed in this view
+    private Proof proof;
+    
+    //The patth where this proof was loaded/should be saved
+    private String path;
+    
+    //Name of the proof/file of this view
+    private String name;
 
     private TextField lastTf;
     private ChangeListener<? extends String> lastTfListener = (ov, oldValue, newValue) -> {
@@ -71,13 +84,15 @@ public class ProofView implements ProofListener{
         anchorPane.setLeftAnchor(sp, 0.0);
         anchorPane.setBottomAnchor(sp, 0.0);
         ProofTab tab = new ProofTab("Proof", this);
+        this.tab = tab;
         tab.setContent(anchorPane);
         tabPane.getTabs().add(tab);
         tabPane.getSelectionModel().select(tab); // Byt till den nya tabben
         newRow();
     }
-    public ProofView(TabPane tabPane) {
+    public ProofView(TabPane tabPane, Proof proof) {
         this(tabPane, CommonPanes.premisesAndConclusion());
+        this.proof = proof;
     }
     public ProofView(TabPane tabPane, String sPremises, String sConclusion) {
         this(tabPane, CommonPanes.premisesAndConclusion(sPremises, sConclusion));
@@ -233,5 +248,12 @@ public class ProofView implements ProofListener{
 
     }
     public void rowInserted(){}
+    
+    public Tab getTab(){ return tab;}
+    public Proof getProof(){ return proof;}
+    public String getPath(){ return path;}
+    public void setPath(String path){ this.path = path; }
+    public String getName(){ return name;}
+    public void setName(String name){ this.name = name; }
 
 }
