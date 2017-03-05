@@ -8,6 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
+import model.Proof;
 
 import java.util.prefs.Preferences;
 
@@ -54,7 +55,7 @@ public class WelcomeView {
                 prefs.putBoolean("showWelcome", false); // Om knappen är checked, visa inte välkomsttabben.
             }
             tabPane1.getTabs().remove(tabItem);
-            new ProofView(tabPane1, premises.getText(), conclusion.getText());
+            new ProofView(tabPane1, new Proof(), premises.getText(), conclusion.getText());
         });
         gridPane.getRowConstraints().addAll(rowC1, rowC2, rowC3, rowC4, rowC5);
         gridPane.add(title, 0, 0);

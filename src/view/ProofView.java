@@ -72,16 +72,16 @@ public class ProofView implements ProofListener, View{
 
     private VBox lineNo;
     private VBox rows;
-    
+
     //The tab object of this view
     private Tab tab;
-    
+
     //The proof displayed in this view
     private Proof proof;
-    
+
     //The patth where this proof was loaded/should be saved
     private String path;
-    
+
     //Name of the proof/file of this view
     private String name;
 
@@ -119,9 +119,9 @@ public class ProofView implements ProofListener, View{
         return proofPane;
     }
 
-    public ProofView(TabPane tabPane, HBox premisesAndConclusion) {
-        proof = new Proof();
-        proof.registerProofListener(this);
+    public ProofView(TabPane tabPane, Proof proof, HBox premisesAndConclusion) {
+        this.proof = proof;
+        this.proof.registerProofListener(this);
         this.premises = (TextField) premisesAndConclusion.getChildren().get(0);
         this.conclusion = (TextField) premisesAndConclusion.getChildren().get(2);
         SplitPane sp = new SplitPane(premisesAndConclusion, createProofPane());
@@ -140,11 +140,10 @@ public class ProofView implements ProofListener, View{
         newRow();
     }
     public ProofView(TabPane tabPane, Proof proof) {
-        this(tabPane, CommonPanes.premisesAndConclusion());
-        this.proof = proof;
+        this(tabPane, proof, CommonPanes.premisesAndConclusion());
     }
-    public ProofView(TabPane tabPane, String sPremises, String sConclusion) {
-        this(tabPane, CommonPanes.premisesAndConclusion(sPremises, sConclusion));
+    public ProofView(TabPane tabPane, Proof proof, String sPremises, String sConclusion) {
+        this(tabPane, proof, CommonPanes.premisesAndConclusion(sPremises, sConclusion));
     }
 
 
@@ -194,7 +193,6 @@ public class ProofView implements ProofListener, View{
     public void rowInserted() {
         BorderPane bp = createRow();
         checkAndAdd(bp);
-        BorderPane tf = bp;
         int curRowNo = counter;
         lineNo.getChildren().add(createLabel());
         if (lastTf != null) {
@@ -315,7 +313,6 @@ public class ProofView implements ProofListener, View{
 
 
     }
-    public void rowInserted(){}
     public Tab getTab(){ return tab;}
     public Proof getProof(){ return proof;}
     public String getPath(){ return path;}

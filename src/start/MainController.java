@@ -16,19 +16,11 @@ import view.WelcomeView;
 import javafx.event.ActionEvent;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-<<<<<<< HEAD
 import model.Proof;
-=======
 import java.util.prefs.Preferences;
->>>>>>> wellFormedExpressions
 
 public class MainController implements Initializable {
 	
@@ -49,13 +41,9 @@ public class MainController implements Initializable {
 
     @FXML
     void newProof(ActionEvent event) {
-<<<<<<< HEAD
     	View view = new ProofView(tabPane, new Proof());
     	activeViews.put(view.getTab(), view);
     	//TODO: remove mapping when tab is closed
-=======
-        new ProofView(tabPane);
->>>>>>> wellFormedExpressions
     }
 
     @FXML

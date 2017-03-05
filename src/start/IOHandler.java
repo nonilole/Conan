@@ -47,10 +47,8 @@ public class IOHandler {
 	public static void saveProof(Proof proof, String path) throws FileNotFoundException, IOException{
     	FileOutputStream fos = new FileOutputStream(path);
     	ObjectOutputStream oout = new ObjectOutputStream(fos);
-    	int id = proof.id;
     	oout.writeObject(proof);
     	fos.close();
     	oout.close();
-    	System.out.println("Serialized "+path+" id: "+id);
 	}
 }
