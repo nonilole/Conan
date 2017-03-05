@@ -199,10 +199,12 @@ public class ProofView implements ProofListener, View{
         TextField tempTf = (TextField) bp.getCenter();
         lastTf = tempTf;
         lastTf.textProperty().addListener((ChangeListener<? super String>) lastTfListener);
+        // Updates the Proof object if the textField is updated
         lastTf.textProperty().addListener((ov, oldValue, newValue) -> {
             proof.updateFormulaRow(newValue, curRowNo);
         });
         TextField rule = (TextField) bp.getRight();
+        // Updates the Proof object if the textField is updated
         rule.textProperty().addListener((ov, oldValue, newValue) -> {
             proof.updateRuleRow(newValue, curRowNo);
         });
