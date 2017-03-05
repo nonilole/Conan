@@ -28,7 +28,9 @@ public class MainController implements Initializable {
     private Color x4;
 
     @FXML
-    void newProof(ActionEvent event) {new ProofView(tabPane);}
+    void newProof(ActionEvent event) {
+        new ProofView(tabPane);
+    }
 
     @FXML
     void newRow(ActionEvent event) {

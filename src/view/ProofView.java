@@ -244,7 +244,10 @@ public class ProofView implements ProofListener{
             rList.remove(rList.size()-1);
             counter--;
             lineNo.getChildren().remove(lineNo.getChildren().size() - 1);
-
+            proof.deleteRow();
+            BorderPane lastBP = rList.get(rList.size()-1);
+            lastTf = (TextField) lastBP.getCenter();
+            lastTf.textProperty().addListener((ChangeListener<? super String>) lastTfListener);
         }
 
 
