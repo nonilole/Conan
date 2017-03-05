@@ -24,6 +24,7 @@ public class Proof {
         }
     }
     public void deleteRow(int rowNumber){}
+    public void deleteRow(){rows.remove(rows.size()-1);}
     public void insertRow(String formula, String rule, int rowNumber){}
     public void updateRow(String formula, String rule, int rowNumber){}
 
