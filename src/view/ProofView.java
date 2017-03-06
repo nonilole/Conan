@@ -233,6 +233,10 @@ public class ProofView implements ProofListener{
     
     public void addSymbol() {
     	System.out.println("tjena");
+    	
+    	BorderPane bp = rList.get(rList.size()-1);
+    	TextField tf = (TextField) bp.getCenter();
+    	tf.setText("hej");
     }
     
     public void rowInserted(){}
