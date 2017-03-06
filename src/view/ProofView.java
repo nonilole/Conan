@@ -1,4 +1,5 @@
 package view;
+import java.awt.event.ActionEvent;
 import java.util.*;
 
 import javafx.beans.value.ChangeListener;
@@ -246,11 +247,14 @@ public class ProofView implements ProofListener{
         }
     }
     
-    public void addSymbol() {
+    public void addSymbol(javafx.event.ActionEvent event) {
     	System.out.println("tjena");
     	
     	if(lastPressedTf != null){
-    		lastPressedTf.setText("testing");
+    		String[] parts = event.toString().split("'");
+    		lastPressedTf.setText(lastPressedTf.getText() + parts[1]);
+    		lastPressedTf.requestFocus();
+    		lastPressedTf.positionCaret(lastPressedTf.getLength());
     	}
     	
     	/*BorderPane bp = rList.get(rList.size()-1);
