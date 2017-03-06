@@ -2,9 +2,11 @@ package view;
 import java.util.*;
 
 import javafx.beans.value.ChangeListener;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import model.ProofListener;
 
@@ -28,6 +30,7 @@ public class ProofView implements ProofListener{
     private VBox lineNo;
     private VBox rows;
 
+    private TextField lastPressedTf;
     private TextField lastTf;
     private ChangeListener<? extends String> lastTfListener = (ov, oldValue, newValue) -> {
         newRow();
@@ -109,12 +112,24 @@ public class ProofView implements ProofListener{
         TextField tf2 = new TextField();
         tf1.getStyleClass().add("myText");
         tf2.getStyleClass().add("myText");
+        tf1.setOnMouseClicked(new EventHandler<MouseEvent>(){
+	            public void handle(MouseEvent event){
+	                lastPressedTf = tf1;
+	            }
+	        });
+        tf2.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            public void handle(MouseEvent event){
+                lastPressedTf = tf2;
+            }
+        });
+        
         bp.setCenter(tf1);
         bp.setRight(tf2);
 
         return bp;
     }
-    Label createLabel() {
+
+	Label createLabel() {
         Label lbl = new Label(""+counter++);
         lbl.getStyleClass().add("lineNo");
         lbl.setPadding(new Insets(8+carry,2,2,2));
@@ -234,9 +249,13 @@ public class ProofView implements ProofListener{
     public void addSymbol() {
     	System.out.println("tjena");
     	
-    	BorderPane bp = rList.get(rList.size()-1);
+    	if(lastPressedTf != null){
+    		lastPressedTf.setText("testing");
+    	}
+    	
+    	/*BorderPane bp = rList.get(rList.size()-1);
     	TextField tf = (TextField) bp.getCenter();
-    	tf.setText("hej");
+    	tf.setText("hej");*/
     }
     
     public void rowInserted(){}
