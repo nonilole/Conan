@@ -9,7 +9,14 @@ public class Negation extends Formula{
         super.precedence = 3;
     }
 
-    //TODO: equals()
+    @Override
+    public boolean equals(Object o){
+    	if(o instanceof Negation){
+    		Negation other = (Negation) o;
+    		return this.formula.equals(other.formula);
+    	}
+    	return false;
+    }
     
     @Override
     public String toString(){

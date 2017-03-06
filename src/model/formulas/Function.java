@@ -13,7 +13,19 @@ public class Function implements Term{
         this.args = args;
     }
 
-    //TODO: equals()
+    @Override
+    public boolean equals(Object o){
+    	if(o instanceof Function){
+    		Function f = (Function) o;
+    		if(this.id != f.id) return false;
+    		if(this.args.size() != f.args.size()) return false;
+    		for(int i = 0; i < this.args.size(); i++){
+    			if(this.args.get(i) != f.args.get(i)) return false;
+    		}
+    		return true;
+    	}
+    	return false;
+    }
     
     public List<Term> getArgs(){
         return new ArrayList<Term>(args);

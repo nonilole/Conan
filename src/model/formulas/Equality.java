@@ -11,7 +11,14 @@ public class Equality extends Formula {
         super.precedence = 3;
     }
 
-    //TODO: equals()
+    @Override
+    public boolean equals(Object o){
+    	if(o instanceof Equality){
+    		Equality e = (Equality)o;
+    		return this.lhs.equals(e.lhs) && this.rhs.equals(e.rhs);
+    	}
+    	return false;
+    }
     
     @Override
     public String toString(){	

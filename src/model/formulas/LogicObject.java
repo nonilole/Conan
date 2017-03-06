@@ -8,7 +8,13 @@ public class LogicObject implements Term{
         this.id = id;
     }
 
-    //TODO: equals()
+    @Override
+    public boolean equals(Object o){
+    	if(o instanceof LogicObject){
+    		return id == ((LogicObject)o).id;
+    	}
+    	return false;
+    }
 
     public String toString(){
         return id;

@@ -11,7 +11,14 @@ public class Implication extends Formula {
         super.precedence = 1;
     }
 
-    //TODO: equals()
+    @Override
+    public boolean equals(Object o){
+    	if(o instanceof Implication){
+    		Implication other = (Implication) o;
+    		return this.lhs.equals(other.lhs) && this.rhs.equals(other.rhs);
+    	}
+    	return false;
+    }
     
     @Override
     public String toString(){

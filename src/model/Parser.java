@@ -8,35 +8,6 @@ class Parser{
     BufferedReader br;
     final boolean verbose = false;
 
-    //main method only for testing
-    public static void main(String[] args){
-        Parser pr = new Parser();
-        try{
-            Scanner scr = new Scanner(new File("resources/parserTestFormulas.txt"));
-            while(scr.hasNext()){
-                String toParse = scr.nextLine();
-                if(toParse.startsWith("//") || toParse.equals(""))
-                    continue;
-                System.out.println("Input:   "+toParse);
-                Formula f;
-                try{
-                	f = pr.parse(toParse);
-                }catch(ParseException e){
-                	System.out.println("Error: " + e.getMessage());
-                	System.out.println("=====================================================");
-                	continue;
-                }
-                System.out.println("Output:  "+f);
-                System.out.println("=====================================================");
-            }
-            scr.close();
-        }
-        catch(Exception e){
-            System.out.println("Tests failed");
-            System.out.println(e);
-        }
-    }
-
     //Should not be called from within Parser since it will overwrite this.br
     public Formula parse(String str){
         StringReader strR = new StringReader(str);

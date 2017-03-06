@@ -19,7 +19,17 @@ public class QuantifiedFormula extends Formula{
         super.precedence = 3;
     }
 
-    //TODO: equals()
+    @Override
+    public boolean equals(Object o){
+    	if(o instanceof QuantifiedFormula){
+    		QuantifiedFormula other = (QuantifiedFormula) o;
+    		if(this.type != other.type) return false;
+    		if(this.var != other.var) return false;
+    		return this.formula.equals(other.formula);
+    	}
+    	return false;
+    }
+    
     @Override
     public String toString(){
     	StringBuilder strB = new StringBuilder();

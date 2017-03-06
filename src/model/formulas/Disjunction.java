@@ -10,7 +10,15 @@ public class Disjunction extends Formula {
         this.rhs = rhs;
         super.precedence = 2;
     }
-    //TODO: equals()
+    
+    @Override
+    public boolean equals(Object o){
+    	if(o instanceof Disjunction){
+    		Disjunction other = (Disjunction) o;
+    		return this.lhs.equals(other.lhs) && this.rhs.equals(other.rhs);
+    	}
+    	return false;
+    }
     
     @Override
     public String toString(){	
