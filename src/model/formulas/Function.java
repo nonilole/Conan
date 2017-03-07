@@ -17,10 +17,10 @@ public class Function implements Term{
     public boolean equals(Object o){
     	if(o instanceof Function){
     		Function f = (Function) o;
-    		if(this.id != f.id) return false;
+    		if(!this.id.equals(f.id)) return false;
     		if(this.args.size() != f.args.size()) return false;
     		for(int i = 0; i < this.args.size(); i++){
-    			if(this.args.get(i) != f.args.get(i)) return false;
+    			if(!this.args.get(i).equals(f.args.get(i))) return false;
     		}
     		return true;
     	}

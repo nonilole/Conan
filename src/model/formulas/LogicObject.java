@@ -11,7 +11,7 @@ public class LogicObject implements Term{
     @Override
     public boolean equals(Object o){
     	if(o instanceof LogicObject){
-    		return id == ((LogicObject)o).id;
+    		return id.equals(((LogicObject)o).id);
     	}
     	return false;
     }

@@ -22,10 +22,10 @@ public class Predicate extends Formula{
     public boolean equals(Object o){
     	if(o instanceof Predicate){
     		Predicate p = (Predicate) o;
-    		if(this.id != p.id) return false;
+    		if(!this.id.equals(p.id)) return false;
     		if(this.args.size() != p.args.size()) return false;
     		for(int i = 0; i < this.args.size(); i++){
-    			if(this.args.get(i) != p.args.get(i)) return false;
+    			if(!this.args.get(i).equals(p.args.get(i))) return false;
     		}
     		return true;
     	}

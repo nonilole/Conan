@@ -40,3 +40,7 @@
 .bad {
   -fx-background-color: pink;
 }
+
+.conclusionReached {
+  -fx-background-color: #90EE90;
+}
