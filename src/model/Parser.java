@@ -63,7 +63,7 @@ class Parser{
         }
         return prev;
     }
-    
+
     //Formula3, F3   := (F) | ∀xF3 | ∃xF3| ¬F3 | Predicate | Term = Term
     // TODO: last part: Term = Term, not implemented yet
     Formula parseFormula3() throws IOException{
@@ -150,8 +150,7 @@ class Parser{
     //Check if given char is allowed as start of predicate
     //Currently allows: A-Z
     boolean isValidStartOfPredicate(char c){
-        if(c >= 'A' && c <= 'Z') return true;
-        return false;
+        return (c >= 'A' && c <= 'Z');
     }
 
     //Parse a comma separated list of args/terms, like (x,y,z)
@@ -194,9 +193,7 @@ class Parser{
         }
     }
 
-    boolean isValidStartOfTerm(char c){
-        return c >= 'a' && c <= 'z';
-    }
+    boolean isValidStartOfTerm(char c) { return c >= 'a' && c <= 'z'; }
 
     boolean isBinaryOperator(char c){
         return c == '∧' || c == '∨' || c == '→';
