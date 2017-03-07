@@ -4,6 +4,7 @@ import java.util.*;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.scene.CacheHint;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import model.Proof;
@@ -123,6 +124,7 @@ public class ProofView implements ProofListener, View{
         this.conclusion.textProperty().addListener((ov, oldValue, newValue) -> {
             proof.updateConclusion(newValue);
         });
+        proof.updateConclusion(this.conclusion.getText());
         SplitPane sp = new SplitPane(premisesAndConclusion, createProofPane());
         sp.setOrientation(Orientation.VERTICAL);
         sp.setDividerPosition(0, 0.1);
@@ -144,8 +146,6 @@ public class ProofView implements ProofListener, View{
     public ProofView(TabPane tabPane, Proof proof, String sPremises, String sConclusion) {
         this(tabPane, proof, CommonPanes.premisesAndConclusion(sPremises, sConclusion));
     }
-
-
     /* Controller begin */
     public void openBox() {
         proof.openBox();
@@ -160,8 +160,6 @@ public class ProofView implements ProofListener, View{
         proof.deleteRow();
     }
     /* End of controller */
-
-
     private void checkAndAdd(Region item) {
         if (curBoxDepth.isEmpty()) {
             rows.getChildren().add(item);
@@ -178,7 +176,9 @@ public class ProofView implements ProofListener, View{
         tf2.getStyleClass().add("myText");
         bp.setCenter(tf1);
         bp.setRight(tf2);
-
+        bp.setCache(true);
+        bp.setCacheShape(true);
+        bp.setCacheHint(CacheHint.SPEED);
         return bp;
     }
     Label createLabel() {
@@ -187,11 +187,12 @@ public class ProofView implements ProofListener, View{
         lbl.setPadding(new Insets(8+carry,2,2,2));
 
         carry = 0;
+        lbl.setCache(true);
+        lbl.setCacheShape(true);
+        lbl.setCacheHint(CacheHint.SPEED);
         return lbl;
     }
-
-
-    public void rowInserted() {
+    public void rowInserted(String formula, String rule) {
         BorderPane bp = createRow();
         checkAndAdd(bp);
         int curRowNo = counter;
@@ -200,27 +201,24 @@ public class ProofView implements ProofListener, View{
             lastTf.textProperty().removeListener((ChangeListener<? super String>) lastTfListener);
         }
         TextField tempTf = (TextField) bp.getCenter();
+        tempTf.setText(formula);
         lastTf = tempTf;
         lastTf.textProperty().addListener((ChangeListener<? super String>) lastTfListener);
         // Updates the Proof object if the textField is updated
         lastTf.textProperty().addListener((ov, oldValue, newValue) -> {
             proof.updateFormulaRow(newValue, curRowNo);
         });
-        TextField rule = (TextField) bp.getRight();
+        TextField ruleTf = (TextField) bp.getRight();
+        ruleTf.setText(rule);
         // Updates the Proof object if the textField is updated
-        rule.textProperty().addListener((ov, oldValue, newValue) -> {
+        ruleTf.textProperty().addListener((ov, oldValue, newValue) -> {
             proof.updateRuleRow(newValue, curRowNo);
         });
         rList.add(bp);
     }
-
-
    // public void focus() { // Save the last focused textfield here for quick resuming?
    //     Platform.runLater(() -> lastTf.requestFocus());
    // }
-
-
-
     public void boxOpened(){
         VBox vb = new VBox();
         vb.getStyleClass().add("openBox");
@@ -253,7 +251,6 @@ public class ProofView implements ProofListener, View{
         TextField expression = (TextField) rList.get(lineNo-1).getCenter();
         applyStyleIf(expression, correct, "conclusionReached");
     }
-
     /**Deletes the last row*/
     public void rowDeleted(){
         //todo make sure that the lines gets updated correctly + refactor the code
@@ -323,8 +320,6 @@ public class ProofView implements ProofListener, View{
             lastTf = (TextField) lastBP.getCenter();
             lastTf.textProperty().addListener((ChangeListener<? super String>) lastTfListener);
         }
-
-
     }
     public Tab getTab(){ return tab;}
     public Proof getProof(){ return proof;}

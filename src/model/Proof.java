@@ -11,13 +11,11 @@ public class Proof implements Serializable{
     private Parser parser;
     private Formula conclusion;
     private int curDepth;
-    private boolean conclusionReached;
 
     public Proof() {
         listeners = new ArrayList();
         parser = new Parser();
         curDepth = 0;
-        conclusionReached = false;
     }
 
     /***
@@ -32,11 +30,11 @@ public class Proof implements Serializable{
             rows.add(new ProofRow(null, rule, curDepth));
         }
         for (ProofListener listener : this.listeners) {
-            listener.rowInserted();
+            listener.rowInserted(formula, rule);
         }
     }
     public void deleteRow(int rowNumber){}
-    public void deleteRow(){
+    public void deleteRow() {
         if (rows.size() >= 0) {
             rows.remove(rows.size() - 1);
             for (ProofListener listener : this.listeners) {
@@ -61,19 +59,21 @@ public class Proof implements Serializable{
             row.setFormula(parser.parse(formula));
         } catch(Exception ParseException) {
             wellFormed = false;
+            row.setFormulaWellformed(false);
         }
         if (!wellFormed && !formula.equals("")) {
             row.setFormula(null);
+            row.setFormulaWellformed(false);
             for (ProofListener listener : this.listeners) {
                 listener.rowUpdated(false, rowNumber);
             }
         } else {
+            row.setFormulaWellformed(true);
             for (ProofListener listener : this.listeners) {
                 listener.rowUpdated(true, rowNumber);
             }
-            if (rowNumber == rows.size()-1) // Om det är nästsista raden.
-                verifyConclusion();
         }
+        verifyConclusion(rowIndex);
     }
     public void updateRuleRow(String rule, int rowNumber){}
     public void saveProof(String filepath){}
@@ -97,33 +97,39 @@ public class Proof implements Serializable{
     public void updateConclusion(String conclusion) {
         try {
             this.conclusion = parser.parse(conclusion);
-        } catch(Exception ParseException) {
+        } catch (Exception ParseException) {
             this.conclusion = null;
         }
+
+        //ExecutorService executor = Executors.newFixedThreadPool(4);
+        for (int i = 0; i < rows.size(); i++) {
+            // non-parallel
+            verifyConclusion(i);
+            /*
+            final int I = i;
+            executor.submit(() -> {
+                System.out.println(I);
+                verifyConclusion(I);
+            });
+            */
+        }
     }
-    public void verifyConclusion() {
-        int secondLastRowIndex = rows.size()-2;
-        if (secondLastRowIndex < 0)
-            return;
+    public void verifyConclusion(int rowIndex) {
+        ProofRow row = rows.get(rowIndex);
+        if (row.matchesConclusion()) {
+            row.setMatchesConclusion(false);
+            for (ProofListener listener : this.listeners) {
+                listener.conclusionReached(false, rowIndex + 1);
+            }
+        }
         if (this.conclusion == null)
             return;
-        Formula formula;
-        try {
-            formula = rows.get(secondLastRowIndex).getFormula();
-        } catch (Exception ParseException) {
+        if (row.getFormula() == null)
             return;
-        }
-       // System.out.println(this.conclusion);
-       // System.out.println(formula);
-        if (this.conclusion.equals(formula)) {
-            conclusionReached = true;
+        if (this.conclusion.equals(row.getFormula())) {
+            row.setMatchesConclusion(true);
             for (ProofListener listener : this.listeners) {
-                listener.conclusionReached(true, secondLastRowIndex+1);
-            }
-        } else {
-            conclusionReached = false;
-            for (ProofListener listener : this.listeners) {
-                listener.conclusionReached(false, secondLastRowIndex+1);
+                listener.conclusionReached(true, rowIndex+1);
             }
         }
     }
