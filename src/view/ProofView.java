@@ -120,6 +120,9 @@ public class ProofView implements ProofListener, View{
         this.proof.registerProofListener(this);
         this.premises = (TextField) premisesAndConclusion.getChildren().get(0);
         this.conclusion = (TextField) premisesAndConclusion.getChildren().get(2);
+        this.conclusion.textProperty().addListener((ov, oldValue, newValue) -> {
+            proof.updateConclusion(newValue);
+        });
         SplitPane sp = new SplitPane(premisesAndConclusion, createProofPane());
         sp.setOrientation(Orientation.VERTICAL);
         sp.setDividerPosition(0, 0.1);
@@ -235,15 +238,21 @@ public class ProofView implements ProofListener, View{
 
         }
     }
+    private void applyStyleIf(TextField expression, boolean bool, String style) {
+        expression.getStyleClass().removeIf((s) -> s.equals(style));
+        if (bool) {
+            expression.getStyleClass().add(style);
+        }
+
+    }
     public void rowUpdated(boolean wellFormed, int lineNo) {
         TextField expression = (TextField) rList.get(lineNo-1).getCenter();
-        if (wellFormed) {
-            expression.getStyleClass().removeIf((s) -> s.equals("bad")); // Remove the bad-class from textField.
-        } else {
-            expression.getStyleClass().add("bad");
-        }
+        applyStyleIf(expression, !wellFormed, "bad");
     }
-    public void conclusionReached(){}
+    public void conclusionReached(boolean correct, int lineNo){
+        TextField expression = (TextField) rList.get(lineNo-1).getCenter();
+        applyStyleIf(expression, correct, "conclusionReached");
+    }
 
     /**Deletes the last row*/
     public void rowDeleted(){

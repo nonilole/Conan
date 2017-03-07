@@ -1,5 +1,7 @@
 package model;
 
+import model.formulas.Formula;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -7,12 +9,15 @@ public class Proof implements Serializable{
     private ArrayList<ProofListener> listeners;
     private ArrayList<ProofRow> rows = new ArrayList();
     private Parser parser;
+    private Formula conclusion;
     private int curDepth;
+    private boolean conclusionReached;
 
     public Proof() {
         listeners = new ArrayList();
         parser = new Parser();
         curDepth = 0;
+        conclusionReached = false;
     }
 
     /***
@@ -66,6 +71,8 @@ public class Proof implements Serializable{
             for (ProofListener listener : this.listeners) {
                 listener.rowUpdated(true, rowNumber);
             }
+            if (rowNumber == rows.size()-1) // Om det är nästsista raden.
+                verifyConclusion();
         }
     }
     public void updateRuleRow(String rule, int rowNumber){}
@@ -87,7 +94,39 @@ public class Proof implements Serializable{
             listener.boxClosed();
         }
     }
-    public void verifyConclusion(){}
+    public void updateConclusion(String conclusion) {
+        try {
+            this.conclusion = parser.parse(conclusion);
+        } catch(Exception ParseException) {
+            this.conclusion = null;
+        }
+    }
+    public void verifyConclusion() {
+        int secondLastRowIndex = rows.size()-2;
+        if (secondLastRowIndex < 0)
+            return;
+        if (this.conclusion == null)
+            return;
+        Formula formula;
+        try {
+            formula = rows.get(secondLastRowIndex).getFormula();
+        } catch (Exception ParseException) {
+            return;
+        }
+       // System.out.println(this.conclusion);
+       // System.out.println(formula);
+        if (this.conclusion.equals(formula)) {
+            conclusionReached = true;
+            for (ProofListener listener : this.listeners) {
+                listener.conclusionReached(true, secondLastRowIndex+1);
+            }
+        } else {
+            conclusionReached = false;
+            for (ProofListener listener : this.listeners) {
+                listener.conclusionReached(false, secondLastRowIndex+1);
+            }
+        }
+    }
     public void registerProofListener(ProofListener listener){
         this.listeners.add(listener);
     }
