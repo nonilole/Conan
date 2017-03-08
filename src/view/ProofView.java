@@ -251,6 +251,8 @@ public class ProofView implements ProofListener, View{
         TextField expression = (TextField) rList.get(lineNo-1).getCenter();
         applyStyleIf(expression, correct, "conclusionReached");
     }
+
+
     /**Deletes the last row*/
     public void rowDeleted(){
         //todo make sure that the lines gets updated correctly + refactor the code
@@ -271,12 +273,11 @@ public class ProofView implements ProofListener, View{
             v.add(node);
 
             //Remove all the closing part of boxes that encloses the last row
-            while(node.getParent() instanceof VBox){
+            while(node.getParent() instanceof VBox &&
+                    node.getStyleClass().toString().equals("closedBox")){
 
-                if(node.getStyleClass().toString().equals("closedBox"))
-                {
-                    carry-=carryAddClose;
-                }
+                carry-=carryAddClose;
+
 
                 node.getStyleClass().clear();
                 node.getStyleClass().add("openBox");
