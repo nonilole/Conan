@@ -21,8 +21,6 @@ public class RandomFormulaGenerator {
 	final int FUNCTION_WEIGHT = 10;
 	final int TERM_WEIGHT_SUM = FUNCTION_WEIGHT + LOGICALOBJECT_WEIGHT;
 	
-	
-	
 	Random rand = new Random();
 	
 	public void printFormulas(int nrOfFormulas, int scalingFactor){
@@ -32,20 +30,20 @@ public class RandomFormulaGenerator {
 		}
 	}
 	
-	//generate a random formula, argument x is a way to regulate the length of the formula
+	//generate a random formula, paramater scalingFactor is a way to regulate the length of the formula
 	//bigger scalingFactor -> longer formula
 	Formula generateFormula(int scalingFactor){
-		//scalingFacto should decrease each time to prevent infinitely large formulas
+		//scalingFactor should decrease each time to prevent infinitely large formulas
 		//rand.nextInt will throw runtime error if given argument < 1
-		//System.out.println("scalingFactor: "+scalingFactor);
 		if(scalingFactor < 2) {
 			scalingFactor = 0;
 		}
 		else{
 			scalingFactor -= 1 + rand.nextInt(scalingFactor/2);
 		}
-		//System.out.println("new scalingFactor: "+scalingFactor);
-		//if x is zero or less we want a predicate or equality, make sure ranInt stays within limit for that
+		//if scalingFactor is zero or less we want a predicate or equality, make sure ranInt stays within limit for that
+		//So if scalingFactor <= 0, set ranInt to be the sum of EQUALTIY_WEIGHT nad PREDICATE_WEIGHT
+		//Since those are checked first, only predicates or equality can be generated in that case
 		int ranInt = (scalingFactor > 0) ? rand.nextInt(FORMULA_WEIGHT_SUM) :  rand.nextInt(EQUALITY_WEIGHT + PREDICATE_WEIGHT);
 		int acc = 0;
 		
@@ -75,7 +73,9 @@ public class RandomFormulaGenerator {
 		}
 	}
 	
-	//Issue: Never generates functions as arguments for functions... 
+	//Issue: Never generates functions as arguments for functions
+	//Fix this should call itself recursively to generate arguments for function
+	//This could be problematic though since infitie formulas could be generated.
 	Term generateTerm(){
 		String randId = randomTermId();
 		if(rand.nextInt(TERM_WEIGHT_SUM) < LOGICALOBJECT_WEIGHT){
@@ -87,10 +87,12 @@ public class RandomFormulaGenerator {
 	}
 	
 	List<Term> generateArgsList(){
-		//how many arguments
-		//usually just one, sometimes want 2 or 3
+		//how many arguments? usually just one, sometimes want 2 or 3
 		int nrArgs;
 		int randInt = rand.nextInt(10);
+		//if a 0,2,4,6,8,1 or 7 is generated, it will be 1 argument
+		//if 3, or 9 there will be 2 arguments
+		//if a 5 is generated there will be 3 arguments
 		if( randInt % 2 == 0){
 			nrArgs = 1;  //0,2,4,6,8
 		}else if(randInt % 3 == 0){
@@ -108,12 +110,12 @@ public class RandomFormulaGenerator {
 	}
 	
 	String randomPredicateId(){
-		//I'm sorry, this  line is a mess. It should return a single character string like "A" or "Z"
+		//This returns a single character string like "A" or "Z"
 		return ""+((char) (rand.nextInt('Z' - 'A' + 1) + 'A'));
 	}
 	
 	String randomTermId(){
-		//I'm sorry, this  line is a mess. It should return a single character string like "a" or "z"
+		//This returns a single character string like "a" or "z"
 		return ""+((char) (rand.nextInt('z' - 'a' + 1) + 'a'));
 	}
 	
