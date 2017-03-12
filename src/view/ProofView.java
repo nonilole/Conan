@@ -386,7 +386,12 @@ public class ProofView implements ProofListener, View{
     	assert( box.getChildren().isEmpty() );
     	if(parentNode instanceof VBox ){
     		((VBox) parentNode).getChildren().remove(box);
+    		if(box.getStyleClass().toString().equals("openBox")){
+    			VBox box2 = curBoxDepth.pop();
+    			assert(box == box2);
+    		}
     		removeRecursivelyIfEmpty((VBox) parentNode);
+    		
     	}
     }
 }
