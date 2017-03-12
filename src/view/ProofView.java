@@ -218,7 +218,7 @@ public class ProofView implements ProofListener, View{
     	}
     	lineNo.getChildren().add(createLabel());
     	updateLabelPaddings(rList.size());
-    	addListeners(rList.size());
+    	addListeners(rp);
     }
     
     //rowNo is which row the reference row is at, BoxReference tells you if you want to add the new row before or after
@@ -252,7 +252,7 @@ public class ProofView implements ProofListener, View{
         rList.add(rListInsertionIndex, rp);
         lineNo.getChildren().add(createLabel());
         updateLabelPaddings(rowNo);
-        addListeners(rowNo);
+        addListeners(rp);
         /*
         if (lastTf != null) {
             lastTf.textProperty().removeListener((ChangeListener<? super String>) lastTfListener);
@@ -364,18 +364,19 @@ public class ProofView implements ProofListener, View{
     }
     
     //add listeners for the formula and rule textfields in the RowPane at the given rowNr
-    private void addListeners(int rowNr){
-    	RowPane rp = rList.get(rowNr-1);
+    private void addListeners(RowPane rp){
     	
     	// Updates the Proof object if the textField is updated
         TextField ruleField= (TextField) rp.getRight();
         TextField formulaField = (TextField) rp.getCenter();
         formulaField.textProperty().addListener((ov, oldValue, newValue) -> {
-            proof.updateFormulaRow(newValue, rowNr);
+        	int rpIndex = rList.indexOf(rp);
+            proof.updateFormulaRow(newValue, rpIndex+1);
         });
         // Updates the Proof object if the textField is updated
         ruleField.textProperty().addListener((ov, oldValue, newValue) -> {
-            proof.updateRuleRow(newValue, rowNr);
+        	int rpIndex = rList.indexOf(rp);
+            proof.updateRuleRow(newValue, rpIndex+1);
         });
     }
     
