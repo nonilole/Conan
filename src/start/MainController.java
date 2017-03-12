@@ -2,8 +2,10 @@ package start;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
@@ -19,6 +21,8 @@ import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+
+import model.BoxReference;
 import model.Proof;
 import java.util.prefs.Preferences;
 
@@ -28,6 +32,11 @@ public class MainController implements Initializable {
 	private int counter = 0;
 	HashMap<Tab,View> activeViews = new HashMap<Tab, View>();
 	
+	@FXML
+    private TextField indexInput; // temporary for inserting rows
+
+    @FXML
+    private CheckBox insertAfterCheck; // temporary for inserting rows
     @FXML
     private TabPane tabPane;
 
@@ -48,9 +57,50 @@ public class MainController implements Initializable {
 
     @FXML
     void newRow(ActionEvent event) {
-        if (currentProof != null) {
-            currentProof.newRow();
-        }
+    	//System.out.println("mainc newRow");
+    	View view = getCurrentView();
+    	ProofView pv;
+    	if(view instanceof ProofView){
+    		pv = (ProofView)view;
+    	}else{
+    		return;
+    	}
+    	pv.newRow();
+    }
+    
+    @FXML
+    void insertRow(ActionEvent event) {
+    	//System.out.println("MainController.insertRow():");
+    	View view = getCurrentView();
+    	ProofView pv;
+    	if(view instanceof ProofView){
+    		pv = (ProofView)view;
+    	}else{
+    		return;
+    	}
+    	int rowNumber;
+    	try{
+    		rowNumber = Integer.parseInt(indexInput.getText());
+    		//System.out.println("    rowNumber:"+rowNumber);
+    		BoxReference br = insertAfterCheck.isSelected() ? BoxReference.AFTER : BoxReference.BEFORE;
+    		//System.out.println("    insertAfterCheck:"+br);
+        	pv.getProof().insertNewRow(rowNumber, br);
+    	}catch(NumberFormatException e){
+    		System.out.println("Improperly formatted number string");
+    		return;
+    	}
+    	catch(Exception e){
+    		System.out.println(e);
+    		System.out.println(e.getMessage());
+    		e.printStackTrace();
+    		return;
+    	}
+    	
+    	
+        /*if (currentProof != null) {
+        	String rowNoStr = indexInput.getText();
+            currentProof.insertNewRow(Integer.parseInt(rowNoStr));
+        }*/
     }
 
     @FXML
@@ -68,10 +118,22 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    void deleteLastRow(ActionEvent event) { // Remove this later
-        if (currentProof != null) {
-            currentProof.rowDeleteLastRow();
-        }
+    void deleteRow(ActionEvent event) {
+    	View view = getCurrentView();
+    	ProofView pv;
+    	if(view instanceof ProofView){
+    		pv = (ProofView)view;
+    	}else{
+    		return;
+    	}
+    	int rowNumber;
+        try{
+    		rowNumber = Integer.parseInt(indexInput.getText());
+        	pv.getProof().deleteRow(rowNumber);
+    	}catch(NumberFormatException e){
+    		System.out.println("Improperly formatted number string");
+    		return;
+    	}
     }
 
     @FXML

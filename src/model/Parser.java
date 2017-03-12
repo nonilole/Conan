@@ -239,8 +239,7 @@ class Parser{
         while(open > 0){
             int next = next();
             if(next == -1){
-                //throw ParseError...
-                System.exit(1);
+                throw new ParseException("Missing right-bracket");
             }
             else if( (char)next == '('){
                 strB.append( (char)next );

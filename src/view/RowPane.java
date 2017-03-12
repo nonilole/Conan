@@ -3,11 +3,13 @@ package view;
 import javafx.scene.layout.BorderPane;
 
 public class RowPane extends BorderPane{
+	
 	private boolean isFirstRowInBox;
 	//nrOfClosingBoxes tracks how many boxes that this row is the last line of
 	private int nrOfClosingBoxes;
 	
 	public RowPane(boolean isFirstRowInBox, int nrOfClosingBoxes){
+		super();
 		this.isFirstRowInBox = isFirstRowInBox;
 		this.setNrOfClosingBoxes(nrOfClosingBoxes);
 	}
@@ -28,7 +30,7 @@ public class RowPane extends BorderPane{
 		this.nrOfClosingBoxes = nrOfClosingBoxes;
 	}
 	
-	public void incrementNrofClosingBoxes(){
+	public void incrementNrOfClosingBoxes(){
 		nrOfClosingBoxes++;
 	}
 }

@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -10,6 +11,7 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -22,7 +24,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="start.MainController">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="start.MainController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -68,12 +70,14 @@
         <items>
           <Button mnemonicParsing="false" onAction="#saveProof" text="Save" />
             <Button mnemonicParsing="false" onAction="#openProof" text="Load" />
-            <Button mnemonicParsing="false" text="Tree view" />
             <Button layoutX="118.0" layoutY="11.0" mnemonicParsing="false" onAction="#newRow" text="newRow" />
             <Button layoutX="204.0" layoutY="11.0" mnemonicParsing="false" onAction="#openBox" text="openBox" />
             <Button layoutX="281.0" layoutY="11.0" mnemonicParsing="false" onAction="#closeBox" text="closeBox" />
             <Button mnemonicParsing="false" onAction="#newProof" text="newProofButton" />
-            <Button mnemonicParsing="false" onAction="#deleteLastRow" text="deleteLastRow" />
+            <Button mnemonicParsing="false" onAction="#deleteRow" text="deleteRow" />
+            <TextField fx:id="indexInput" prefHeight="26.0" prefWidth="45.0" />
+            <Button mnemonicParsing="false" onAction="#insertRow" text="InsertRow" />
+            <CheckBox fx:id="insertAfterCheck" mnemonicParsing="false" text="Insert after" />
         </items>
       </ToolBar>
     <SplitPane dividerPositions="0.2" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" scaleShape="false" VBox.vgrow="ALWAYS">

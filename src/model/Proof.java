@@ -7,43 +7,59 @@ import java.util.ArrayList;
 
 public class Proof implements Serializable{
     private ArrayList<ProofListener> listeners;
-    private ArrayList<ProofRow> rows = new ArrayList();
+    private ArrayList<ProofRow> rows = new ArrayList<ProofRow>();
     private Parser parser;
     private Formula conclusion;
     private int curDepth;
 
     public Proof() {
-        listeners = new ArrayList();
+        listeners = new ArrayList<ProofListener>();
         parser = new Parser();
         curDepth = 0;
     }
 
     /***
      * Add the row to the Proof representation. Add null pointer instead of Formula if not well formed.
-     * @param formula
-     * @param rule
      */
-    public void addRow(String formula, String rule) {
-        try {
-            rows.add(new ProofRow(parser.parse(formula), rule, curDepth));
-        } catch(Exception ParseException) {
-            rows.add(new ProofRow(null, rule, curDepth));
-        }
+    public void addRow() {
+        rows.add(new ProofRow());
         for (ProofListener listener : this.listeners) {
-            listener.rowInserted(formula, rule);
+            listener.rowAdded();
         }
     }
-    public void deleteRow(int rowNumber){}
+    
+    public void deleteRow(int rowNumber){
+    	if(rowNumber < 1 || rowNumber > rows.size()){
+    		throw new IllegalArgumentException();
+    	}
+    	rows.remove(rowNumber-1);
+    	for (ProofListener listener : this.listeners) {
+            listener.rowDeleted(rowNumber);
+        }
+    }
+    
     public void deleteRow() {
-        if (rows.size() >= 0) {
+    	System.out.println("Wrong: Proof.deleRow()");
+        /*if (rows.size() >= 0) {
             rows.remove(rows.size() - 1);
             for (ProofListener listener : this.listeners) {
                 listener.rowDeleted();
             }
-        }
-
+        }*/
     }
-    public void insertRow(String formula, String rule, int rowNumber){}
+    
+    public void insertNewRow(int rowNumber, BoxReference br){
+    	if(rowNumber < 1 || rowNumber > rows.size()+1){
+    		System.out.println("Proof.insertNewRow: incorrect rowNumber");
+    		System.out.println("rows.size(): "+rows.size()+", rowNumber: "+rowNumber);
+    		return;
+    	}
+    	//System.out.println("Proof("+rowNumber+","+br+")");
+    	rows.add(rowNumber-1, new ProofRow());
+    	for(ProofListener pl : listeners){
+    		pl.rowInserted(rowNumber, br);
+    	}
+    }
     public void updateRow(String formula, String rule, int rowNumber){}
 
     /**
@@ -54,24 +70,19 @@ public class Proof implements Serializable{
     public void updateFormulaRow(String formula, int rowNumber){
         int rowIndex = rowNumber-1;
         ProofRow row = rows.get(rowIndex);
-        boolean wellFormed = true;
+        boolean wellFormed;
+        Formula parsedFormula;
         try {
-            row.setFormula(parser.parse(formula));
+            parsedFormula = parser.parse(formula);
+            wellFormed = true;
         } catch(Exception ParseException) {
-            wellFormed = false;
-            row.setFormulaWellformed(false);
+            wellFormed = formula.equals("") ? true : false;
+            parsedFormula = null;
         }
-        if (!wellFormed && !formula.equals("")) {
-            row.setFormula(null);
-            row.setFormulaWellformed(false);
-            for (ProofListener listener : this.listeners) {
-                listener.rowUpdated(false, rowNumber);
-            }
-        } else {
-            row.setFormulaWellformed(true);
-            for (ProofListener listener : this.listeners) {
-                listener.rowUpdated(true, rowNumber);
-            }
+        row.setFormulaWellformed(wellFormed);
+        row.setFormula(parsedFormula);
+        for (ProofListener listener : this.listeners) {
+            listener.rowUpdated(wellFormed, rowNumber);
         }
         verifyConclusion(rowIndex);
     }
