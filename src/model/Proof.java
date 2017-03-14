@@ -8,17 +8,21 @@ import java.util.ArrayList;
 public class Proof implements Serializable{
     private ArrayList<ProofListener> listeners = new ArrayList<ProofListener>();
     //private ArrayList<ProofRow> rows = new ArrayList<ProofRow>();
-    private Parser parser = new Parser();
+    private Parser parser = new Parser(); //this won't be serialized
     private Formula conclusion;
     //private int curDepth = 0;
     private ProofData proofData = new ProofData();
+    private boolean openBoxNextAddRow = false; 
 
     /***
-     * Add the row to the Proof representation. Add null pointer instead of Formula if not well formed.
+     * Add a new row at the end of the proof.
      */
     public void addRow() {
-        //rows.add(new ProofRow());
     	proofData.addRow();
+    	if(openBoxNextAddRow){
+    		proofData.openBox( proofData.size()-1 );
+    		openBoxNextAddRow = false;
+    	}
         for (ProofListener listener : this.listeners) {
             listener.rowAdded();
         }
@@ -45,6 +49,8 @@ public class Proof implements Serializable{
     		pl.rowInserted(rowNumber, br);
     	}
     }
+    
+    //Will you ever update both the formula and rule fields at the same time?
     public void updateRow(String formula, String rule, int rowNumber){}
 
     /**
@@ -55,21 +61,14 @@ public class Proof implements Serializable{
     public void updateFormulaRow(String formula, int rowNumber){
         int rowIndex = rowNumber-1;
         ProofRow row = proofData.getRow(rowIndex);
-        boolean wellFormed;
-        Formula parsedFormula;
-        try {
-            parsedFormula = parser.parse(formula);
-            wellFormed = true;
-        } catch(Exception ParseException) {
-            wellFormed = formula.equals("") ? true : false;
-            parsedFormula = null;
-        }
-        row.setWellformed(wellFormed);
-        row.setFormula(parsedFormula);
+        boolean wellFormed = proofData.updateRow(rowIndex, formula);
+        
         for (ProofListener listener : this.listeners) {
             listener.rowUpdated(wellFormed, rowNumber);
         }
         verifyConclusion(rowIndex);
+        proofData.printProof();
+        System.out.println("==========================================================");
     }
     public void updateRuleRow(String rule, int rowNumber){
     	System.out.println("Proof.updateRuleRow not implemented!");
@@ -84,14 +83,28 @@ public class Proof implements Serializable{
     	System.out.println("Proof.verifyRow not implemented!");
     	return true;
     }
+    
+    //This shouldn't be used when a proper UI for opening boxes has been implemented
+    //since at that point, you open a box in a specific row rather than at the end of a proof
+    //Instead, at that point, use openBox(int rowNr)
     public void openBox() {
-        //TODO: something...
+    	openBoxNextAddRow = true;
         for (ProofListener listener : this.listeners) {
             listener.boxOpened();
         }
     }
+    
+    public void openBox(int rowNr){
+    	System.out.println("Proof.openBox(int) not implemented!");
+    	//if rowNr is the last line, the new box should be open
+    	//otherwise closed
+    	for (ProofListener listener : this.listeners) {
+            listener.boxOpened();
+        }
+    }
+    
     public void closeBox(){
-        //TODO: something
+        proofData.closeBox();
         for (ProofListener listener : this.listeners) {
             listener.boxClosed();
         }
@@ -102,6 +115,7 @@ public class Proof implements Serializable{
             this.conclusion = parser.parse(conclusion);
         } catch (Exception ParseException) {
             this.conclusion = null;
+            return;
         }
         for (int i = 0; i < proofData.size(); i++) {
             verifyConclusion(i);
