@@ -1,17 +1,11 @@
 package view;
-import java.awt.event.ActionEvent;
 import java.util.*;
-
 import javafx.beans.value.ChangeListener;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.CacheHint;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import model.BoxReference;
 import model.Proof;
@@ -77,7 +71,7 @@ public class ProofView implements ProofListener, View{
 	private VBox rows;
 
 	//The tab object of this view
-	private Tab tab;
+	private ViewTab tab;
 
 	//The proof displayed in this view
 	private Proof proof;
@@ -158,11 +152,10 @@ public class ProofView implements ProofListener, View{
 		anchorPane.setRightAnchor(sp, 0.0);
 		anchorPane.setLeftAnchor(sp, 0.0);
 		anchorPane.setBottomAnchor(sp, 0.0);
-		ProofTab tab = new ProofTab("Proof", this);
-		this.tab = tab;
-		tab.setContent(anchorPane);
-		tabPane.getTabs().add(tab);
-		tabPane.getSelectionModel().select(tab); // Byt till den nya tabben
+		this.tab = new ViewTab("Proof", this);
+		this.tab.setContent(anchorPane);
+		tabPane.getTabs().add(this.tab);
+		tabPane.getSelectionModel().select(this.tab); // Byt till den nya tabben
 		newRow();
 	}
 
@@ -335,7 +328,6 @@ public class ProofView implements ProofListener, View{
 	}
 
 	public void rowUpdated(boolean wellFormed, int lineNo) {
-		System.out.println("RowUpdated");
 		TextField expression = (TextField) rList.get(lineNo-1).getCenter();
 		applyStyleIf(expression, !wellFormed, "bad");
 	}
@@ -379,7 +371,7 @@ public class ProofView implements ProofListener, View{
 		updateLabelPaddings( updatePreviousRowLabel ? rowNr-1 : rowNr  );
 	}
 
-	public Tab getTab(){ return tab;}
+	public ViewTab getTab(){ return tab;}
 	public Proof getProof(){ return proof;}
 	public String getPath(){ return path;}
 	public void setPath(String path){ this.path = path; }
@@ -449,5 +441,4 @@ public class ProofView implements ProofListener, View{
 		}
 	}
 
-	public void rowInserted(){}
 }
