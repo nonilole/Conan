@@ -65,6 +65,11 @@ public class ProofView implements ProofListener{
         return proofPane;
     }
 
+    /**
+     * Adds content to the TabPane in the proof and adds listeners to the premise and conclusion. 
+     * @param tabPane
+     * @param premisesAndConclusion
+     */
     public ProofView(TabPane tabPane, HBox premisesAndConclusion) {
         this.premises = (TextField) premisesAndConclusion.getChildren().get(0);
         this.conclusion = (TextField) premisesAndConclusion.getChildren().get(2);
@@ -117,6 +122,12 @@ public class ProofView implements ProofListener{
             temp.getChildren().add(item);
         }
     }
+    
+    /**
+     * Creates a new row with a textfield for the expression and a textfield
+     * for the rules and adds listeners to both of them.
+     * @return bp, the BorderPane containing two textfields. 
+     */
     private BorderPane createRow() {
         BorderPane bp = new BorderPane();
         TextField tf1 = new TextField();
@@ -255,6 +266,10 @@ public class ProofView implements ProofListener{
         }
     }
     
+    /**
+     * Adds the unicode symbol that has been pressed to the caret position in the focused text field.
+     * @param event, the pressed unicode button. 
+     */
     public void addSymbol(javafx.event.ActionEvent event){
     	   	if(lastFocusedTf != null){
     	   	int tmpCaretPosition = caretPosition;
