@@ -31,7 +31,9 @@ public class ProofView implements ProofListener{
     private VBox lineNo;
     private VBox rows;
 
-    private TextField lastPressedTf;
+    private TextField lastFocusedTf;
+    private int caretPosition;
+    
     private TextField lastTf;
     private ChangeListener<? extends String> lastTfListener = (ov, oldValue, newValue) -> {
         newRow();
@@ -66,6 +68,14 @@ public class ProofView implements ProofListener{
     public ProofView(TabPane tabPane, HBox premisesAndConclusion) {
         this.premises = (TextField) premisesAndConclusion.getChildren().get(0);
         this.conclusion = (TextField) premisesAndConclusion.getChildren().get(2);
+        this.premises.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            lastFocusedTf = this.premises;
+            caretPosition = this.premises.getCaretPosition();
+        });
+        this.conclusion.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            lastFocusedTf = this.conclusion;
+            caretPosition = this.conclusion.getCaretPosition();
+        });
         SplitPane sp = new SplitPane(premisesAndConclusion, createProofPane());
         sp.setOrientation(Orientation.VERTICAL);
         sp.setDividerPosition(0, 0.1);
@@ -113,15 +123,13 @@ public class ProofView implements ProofListener{
         TextField tf2 = new TextField();
         tf1.getStyleClass().add("myText");
         tf2.getStyleClass().add("myText");
-        tf1.setOnMouseClicked(new EventHandler<MouseEvent>(){
-	            public void handle(MouseEvent event){
-	                lastPressedTf = tf1;
-	            }
-	        });
-        tf2.setOnMouseClicked(new EventHandler<MouseEvent>(){
-            public void handle(MouseEvent event){
-                lastPressedTf = tf2;
-            }
+        tf1.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            lastFocusedTf = tf1;
+            caretPosition = tf1.getCaretPosition();
+        });
+        tf2.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            lastFocusedTf = tf2;
+            caretPosition = tf2.getCaretPosition();
         });
         
         bp.setCenter(tf1);
@@ -247,19 +255,15 @@ public class ProofView implements ProofListener{
         }
     }
     
-    public void addSymbol(javafx.event.ActionEvent event) {
-    	System.out.println("tjena");
-    	
-    	if(lastPressedTf != null){
-    		String[] parts = event.toString().split("'");
-    		lastPressedTf.setText(lastPressedTf.getText() + parts[1]);
-    		lastPressedTf.requestFocus();
-    		lastPressedTf.positionCaret(lastPressedTf.getLength());
+    public void addSymbol(javafx.event.ActionEvent event){
+    	   	if(lastFocusedTf != null){
+    	   	int tmpCaretPosition = caretPosition;
+    	   	String[] parts = event.toString().split("'");
+    		lastFocusedTf.setText(lastFocusedTf.getText().substring(0, caretPosition) + parts[1] 
+    				+ lastFocusedTf.getText().substring(caretPosition, lastFocusedTf.getLength()));
+    		lastFocusedTf.requestFocus();
+    		lastFocusedTf.positionCaret(tmpCaretPosition+1);
     	}
-    	
-    	/*BorderPane bp = rList.get(rList.size()-1);
-    	TextField tf = (TextField) bp.getCenter();
-    	tf.setText("hej");*/
     }
     
     public void rowInserted(){}
