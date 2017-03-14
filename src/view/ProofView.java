@@ -183,7 +183,7 @@ public class ProofView implements ProofListener, View{
 		proof.addRow();
 	}
 	public void rowDeleteRow(){
-		proof.deleteRow();
+		//proof.deleteRow();
 	}
 	public void insertNewRow(int rowNo, BoxReference br){
 		proof.insertNewRow(rowNo, br);
