@@ -12,8 +12,8 @@ import model.Proof;
 
 import java.util.prefs.Preferences;
 
-public class WelcomeView {
-    Tab tabItem;
+public class WelcomeView implements View {
+    ViewTab tab;
     TextField premises;
     TextField conclusion;
     CheckBox notAgain;
@@ -50,11 +50,11 @@ public class WelcomeView {
         Button butNext = new Button("Continue");
         butNext.setOnAction(event -> {
             Preferences prefs = Preferences.userRoot().node("General");
-            TabPane tabPane1 = tabItem.getTabPane();
+            TabPane tabPane1 = tab.getTabPane();
             if (!this.notAgain.isIndeterminate() && this.notAgain.selectedProperty().getValue()) {
                 prefs.putBoolean("showWelcome", false); // Om knappen är checked, visa inte välkomsttabben.
             }
-            tabPane1.getTabs().remove(tabItem);
+            tabPane1.getTabs().remove(tab);
             new ProofView(tabPane1, new Proof(), premises.getText(), conclusion.getText());
         });
         gridPane.getRowConstraints().addAll(rowC1, rowC2, rowC3, rowC4, rowC5);
@@ -79,10 +79,15 @@ public class WelcomeView {
         ap.setRightAnchor(scrollPane, 0.0);
         ap.setBottomAnchor(scrollPane, 0.0);
         ap.setLeftAnchor(scrollPane, 0.0);
-        this.tabItem = new Tab(sTab);
-        this.tabItem.setContent(ap);
-        tabPane.getTabs().add(tabItem);
-        tabPane.getSelectionModel().select(tabItem);
+        this.tab = new ViewTab(sTab, this);
+        this.tab.setContent(ap);
+        tabPane.getTabs().add(this.tab);
+        tabPane.getSelectionModel().select(this.tab);
+    }
+
+    @Override
+    public ViewTab getTab() {
+        return this.tab;
     }
 }
 

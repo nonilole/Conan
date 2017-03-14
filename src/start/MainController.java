@@ -3,23 +3,21 @@ package start;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import view.ProofTab;
 import view.ProofView;
 import view.View;
+import view.ViewTab;
 import view.WelcomeView;
 
 import javafx.event.ActionEvent;
 
 import java.io.File;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import model.BoxReference;
@@ -27,11 +25,6 @@ import model.Proof;
 import java.util.prefs.Preferences;
 
 public class MainController implements Initializable {
-	
-	//for testing, should be deleted
-	private int counter = 0;
-	HashMap<Tab,View> activeViews = new HashMap<Tab, View>();
-	
 	@FXML
     private TextField indexInput; // temporary for inserting rows
 
@@ -40,7 +33,7 @@ public class MainController implements Initializable {
     @FXML
     private TabPane tabPane;
 
-    private ProofView currentProof;
+    private ViewTab currentTab;
 
     @FXML
     private Font x3;
@@ -50,34 +43,31 @@ public class MainController implements Initializable {
 
     @FXML
     void newProof(ActionEvent event) {
-    	View view = new ProofView(tabPane, new Proof());
-    	activeViews.put(view.getTab(), view);
-    	//TODO: remove mapping when tab is closed
+    	new ProofView(tabPane, new Proof());
+    }
+
+    private ProofView convertProofView(View view) {
+        if(view instanceof ProofView){
+            return (ProofView) view;
+        } else {
+            return null;
+        }
     }
 
     @FXML
     void newRow(ActionEvent event) {
     	//System.out.println("mainc newRow");
-    	View view = getCurrentView();
-    	ProofView pv;
-    	if(view instanceof ProofView){
-    		pv = (ProofView)view;
-    	}else{
-    		return;
-    	}
+    	ProofView pv = convertProofView(getCurrentView());
+    	if (pv == null)
+    	    return;
     	pv.newRow();
     }
     
     @FXML
     void insertRow(ActionEvent event) {
-    	//System.out.println("MainController.insertRow():");
-    	View view = getCurrentView();
-    	ProofView pv;
-    	if(view instanceof ProofView){
-    		pv = (ProofView)view;
-    	}else{
-    		return;
-    	}
+        ProofView pv = convertProofView(getCurrentView());
+        if (pv == null)
+            return;
     	int rowNumber;
     	try{
     		rowNumber = Integer.parseInt(indexInput.getText());
@@ -95,37 +85,29 @@ public class MainController implements Initializable {
     		e.printStackTrace();
     		return;
     	}
-    	
-    	
-        /*if (currentProof != null) {
-        	String rowNoStr = indexInput.getText();
-            currentProof.insertNewRow(Integer.parseInt(rowNoStr));
-        }*/
     }
 
     @FXML
     void openBox(ActionEvent event) { // Remove this later
-        if (currentProof != null) {
-            currentProof.openBox();
-        }
+        ProofView pv = convertProofView(getCurrentView());
+        if (pv == null)
+            return;
+        pv.openBox();
     }
 
     @FXML
     void closeBox(ActionEvent event) { // Remove this later
-        if (currentProof != null) {
-            currentProof.closeBox();
-        }
+        ProofView pv = convertProofView(getCurrentView());
+        if (pv == null)
+            return;
+        pv.closeBox();
     }
 
     @FXML
     void deleteRow(ActionEvent event) {
-    	View view = getCurrentView();
-    	ProofView pv;
-    	if(view instanceof ProofView){
-    		pv = (ProofView)view;
-    	}else{
-    		return;
-    	}
+        ProofView pv = convertProofView(getCurrentView());
+        if (pv == null)
+            return;
     	int rowNumber;
         try{
     		rowNumber = Integer.parseInt(indexInput.getText());
@@ -151,34 +133,31 @@ public class MainController implements Initializable {
 
     @FXML
     void symbolButtonPressed(ActionEvent event) {
-    	if(currentProof != null) {
-    		currentProof.addSymbol(event);
+        ProofView pv = convertProofView(getCurrentView());
+    	if (pv != null) {
+    		pv.addSymbol(event);
     	}
     }
     
     @FXML
     void saveProof(ActionEvent event) {
-    	View view = getCurrentView();
-    	if(view instanceof ProofView == false){
-    		System.out.println("Not a proof, not saving");
-    		return;
-    	}
-    	else{
-    		ProofView pView = (ProofView)view;
-    		if(pView.getPath() == null ){
-    			//if no path is set for current proof, call other method
-    			saveProofAs(null);
-    			return;
-    		}
-    		try{
-    			IOHandler.saveProof(pView.getProof(), pView.getPath());
-    		}
-    		catch(Exception e){
-    			System.out.println("saveProof\n"+e);
-    			//Inform user what went wrong
-    		}
-    	}
-    	
+        ProofView pv = convertProofView(getCurrentView());
+        if (pv == null) {
+            System.out.println("Not a proof, not saving");
+            return;
+        }
+        if(pv.getPath() == null ){
+            //if no path is set for current proof, call other method
+            saveProofAs(null);
+            return;
+        }
+        try{
+            IOHandler.saveProof(pv.getProof(), pv.getPath());
+        }
+        catch(Exception e){
+            System.out.println("saveProof\n"+e);
+            //Inform user what went wrong
+        }
     }
     
     @FXML
@@ -216,7 +195,6 @@ public class MainController implements Initializable {
     	ProofView openedProofView;
     	try{
     		openedProofView = IOHandler.openProof(tabPane);
-    		activeViews.put(openedProofView.getTab(), openedProofView);
     	}catch(Exception e){
     		System.out.println(e);
     		return;
@@ -225,22 +203,21 @@ public class MainController implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources){
+    public void initialize(URL location, ResourceBundle resources) {
         Preferences prefs = Preferences.userRoot().node("General"); // Inställningar i noden "General"
         tabPane.getSelectionModel().selectedItemProperty().addListener((ov, oldTab, newTab) -> {
-            if (newTab instanceof ProofTab) {
-                ProofTab temp = (ProofTab) newTab;
-                currentProof = temp.getView();
+            if (newTab instanceof ViewTab) {
+                currentTab = (ViewTab) newTab;
             }
         });
         if (prefs.getBoolean("showWelcome", true)) { // Om showWelcome-paret ej existerar, returnera true
             new WelcomeView(tabPane);
         }
     }
-    
+
     //Get the view corresponding to the currently active tab
-    View getCurrentView(){
-    	return activeViews.get( tabPane.getSelectionModel().getSelectedItem());
+    private View getCurrentView() {
+            return currentTab.getView();
     }
 }
 
