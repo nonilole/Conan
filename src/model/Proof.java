@@ -28,6 +28,10 @@ public class Proof implements Serializable{
         }
     }
     
+    /**
+     * TODO: explain what the method does
+     * @param rowNumber
+     */
     public void deleteRow(int rowNumber){
     	if(rowNumber < 1 || rowNumber > proofData.size()){
     		throw new IllegalArgumentException();
@@ -38,6 +42,11 @@ public class Proof implements Serializable{
         }
     }
     
+    /**
+     * TODO: explain what the method does
+     * @param rowNumber
+     * @param br
+     */
     public void insertNewRow(int rowNumber, BoxReference br){
     	if(rowNumber < 1 || rowNumber > proofData.size()+1){
     		System.out.println("Proof.insertNewRow: incorrect rowNumber");
@@ -110,6 +119,10 @@ public class Proof implements Serializable{
         }
     }
     
+    /**
+     * TODO: explain what the method does
+     * @param conclusion
+     */
     public void updateConclusion(String conclusion) {
         try {
             this.conclusion = parser.parse(conclusion);
@@ -122,6 +135,10 @@ public class Proof implements Serializable{
         }
     }
     
+    /**
+     * TODO: explain what the method does
+     * @param rowIndex
+     */
     public void verifyConclusion(int rowIndex) {
     	System.out.println("Proof.verifyConclusion not implemented!");
         ProofRow row = proofData.getRow(rowIndex);

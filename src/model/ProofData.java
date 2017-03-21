@@ -10,6 +10,11 @@ public class ProofData {
 	List<ProofRow> rows = new ArrayList<ProofRow>();
 	Box topLevelBox = new Box(true);
 	
+	/**
+	 * TODO: explain what the method does
+	 * @param index
+	 * @param br
+	 */
 	public void insertRow(int index, BoxReference br){
 		ProofRow referenceRow = rows.get(index);
 		List<Box> boxes = new ArrayList<Box>( referenceRow.getBoxes() );
@@ -17,7 +22,10 @@ public class ProofData {
 		rows.add(insertionIndex, new ProofRow(boxes));
 	}
 	
-	//add a new row at the end of the proof
+	
+	/**
+	 * add a new row at the end of the proof
+	 */
 	public void addRow(){
 		ProofRow lastRow = getLastRow();
 		List<Box> openBoxes;
@@ -36,7 +44,13 @@ public class ProofData {
 		return rows.get(index);
 	}
 	
-	//returns true if the string can be parsed, false otherwise
+	
+	/**
+	 * returns true if the string can be parsed, false otherwise
+	 * @param index
+	 * @param userInput
+	 * @return
+	 */
 	public boolean updateRow(int index, String userInput){
 		Parser parser = new Parser();
 		ProofRow row = rows.get(index);
@@ -65,9 +79,13 @@ public class ProofData {
 		return true;
 	}
 	
-	//creates a new innermost box in the row given by index
-	//if this is the last row and it's not within an already closed box,
-	//this new box will be open.
+	
+	/**
+	 * creates a new innermost box in the row given by index 
+	 * if this is the last row and it's not within an already closed box, 
+	 * this new box will be open.
+	 * @param index
+	 */
 	public void openBox(int index){
 		ProofRow row = rows.get(index);
 		boolean openBox = index == rows.size()-1;
@@ -80,7 +98,10 @@ public class ProofData {
 		row.getBoxes().add(new Box(openBox));
 	}
 	
-	//closes the innermost open box of the last line
+	
+	/**
+	 * closes the innermost open box of the last line
+	 */
 	public void closeBox(){
 		ProofRow row = getLastRow();
 		if(row != null){
@@ -101,6 +122,9 @@ public class ProofData {
 	
 	//for debugging
 	//TODO: print the rule...
+	/**
+	 * TODO: explain what the method does
+	 */
 	public void printProof(){
 		for(int i = 0; i < rows.size(); i++){
 			ProofRow row = rows.get(i);

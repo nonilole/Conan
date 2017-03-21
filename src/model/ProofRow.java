@@ -56,6 +56,10 @@ public class ProofRow {
     	return boxes;
     }
     
+    /**
+     * TODO: explain what the method does
+     * @return
+     */
     public Box getInnermostOpenBox(){
     	Stack<Box> stack = new Stack<Box>();
     	assert(getBoxes().get(0).isOpen());//top-level box should always be open
@@ -71,7 +75,11 @@ public class ProofRow {
     	throw new RuntimeException("No open box in this row");
     }
     
-    //returns a new list with the open boxes that contains this row
+    
+    /**
+     * returns a new list with the open boxes that contains this row
+     * @return
+     */
     public List<Box> getOpenBoxes(){
     	List<Box> openBoxes = new ArrayList<Box>();
     	boolean noMoreOpenBoxes = false; // for debugging/assertion
