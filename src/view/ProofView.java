@@ -208,6 +208,8 @@ public class ProofView implements ProofListener, View{
 		RowPane bp = new RowPane(isFirstRowInBox,nrOfClosingBoxes);
 		TextField tf1 = new TextField();
 		TextField tf2 = new TextField();
+		tf1.setId("leftTextfield");
+		tf2.setId("rightTextfield");
 		tf1.getStyleClass().add("myText");
 		tf2.getStyleClass().add("myText");
 		tf1.focusedProperty().addListener((observable, oldValue, newValue) -> {
@@ -439,7 +441,8 @@ public class ProofView implements ProofListener, View{
 	 * @param event, the pressed unicode button. 
 	 */
 	public void addSymbol(javafx.event.ActionEvent event){
-		if(lastFocusedTf != null){
+		
+		if(lastFocusedTf != null && lastFocusedTf.getId() == "leftTextfield"){
 			int tmpCaretPosition = caretPosition;
 			String[] parts = event.toString().split("'");
 			lastFocusedTf.setText(lastFocusedTf.getText().substring(0, caretPosition) + parts[1] 
@@ -454,10 +457,10 @@ public class ProofView implements ProofListener, View{
 	 * @param event
 	 */
 	public void addRule(javafx.event.ActionEvent event){
-		if(lastFocusedTf != null){
+		if(lastFocusedTf != null && lastFocusedTf.getId() == "rightTextfield"){
 			int tmpCaretPosition = caretPosition;
 			String[] parts = event.toString().split("'");
-			lastFocusedTf.setText( parts[1] );
+			lastFocusedTf.setText(parts[1]);
 			lastFocusedTf.requestFocus();
 			lastFocusedTf.positionCaret(tmpCaretPosition+1);
 		}

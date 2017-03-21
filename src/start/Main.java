@@ -15,7 +15,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("sketch.fxml"));
-        Scene scene = new Scene(root, 900, 500);
+        Scene scene = new Scene(root, 1200, 600);
         scene.getStylesheets().add("style.css");
         stage.setTitle("Conan");
         stage.setScene(scene);
