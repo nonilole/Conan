@@ -448,6 +448,20 @@ public class ProofView implements ProofListener, View{
 			lastFocusedTf.positionCaret(tmpCaretPosition+1);
 		}
 	}
+	
+	/**
+	 * Adds the rule symbol that has been pressed to the text field for the rule.
+	 * @param event
+	 */
+	public void addRule(javafx.event.ActionEvent event){
+		if(lastFocusedTf != null){
+			int tmpCaretPosition = caretPosition;
+			String[] parts = event.toString().split("'");
+			lastFocusedTf.setText( parts[1] );
+			lastFocusedTf.requestFocus();
+			lastFocusedTf.positionCaret(tmpCaretPosition+1);
+		}
+	}
 
 	public void rowInserted(){}
 }

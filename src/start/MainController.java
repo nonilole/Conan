@@ -146,13 +146,16 @@ public class MainController implements Initializable {
     void openInstructions(ActionEvent event) { }
 
     @FXML
-    void ruleButtonPressed(ActionEvent event) {
-    }
-
-    @FXML
     void symbolButtonPressed(ActionEvent event) {
     	if(currentProof != null) {
     		currentProof.addSymbol(event);
+    	}
+    }
+    
+    @FXML
+    void ruleButtonPressed(ActionEvent event) {
+    	if(currentProof != null) {
+    		currentProof.addRule(event);
     	}
     }
     
