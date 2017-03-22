@@ -51,8 +51,6 @@ public class WelcomeView implements View {
         rules.setOnAction(event -> {
             Preferences prefs = Preferences.userRoot().node("General");
             TabPane helpTab= tab.getTabPane();
-
-            System.out.println("This link is clicked");
                 new HelpView(helpTab);
                 }
         );
