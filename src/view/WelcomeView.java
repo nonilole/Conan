@@ -51,7 +51,7 @@ public class WelcomeView implements View {
         rules.setOnAction(event -> {
             Preferences prefs = Preferences.userRoot().node("General");
             TabPane helpTab= tab.getTabPane();
-                new HelpView(helpTab);
+                new InferenceRuleView(helpTab);
                 }
         );
         this.notAgain = new CheckBox("Do not show again");
