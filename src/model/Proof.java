@@ -11,21 +11,20 @@ public class Proof implements Serializable{
     private Parser parser = new Parser(); //this won't be serialized
     private Formula conclusion;
     //private int curDepth = 0;
-    private ProofData proofData = new ProofData();
-    private boolean openBoxNextAddRow = false; 
+    private Box proofData = new Box(null, true);
+    //private boolean openBoxNextAddRow = false; 
 
     /***
      * Add a new row at the end of the proof.
      */
     public void addRow() {
     	proofData.addRow();
-    	if(openBoxNextAddRow){
-    		proofData.openBox( proofData.size()-1 );
-    		openBoxNextAddRow = false;
-    	}
         for (ProofListener listener : this.listeners) {
             listener.rowAdded();
         }
+        System.out.println("addRow()");
+        proofData.printRows(1, 1);
+        System.out.println("==========================================================");
     }
     
     public void deleteRow(int rowNumber){
@@ -36,6 +35,9 @@ public class Proof implements Serializable{
     	for (ProofListener listener : this.listeners) {
             listener.rowDeleted(rowNumber);
         }
+    	System.out.println("deleteRow("+rowNumber+")");
+    	proofData.printRows(1,1);
+        System.out.println("==========================================================");
     }
     
     public void insertNewRow(int rowNumber, BoxReference br){
@@ -48,6 +50,9 @@ public class Proof implements Serializable{
     	for(ProofListener pl : listeners){
     		pl.rowInserted(rowNumber, br);
     	}
+    	System.out.println("insertNewRow("+rowNumber+", "+br+")");
+    	proofData.printRows(1,1);
+        System.out.println("==========================================================");
     }
     
     //Will you ever update both the formula and rule fields at the same time?
@@ -59,15 +64,15 @@ public class Proof implements Serializable{
      * @param rowNumber
      */
     public void updateFormulaRow(String formula, int rowNumber){
+    	//System.out.println("Proof.updateFormulaRow("+formula+", "+rowNumber+")");
         int rowIndex = rowNumber-1;
-        ProofRow row = proofData.getRow(rowIndex);
-        boolean wellFormed = proofData.updateRow(rowIndex, formula);
+        boolean wellFormed = proofData.updateFormulaRow(rowIndex, formula);
         
         for (ProofListener listener : this.listeners) {
             listener.rowUpdated(wellFormed, rowNumber);
         }
-        verifyConclusion(rowIndex);
-        proofData.printProof();
+        //verifyConclusion(rowIndex);
+        proofData.printRows(1,1);
         System.out.println("==========================================================");
     }
     public void updateRuleRow(String rule, int rowNumber){
@@ -75,10 +80,14 @@ public class Proof implements Serializable{
     }
     //public void saveProof(String filepath){}
     //public void loadProof(String filepath){}
+    
+    //should verify each line in the proof from line start
     public boolean verifyProof(int start){ 
     	System.out.println("Proof.verifyProof not implemented!");
     	return true;
     }
+    
+    //should verify that the row is correct with regards to it's rule
     public boolean verifyRow(int rowNumber){ 
     	System.out.println("Proof.verifyRow not implemented!");
     	return true;
@@ -88,7 +97,7 @@ public class Proof implements Serializable{
     //since at that point, you open a box in a specific row rather than at the end of a proof
     //Instead, at that point, use openBox(int rowNr)
     public void openBox() {
-    	openBoxNextAddRow = true;
+    	proofData.openNewBox();
         for (ProofListener listener : this.listeners) {
             listener.boxOpened();
         }
@@ -96,7 +105,7 @@ public class Proof implements Serializable{
     
     public void openBox(int rowNr){
     	System.out.println("Proof.openBox(int) not implemented!");
-    	//if rowNr is the last line, the new box should be open
+    	//if rowNr refers to the last line, the new box should be open
     	//otherwise closed
     	for (ProofListener listener : this.listeners) {
             listener.boxOpened();
@@ -144,4 +153,19 @@ public class Proof implements Serializable{
     public void registerProofListener(ProofListener listener){
         this.listeners.add(listener);
     }
+    
+    public void printProof(){
+    	proofData.printRows(1,1);
+    	/*for(int i = 0; i < proofData.size(); i++){
+    		System.out.println(i+"."+proofData.getRow(i));
+    	}*/
+    }
+    /*
+    public void printProofRowScope(){
+    	proofData.printProofRowScope();
+    }
+    
+    public void printProofIntervallScope(){
+    	proofData.printProofIntervallScope();
+    }*/
 }
