@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 
-class HelpView implements View {
+class InferenceRuleView implements View {
     //The tab object of this view
     private ViewTab tab;
 
@@ -14,7 +14,7 @@ class HelpView implements View {
      * @param tabPane
      *
      */
-    public HelpView(TabPane tabPane) {
+    public InferenceRuleView(TabPane tabPane) {
     //TODO adjust the image based on screen size
 
             //load the image
