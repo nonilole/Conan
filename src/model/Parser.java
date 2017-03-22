@@ -8,7 +8,12 @@ class Parser{
     BufferedReader br;
     final boolean verbose = false;
 
-    //Should not be called from within Parser since it will overwrite this.br
+    /**
+     * TODO: explain what the method does and what it returns
+     * Should not be called from within Parser since it will overwrite this.br
+     * @param str
+     * @return
+     */
     public Formula parse(String str){
         StringReader strR = new StringReader(str);
         br = new BufferedReader(strR);
@@ -23,6 +28,11 @@ class Parser{
         
     }
 
+    /**
+     * TODO: explain what the method does and what it returns
+     * @return
+     * @throws IOException
+     */
     Formula parseFormula1() throws IOException{
         if(verbose)
             System.out.format("parseFormula1, %c\n",(char)peek());
@@ -41,7 +51,12 @@ class Parser{
         }
     }
 
-    //Formula2, F2   := F3 | F2 ∧ F3 | F2 ∨ F3
+    /**
+     * TODO: explain what the method does and what it returns
+     * Formula2, F2   := F3 | F2 ∧ F3 | F2 ∨ F3
+     * @return
+     * @throws IOException
+     */
     Formula parseFormula2() throws IOException{
         if(verbose)
             System.out.format("parseFormula2, %c\n",(char)peek());
@@ -64,8 +79,13 @@ class Parser{
         return prev;
     }
 
-    //Formula3, F3   := (F) | ∀xF3 | ∃xF3| ¬F3 | Predicate | Term = Term
-    // TODO: last part: Term = Term, not implemented yet
+    /**
+     * TODO: explain what the method does and what it returns
+     * TODO: last part: Term = Term, not implemented yet
+     * Formula3, F3   := (F) | ∀xF3 | ∃xF3| ¬F3 | Predicate | Term = Term
+     * @return
+     * @throws IOException
+     */
     Formula parseFormula3() throws IOException{
         if(verbose)
             System.out.format("parseFormula3, %c\n",(char)peek());
@@ -95,6 +115,11 @@ class Parser{
         }
     }
 
+    /**
+     * TODO: explain what the method does and what it returns
+     * @return
+     * @throws IOException
+     */
     Formula parseQuant() throws IOException{
         if(verbose)
             System.out.format("parseQuant, %c\n",(char)peek());
@@ -141,19 +166,31 @@ class Parser{
         return new Predicate(id, args);
     }
     
-    //Parse a predicate identifier and return it
+    /**
+     * Parse a predicate identifier and return it
+     * @return
+     * @throws IOException
+     */
     String parsePredicateId() throws IOException{
         //Should probably verify that characters are valid.
         return ""+(char)next();
     }
     
-    //Check if given char is allowed as start of predicate
-    //Currently allows: A-Z
+    /**
+     * Check if given char is allowed as start of predicate. 
+     * Currently allows: A-Z
+     * @param c
+     * @return
+     */
     boolean isValidStartOfPredicate(char c){
         return (c >= 'A' && c <= 'Z');
     }
 
-    //Parse a comma separated list of args/terms, like (x,y,z)
+    /**
+     * Parse a comma separated list of args/terms, like (x,y,z)
+     * @return
+     * @throws IOException
+     */
     List<Term> parseArgs() throws IOException{
         if(verbose)
             System.out.format("parseArgs, %c\n",(char)peek());
@@ -176,8 +213,12 @@ class Parser{
         return args;
     }
 
-    //Parse an identifier for an object
-    //Currently only allows single character, a-z
+    /**
+     * Parse an identifier for an object 
+     * Currently only allows single character, a-z
+     * @return
+     * @throws IOException
+     */
     Term parseTerm() throws IOException{
         if( isValidStartOfTerm( (char)peek()) == false){
             throw new ParseException("parseArg, "+(char)next());
@@ -199,8 +240,12 @@ class Parser{
         return c == '∧' || c == '∨' || c == '→';
     }
 
-    //Return next char but doesn't remove it from stream
-    //Removes leading spaces
+    /**
+     * Return next char but doesn't remove it from stream
+     * Removes leading spaces
+     * @return
+     * @throws IOException
+     */
     int peek() throws IOException{
         removeLeadingSpaces();
         br.mark(1);
@@ -209,12 +254,21 @@ class Parser{
         return r;
     }
 
-    //Return next char, also removes leading spaces
+    
+    /**
+     * Return next char, also removes leading spaces
+     * @return
+     * @throws IOException
+     */
     int next() throws IOException{
         removeLeadingSpaces();
         return br.read();
     }
 
+    /**
+     * TODO: explain what the method does
+     * @throws IOException
+     */
     void removeLeadingSpaces() throws IOException{
         while(true){
             br.mark(1);
@@ -227,9 +281,13 @@ class Parser{
         }
     }
     
-    //Read input stream and return string from inside parenthesis.
-    //if next characters in stream are: (123)456
-    //return "123", next chars in stream should now be: 456
+    /**
+     * Read input stream and return string from inside parenthesis. 
+     * if next characters in stream are: (123)456 
+     * return "123", next chars in stream should now be: 456
+     * @return
+     * @throws IOException
+     */
     String getParenthesizedString() throws IOException{
         if((char)next() != '('){
             throw new ParseException("getParenthesizedString, "+(char)next());
@@ -259,7 +317,10 @@ class Parser{
         return strB.toString();
     }
 
-    //print the remaining characters in the stream
+    /**
+     * print the remaining characters in the stream
+     * @throws IOException
+     */
     void printStream() throws IOException{
         while(true){
             int next = next();
@@ -269,14 +330,17 @@ class Parser{
         System.out.print("\n");
     }
 
-    //remove next character in stream and make sure it's the expected one
+    /**
+     * remove next character in stream and make sure it's the expected one
+     * @param c
+     * @throws IOException
+     */
     void ignore(char c) throws IOException{
     	char next = (char)next();
         if( next != c){
             throw new ParseException("ignore; expected: "+c+", got: "+next);
         }
     }
-
 }
 
 class ParseException extends RuntimeException{

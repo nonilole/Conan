@@ -1,33 +1,37 @@
 package model;
 
 import model.formulas.Formula;
+import model.rules.ConjunctionElimRule;
+import model.rules.ConjunctionIntroRule;
+import model.rules.ImplicationIntroRule;
+import model.rules.Rule;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Proof implements Serializable{
     private ArrayList<ProofListener> listeners = new ArrayList<ProofListener>();
-    //private ArrayList<ProofRow> rows = new ArrayList<ProofRow>();
     private Parser parser = new Parser(); //this won't be serialized
     private Formula conclusion;
-    //private int curDepth = 0;
-    private ProofData proofData = new ProofData();
-    private boolean openBoxNextAddRow = false; 
+    private Box proofData = new Box(null, true);
 
     /***
      * Add a new row at the end of the proof.
      */
     public void addRow() {
     	proofData.addRow();
-    	if(openBoxNextAddRow){
-    		proofData.openBox( proofData.size()-1 );
-    		openBoxNextAddRow = false;
-    	}
         for (ProofListener listener : this.listeners) {
             listener.rowAdded();
         }
+        System.out.println("addRow()");
+        proofData.printRows(1, 1);
+        System.out.println("==========================================================");
     }
     
+    /**
+     * delete the row at index rowNumber-1
+     * @param rowNumber
+     */
     public void deleteRow(int rowNumber){
     	if(rowNumber < 1 || rowNumber > proofData.size()){
     		throw new IllegalArgumentException();
@@ -36,8 +40,16 @@ public class Proof implements Serializable{
     	for (ProofListener listener : this.listeners) {
             listener.rowDeleted(rowNumber);
         }
+    	System.out.println("deleteRow("+rowNumber+")");
+    	proofData.printRows(1,1);
+        System.out.println("==========================================================");
     }
     
+    /**
+     * Inserts a new row into the same box as the referenced row
+     * @param rowNumber: the number of the row used as reference
+     * @param br: Indicates whether the new row should be added before or after the reference row
+     */
     public void insertNewRow(int rowNumber, BoxReference br){
     	if(rowNumber < 1 || rowNumber > proofData.size()+1){
     		System.out.println("Proof.insertNewRow: incorrect rowNumber");
@@ -48,6 +60,9 @@ public class Proof implements Serializable{
     	for(ProofListener pl : listeners){
     		pl.rowInserted(rowNumber, br);
     	}
+    	System.out.println("insertNewRow("+rowNumber+", "+br+")");
+    	proofData.printRows(1,1);
+        System.out.println("==========================================================");
     }
     
     //Will you ever update both the formula and rule fields at the same time?
@@ -58,37 +73,78 @@ public class Proof implements Serializable{
      * @param formula
      * @param rowNumber
      */
-    public void updateFormulaRow(String formula, int rowNumber){
+    public void updateFormulaRow(String strFormula, int rowNumber){
+    	//System.out.println("Proof.updateFormulaRow("+formula+", "+rowNumber+")");
         int rowIndex = rowNumber-1;
-        ProofRow row = proofData.getRow(rowIndex);
-        boolean wellFormed = proofData.updateRow(rowIndex, formula);
+        ProofRow toBeUpdated = proofData.getRow(rowIndex);
+        Formula parsedFormula = null;
+        boolean wellFormed;
+        try{
+        	parsedFormula = parser.parse(strFormula);
+        	wellFormed = true;
+        }
+        catch(ParseException e){
+        	wellFormed = false;
+        }
+        toBeUpdated.setFormula(parsedFormula);
+        toBeUpdated.setUserInput(strFormula);
+        toBeUpdated.setWellformed(wellFormed);
         
         for (ProofListener listener : this.listeners) {
             listener.rowUpdated(wellFormed, rowNumber);
         }
         verifyConclusion(rowIndex);
-        proofData.printProof();
+        proofData.printRows(1,1);
         System.out.println("==========================================================");
     }
+    
     public void updateRuleRow(String rule, int rowNumber){
     	System.out.println("Proof.updateRuleRow not implemented!");
     }
-    //public void saveProof(String filepath){}
-    //public void loadProof(String filepath){}
-    public boolean verifyProof(int start){ 
-    	System.out.println("Proof.verifyProof not implemented!");
-    	return true;
+    
+    //should verify each line in the proof from line startIndex
+    public boolean verifyProof(int startIndex){ 
+    	assert(startIndex < proofData.size()) : "Proof.verifyProof: index out of bounds";
+    	boolean returnValue = true;
+    	for(int i = startIndex; i < proofData.size(); i++){
+    		if(verifyRow(i) == false) returnValue = false;
+    	}
+    	return returnValue;
     }
-    public boolean verifyRow(int rowNumber){ 
-    	System.out.println("Proof.verifyRow not implemented!");
-    	return true;
+    
+    //should verify that the row is correct with regards to it's rule and
+    //inform listeners of the status
+    public boolean verifyRow(int rowIndex){
+    	assert(rowIndex < proofData.size()) : "Proof.verifyRow: index out of bounds";
+    	ProofRow row = proofData.getRow(rowIndex);
+    	Rule rule = row.getRule();
+    	
+    	if(rule.hasCompleteInfo() == false ) return false;
+    	boolean isVerified;
+    	
+    	//call the appropriate verification function
+    	if(rule instanceof ConjunctionElimRule){
+    		System.out.println("ConjunctionElimRule verification not added yet!");
+    		isVerified = false;
+    	}
+    	else if(rule instanceof ConjunctionIntroRule){
+    		isVerified = Verification.verifyAndIntro(proofData, rowIndex);
+    	}
+    	else if(rule instanceof ImplicationIntroRule){
+    		isVerified = Verification.verifyImplicationIntro(proofData, rowIndex);
+    	}
+    	else{
+    		System.out.println(rule+" rule not implemented yet, have you addded it to Proof.verifyRow ?");
+    		isVerified = false;
+    	}
+    	return isVerified;
     }
     
     //This shouldn't be used when a proper UI for opening boxes has been implemented
     //since at that point, you open a box in a specific row rather than at the end of a proof
     //Instead, at that point, use openBox(int rowNr)
     public void openBox() {
-    	openBoxNextAddRow = true;
+    	proofData.openNewBox();
         for (ProofListener listener : this.listeners) {
             listener.boxOpened();
         }
@@ -96,7 +152,7 @@ public class Proof implements Serializable{
     
     public void openBox(int rowNr){
     	System.out.println("Proof.openBox(int) not implemented!");
-    	//if rowNr is the last line, the new box should be open
+    	//if rowNr refers to the last line, the new box should be open
     	//otherwise closed
     	for (ProofListener listener : this.listeners) {
             listener.boxOpened();
@@ -110,6 +166,10 @@ public class Proof implements Serializable{
         }
     }
     
+    /**
+     * Updates the conclusion used as the 'goal' of the proof
+     * @param conclusion
+     */
     public void updateConclusion(String conclusion) {
         try {
             this.conclusion = parser.parse(conclusion);
@@ -122,8 +182,12 @@ public class Proof implements Serializable{
         }
     }
     
+    /**
+     * Verifies if the row matches the conclusion
+     * @param rowIndex
+     */
+    //TODO: check that the row has been verified, not just matches conclusion
     public void verifyConclusion(int rowIndex) {
-    	System.out.println("Proof.verifyConclusion not implemented!");
         ProofRow row = proofData.getRow(rowIndex);
         /*if (false) {
             for (ProofListener listener : this.listeners) {
@@ -141,7 +205,29 @@ public class Proof implements Serializable{
         }
     }
     
+    /**
+     * Needs to be called after a proof has been loaded/deserialized
+     */
+    public void load(){
+    	parser = new Parser();
+    }
+    
     public void registerProofListener(ProofListener listener){
         this.listeners.add(listener);
     }
+    
+    public void printProof(){
+    	proofData.printRows(1,1);
+    	/*for(int i = 0; i < proofData.size(); i++){
+    		System.out.println(i+"."+proofData.getRow(i));
+    	}*/
+    }
+    /*
+    public void printProofRowScope(){
+    	proofData.printProofRowScope();
+    }
+    
+    public void printProofIntervallScope(){
+    	proofData.printProofIntervallScope();
+    }*/
 }

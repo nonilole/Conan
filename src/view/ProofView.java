@@ -176,7 +176,7 @@ public class ProofView implements ProofListener, View{
 		proof.addRow();
 	}
 	public void rowDeleteRow(){
-		//proof.deleteRow();
+		//needs rowNr
 	}
 	public void insertNewRow(int rowNo, BoxReference br){
 		proof.insertNewRow(rowNo, br);
@@ -415,13 +415,15 @@ public class ProofView implements ProofListener, View{
 		Node parentNode = box.getParent();
 		assert( box.getChildren().isEmpty() );
 		if(parentNode instanceof VBox ){
-			((VBox) parentNode).getChildren().remove(box);
+			VBox parentBox = (VBox) parentNode;
+			parentBox.getChildren().remove(box);
 			if(box.getStyleClass().toString().equals("openBox")){
 				VBox box2 = curBoxDepth.pop();
 				assert(box == box2);
 			}
-			removeRecursivelyIfEmpty((VBox) parentNode);
-
+			if( parentBox.getChildren().isEmpty() ){
+				removeRecursivelyIfEmpty(parentBox);
+			}
 		}
 	}
 
