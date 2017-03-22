@@ -26,7 +26,6 @@ public class Box implements ProofEntry{
 		boxToInsertInto.incSize();
 	}
 	
-	//TODO: messy code, can be shortened a lot
 	public void addRow(){
 		//System.out.println("Box.addRow(");
 		if(entries.isEmpty()) {
@@ -39,18 +38,12 @@ public class Box implements ProofEntry{
 			Box box = (Box) lastEntry;
 			if(box.isOpen()){
 				box.addRow();
-			}
-			else{
-				entries.add(new ProofRow(this));
-				incSize();
+				return;
 			}
 		}
-		else{
-			entries.add(new ProofRow(this));
-			incSize();
-		}
+		entries.add(new ProofRow(this));
+		incSize();
 	}
-	
 	
 	public ProofRow getRow(int steps){
 		//System.out.println("Box.getRow("+steps+")");
@@ -82,12 +75,12 @@ public class Box implements ProofEntry{
 		parent.decSize();
 	}
 	
-	public boolean updateFormulaRow(int index, String userFormulaInput){
+	/*public boolean updateFormulaRow(int index, String userFormulaInput){
 		System.out.println("Box.updateRow("+index+", "+userFormulaInput+")");
 		ProofRow row = getRow(index);
 		row.setUserInput(userFormulaInput);
 		return false;
-	}
+	}*/
 	
 	public void openNewBox(){
 		ProofEntry lastEntry = entries.get(entries.size()-1);

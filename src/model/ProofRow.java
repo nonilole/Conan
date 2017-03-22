@@ -10,15 +10,12 @@ import model.rules.Rule;
  * ProofRow is the internal representation of a row for a proof.
  */
 public class ProofRow implements ProofEntry{
-	//private List<Box> boxes; //First box in list should be the top-level box, last box should be the innermost one
     private Formula formula;
     private String userInput = "";
     private Rule rule;
     private Box parent;
     private boolean isWellFormed = true;
-    //private boolean ruleIsWellFormed; //user should ot type in rules, no need to track if it's wellformed?
     private boolean isVerified = false;;
-    //private boolean matchesConclusion; // th row doesn't need to know this
     
     public ProofRow(Box parent){
     	this.parent = parent;

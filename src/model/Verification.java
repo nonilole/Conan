@@ -10,8 +10,7 @@ class Verification {
 	//Author
 	static boolean verifyRuleName(ProofData data, int rowToVerify ){
 		// Stuff to check:
-		// is the rule object of the correct type?
-		// does the rule object contain all the needed info? ( rule.hasCompleteInfo() ) //should be checked elsewhere?
+		// is the rule object of the correct type? Probably just check with an assertion
 		// are the references in the rule object in scope of rowIndex?
 		// are all the referenced rows verified?
 			// ProofData.isInScope should check both scope and if the data is verified
@@ -23,7 +22,7 @@ class Verification {
 	//Not done/correct! Some of this code will laso be moved elsewhere
 	static boolean verifyAndIntro(Box data, int rowIndex){
 		try{
-			// is the rule object of the correct type? //maybe just use asserion here instead
+			// is the rule object of the correct type? //maybe just use assertion here instead
 			ProofRow rowToVerify = data.getRow( rowIndex );
 			Rule uncastRule = rowToVerify.getRule();
 			if( uncastRule instanceof ConjunctionIntroRule == false){
@@ -32,14 +31,12 @@ class Verification {
 			}
 			ConjunctionIntroRule rule = (ConjunctionIntroRule) uncastRule;
 			
-			// does the rule contain all the needed info? ( rule.hasCompleteInfo() )
-			if( rule.hasCompleteInfo() == false ) return false;
-			
 			// are the references in the rule object in scope of rowIndex?
 			// are all the referenced rows verified?
 			// ProofData.isInScope should check scope and if the data is verified
 			if( data.isInScopeOf(rule.getPremise1(), rowIndex) == false ||
-				data.isInScopeOf(rule.getPremise2(), rowIndex) == false ){
+				data.isInScopeOf(rule.getPremise2(), rowIndex) == false )
+			{
 				return false;
 			}
 			
@@ -73,9 +70,6 @@ class Verification {
 				return false;
 			}
 			ImplicationIntroRule rule = (ImplicationIntroRule) uncastRule;
-			
-			// does the rule contain all the needed info? ( rule.hasCompleteInfo() )
-			if( rule.hasCompleteInfo() == false ) return false;
 			
 			// are the references in the rule object in scope of rowIndex?
 			// are all the referenced rows verified?

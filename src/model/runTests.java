@@ -11,7 +11,7 @@ public class runTests {
 		//new RandomFormulaGenerator().printFormulas(20, 2);
 		//VerificationTest.isInScopeRowTest();
 		//VerificationTest.isInScopeIntervallTest();
-		VerificationTest.boxTest();
+		//VerificationTest.boxTest();
 		System.out.println("Done.");
 	}
 
