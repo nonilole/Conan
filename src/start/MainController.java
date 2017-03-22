@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import view.InstructionsView;
 import view.ProofView;
 import view.View;
 import view.ViewTab;
@@ -202,6 +203,11 @@ public class MainController implements Initializable {
     	//open new tab to display openedProof
     }
 
+    @FXML
+    void showUserInstructions(ActionEvent event) {
+    	new InstructionsView(tabPane);
+    }
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Preferences prefs = Preferences.userRoot().node("General"); // Inställningar i noden "General"
