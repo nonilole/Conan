@@ -1,6 +1,6 @@
 package model.rules;
 
-public class ConjunctionIntroRule extends Rule{
+public class ConjunctionIntroRule implements Rule{
 
 	//indexes of the premises
 	private Integer premise1;

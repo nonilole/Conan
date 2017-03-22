@@ -1,6 +1,6 @@
 package model.rules;
 
-public class ImplicationIntroRule extends Rule {
+public class ImplicationIntroRule implements Rule {
 
 	private Intervall premiseIntervall;
 
@@ -24,6 +24,11 @@ public class ImplicationIntroRule extends Rule {
 	@Override
 	public boolean hasCompleteInfo() {
 		return premiseIntervall == null;
+	}
+	
+	@Override
+	public String toString(){
+		return String.format("→-I (%s)", premiseIntervall);
 	}
 
 }

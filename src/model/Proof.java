@@ -4,6 +4,7 @@ import model.formulas.Formula;
 import model.rules.ConjunctionElimRule;
 import model.rules.ConjunctionIntroRule;
 import model.rules.ImplicationIntroRule;
+import model.rules.Premise;
 import model.rules.Rule;
 
 import java.io.Serializable;
@@ -108,12 +109,13 @@ public class Proof implements Serializable{
     	boolean returnValue = true;
     	for(int i = startIndex; i < proofData.size(); i++){
     		if(verifyRow(i) == false) returnValue = false;
+    		//TODO: inform listeners about each row
     	}
     	return returnValue;
     }
     
     //should verify that the row is correct with regards to it's rule and
-    //inform listeners of the status
+    //update the row object with this info
     public boolean verifyRow(int rowIndex){
     	assert(rowIndex < proofData.size()) : "Proof.verifyRow: index out of bounds";
     	ProofRow row = proofData.getRow(rowIndex);
@@ -123,8 +125,12 @@ public class Proof implements Serializable{
     	boolean isVerified;
     	
     	//call the appropriate verification function
-    	if(rule instanceof ConjunctionElimRule){
+    	if(rule instanceof Premise){
+    		isVerified = true; 
+    	}
+    	else if(rule instanceof ConjunctionElimRule){
     		System.out.println("ConjunctionElimRule verification not added yet!");
+    		//TODO: implement needed function
     		isVerified = false;
     	}
     	else if(rule instanceof ConjunctionIntroRule){
@@ -134,9 +140,10 @@ public class Proof implements Serializable{
     		isVerified = Verification.verifyImplicationIntro(proofData, rowIndex);
     	}
     	else{
-    		System.out.println(rule+" rule not implemented yet, have you addded it to Proof.verifyRow ?");
+    		System.out.println(rule+" rule not implemented yet, have you added it to Proof.verifyRow ?");
     		isVerified = false;
     	}
+    	row.setVerified(isVerified);
     	return isVerified;
     }
     

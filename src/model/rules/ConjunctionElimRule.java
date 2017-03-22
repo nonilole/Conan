@@ -1,6 +1,6 @@
 package model.rules;
 
-public class ConjunctionElimRule extends Rule{
+public class ConjunctionElimRule implements Rule{
 	private int type;
 	private Integer premise;
 	

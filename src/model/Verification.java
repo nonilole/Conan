@@ -14,7 +14,7 @@ class Verification {
 		// are the references in the rule object in scope of rowIndex?
 		// are all the referenced rows verified?
 			// ProofData.isInScope should check both scope and if the data is verified
-		// do we have the needed premises/references to make the deduction?
+		// do we have the needed references to make the deduction?
 	}
 	*/
 	
@@ -22,14 +22,10 @@ class Verification {
 	//Not done/correct! Some of this code will laso be moved elsewhere
 	static boolean verifyAndIntro(Box data, int rowIndex){
 		try{
-			// is the rule object of the correct type? //maybe just use assertion here instead
+			// is the rule object of the correct type?
 			ProofRow rowToVerify = data.getRow( rowIndex );
-			Rule uncastRule = rowToVerify.getRule();
-			if( uncastRule instanceof ConjunctionIntroRule == false){
-				System.out.println("verifyAndIntro: wrong rule");
-				return false;
-			}
-			ConjunctionIntroRule rule = (ConjunctionIntroRule) uncastRule;
+			assert(rowToVerify.getRule() instanceof ConjunctionIntroRule):"Incorrect usage of function: Verification.verifyAndIntro";
+			ConjunctionIntroRule rule = (ConjunctionIntroRule) rowToVerify.getRule();
 			
 			// are the references in the rule object in scope of rowIndex?
 			// are all the referenced rows verified?
