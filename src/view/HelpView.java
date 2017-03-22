@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 
 class HelpView implements View {
     //The tab object of this view
-    private Tab tab;
+    private ViewTab tab;
 
     /**
      * Adds the content for showing the inference rules to the TabPane in the proof
@@ -29,8 +29,7 @@ class HelpView implements View {
 
             //putting the image on a scrollpane
             ScrollPane sp=new ScrollPane();
-            Tab tab = new Tab();
-            tab.setText("Inference Rules");
+            tab = new ViewTab("Inference Rules",this);
             sp.setContent(iv1);
             tabPane.getTabs().add(tab);
             tab.setContent(sp);
@@ -39,7 +38,7 @@ class HelpView implements View {
     }
 
     @Override
-    public Tab getTab() {
+    public ViewTab getTab() {
         return tab;
     }
 }
