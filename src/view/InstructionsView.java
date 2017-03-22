@@ -1,8 +1,13 @@
 package view;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -10,24 +15,98 @@ import javafx.scene.layout.RowConstraints;
 
 public class InstructionsView extends Tab {
     
-	private GridPane gridPane;
-    private ScrollPane scrollPane;
-    AnchorPane ap;
+    private TabPane tabPane;
 	
 	private final static String tabName = "Instructions";
-    private Label heading;
-    private Label instructions;
-    Button close;
-
+    
+    public InstructionsView(TabPane tabPane) {
+    	super(tabName);
+    	this.tabPane = tabPane;
+    	this.setContent(constructContent());     
+        addAsTab();
+        open();
+    }
+    
+    /**
+     * Constructs the contents of the view.
+     * @return a Node that is aggregated by all the contents of the view.
+     */
+    private Node constructContent() {
+    	/*
+    	 * The view is composed as follows:
+    	 * an anchor pane
+    	 * 	└── a scroll pane
+    	 * 		 └── a grid pane
+    	 * 				├── A heading
+    	 * 				├── User instructions
+    	 *	 			└── A close button
+    	 */
+    	return constructAnchorPane();
+    }
+    
+    /**
+     * Constructs the complete anchor pane of this view.
+     */
+    private AnchorPane constructAnchorPane() {
+		Node anchorChild = constructScrollPane(); 
+		AnchorPane anchorPane = new AnchorPane(anchorChild);
+		setAnchorBounds(anchorChild);
+		return anchorPane;
+    }
+    
+    /**
+     * Sets the bounds for the contents of the anchor pane.
+     * @param contents
+     */
+    private void setAnchorBounds(Node contents) {
+    	AnchorPane.setTopAnchor(contents, 0.0);
+		AnchorPane.setRightAnchor(contents, 0.0);
+		AnchorPane.setBottomAnchor(contents, 0.0);
+		AnchorPane.setLeftAnchor(contents, 0.0);
+	}
+    
+    /**
+     * Enables scrolling in the view.
+     */
+    private ScrollPane constructScrollPane() {
+    	GridPane gridPane = constructGridPane();
+    	ScrollPane scrollPane = new ScrollPane(gridPane);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        return scrollPane;
+    }
+    
     /**
      * Sets the layout of the component
      */
-    private void setLayout() {
-        gridPane = new GridPane();
+    private GridPane constructGridPane() {
+        GridPane gridPane = new GridPane();
         gridPane.setVgap(20.0);
         gridPane.setPadding(new Insets(20.0, 20.0, 20.0, 20.0));
         
-        RowConstraints rowC1 = new RowConstraints();
+        setRowConstraints(gridPane);
+        
+        Label heading = constructHeading();
+        Label instructions = constructInstructions();
+        Button closeButton = constructCloseButton();
+        
+        addChildren(gridPane, heading, instructions, closeButton);
+        setAlignments(heading, instructions, closeButton);
+        
+        return gridPane;
+	}
+    
+    /**
+     * Sets row constraints for the provided grid pane.
+     * @param gridPane The grid pane to set row constraints for.
+     */
+    private void setRowConstraints(GridPane gridPane) {
+    	/* TODO These were copied from the Welcome view.
+    	 * What do their values represent?
+    	 * How were their values determined?
+    	 */    	
+    	
+    	RowConstraints rowC1 = new RowConstraints();
         RowConstraints rowC2 = new RowConstraints();
         RowConstraints rowC3 = new RowConstraints();
         RowConstraints rowC4 = new RowConstraints();
@@ -41,91 +120,91 @@ public class InstructionsView extends Tab {
         gridPane.getRowConstraints().addAll(rowC1, rowC2, rowC3, rowC4, rowC5);
 	}
     
-    /**
-     * Enables scrolling in the view.
-     */
-    private void makeScrollable() {
-    	scrollPane = new ScrollPane(gridPane);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+    private void addChildren(GridPane gridPane, Node heading, Node instructions, Node closeButton) {
+		/* TODO the column and row indicies were copied from the Welcome view.
+		 * Why are row indicies increment in twos?
+		 */
+    	gridPane.add(heading, 0, 0);
+		gridPane.add(instructions, 0, 2);
+		gridPane.add(closeButton, 0, 4);
     }
     
     /**
-     * Anchors the instruction view to its content.
+     * Sets the alignments for the children of the grid pane
+     * @param heading The heading child.
+     * @param instructions The instructions child.
+     * @param closeButton The closeButton child.
      */
-    private void anchor() {
-    	 ap = new AnchorPane(scrollPane);
-         AnchorPane.setTopAnchor(scrollPane, 0.0);
-         AnchorPane.setRightAnchor(scrollPane, 0.0);
-         AnchorPane.setBottomAnchor(scrollPane, 0.0);
-         AnchorPane.setLeftAnchor(scrollPane, 0.0);
-    }
+    private void setAlignments(Node heading, Node instructions, Node closeButton) {
+    	GridPane.setHalignment(heading, HPos.CENTER);
+    	GridPane.setValignment(heading, VPos.CENTER);
+    	GridPane.setHalignment(closeButton, HPos.RIGHT);
+	}
+
     
     /**
      * Constructs the view heading.
      */
-    private void setupHeading() {
+    private Label constructHeading() {
     	final String text = "How to use Conan";
-    	heading = new Label(text);
+    	Label heading = new Label(text);
     	heading.getStyleClass().add("myTitle");
-    	gridPane.add(heading, 0, 0);
+    	return heading;
     }
     
     /**
      * Constructs the user instructions.
      */
-    private void setupInstructions() {
-    	final String body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ante est, placerat quis ultricies sed, varius nec ante. Nullam interdum eu tortor quis faucibus. Duis accumsan purus ac diam porta, eget semper arcu pulvinar. Sed et ornare ligula. Morbi sollicitudin pretium eros, vitae feugiat ante tincidunt vel. Cras aliquam lobortis neque, non rutrum orci volutpat et. Nam at tincidunt mauris. Phasellus lobortis lorem dolor, sit amet tempus nulla pellentesque nec. Aenean a venenatis lectus.";
-    	instructions = new Label(body);
+    private Label constructInstructions() {
+    	Label instructions = new Label(loadInstrctions());
         instructions.getStyleClass().add("myText");
         instructions.setWrapText(true);
-        gridPane.add(instructions, 0, 2);
+        return instructions;
 	}
     
-    private void setupCloseButton(){
-    	close = new Button("Close");
+    /**
+     * Returns the contents of the user instructions file.
+     * @return The contents of resources/userInstructions.txt
+     */
+    private String loadInstrctions() {
+    	StringBuilder filedata = new StringBuilder();
+    	try{
+	        Scanner scr = new Scanner(new File("resources/userInstructions.txt"));
+	        while(scr.hasNext()){
+	        	filedata.append(scr.nextLine() + System.lineSeparator());
+	        }
+	        scr.close();
+	    } catch(FileNotFoundException e){
+	    	System.out.println("User instructions could not be located.");
+	        System.out.println(e);
+	    }
+    	return filedata.toString();
+    }
+    
+    /**
+     * Constructs a button for closing the view.
+     * @return A button that when invoked removes this tab from its tab pane.
+     */
+    private Button constructCloseButton() {
+    	Button close = new Button("Close");
         close.setOnAction(event -> {
             TabPane tabPane = this.getTabPane();
             tabPane.getTabs().remove(this);
         });
-        gridPane.add(close, 0, 4);
+        return close;
     }
     
     /**
-     * Handles the alignment of components.
+     * Adds this view to its affiliated tab pane.
      */
-    private void alignContents() {
-    	GridPane.setHalignment(heading, HPos.CENTER);
-    	GridPane.setValignment(heading, VPos.CENTER);
-    	GridPane.setHalignment(close, HPos.RIGHT);
-	}
-    
-    /**
-     * Adds this view to the provided 
-     * @param tabPane
-     */
-    private void addAsTab(TabPane tabPane) {
+    private void addAsTab() {
     	tabPane.getTabs().add(this);
     }
     
-    private void open(TabPane tabPane) {
+    /**
+     * Makes this view the selected tab in its affiliated tab pane.
+     */
+    private void open() {
         tabPane.getSelectionModel().select(this);
     }
-    
-    public InstructionsView(TabPane tabPane) {
-    	super(tabName);
-        setLayout();
-        makeScrollable();
-        anchor();
-        setupHeading();
-        setupInstructions();
-        setupCloseButton();
-        alignContents();
-        
-        this.setContent(ap);
-        
-        addAsTab(tabPane);
-        open(tabPane);
-    }
 }
-
