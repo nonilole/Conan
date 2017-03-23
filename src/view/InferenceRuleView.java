@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 
-class InferenceRuleView implements View {
+public class InferenceRuleView implements View {
     //The tab object of this view
     private ViewTab tab;
 
