@@ -13,7 +13,7 @@ import view.ProofView;
 import view.View;
 import view.ViewTab;
 import view.WelcomeView;
-
+import view.InferenceRuleView;
 import javafx.event.ActionEvent;
 
 import java.io.File;
@@ -123,6 +123,10 @@ public class MainController implements Initializable {
         new WelcomeView(tabPane);
     }
 
+    @FXML
+    void showInferenceRules(ActionEvent event) {
+    new InferenceRuleView(tabPane);
+    }
 
     @FXML
     void openInstructions(ActionEvent event) { }
