@@ -212,6 +212,8 @@ public class ProofView implements ProofListener, View{
 		tf2.setId("rightTextfield");
 		tf1.getStyleClass().add("myText");
 		tf2.getStyleClass().add("myText");
+		tf1.setMaxWidth(700);
+		tf2.setPrefWidth(300);
 		tf1.focusedProperty().addListener((observable, oldValue, newValue) -> {
 			lastFocusedTf = tf1;
 			caretPosition = tf1.getCaretPosition();
@@ -220,7 +222,6 @@ public class ProofView implements ProofListener, View{
 			lastFocusedTf = tf2;
 			caretPosition = tf2.getCaretPosition();
 		});
-
 		bp.setCenter(tf1);
 		bp.setRight(tf2);
 		bp.setCache(true);
