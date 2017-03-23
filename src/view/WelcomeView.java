@@ -47,13 +47,6 @@ public class WelcomeView implements View {
 
         Hyperlink help = new Hyperlink("Help me!");
 
-        Hyperlink rules = new Hyperlink("Rules!");
-        rules.setOnAction(event -> {
-            Preferences prefs = Preferences.userRoot().node("General");
-            TabPane helpTab= tab.getTabPane();
-                new InferenceRuleView(helpTab);
-                }
-        );
         this.notAgain = new CheckBox("Do not show again");
         Button butNext = new Button("Continue");
         butNext.setOnAction(event -> {
@@ -69,7 +62,6 @@ public class WelcomeView implements View {
         gridPane.add(title, 0, 0);
         gridPane.add(help, 0, 1);
 
-        gridPane.add(rules, 0, 1);
         gridPane.add(welcomeText, 0, 2);
         gridPane.add(premisesAndConclusion, 0, 3);
         gridPane.add(this.notAgain, 0, 4);
@@ -78,7 +70,6 @@ public class WelcomeView implements View {
         gridPane.setValignment(title, VPos.CENTER);
         gridPane.setHalignment(help, HPos.CENTER);
 
-        gridPane.setHalignment(rules, HPos.LEFT);
         gridPane.setHalignment(premisesAndConclusion, HPos.CENTER);
         gridPane.setValignment(premisesAndConclusion, VPos.CENTER);
         gridPane.setHalignment(notAgain, HPos.LEFT);
