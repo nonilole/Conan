@@ -8,10 +8,10 @@ public class ConjunctionIntroRule implements Rule{
 	
 	public ConjunctionIntroRule(){ super(); }
 	
-	public ConjunctionIntroRule(int p1, int p2){
+	public ConjunctionIntroRule(int premise1Index, int premise2Index){
 		super();
-		premise1 = p1;
-		premise2 = p2;
+		premise1 = premise1Index;
+		premise2 = premise2Index;
 	}
 	
 	@Override

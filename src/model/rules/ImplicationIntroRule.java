@@ -8,9 +8,9 @@ public class ImplicationIntroRule implements Rule {
 		super();
 	}
 	
-	public ImplicationIntroRule(Intervall intervall){
+	public ImplicationIntroRule(Intervall indexIntervall){
 		super();
-		premiseIntervall = intervall;
+		premiseIntervall = indexIntervall;
 	}
 	
 	public Intervall getPremiseIntervall() {

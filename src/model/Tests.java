@@ -30,7 +30,7 @@ public class Tests {
 	public static void verificationTest(){
 		Proof proof = new Proof();
 		//ConjunctionIntroRule test
-		/*proof.addRow();//1
+		proof.addRow();//1
 		proof.addRow();//2
 		proof.addRow();//3
 		proof.updateFormulaRow("A", 1);
@@ -38,9 +38,10 @@ public class Tests {
 		proof.updateFormulaRow("B", 2);
 		proof.addRule(2, new Premise());
 		proof.updateFormulaRow("A ∧ B", 3);
-		proof.addRule(3, new ConjunctionIntroRule(1,2));*/
+		proof.addRule(3, new ConjunctionIntroRule(1,2));
 		
 		//ImplicationIntroRule test
+		/*
 		proof.addRow();//1
 		proof.openBox();
 		proof.addRow();//2
@@ -56,7 +57,7 @@ public class Tests {
 		proof.addRule(3, new Premise());
 		proof.updateFormulaRow("A → B", 4);
 		proof.addRule(4, new ImplicationIntroRule(new Intervall(1,2)));
-		
+		*/
 		proof.printProof(true);
 	}
 	

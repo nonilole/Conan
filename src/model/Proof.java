@@ -31,6 +31,8 @@ public class Proof implements Serializable{
     
     /**
      * delete the row at index rowNumber-1
+     * TODO: update indexes of rule objects in rows below?
+     * TODO: verify rows below since they now might not be correct anymore
      * @param rowNumber
      */
     public void deleteRow(int rowNumber){
@@ -48,6 +50,8 @@ public class Proof implements Serializable{
     
     /**
      * Inserts a new row into the same box as the referenced row
+     * TODO: update indexes of rule objects in rows below?
+     * TODO: verify rows below since they now might not be correct anymore
      * @param rowNumber: the number of the row used as reference
      * @param br: Indicates whether the new row should be added before or after the reference row
      */
@@ -95,7 +99,7 @@ public class Proof implements Serializable{
             listener.rowUpdated(wellFormed, rowNumber);
         }
         verifyConclusion(rowIndex);
-        verifyRow(rowIndex); //should use verifyProof later probably
+        verifyRow(rowIndex); //should use verifyProof later probably, to verify rows lower in the proof aswell
         proofData.printRows(1,1);
         System.out.println("==========================================================");
     }
@@ -104,7 +108,7 @@ public class Proof implements Serializable{
     	System.out.println("Proof.updateRuleRow not implemented!");
     }
     
-    //For testing
+    //Adds a rule object to the given row
     public void addRule(int rowNr, Rule rule){
     	proofData.getRow(rowNr-1).setRule(rule);
     	verifyRow(rowNr-1); //should use verifyProof later probably
@@ -141,7 +145,7 @@ public class Proof implements Serializable{
     		isVerified = false;
     	}
     	else if(rule instanceof ConjunctionIntroRule){
-    		isVerified = Verification.verifyAndIntro(proofData, rowIndex);
+    		isVerified = Verification.verifyConjunctionIntro(proofData, rowIndex);
     	}
     	else if(rule instanceof ImplicationIntroRule){
     		isVerified = Verification.verifyImplicationIntro(proofData, rowIndex);
@@ -199,7 +203,7 @@ public class Proof implements Serializable{
     
     /**
      * Verifies if the row matches the conclusion
-     * @param rowIndex
+     * @param rowIndex: index of the row to verify
      */
     //TODO: check that the row has been verified, not just matches conclusion
     public void verifyConclusion(int rowIndex) {
