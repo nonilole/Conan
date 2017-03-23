@@ -30,15 +30,18 @@ import model.ProofListener;
  * 3      | BorderPane
  * 4      | BorderPane
  *
- * The row is a BorderPane and consists of two TextFields
+ * The row is a BorderPane and consists of two TextFields and a BorderPane 
  *
  * Row
  * =============
- * |center|right
- *
- * These can be reached by calling the BorderPanes method's getCenter() and getRight().
+ * Left - a TextField for the expression
+ * Center - a TextField for the rule
+ * 
+ * These can be reached by calling the BorderPanes method's getLeft(), getCenter() and getRight().
  * Remember to cast these to TextFields.
  * E.g. (TextField) rList.get(rList.size()-1).getCenter()
+ * 
+ * Right - a BorderPane the consists of three Textfields for the rule prompt
  *
  * Keep in mind, that each child of rows is not a BorderPane. Boxes are additional VBoxes, with styling.
  * E.g.
@@ -205,25 +208,60 @@ public class ProofView implements ProofListener, View{
 	 * @return bp, the BorderPane containing two textfields. 
 	 */
 	private RowPane createRow(boolean isFirstRowInBox, int nrOfClosingBoxes) {
+		//borderpane which contains the textfield for the expression and the rule
 		RowPane bp = new RowPane(isFirstRowInBox,nrOfClosingBoxes);
-		TextField tf1 = new TextField();
-		TextField tf2 = new TextField();
-		tf1.setId("leftTextfield");
-		tf2.setId("rightTextfield");
-		tf1.getStyleClass().add("myText");
-		tf2.getStyleClass().add("myText");
-		tf1.setMaxWidth(700);
-		tf2.setPrefWidth(300);
-		tf1.focusedProperty().addListener((observable, oldValue, newValue) -> {
-			lastFocusedTf = tf1;
-			caretPosition = tf1.getCaretPosition();
+		
+		//borderpane that contains the three textfields that for the rule promt
+		BorderPane bpRulePromt = new BorderPane();
+		bpRulePromt.setMaxWidth(240);
+		
+		TextField tfExpression = new TextField();
+		TextField tfRule = new TextField();
+		TextField tfRulePromt1 = new TextField();
+		TextField tfRulePromt2 = new TextField();
+		TextField tfRulePromt3 = new TextField();
+		
+		//setting id
+		tfExpression.setId("leftTextfield");
+		tfRule.setId("rightTextfield");
+		tfRulePromt1.setId("rulePromt1tf");
+		tfRulePromt2.setId("rulePromt2tf");
+		tfRulePromt3.setId("rulePromt3tf");
+		
+		//setting text style
+		tfExpression.getStyleClass().add("myText");
+		tfRule.getStyleClass().add("myText");
+		tfRulePromt1.getStyleClass().add("myText");
+		tfRulePromt2.getStyleClass().add("myText");
+		tfRulePromt3.getStyleClass().add("myText");
+		
+		//setting the width for the textfields
+		tfExpression.setPrefWidth(580);
+		tfRule.setMaxWidth(100);
+		tfRulePromt1.setMaxWidth(80);
+		tfRulePromt2.setMaxWidth(80);
+		tfRulePromt3.setMaxWidth(80);
+		
+		//adding listeners to the expression- and rule textfield
+		tfExpression.focusedProperty().addListener((observable, oldValue, newValue) -> {
+			lastFocusedTf = tfExpression;
+			caretPosition = tfExpression.getCaretPosition();
 		});
-		tf2.focusedProperty().addListener((observable, oldValue, newValue) -> {
-			lastFocusedTf = tf2;
-			caretPosition = tf2.getCaretPosition();
+		tfRule.focusedProperty().addListener((observable, oldValue, newValue) -> {
+			lastFocusedTf = tfRule;
+			caretPosition = tfRule.getCaretPosition();
 		});
-		bp.setCenter(tf1);
-		bp.setRight(tf2);
+		
+		
+		bpRulePromt.setLeft(tfRulePromt1);
+		bpRulePromt.setCenter(tfRulePromt2);
+		bpRulePromt.setRight(tfRulePromt3);
+		
+		bp.setLeft(tfExpression);
+		bp.setCenter(tfRule);
+		bp.setRight(bpRulePromt);
+		//bp.setRight(tfRulePromt1);
+		
 		bp.setCache(true);
 		bp.setCacheShape(true);
 		bp.setCacheHint(CacheHint.SPEED);
@@ -339,11 +377,11 @@ public class ProofView implements ProofListener, View{
 
 	public void rowUpdated(boolean wellFormed, int lineNo) {
 		System.out.println("RowUpdated");
-		TextField expression = (TextField) rList.get(lineNo-1).getCenter();
+		TextField expression = (TextField) rList.get(lineNo-1).getLeft();
 		applyStyleIf(expression, !wellFormed, "bad");
 	}
 	public void conclusionReached(boolean correct, int lineNo){
-		TextField expression = (TextField) rList.get(lineNo-1).getCenter();
+		TextField expression = (TextField) rList.get(lineNo-1).getLeft();
 		applyStyleIf(expression, correct, "conclusionReached");
 	}
 
@@ -408,8 +446,11 @@ public class ProofView implements ProofListener, View{
 	private void addListeners(RowPane rp){
 
 		// Updates the Proof object if the textField is updated
-		TextField ruleField= (TextField) rp.getRight();
-		TextField formulaField = (TextField) rp.getCenter();
+		TextField ruleField = (TextField) rp.getCenter();
+		TextField formulaField = (TextField) rp.getLeft();
+		
+		//TODO: add listeners to the rulePromt textfields
+		//TextField RulePromt1 = (TextField) rp.getRight()
 		formulaField.textProperty().addListener((ov, oldValue, newValue) -> {
 			int rpIndex = rList.indexOf(rp);
 			proof.updateFormulaRow(newValue, rpIndex+1);
