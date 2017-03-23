@@ -95,12 +95,19 @@ public class Proof implements Serializable{
             listener.rowUpdated(wellFormed, rowNumber);
         }
         verifyConclusion(rowIndex);
+        verifyRow(rowIndex); //should use verifyProof later probably
         proofData.printRows(1,1);
         System.out.println("==========================================================");
     }
     
     public void updateRuleRow(String rule, int rowNumber){
     	System.out.println("Proof.updateRuleRow not implemented!");
+    }
+    
+    //For testing
+    public void addRule(int rowNr, Rule rule){
+    	proofData.getRow(rowNr-1).setRule(rule);
+    	verifyRow(rowNr-1); //should use verifyProof later probably
     }
     
     //should verify each line in the proof from line startIndex
@@ -120,11 +127,11 @@ public class Proof implements Serializable{
     	assert(rowIndex < proofData.size()) : "Proof.verifyRow: index out of bounds";
     	ProofRow row = proofData.getRow(rowIndex);
     	Rule rule = row.getRule();
-    	
+    	if(rule == null) return false;
     	if(rule.hasCompleteInfo() == false ) return false;
-    	boolean isVerified;
     	
     	//call the appropriate verification function
+    	boolean isVerified;
     	if(rule instanceof Premise){
     		isVerified = true; 
     	}
@@ -152,6 +159,7 @@ public class Proof implements Serializable{
     //Instead, at that point, use openBox(int rowNr)
     public void openBox() {
     	proofData.openNewBox();
+    	//TODO: should probbly add a new row immediatly to avoid issues with empty boxes
         for (ProofListener listener : this.listeners) {
             listener.boxOpened();
         }
@@ -223,18 +231,26 @@ public class Proof implements Serializable{
         this.listeners.add(listener);
     }
     
-    public void printProof(){
-    	proofData.printRows(1,1);
-    	/*for(int i = 0; i < proofData.size(); i++){
-    		System.out.println(i+"."+proofData.getRow(i));
-    	}*/
-    }
-    /*
-    public void printProofRowScope(){
-    	proofData.printProofRowScope();
+    //Only for debugging, do not use this for actual implementation
+    public Box getData(){
+    	return proofData;
     }
     
-    public void printProofIntervallScope(){
-    	proofData.printProofIntervallScope();
-    }*/
+    public void printBoxes(){
+    	proofData.printBoxes();
+    }
+    
+    public void printProof(boolean zeroBasedNumbering){
+    	int x = zeroBasedNumbering ? 0 : 1;
+    	proofData.printRows(1,x);
+    }
+    
+    public void printRowScopes(boolean zeroBasedNumbering){
+    	proofData.printRowScopes(zeroBasedNumbering);
+    }
+    
+    
+    public void printIntervallScopes( boolean zeroBasedNumbering){
+    	proofData.printIntervallScopes(zeroBasedNumbering);
+    }
 }

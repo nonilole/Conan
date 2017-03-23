@@ -56,12 +56,16 @@ public class ProofRow implements ProofEntry{
     
     @Override //TODO: also represent the rule...
     public String toString(){
+    	StringBuilder strB = new StringBuilder();
     	if(formula == null){
-    		return getUserInput();
+    		strB.append(getUserInput());
     	}
     	else{
-    		return formula.toString();
+    		strB.append(formula.toString());
     	}
+    	strB.append(" :: "+rule); // ✓
+    	strB.append(" :: Verified: " + (isVerified ? "✓" : "x"));
+    	return strB+"";
     }
 
 	public String getUserInput() {

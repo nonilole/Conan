@@ -9,4 +9,8 @@ public class Premise implements Rule {
 		return true;
 	}
 
+	@Override
+	public String toString(){
+		return "Premise";
+	}
 }

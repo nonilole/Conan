@@ -23,7 +23,7 @@ public class ImplicationIntroRule implements Rule {
 	
 	@Override
 	public boolean hasCompleteInfo() {
-		return premiseIntervall == null;
+		return premiseIntervall != null;
 	}
 	
 	@Override

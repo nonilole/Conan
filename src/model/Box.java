@@ -47,7 +47,7 @@ public class Box implements ProofEntry{
 	
 	public ProofRow getRow(int steps){
 		//System.out.println("Box.getRow("+steps+")");
-		assert(steps < size) : "index="+steps+" size="+size;
+		assert(steps < size) : "getRow: index="+steps+" size="+size;
 		
 		for(int i = 0; i < size ; i++ ){
 			ProofEntry entry = entries.get(i);
@@ -104,15 +104,64 @@ public class Box implements ProofEntry{
 		}
 	}
 	
-	//paramaters should be indexes, not row numbers
-	public boolean isInScopeOf(int referenceRow, int referencingRow){
+	//check if referenceRowIndex is in scope of referencingRowIndex
+	public boolean isInScopeOf(int referenceRowIndex, int referencingRowIndex){
+		if( referenceRowIndex >= referencingRowIndex) return false;
+		ProofRow referenceRow = getRow(referenceRowIndex);
+		ProofRow referencingRow = getRow(referencingRowIndex);
+		Box referenceParent = referenceRow.getParent();
+		Box referencingRowAncestorBox = referencingRow.getParent();
+		
+		//For referenceRow to be in scope of the referencingRow, the parent of the referenceRow must be 
+		//in the ancestral hierarchy of the referencingRow. A simpler way to put it: The innermost box 
+		//containing the referenceRow must also contain the referencingRow
+		while(referencingRowAncestorBox != null){
+			if( referenceParent == referencingRowAncestorBox){
+				return true;
+			}
+			referencingRowAncestorBox = referencingRowAncestorBox.getParent();
+		}
 		return false;
 	}
 	
 	//paramaters should be indexes, not row numbers
-		public boolean isInScopeOf(Intervall intervall, int referencingRow){
-			return false;
+	public boolean isInScopeOf(Intervall intervall, int referencingRow){
+		int start = intervall.startIndex; 
+		int end = intervall.endIndex;
+		if( end < start || referencingRow <= end) return false;
+		//System.out.println("end < start || referencingRow <= end : true");
+		//TODO: check if verified
+		//ProofRow row1 = getRow(start);
+		//ProofRow row2 = getRow(end);
+		Box theBox = getBox(intervall);
+		if( theBox == null) return false;
+		Box parentOfIntervallBox = theBox.getParent();
+		//System.out.println("theBox == null : false");
+		
+		//check if the box is an ancestor of the referencingRow
+		Box referencingRowAncestorBox = getRow(referencingRow).getParent();
+		while(referencingRowAncestorBox != null){
+			if( parentOfIntervallBox == referencingRowAncestorBox) return true;
+			referencingRowAncestorBox = referencingRowAncestorBox.getParent();
 		}
+		System.out.println("reached the end");
+		return false;
+	}
+	
+	//If this intervall represents a box in this proof, return that box
+	public Box getBox(Intervall intervall){
+		ProofRow startRow = getRow(intervall.startIndex);
+		ProofRow endRow   = getRow(intervall.endIndex);
+		Box parent = startRow.getParent();
+		
+		while(parent != null){
+			if( parent.getRow(0) == startRow && parent.getRow( parent.size()-1 ) == endRow ){
+				return parent;
+			}
+			parent = parent.getParent();
+		}
+		return null;
+	}
 	
 	public int size(){
 		return size;
@@ -159,6 +208,19 @@ public class Box implements ProofEntry{
 		return parent == null;
 	}
 	
+	public void printBoxes(){
+		List<Intervall> foundBoxes = new ArrayList<Intervall>();
+		for(int i = 0; i < size(); i++){
+			for( int j = i; j < size(); j++){
+				Intervall intervall = new Intervall(i,j);
+				Box box = getBox(intervall);
+				if( box != null) foundBoxes.add(intervall);
+			}
+		}
+		//printRows(1,0);
+		System.out.println("Found boxes: "+foundBoxes);
+	}
+	
 	public void printRows(int depth, int startNr){
 		int currentNr = startNr;
 		//System.out.println("size:"+size);
@@ -175,5 +237,31 @@ public class Box implements ProofEntry{
 			}
 		}
 		
+	}
+	
+	public void printRowScopes(boolean zeroBasedNumbering){
+		int offset = zeroBasedNumbering ? 0 : 1;
+		for(int i = 0; i < size; i++){
+			System.out.print("Rows in scope of line "+i+": ");
+			for(int j = 0; j < i; j++){
+				if(isInScopeOf(j,i)) System.out.print(""+(j+offset)+", ");
+			}
+			System.out.println("");
+		}
+		
+	}
+	
+	public void printIntervallScopes(boolean zeroBasedNumbering){
+		int offset = zeroBasedNumbering ? 0 : 1;
+		for(int rowI = 0; rowI < size; rowI++){
+			System.out.print("Intervalls in scope for row "+(rowI+offset)+": ");
+			for(int i = 0; i < size; i++){
+				for(int j = 0; j < size; j++){
+					Intervall inter  = new Intervall(i,j);
+					if( isInScopeOf(inter, rowI) ) System.out.print(""+inter+", ");
+				}
+			}
+			System.out.println("");
+		}
 	}
 }

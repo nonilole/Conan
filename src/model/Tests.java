@@ -8,6 +8,10 @@ import java.util.Scanner;
 
 import model.formulas.Formula;
 import model.formulas.RandomFormulaGenerator;
+import model.rules.ConjunctionIntroRule;
+import model.rules.ImplicationIntroRule;
+import model.rules.Intervall;
+import model.rules.Premise;
 
 public class Tests {
 
@@ -16,13 +20,126 @@ public class Tests {
 		//equalsTest();
 		//parserTest();
 		//new RandomFormulaGenerator().printFormulas(20, 2);
-		//VerificationTest.isInScopeRowTest();
-		//VerificationTest.isInScopeIntervallTest();
-		//VerificationTest.boxTest();
+		//isInScopeRowTest();
+		//isInScopeIntervallTest();
+		//getBoxTest();
+		verificationTest();
 		System.out.println("Done.");
 	}
 	
-	public void parserTest(){
+	public static void verificationTest(){
+		Proof proof = new Proof();
+		//ConjunctionIntroRule test
+		/*proof.addRow();//1
+		proof.addRow();//2
+		proof.addRow();//3
+		proof.updateFormulaRow("A", 1);
+		proof.addRule(1, new Premise());
+		proof.updateFormulaRow("B", 2);
+		proof.addRule(2, new Premise());
+		proof.updateFormulaRow("A ∧ B", 3);
+		proof.addRule(3, new ConjunctionIntroRule(1,2));*/
+		
+		//ImplicationIntroRule test
+		proof.addRow();//1
+		proof.openBox();
+		proof.addRow();//2
+		proof.addRow();//3
+		proof.closeBox();
+		proof.addRow();//4
+		
+		proof.updateFormulaRow("X", 1);
+		proof.addRule(1, new Premise());
+		proof.updateFormulaRow("A", 2);
+		proof.addRule(2, new Premise());
+		proof.updateFormulaRow("B", 3);
+		proof.addRule(3, new Premise());
+		proof.updateFormulaRow("A → B", 4);
+		proof.addRule(4, new ImplicationIntroRule(new Intervall(1,2)));
+		
+		proof.printProof(true);
+	}
+	
+	public static void isInScopeIntervallTest(){
+		Proof proof = new Proof();
+		proof.addRow();//0
+		proof.openBox();
+		proof.addRow();//1
+		proof.addRow();//2
+		proof.closeBox();
+		proof.addRow();//3
+		proof.openBox();
+		proof.addRow();//4
+		proof.openBox();
+		proof.addRow();//5
+		proof.closeBox();
+		proof.openBox();
+		proof.addRow();//6
+		proof.addRow();//7
+		proof.closeBox();
+		proof.addRow();//8
+		proof.addRow();//9
+		proof.closeBox();
+		proof.addRow();//10
+		
+		proof.printProof(true);
+		proof.printBoxes();
+		//Box data = proof.getData();
+		//System.out.println("isInscopeOf( (1-2), 3) :"+data.isInScopeOf(new Intervall(1,2), 3));
+		proof.printIntervallScopes(true);
+	}
+	
+	public static void isInScopeRowTest(){
+		Proof proof = new Proof();
+		proof.addRow();//0
+		proof.openBox();
+		proof.addRow();//1
+		proof.addRow();//2
+		proof.closeBox();
+		proof.addRow();//3
+		proof.openBox();
+		proof.addRow();//4
+		proof.openBox();
+		proof.addRow();//5
+		proof.closeBox();
+		proof.openBox();
+		proof.addRow();//6
+		proof.addRow();//7
+		proof.closeBox();
+		proof.addRow();//8
+		proof.addRow();//9
+		
+		proof.printProof(true);
+		proof.printBoxes();
+		proof.printRowScopes(true);
+	}
+	
+	public static void getBoxTest(){
+		Proof proof = new Proof();
+		Box data = proof.getData();
+		proof.addRow();//0
+		proof.openBox();
+		proof.addRow();//1
+		proof.addRow();//2
+		proof.openBox();
+		proof.addRow();//3
+		proof.openBox();
+		proof.addRow();//4
+		proof.closeBox();
+		proof.addRow();//5
+		proof.closeBox();
+		proof.openBox();
+		proof.addRow();//6
+		proof.addRow();//7
+		proof.closeBox();
+		proof.addRow();//8
+		proof.addRow();//9
+		
+		proof.printProof(true); //zeroBasedNumbering?
+		proof.printBoxes();
+	}
+	
+	public static void parserTest(){
         Parser pr = new Parser();
         try{
             Scanner scr = new Scanner(new File("resources/wellFormedFormulas.txt"));
@@ -89,7 +206,7 @@ public class Tests {
         }
     }
 
-	public void equalsTest(){
+	public static void equalsTest(){
     	final int NROFTESTS = 100;
         Parser pr = new Parser();
         List<Formula> formulas = new ArrayList<Formula>();
