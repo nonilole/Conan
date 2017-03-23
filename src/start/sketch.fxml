@@ -24,7 +24,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="start.MainController">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="start.MainController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -62,6 +62,7 @@
         <Menu mnemonicParsing="false" text="Help">
           <items>
             <MenuItem mnemonicParsing="false" text="About" />
+                  <MenuItem mnemonicParsing="false" onAction="#showInferenceRules" text="Show Inference Rules" />
           </items>
         </Menu>
       </menus>
@@ -78,6 +79,7 @@
             <TextField fx:id="indexInput" prefHeight="26.0" prefWidth="45.0" />
             <Button mnemonicParsing="false" onAction="#insertRow" text="InsertRow" />
             <CheckBox fx:id="insertAfterCheck" mnemonicParsing="false" text="Insert after" />
+            <Button mnemonicParsing="false" onAction="#showInferenceRules" text="Help" />
         </items>
       </ToolBar>
     <SplitPane dividerPositions="0.2" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" scaleShape="false" VBox.vgrow="ALWAYS">
