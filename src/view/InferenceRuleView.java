@@ -24,7 +24,7 @@ public class InferenceRuleView implements View {
             ImageView iv1 = new ImageView();
             iv1.setImage(image);
             iv1.setSmooth(true);
-            iv1.fitHeightProperty().bind(tabPane.heightProperty());
+      //      iv1.fitHeightProperty().bind(tabPane.heightProperty());
             iv1.fitWidthProperty().bind(tabPane.widthProperty());
 
             //putting the image on a scrollpane
