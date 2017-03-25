@@ -1,5 +1,6 @@
 package view;
 import java.awt.event.ActionEvent;
+
 import java.util.*;
 
 import javafx.beans.value.ChangeListener;
@@ -210,10 +211,7 @@ public class ProofView implements ProofListener, View{
 	private RowPane createRow(boolean isFirstRowInBox, int nrOfClosingBoxes) {
 		//borderpane which contains the textfield for the expression and the rule
 		RowPane bp = new RowPane(isFirstRowInBox,nrOfClosingBoxes);
-		
-		//borderpane that contains the three textfields that for the rule promt
-		BorderPane bpRulePromt = new BorderPane();
-		bpRulePromt.setMaxWidth(240);
+		RulePane ruleAndRulePrompt = new RulePane();
 		
 		TextField tfExpression = new TextField();
 		TextField tfRule = new TextField();
@@ -258,15 +256,14 @@ public class ProofView implements ProofListener, View{
 			caretPosition = tfRule.getCaretPosition();
 		});
 		
+		//adding the textfield for the rule and the rulepromts
+		ruleAndRulePrompt.getChildren().add(tfRule);
+		ruleAndRulePrompt.getChildren().add(tfRulePromt1);
+		ruleAndRulePrompt.getChildren().add(tfRulePromt2);
+		ruleAndRulePrompt.getChildren().add(tfRulePromt3);
 		
-		bpRulePromt.setLeft(tfRulePromt1);
-		bpRulePromt.setCenter(tfRulePromt2);
-		bpRulePromt.setRight(tfRulePromt3);
-		
-		bp.setLeft(tfExpression);
-		bp.setCenter(tfRule);
-		bp.setRight(bpRulePromt);
-		//bp.setRight(tfRulePromt1);
+		bp.setCenter(tfExpression);
+		bp.setRight(ruleAndRulePrompt);
 		
 		bp.setCache(true);
 		bp.setCacheShape(true);
@@ -383,11 +380,11 @@ public class ProofView implements ProofListener, View{
 
 	public void rowUpdated(boolean wellFormed, int lineNo) {
 		System.out.println("RowUpdated");
-		TextField expression = (TextField) rList.get(lineNo-1).getLeft();
+		TextField expression = (TextField) rList.get(lineNo-1).getCenter();
 		applyStyleIf(expression, !wellFormed, "bad");
 	}
 	public void conclusionReached(boolean correct, int lineNo){
-		TextField expression = (TextField) rList.get(lineNo-1).getLeft();
+		TextField expression = (TextField) rList.get(lineNo-1).getCenter();
 		applyStyleIf(expression, correct, "conclusionReached");
 	}
 
@@ -452,8 +449,10 @@ public class ProofView implements ProofListener, View{
 	private void addListeners(RowPane rp){
 
 		// Updates the Proof object if the textField is updated
-		TextField ruleField = (TextField) rp.getCenter();
-		TextField formulaField = (TextField) rp.getLeft();
+		TextField formulaField = (TextField) rp.getCenter();
+		RulePane tmprulePane = (RulePane) rp.getRight();
+		TextField ruleField = (TextField) tmprulePane.getChildren().get(0);
+		
 		
 		//TODO: add listeners to the rulePromt textfields
 		//TextField RulePromt1 = (TextField) rp.getRight()
