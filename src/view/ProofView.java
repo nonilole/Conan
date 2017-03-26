@@ -26,18 +26,18 @@ import model.ProofListener;
  * 3      | BorderPane
  * 4      | BorderPane
  *
- * The row is a BorderPane and consists of two TextFields and a BorderPane 
+ * The row is a BorderPane and consists of one TextField and a RulePane 
  *
  * Row
  * =============
- * Left - a TextField for the expression
- * Center - a TextField for the rule
+ * Center - a TextField for the expression
+ * Right - a RulePane that consists of four textfields for the rule and rule prompts
  * 
- * These can be reached by calling the BorderPanes method's getLeft(), getCenter() and getRight().
- * Remember to cast these to TextFields.
- * E.g. (TextField) rList.get(rList.size()-1).getCenter()
+ * These can be reached by calling the BorderPanes method's getExpression().
+ * Remember to cast to TextField.
+ * E.g. (TextField) rList.get(rList.size()-1).getExpression()
  * 
- * Right - a BorderPane the consists of three Textfields for the rule prompt
+ * Right - a RulePane the consists of four Textfields for the rule and rule prompts
  *
  * Keep in mind, that each child of rows is not a BorderPane. Boxes are additional VBoxes, with styling.
  * E.g.
@@ -319,7 +319,7 @@ public class ProofView extends View implements ProofListener {
 			indexToInsertInParent = parentBox.getChildren().indexOf(referenceRow) + 1;
 		}
 		RowPane rp = createRow(isFirstRowInBox, nrOfClosingBoxes);
-		((TextField)rp.getCenter()).setText("*");
+		((TextField)rp.getExpression()).setText("*");
 		parentBox.getChildren().add(indexToInsertInParent,rp);
 		rList.add(rListInsertionIndex, rp);
 		lineNo.getChildren().add(createLabel());
@@ -369,11 +369,11 @@ public class ProofView extends View implements ProofListener {
 	}
 
 	public void rowUpdated(boolean wellFormed, int lineNo) {
-		TextField expression = (TextField) rList.get(lineNo-1).getCenter();
+		TextField expression = (TextField) rList.get(lineNo-1).getExpression();
 		applyStyleIf(expression, !wellFormed, "bad");
 	}
 	public void conclusionReached(boolean correct, int lineNo){
-		TextField expression = (TextField) rList.get(lineNo-1).getCenter();
+		TextField expression = (TextField) rList.get(lineNo-1).getExpression();
 		applyStyleIf(expression, correct, "conclusionReached");
 	}
 
@@ -438,7 +438,7 @@ public class ProofView extends View implements ProofListener {
 	private void addListeners(RowPane rp){
 
 		// Updates the Proof object if the textField is updated
-		TextField formulaField = (TextField) rp.getCenter();
+		TextField formulaField = (TextField) rp.getExpression();
 		RulePane tmprulePane = (RulePane) rp.getRight();
 		TextField ruleField = (TextField) tmprulePane.getChildren().get(0);
 		

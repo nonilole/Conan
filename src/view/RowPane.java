@@ -1,5 +1,6 @@
 package view;
 
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
 public class RowPane extends BorderPane{
@@ -32,5 +33,11 @@ public class RowPane extends BorderPane{
 	
 	public void incrementNrOfClosingBoxes(){
 		nrOfClosingBoxes++;
+	}
+	
+	public TextField getExpression() {
+		TextField expression = new TextField(); 
+		expression = (TextField) this.getCenter(); 
+		return expression;
 	}
 }
