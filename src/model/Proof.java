@@ -193,7 +193,6 @@ public class Proof implements Serializable{
                 listener.conclusionReached(false, rowIndex + 1);
             }
         }*/
-        System.out.println("Hello");
         if (this.conclusion != null && row.getFormula() != null && this.conclusion.equals(row.getFormula())) {
             for (ProofListener listener : this.listeners) {
                 listener.conclusionReached(true, rowIndex+1);
