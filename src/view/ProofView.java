@@ -162,10 +162,10 @@ public class ProofView extends View implements ProofListener {
 	}
 
 	public ProofView(TabPane tabPane, Proof proof) {
-		this(tabPane, proof, CommonPanes.premisesAndConclusion());
+		this(tabPane, proof, new premisesAndConclusion());
 	}
 	public ProofView(TabPane tabPane, Proof proof, String sPremises, String sConclusion) {
-		this(tabPane, proof, CommonPanes.premisesAndConclusion(sPremises, sConclusion));
+		this(tabPane, proof, new premisesAndConclusion(sPremises, sConclusion));
 	}
 	/* Controller begin */
 	public void openBox() {
@@ -216,7 +216,7 @@ public class ProofView extends View implements ProofListener {
 		tfRulePromt3.setVisible(false);
 		
 		//setting id
-		tfExpression.setId("leftTextfield");
+		tfExpression.setId("expression");
 		tfRule.setId("rightTextfield");
 		tfRulePromt1.setId("rulePromt1tf");
 		tfRulePromt2.setId("rulePromt2tf");

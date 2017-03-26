@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 import model.formulas.*;
 
-class Parser{
+public class Parser{
     BufferedReader br;
     final boolean verbose = false;
 
@@ -342,14 +342,6 @@ class Parser{
         }
     }
 }
-
-class ParseException extends RuntimeException{
-
-	public ParseException(String msg){
-        super(msg);
-    }
-}
-
 
 
 

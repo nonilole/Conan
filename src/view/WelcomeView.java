@@ -43,9 +43,11 @@ public class WelcomeView extends View {
         rowC3.setFillHeight(true);
         rowC4.setPrefHeight(20.0);
         rowC5.setPrefHeight(20.0);
-        HBox premisesAndConclusion = CommonPanes.premisesAndConclusion();
+        HBox premisesAndConclusion = new premisesAndConclusion();
         this.premises = (TextField) premisesAndConclusion.getChildren().get(0);
         this.conclusion = (TextField) premisesAndConclusion.getChildren().get(2);
+        this.premises.setId("expression");
+        this.conclusion.setId("expression");
         this.premises.focusedProperty().addListener((observable, oldValue, newValue) -> {
             lastFocusedTf = this.premises;
             caretPosition = this.premises.getCaretPosition();

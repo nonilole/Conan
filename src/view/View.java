@@ -12,7 +12,7 @@ public abstract class View {
      * @param event, the pressed unicode button.
      */
     public void addSymbol(javafx.event.ActionEvent event){
-        if(lastFocusedTf != null){
+        if(lastFocusedTf != null && lastFocusedTf.getId() == "expression"){
             int tmpCaretPosition = caretPosition;
             String[] parts = event.toString().split("'");
             lastFocusedTf.setText(lastFocusedTf.getText().substring(0, caretPosition) + parts[1]
