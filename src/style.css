@@ -1,5 +1,10 @@
+@font-face {
+  font-family: Lato;
+  src: url('Lato-Regular.ttf');
+}
+
 .myText {
-  -fx-font-family: Monospace;
+  -fx-font-family: Lato;
   -fx-font-size: 14px;
   -fx-border-radius: 0;
   -fx-border-size: 0;
