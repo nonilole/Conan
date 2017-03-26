@@ -40,4 +40,35 @@ public class RowPane extends BorderPane{
 		expression = (TextField) this.getCenter(); 
 		return expression;
 	}
+	public TextField getRule() {
+		RulePane rulePane = new RulePane();
+		rulePane = (RulePane) this.getRight();
+		TextField rule = new TextField();
+		rule = (TextField) rulePane.getChildren().get(0);
+		return rule; 
+	}
+	
+	public TextField getRulePrompt1() {
+		RulePane rulePane = new RulePane();
+		rulePane = (RulePane) this.getRight();
+		TextField ruleprompt1 = new TextField();
+		ruleprompt1 = (TextField) rulePane.getChildren().get(1);
+		return ruleprompt1;
+	}
+	
+	public TextField getRulePrompt2() {
+		RulePane rulePane = new RulePane();
+		rulePane = (RulePane) this.getRight();
+		TextField ruleprompt2 = new TextField();
+		ruleprompt2 = (TextField) rulePane.getChildren().get(1);
+		return ruleprompt2;
+	}
+	
+	public TextField getRulePrompt3() {
+		RulePane rulePane = new RulePane();
+		rulePane = (RulePane) this.getRight();
+		TextField ruleprompt3 = new TextField();
+		ruleprompt3 = (TextField) rulePane.getChildren().get(1);
+		return ruleprompt3;
+	}
 }

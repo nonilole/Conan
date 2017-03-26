@@ -441,12 +441,8 @@ public class ProofView extends View implements ProofListener {
 
 		// Updates the Proof object if the textField is updated
 		TextField formulaField = (TextField) rp.getExpression();
-		RulePane tmprulePane = (RulePane) rp.getRight();
-		TextField ruleField = (TextField) tmprulePane.getChildren().get(0);
+		TextField ruleField = (TextField) rp.getRule();
 		
-		
-		//TODO: add listeners to the rulePromt textfields
-		//TextField RulePromt1 = (TextField) rp.getRight()
 		formulaField.textProperty().addListener((ov, oldValue, newValue) -> {
 			int rpIndex = rList.indexOf(rp);
 			proof.updateFormulaRow(newValue, rpIndex+1);
