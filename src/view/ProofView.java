@@ -132,7 +132,9 @@ public class ProofView extends View implements ProofListener {
 		this.proof = proof;
 		this.proof.registerProofListener(this);
 		this.premises = (TextField) premisesAndConclusion.getChildren().get(0);
+		this.premises.setId("expression");
 		this.conclusion = (TextField) premisesAndConclusion.getChildren().get(2);
+		this.conclusion.setId("expression");
 		this.conclusion.textProperty().addListener((ov, oldValue, newValue) -> {
 			proof.updateConclusion(newValue);
 		});
