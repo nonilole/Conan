@@ -1,10 +1,10 @@
 @font-face {
-  font-family: Lato;
-  src: url('Lato-Regular.ttf');
+  font-family: DejaVu Sans Mono;
+  src: url('DejaVuSansMono.ttf');
 }
 
 .myText {
-  -fx-font-family: Lato;
+  -fx-font-family: DejaVu Sans Mono;
   -fx-font-size: 14px;
   -fx-border-radius: 0;
   -fx-border-size: 0;
