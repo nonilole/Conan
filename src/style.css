@@ -2,9 +2,13 @@
   font-family: Lato;
   src: url('Lato-Regular.ttf');
 }
+@font-face {
+  font-family: DejaVu Serif;
+  src: url('DejaVuSerif.ttf');
+}
 
 .myText {
-  -fx-font-family: Lato;
+  -fx-font-family: DejaVu Serif;
   -fx-font-size: 14px;
   -fx-border-radius: 0;
   -fx-border-size: 0;
