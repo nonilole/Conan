@@ -1,5 +1,6 @@
 package view;
 
+import javafx.scene.CacheHint;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
@@ -13,6 +14,15 @@ public class RowPane extends BorderPane{
 		super();
 		this.isFirstRowInBox = isFirstRowInBox;
 		this.setNrOfClosingBoxes(nrOfClosingBoxes);
+		TextField tfExpression = new TextField();
+		tfExpression.setId("expression");
+		tfExpression.getStyleClass().add("myText");
+		tfExpression.setPrefWidth(580);
+		this.setCenter(tfExpression);
+		this.setRight(new RulePane());
+		this.setCache(true);
+		this.setCacheShape(true);
+		this.setCacheHint(CacheHint.SPEED);
 	}
 	
 	public void setIsFirstRowInBox(boolean b){
@@ -36,39 +46,25 @@ public class RowPane extends BorderPane{
 	}
 	
 	public TextField getExpression() {
-		TextField expression = new TextField(); 
-		expression = (TextField) this.getCenter(); 
-		return expression;
+		return (TextField) this.getCenter(); 
 	}
 	public TextField getRule() {
-		RulePane rulePane = new RulePane();
-		rulePane = (RulePane) this.getRight();
-		TextField rule = new TextField();
-		rule = (TextField) rulePane.getChildren().get(0);
-		return rule; 
+		RulePane rulePane = (RulePane) this.getRight();
+		return (TextField) rulePane.getChildren().get(0);
 	}
 	
 	public TextField getRulePrompt1() {
-		RulePane rulePane = new RulePane();
-		rulePane = (RulePane) this.getRight();
-		TextField ruleprompt1 = new TextField();
-		ruleprompt1 = (TextField) rulePane.getChildren().get(1);
-		return ruleprompt1;
+		RulePane rulePane = (RulePane) this.getRight();
+		return (TextField) rulePane.getChildren().get(1);
 	}
 	
 	public TextField getRulePrompt2() {
-		RulePane rulePane = new RulePane();
-		rulePane = (RulePane) this.getRight();
-		TextField ruleprompt2 = new TextField();
-		ruleprompt2 = (TextField) rulePane.getChildren().get(1);
-		return ruleprompt2;
+		RulePane rulePane = (RulePane) this.getRight();
+		return (TextField) rulePane.getChildren().get(2);
 	}
 	
 	public TextField getRulePrompt3() {
-		RulePane rulePane = new RulePane();
-		rulePane = (RulePane) this.getRight();
-		TextField ruleprompt3 = new TextField();
-		ruleprompt3 = (TextField) rulePane.getChildren().get(1);
-		return ruleprompt3;
+		RulePane rulePane = (RulePane) this.getRight();
+		return (TextField) rulePane.getChildren().get(3);
 	}
 }

@@ -33,11 +33,12 @@ import model.ProofListener;
  * Center - a TextField for the expression
  * Right - a RulePane that consists of four textfields for the rule and rule prompts
  * 
- * These can be reached by calling the BorderPanes method's getExpression().
+ * Center can be reached by calling the BorderPanes method's getExpression().
  * Remember to cast to TextField.
  * E.g. (TextField) rList.get(rList.size()-1).getExpression()
  * 
  * Right - a RulePane the consists of four Textfields for the rule and rule prompts
+ * The four textfields to the right can be reached by calling getRule(), getRulePrompt1(), 2 and 3. 
  *
  * Keep in mind, that each child of rows is not a BorderPane. Boxes are additional VBoxes, with styling.
  * E.g.
@@ -204,62 +205,19 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	private RowPane createRow(boolean isFirstRowInBox, int nrOfClosingBoxes) {
 		//borderpane which contains the textfield for the expression and the rule
 		RowPane bp = new RowPane(isFirstRowInBox,nrOfClosingBoxes);
-		RulePane ruleAndRulePrompt = new RulePane();
-		
-		TextField tfExpression = new TextField();
-		TextField tfRule = new TextField();
-		TextField tfRulePromt1 = new TextField();
-		TextField tfRulePromt2 = new TextField();
-		TextField tfRulePromt3 = new TextField();
-		
-		//set the rule prompts to invisible
-		tfRulePromt1.setVisible(false);
-		tfRulePromt2.setVisible(false);
-		tfRulePromt3.setVisible(false);
-		
-		//setting id
-		tfExpression.setId("expression");
-		tfRule.setId("rightTextfield");
-		tfRulePromt1.setId("rulePromt1tf");
-		tfRulePromt2.setId("rulePromt2tf");
-		tfRulePromt3.setId("rulePromt3tf");
-		
-		//setting text style
-		tfExpression.getStyleClass().add("myText");
-		tfRule.getStyleClass().add("myText");
-		tfRulePromt1.getStyleClass().add("myText");
-		tfRulePromt2.getStyleClass().add("myText");
-		tfRulePromt3.getStyleClass().add("myText");
-		
-		//setting the width for the textfields
-		tfExpression.setPrefWidth(580);
-		tfRule.setMaxWidth(100);
-		tfRulePromt1.setMaxWidth(80);
-		tfRulePromt2.setMaxWidth(80);
-		tfRulePromt3.setMaxWidth(80);
 		
 		//adding listeners to the expression- and rule textfield
+		TextField tfExpression = bp.getExpression();
 		tfExpression.focusedProperty().addListener((observable, oldValue, newValue) -> {
 			lastFocusedTf = tfExpression;
 			caretPosition = tfExpression.getCaretPosition();
 		});
+		TextField tfRule = bp.getRule();
 		tfRule.focusedProperty().addListener((observable, oldValue, newValue) -> {
 			lastFocusedTf = tfRule;
 			caretPosition = tfRule.getCaretPosition();
 		});
 		
-		//adding the textfield for the rule and the rulepromts
-		ruleAndRulePrompt.getChildren().add(tfRule);
-		ruleAndRulePrompt.getChildren().add(tfRulePromt1);
-		ruleAndRulePrompt.getChildren().add(tfRulePromt2);
-		ruleAndRulePrompt.getChildren().add(tfRulePromt3);
-		
-		bp.setCenter(tfExpression);
-		bp.setRight(ruleAndRulePrompt);
-		
-		bp.setCache(true);
-		bp.setCacheShape(true);
-		bp.setCacheHint(CacheHint.SPEED);
 		return bp;
 	}
 
