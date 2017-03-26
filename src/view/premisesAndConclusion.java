@@ -11,6 +11,7 @@ import model.ParseException;
 public class premisesAndConclusion extends HBox {
     Parser parser = new Parser();
     private TextField premises;
+    private TextField turnstile;
     private TextField conclusion;
     private void applyStyleIf(TextField expression, boolean bool, String style) {
         expression.getStyleClass().removeIf((s) -> s.equals(style));
@@ -20,12 +21,25 @@ public class premisesAndConclusion extends HBox {
     }
     private void parseAndStyle(TextField tf, String s) {
         try {
-            parser.parse(s);
+            if (!s.equals(""))
+                parser.parse(s);
             applyStyleIf(tf,false,"bad");
         }
         catch (ParseException e) {
             applyStyleIf(tf,true,"bad");
         }
+    }
+
+    private void setPrefs() {
+        this.setHgrow(premises, Priority.ALWAYS);
+        this.setHgrow(turnstile, Priority.NEVER);
+        this.setHgrow(conclusion, Priority.ALWAYS);
+        this.setMinWidth(0.0);
+        this.setPrefWidth(500.0);
+        this.setMaxWidth(500.0);
+        this.setMinHeight(30.0);
+        this.setPrefHeight(30.0);
+        this.setMaxHeight(30.0);
     }
 
     public premisesAndConclusion(String sPremises, String sConclusion) {
@@ -35,7 +49,7 @@ public class premisesAndConclusion extends HBox {
         });
         parseAndStyle(premises, sPremises);
         premises.getStyleClass().add("myText");
-        TextField turnstile = new TextField("⊢");
+        turnstile = new TextField("⊢");
         turnstile.getStyleClass().add("myText");
         turnstile.setPrefWidth(26.0);
         turnstile.setAlignment(Pos.CENTER);
@@ -48,15 +62,7 @@ public class premisesAndConclusion extends HBox {
         parseAndStyle(conclusion, sConclusion);
         conclusion.getStyleClass().add("myText");
         this.getChildren().addAll(premises, turnstile, conclusion);
-        this.setHgrow(premises, Priority.ALWAYS);
-        this.setHgrow(turnstile, Priority.NEVER);
-        this.setHgrow(conclusion, Priority.ALWAYS);
-        this.setMinWidth(0.0);
-        this.setPrefWidth(500.0);
-        this.setMaxWidth(500.0);
-        this.setMinHeight(30.0);
-        this.setPrefHeight(30.0);
-        this.setMaxHeight(30.0);
+        setPrefs();
     }
     public premisesAndConclusion() {
         this("","");
