@@ -1,10 +1,8 @@
 package view;
 
-import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 
-public abstract class View {
-	abstract Tab getTab();
+public abstract class Symbolic {
 	TextField lastFocusedTf;
 	int caretPosition;
     /**
