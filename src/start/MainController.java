@@ -137,8 +137,9 @@ public class MainController implements Initializable {
     
     @FXML
     void ruleButtonPressed(ActionEvent event) {
-    	if(currentProof != null) {
-    		currentProof.addRule(event);
+    	ProofView pv = convertProofView(getCurrentView());
+    	if (pv != null) {
+    		pv.addRule(event);
     	}
     }
     
