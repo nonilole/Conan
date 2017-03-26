@@ -165,7 +165,34 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		tabPane.getTabs().add(this.tab);
 		tabPane.getSelectionModel().select(this.tab); // Byt till den nya tabben
 		newRow();
+		
+		initializeRuleMap();
 	}
+
+	/**
+	 * a method to initialize the ruleMap
+	 * TODO: keep track of when it is a interval 
+	 */
+	private void initializeRuleMap() {
+		ruleMap.put("∧I", 2);
+		ruleMap.put("∧E1", 1);
+		ruleMap.put("∧E2", 1);
+		ruleMap.put("∨I1", 1);
+		ruleMap.put("∨I2", 1);
+		ruleMap.put("∨E", 3);
+		ruleMap.put("→I", 1);
+		ruleMap.put("→E", 2);
+		ruleMap.put("⊥E", 1);
+		ruleMap.put("¬I", 1);
+		ruleMap.put("¬E", 1);
+		ruleMap.put("¬¬E", 1);
+		ruleMap.put("Premise", 0);
+		ruleMap.put("∀I", 1);
+		ruleMap.put("∀E", 1);
+		ruleMap.put("∃I", 1);
+		ruleMap.put("∃E", 1);	
+	}
+
 
 	public ProofView(TabPane tabPane, Proof proof) {
 		this(tabPane, proof, new premisesAndConclusion());
