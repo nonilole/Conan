@@ -51,7 +51,7 @@ import model.ProofListener;
  *      BorderPane
  * BorderPane
  */
-public class ProofView extends View implements ProofListener {
+public class ProofView extends Symbolic implements ProofListener, View {
 	/*
 	 * These are magic constants that decide the lineNo padding.
 	 * Margin can't be changed as a property, so the solution is to take into account how much the border

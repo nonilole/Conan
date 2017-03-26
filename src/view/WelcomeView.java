@@ -12,7 +12,7 @@ import model.Proof;
 
 import java.util.prefs.Preferences;
 
-public class WelcomeView extends View {
+public class WelcomeView extends Symbolic implements View {
     ViewTab tab;
     TextField premises;
     TextField conclusion;

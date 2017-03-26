@@ -13,6 +13,7 @@ public class premisesAndConclusion extends HBox {
     private TextField premises;
     private TextField turnstile;
     private TextField conclusion;
+   // Kanske vill skriva om ProofListener och låta denna lyssna på ett bevis istället.
     private void applyStyleIf(TextField expression, boolean bool, String style) {
         expression.getStyleClass().removeIf((s) -> s.equals(style));
         if (bool) {
