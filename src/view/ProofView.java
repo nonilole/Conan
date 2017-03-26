@@ -89,7 +89,10 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	private String name;
 
 	private TextField lastTf;
-
+	
+	//hashmap for all the rules and number of arguments for all rules
+	private HashMap<String, Integer> ruleMap = new HashMap<String, Integer>();
+	
 	/**
 	 * This ia listener that is applied to the last textField. It creates a new row, each time the value of the textField is changed.
 	 */
