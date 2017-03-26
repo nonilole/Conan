@@ -219,11 +219,10 @@ public class ProofView implements ProofListener, View{
 		TextField tfRulePromt2 = new TextField();
 		TextField tfRulePromt3 = new TextField();
 		
-		/*
+		//set the rule prompts to invisible
 		tfRulePromt1.setVisible(false);
 		tfRulePromt2.setVisible(false);
 		tfRulePromt3.setVisible(false);
-		*/
 		
 		//setting id
 		tfExpression.setId("leftTextfield");
