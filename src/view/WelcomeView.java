@@ -19,6 +19,8 @@ public class WelcomeView implements View {
     CheckBox notAgain;
 
     public WelcomeView(TabPane tabPane) {
+    	//premises.setId("premises");
+    	//conclusion.setId("conclusion");
         GridPane gridPane = new GridPane();
         gridPane.setVgap(20.0);
         gridPane.setPadding(new Insets(20.0, 20.0, 20.0, 20.0));

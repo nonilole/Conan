@@ -1,4 +1,6 @@
 package view;
+
+import java.awt.event.ActionEvent;
 import java.util.*;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
@@ -24,15 +26,18 @@ import model.ProofListener;
  * 3      | BorderPane
  * 4      | BorderPane
  *
- * The row is a BorderPane and consists of two TextFields
+ * The row is a BorderPane and consists of two TextFields and a BorderPane 
  *
  * Row
  * =============
- * |center|right
- *
- * These can be reached by calling the BorderPanes method's getCenter() and getRight().
+ * Left - a TextField for the expression
+ * Center - a TextField for the rule
+ * 
+ * These can be reached by calling the BorderPanes method's getLeft(), getCenter() and getRight().
  * Remember to cast these to TextFields.
  * E.g. (TextField) rList.get(rList.size()-1).getCenter()
+ * 
+ * Right - a BorderPane the consists of three Textfields for the rule prompt
  *
  * Keep in mind, that each child of rows is not a BorderPane. Boxes are additional VBoxes, with styling.
  * E.g.
@@ -198,22 +203,61 @@ public class ProofView implements ProofListener, View{
 	 * @return bp, the BorderPane containing two textfields. 
 	 */
 	private RowPane createRow(boolean isFirstRowInBox, int nrOfClosingBoxes) {
+		//borderpane which contains the textfield for the expression and the rule
 		RowPane bp = new RowPane(isFirstRowInBox,nrOfClosingBoxes);
-		TextField tf1 = new TextField();
-		TextField tf2 = new TextField();
-		tf1.getStyleClass().add("myText");
-		tf2.getStyleClass().add("myText");
-		tf1.focusedProperty().addListener((observable, oldValue, newValue) -> {
-			lastFocusedTf = tf1;
-			caretPosition = tf1.getCaretPosition();
+		RulePane ruleAndRulePrompt = new RulePane();
+		
+		TextField tfExpression = new TextField();
+		TextField tfRule = new TextField();
+		TextField tfRulePromt1 = new TextField();
+		TextField tfRulePromt2 = new TextField();
+		TextField tfRulePromt3 = new TextField();
+		
+		//set the rule prompts to invisible
+		tfRulePromt1.setVisible(false);
+		tfRulePromt2.setVisible(false);
+		tfRulePromt3.setVisible(false);
+		
+		//setting id
+		tfExpression.setId("leftTextfield");
+		tfRule.setId("rightTextfield");
+		tfRulePromt1.setId("rulePromt1tf");
+		tfRulePromt2.setId("rulePromt2tf");
+		tfRulePromt3.setId("rulePromt3tf");
+		
+		//setting text style
+		tfExpression.getStyleClass().add("myText");
+		tfRule.getStyleClass().add("myText");
+		tfRulePromt1.getStyleClass().add("myText");
+		tfRulePromt2.getStyleClass().add("myText");
+		tfRulePromt3.getStyleClass().add("myText");
+		
+		//setting the width for the textfields
+		tfExpression.setPrefWidth(580);
+		tfRule.setMaxWidth(100);
+		tfRulePromt1.setMaxWidth(80);
+		tfRulePromt2.setMaxWidth(80);
+		tfRulePromt3.setMaxWidth(80);
+		
+		//adding listeners to the expression- and rule textfield
+		tfExpression.focusedProperty().addListener((observable, oldValue, newValue) -> {
+			lastFocusedTf = tfExpression;
+			caretPosition = tfExpression.getCaretPosition();
 		});
-		tf2.focusedProperty().addListener((observable, oldValue, newValue) -> {
-			lastFocusedTf = tf2;
-			caretPosition = tf2.getCaretPosition();
+		tfRule.focusedProperty().addListener((observable, oldValue, newValue) -> {
+			lastFocusedTf = tfRule;
+			caretPosition = tfRule.getCaretPosition();
 		});
-
-		bp.setCenter(tf1);
-		bp.setRight(tf2);
+		
+		//adding the textfield for the rule and the rulepromts
+		ruleAndRulePrompt.getChildren().add(tfRule);
+		ruleAndRulePrompt.getChildren().add(tfRulePromt1);
+		ruleAndRulePrompt.getChildren().add(tfRulePromt2);
+		ruleAndRulePrompt.getChildren().add(tfRulePromt3);
+		
+		bp.setCenter(tfExpression);
+		bp.setRight(ruleAndRulePrompt);
+		
 		bp.setCache(true);
 		bp.setCacheShape(true);
 		bp.setCacheHint(CacheHint.SPEED);
@@ -397,8 +441,13 @@ public class ProofView implements ProofListener, View{
 	private void addListeners(RowPane rp){
 
 		// Updates the Proof object if the textField is updated
-		TextField ruleField= (TextField) rp.getRight();
 		TextField formulaField = (TextField) rp.getCenter();
+		RulePane tmprulePane = (RulePane) rp.getRight();
+		TextField ruleField = (TextField) tmprulePane.getChildren().get(0);
+		
+		
+		//TODO: add listeners to the rulePromt textfields
+		//TextField RulePromt1 = (TextField) rp.getRight()
 		formulaField.textProperty().addListener((ov, oldValue, newValue) -> {
 			int rpIndex = rList.indexOf(rp);
 			proof.updateFormulaRow(newValue, rpIndex+1);
@@ -433,11 +482,26 @@ public class ProofView implements ProofListener, View{
 	 * @param event, the pressed unicode button. 
 	 */
 	public void addSymbol(javafx.event.ActionEvent event){
-		if(lastFocusedTf != null){
+		
+		if(lastFocusedTf != null && lastFocusedTf.getId() == "leftTextfield"){
 			int tmpCaretPosition = caretPosition;
 			String[] parts = event.toString().split("'");
 			lastFocusedTf.setText(lastFocusedTf.getText().substring(0, caretPosition) + parts[1] 
 					+ lastFocusedTf.getText().substring(caretPosition, lastFocusedTf.getLength()));
+			lastFocusedTf.requestFocus();
+			lastFocusedTf.positionCaret(tmpCaretPosition+1);
+		}
+	}
+	
+	/**
+	 * Adds the rule symbol that has been pressed to the text field for the rule.
+	 * @param event
+	 */
+	public void addRule(javafx.event.ActionEvent event){
+		if(lastFocusedTf != null && lastFocusedTf.getId() == "rightTextfield"){
+			int tmpCaretPosition = caretPosition;
+			String[] parts = event.toString().split("'");
+			lastFocusedTf.setText(parts[1]);
 			lastFocusedTf.requestFocus();
 			lastFocusedTf.positionCaret(tmpCaretPosition+1);
 		}
