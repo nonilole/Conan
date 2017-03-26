@@ -7,7 +7,7 @@ import javafx.scene.layout.Priority;
 import model.Parser;
 import model.ParseException;
 
-
+// Kanske vill skriva om ProofListener och låta denna lyssna på ett bevis istället.
 public class premisesAndConclusion extends HBox {
     Parser parser = new Parser();
     private TextField premises;
