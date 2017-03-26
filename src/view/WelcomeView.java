@@ -12,7 +12,7 @@ import model.Proof;
 
 import java.util.prefs.Preferences;
 
-public class WelcomeView implements View {
+public class WelcomeView extends View {
     ViewTab tab;
     TextField premises;
     TextField conclusion;
@@ -46,6 +46,14 @@ public class WelcomeView implements View {
         HBox premisesAndConclusion = CommonPanes.premisesAndConclusion();
         this.premises = (TextField) premisesAndConclusion.getChildren().get(0);
         this.conclusion = (TextField) premisesAndConclusion.getChildren().get(2);
+        this.premises.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            lastFocusedTf = this.premises;
+            caretPosition = this.premises.getCaretPosition();
+        });
+        this.conclusion.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            lastFocusedTf = this.conclusion;
+            caretPosition = this.conclusion.getCaretPosition();
+        });
 
         Hyperlink help = new Hyperlink("Help me!");
         this.notAgain = new CheckBox("Do not show again");

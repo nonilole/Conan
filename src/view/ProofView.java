@@ -51,7 +51,7 @@ import model.ProofListener;
  *      BorderPane
  * BorderPane
  */
-public class ProofView implements ProofListener, View{
+public class ProofView extends View implements ProofListener {
 	/*
 	 * These are magic constants that decide the lineNo padding.
 	 * Margin can't be changed as a property, so the solution is to take into account how much the border
@@ -86,9 +86,6 @@ public class ProofView implements ProofListener, View{
 
 	//Name of the proof/file of this view
 	private String name;
-
-	private TextField lastFocusedTf;
-	private int caretPosition;
 
 	private TextField lastTf;
 
@@ -476,23 +473,6 @@ public class ProofView implements ProofListener, View{
 		}
 	}
 
-
-	/**
-	 * Adds the unicode symbol that has been pressed to the caret position in the focused text field.
-	 * @param event, the pressed unicode button. 
-	 */
-	public void addSymbol(javafx.event.ActionEvent event){
-		
-		if(lastFocusedTf != null && lastFocusedTf.getId() == "leftTextfield"){
-			int tmpCaretPosition = caretPosition;
-			String[] parts = event.toString().split("'");
-			lastFocusedTf.setText(lastFocusedTf.getText().substring(0, caretPosition) + parts[1] 
-					+ lastFocusedTf.getText().substring(caretPosition, lastFocusedTf.getLength()));
-			lastFocusedTf.requestFocus();
-			lastFocusedTf.positionCaret(tmpCaretPosition+1);
-		}
-	}
-	
 	/**
 	 * Adds the rule symbol that has been pressed to the text field for the rule.
 	 * @param event
@@ -506,5 +486,7 @@ public class ProofView implements ProofListener, View{
 			lastFocusedTf.positionCaret(tmpCaretPosition+1);
 		}
 	}
+
+
 
 }

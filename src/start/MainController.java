@@ -129,18 +129,15 @@ public class MainController implements Initializable {
 
     @FXML
     void symbolButtonPressed(ActionEvent event) {
-        ProofView pv = convertProofView(getCurrentView());
-    	if (pv != null) {
-    		pv.addSymbol(event);
-    	}
+        getCurrentView().addSymbol(event);
     }
     
     @FXML
     void ruleButtonPressed(ActionEvent event) {
-    	ProofView pv = convertProofView(getCurrentView());
-    	if (pv != null) {
-    		pv.addRule(event);
-    	}
+        ProofView pv = convertProofView(getCurrentView());
+        if (pv != null) {
+            pv.addRule(event);
+        }
     }
     
     @FXML
