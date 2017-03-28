@@ -140,9 +140,7 @@ public class Proof implements Serializable{
     		isVerified = true; 
     	}
     	else if(rule instanceof ConjunctionElimRule){
-    		System.out.println("ConjunctionElimRule verification not added yet!");
-    		//TODO: implement needed function
-    		isVerified = false;
+    		isVerified = Verification.verifyConjunctionElim(proofData, rowIndex);
     	}
     	else if(rule instanceof ConjunctionIntroRule){
     		isVerified = Verification.verifyConjunctionIntro(proofData, rowIndex);

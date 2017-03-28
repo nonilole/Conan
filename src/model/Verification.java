@@ -21,8 +21,8 @@ class Verification {
 		// is the rule object of the correct type? Probably just check with an assertion
 		// are the references in the rule object in scope of rowIndex?
 		// are all the referenced rows verified?
-			// ProofData.isInScope should check both scope and if the data is verified
-		// do we have the needed references to make the deduction?
+			// Box.isInScope should check both scope and if the data is verified
+		// does the referenced rows contain the data for this rule to be correct?
 	}
 	*/
 	
@@ -55,6 +55,31 @@ class Verification {
 	//it's nice to break this out for potential testing maybe?
 	static boolean verifyConjunctionIntro(Formula premise1, Formula premise2, Conjunction result){
 		return result.equals(new Conjunction(premise1, premise2));
+	}
+	
+	//Andreas
+	static boolean verifyConjunctionElim(Box data, int rowIndex){
+	    // is the rule object of the correct type? Probably just check with an assertion
+	    ProofRow rowToVerify = data.getRow( rowIndex );
+        assert(rowToVerify.getRule() instanceof ConjunctionElimRule):"Incorrect rule type in Verification.verifyConjunctionIntro";
+        ConjunctionElimRule rule = (ConjunctionElimRule) rowToVerify.getRule();
+        
+        // are the references in the rule object in scope of rowIndex?        
+        // are all the referenced rows verified?
+          // Box.isInScope should check both scope and if the data is verified
+        if( data.isInScopeOf( rule.getPremise(), rowIndex ) == false ) return false;
+        
+        // do we have the needed references to make the deduction?
+        Formula result = data.getRow(rowIndex).getFormula();
+        Formula reference = data.getRow( rule.getPremise() ).getFormula();
+        if( reference instanceof Conjunction == false) return false;
+        Conjunction ref = (Conjunction)reference;
+        if( rule.getType() == 1){
+            return result.equals(ref.lhs);
+        }
+        else{ //rule.getType() == 2
+          return result.equals(ref.rhs);
+        }
 	}
 	
 	//Andreas

@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 import model.formulas.Formula;
 import model.formulas.RandomFormulaGenerator;
+import model.rules.ConjunctionElimRule;
 import model.rules.ConjunctionIntroRule;
 import model.rules.ImplicationIntroRule;
 import model.rules.Intervall;
@@ -29,16 +30,18 @@ public class Tests {
 	
 	public static void verificationTest(){
 		Proof proof = new Proof();
-		//ConjunctionIntroRule test
+		//ConjunctionElimRule test
 		proof.addRow();//1
+		proof.openBox();
 		proof.addRow();//2
+		proof.closeBox();
 		proof.addRow();//3
-		proof.updateFormulaRow("A", 1);
+		proof.updateFormulaRow("A ∧ B", 1);
 		proof.addRule(1, new Premise());
-		proof.updateFormulaRow("B", 2);
+		proof.updateFormulaRow("A ∧ B ", 2);
 		proof.addRule(2, new Premise());
-		proof.updateFormulaRow("A ∧ B", 3);
-		proof.addRule(3, new ConjunctionIntroRule(1,2));
+		proof.updateFormulaRow("B", 3);
+		proof.addRule(3, new ConjunctionElimRule(2,1));
 		
 		//ImplicationIntroRule test
 		/*
