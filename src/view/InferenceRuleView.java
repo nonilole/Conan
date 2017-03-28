@@ -15,23 +15,31 @@ public class InferenceRuleView implements View {
      *
      */
     public InferenceRuleView(TabPane tabPane) {
-        //load the image
-        Image image = new Image("inferenceRules.jpg");
 
-        //image resizing width only
-        ImageView iv1 = new ImageView();
-        iv1.setImage(image);
-        iv1.setSmooth(true);
-        //iv1.fitHeightProperty().bind(tabPane.heightProperty());
-        iv1.fitWidthProperty().bind(tabPane.widthProperty());
+            //load the image
+            Image image = new Image("inferenceRules.jpg");
 
-        //putting the image on a scrollpane
-        ScrollPane sp=new ScrollPane();
-        tab = new ViewTab("Inference Rules",this);
-        sp.setContent(iv1);
-        tabPane.getTabs().add(tab);
-        tab.setContent(sp);
-        tabPane.getSelectionModel().select(tab);
+            //image resizing
+            ImageView iv1 = new ImageView();
+            iv1.setImage(image);
+            iv1.setSmooth(true);
+            iv1.setPreserveRatio(true);
+
+            //current window size determines the scaling
+            // iv1.fitHeightProperty().bind(tabPane.heightProperty());
+            // iv1.fitWidthProperty().bind(tabPane.widthProperty());
+
+            //putting the image on a scrollpane
+            ScrollPane sp=new ScrollPane();
+            tab = new ViewTab("Inference Rules",this);
+            sp.setContent(iv1);
+            tabPane.getTabs().add(tab);
+            tab.setContent(sp);
+            tabPane.getSelectionModel().select(tab);
+
+            //Fit the width of the image with the width of the tabpane while preserving the image ratio
+            double w=tab.getView().getTab().getTabPane().getWidth();
+            iv1.setFitWidth(w);
 
     }
 
