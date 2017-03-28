@@ -38,7 +38,7 @@ public class InferenceRuleView implements View {
             tabPane.getSelectionModel().select(tab);
 
             //Fit the width of the image with the width of the tabpane while preserving the image ratio
-            double w=tab.getView().getTab().getTabPane().getWidth();
+            double w=tab.getView().getTab().getTabPane().getMaxWidth();
             iv1.setFitWidth(w);
 
     }
