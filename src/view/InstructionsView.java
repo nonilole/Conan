@@ -84,7 +84,7 @@ public class InstructionsView extends Tab {
         gridPane.setVgap(20.0);
         gridPane.setPadding(new Insets(20.0, 20.0, 20.0, 20.0));
         
-        setRowConstraints(gridPane);
+       
         
         Label heading = constructHeading();
         Label instructions = constructInstructions();
@@ -96,37 +96,10 @@ public class InstructionsView extends Tab {
         return gridPane;
 	}
     
-    /**
-     * Sets row constraints for the provided grid pane.
-     * @param gridPane The grid pane to set row constraints for.
-     */
-    private void setRowConstraints(GridPane gridPane) {
-    	/* TODO These were copied from the Welcome view.
-    	 * What do their values represent?
-    	 * How were their values determined?
-    	 */    	
-    	
-    	RowConstraints rowC1 = new RowConstraints();
-        RowConstraints rowC2 = new RowConstraints();
-        RowConstraints rowC3 = new RowConstraints();
-        RowConstraints rowC4 = new RowConstraints();
-        RowConstraints rowC5 = new RowConstraints();
-        rowC1.setPrefHeight(20.0);
-        rowC2.setPrefHeight(20.0);
-        rowC3.setFillHeight(true);
-        rowC4.setPrefHeight(20.0);
-        rowC5.setPrefHeight(20.0);
-
-        gridPane.getRowConstraints().addAll(rowC1, rowC2, rowC3, rowC4, rowC5);
-	}
-    
     private void addChildren(GridPane gridPane, Node heading, Node instructions, Node closeButton) {
-		/* TODO the column and row indicies were copied from the Welcome view.
-		 * Why are row indicies increment in twos?
-		 */
     	gridPane.add(heading, 0, 0);
-		gridPane.add(instructions, 0, 2);
-		gridPane.add(closeButton, 0, 4);
+		gridPane.add(instructions, 0, 1);
+		gridPane.add(closeButton, 0, 2);
     }
     
     /**
