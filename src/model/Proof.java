@@ -175,7 +175,6 @@ public class Proof implements Serializable{
             this.conclusion = parser.parse(conclusion);
         } catch (Exception ParseException) {
             this.conclusion = null;
-            return;
         }
         for (int i = 0; i < proofData.size(); i++) {
             verifyConclusion(i);
@@ -194,13 +193,13 @@ public class Proof implements Serializable{
                 listener.conclusionReached(false, rowIndex + 1);
             }
         }*/
-        if (this.conclusion == null)
-            return;
-        if (row.getFormula() == null)
-            return;
-        if (this.conclusion.equals(row.getFormula())) {
+        if (this.conclusion != null && row.getFormula() != null && this.conclusion.equals(row.getFormula())) {
             for (ProofListener listener : this.listeners) {
                 listener.conclusionReached(true, rowIndex+1);
+            }
+        } else {
+            for (ProofListener listener : this.listeners) {
+                listener.conclusionReached(false, rowIndex+1);
             }
         }
     }

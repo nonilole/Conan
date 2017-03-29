@@ -14,7 +14,7 @@ import model.Proof;
 
 import java.util.prefs.Preferences;
 
-public class WelcomeView implements View {
+public class WelcomeView extends Symbolic implements View {
     ViewTab tab;
     TextField premises;
     TextField conclusion;
@@ -45,9 +45,19 @@ public class WelcomeView implements View {
         rowC3.setFillHeight(true);
         rowC4.setPrefHeight(20.0);
         rowC5.setPrefHeight(20.0);
-        HBox premisesAndConclusion = CommonPanes.premisesAndConclusion();
+        HBox premisesAndConclusion = new premisesAndConclusion();
         this.premises = (TextField) premisesAndConclusion.getChildren().get(0);
         this.conclusion = (TextField) premisesAndConclusion.getChildren().get(2);
+        this.premises.setId("expression");
+        this.conclusion.setId("expression");
+        this.premises.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            lastFocusedTf = this.premises;
+            caretPosition = this.premises.getCaretPosition();
+        });
+        this.conclusion.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            lastFocusedTf = this.conclusion;
+            caretPosition = this.conclusion.getCaretPosition();
+        });
 
         Hyperlink help = new Hyperlink("Help me!");
         help.setOnAction(new EventHandler<ActionEvent>() {

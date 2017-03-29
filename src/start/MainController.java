@@ -9,11 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import view.InstructionsView;
-import view.ProofView;
-import view.View;
-import view.ViewTab;
-import view.WelcomeView;
+import view.*;
 
 import javafx.event.ActionEvent;
 
@@ -130,18 +126,18 @@ public class MainController implements Initializable {
 
     @FXML
     void symbolButtonPressed(ActionEvent event) {
-        ProofView pv = convertProofView(getCurrentView());
-    	if (pv != null) {
-    		pv.addSymbol(event);
-    	}
+        Object obj = getCurrentView();
+        if (obj instanceof Symbolic) {
+            Symbolic sym = (Symbolic) obj;
+            sym.addSymbol(event);
+        }
     }
-    
     @FXML
     void ruleButtonPressed(ActionEvent event) {
-    	ProofView pv = convertProofView(getCurrentView());
-    	if (pv != null) {
-    		pv.addRule(event);
-    	}
+        ProofView pv = convertProofView(getCurrentView());
+        if (pv != null) {
+            pv.addRule(event);
+        }
     }
     
     @FXML
