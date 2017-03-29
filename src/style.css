@@ -1,11 +1,3 @@
-@font-face {
-  font-family: Lato;
-  src: url('Lato-Regular.ttf');
-}
-@font-face {
-  font-family: DejaVu Serif;
-  src: url('DejaVuSerif.ttf');
-}
 
 .myText {
   -fx-font-family: Monospace;
