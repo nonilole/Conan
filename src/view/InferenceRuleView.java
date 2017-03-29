@@ -1,8 +1,10 @@
 package view;
 
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Screen;
 
 
 public class InferenceRuleView implements View {
@@ -19,7 +21,6 @@ public class InferenceRuleView implements View {
             //load the image
             Image image = new Image("inferenceRules.jpg");
 
-            //image resizing
             ImageView iv1 = new ImageView();
             iv1.setImage(image);
             iv1.setSmooth(true);
@@ -37,11 +38,15 @@ public class InferenceRuleView implements View {
             tab.setContent(sp);
             tabPane.getSelectionModel().select(tab);
 
-            //Fit the width of the image with the width of the tabpane while preserving the image ratio
-            double w=tab.getView().getTab().getTabPane().getMaxWidth();
-            iv1.setFitWidth(w);
 
-    }
+            int widthOfToolbar=235; //note to self: breaks when changing toolbar size
+
+
+            //Fit the image with the tabpane by calculating screen width - width of toolbar while preserving ratio
+            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+            double w=primaryScreenBounds.getWidth()-widthOfToolbar;
+            iv1.setFitWidth(w);
+       }
 
     @Override
     public ViewTab getTab() {
