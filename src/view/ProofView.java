@@ -439,6 +439,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		ruleField.textProperty().addListener((ov, oldValue, newValue) -> {
 			int rpIndex = rList.indexOf(rp);
 			proof.updateRuleRow(newValue, rpIndex+1);
+            rp.setPrompts(ruleMap.getOrDefault(newValue,-1));
 		});
 	}
 
