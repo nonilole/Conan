@@ -1,5 +1,7 @@
 package view;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
@@ -46,6 +48,13 @@ public class WelcomeView implements View {
         this.conclusion = (TextField) premisesAndConclusion.getChildren().get(2);
 
         Hyperlink help = new Hyperlink("Help me!");
+        help.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				new InstructionsView(tabPane);
+			}
+		});
+        
         this.notAgain = new CheckBox("Do not show again");
         Button butNext = new Button("Continue");
         butNext.setOnAction(event -> {
@@ -57,7 +66,7 @@ public class WelcomeView implements View {
             tabPane1.getTabs().remove(tab);
             new ProofView(tabPane1, new Proof(), premises.getText(), conclusion.getText());
         });
-        gridPane.getRowConstraints().addAll(rowC1, rowC2, rowC3, rowC4, rowC5);
+        //gridPane.getRowConstraints().addAll(rowC1, rowC2, rowC3, rowC4, rowC5);
         gridPane.add(title, 0, 0);
         gridPane.add(help, 0, 1);
         gridPane.add(welcomeText, 0, 2);
