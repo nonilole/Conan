@@ -38,10 +38,10 @@ public class Tests {
 		proof.addRow();//3
 		proof.updateFormulaRow("A ∧ B", 1);
 		proof.addRule(1, new Premise());
-		proof.updateFormulaRow("A ∧ B ", 2);
+		proof.updateFormulaRow("A ∧ B", 2);
 		proof.addRule(2, new Premise());
 		proof.updateFormulaRow("B", 3);
-		proof.addRule(3, new ConjunctionElimRule(2,1));
+		proof.addRule(3, new ConjunctionElimRule(2,0));
 		
 		//ImplicationIntroRule test
 		/*
