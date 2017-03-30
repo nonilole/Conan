@@ -321,6 +321,7 @@ public void rowInserted(int rowNo, BoxReference br) {
         indexToInsertInParent = parentBox.getChildren().indexOf(referenceRow) + 1;
     }
     RowPane rp = createRow(isFirstRowInBox, nrOfClosingBoxes);
+    ((TextField)rp.getExpression()).setText("*");
     parentBox.getChildren().add(indexToInsertInParent,rp);
     rList.add(rListInsertionIndex, rp);
     lineNo.getChildren().add(createLabel());
