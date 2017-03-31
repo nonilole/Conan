@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.event.ActionEvent;
 import java.util.*;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
@@ -26,19 +25,19 @@ import model.ProofListener;
  * 3      | BorderPane
  * 4      | BorderPane
  *
- * The row is a BorderPane and consists of one TextField and a RulePane 
+ * The row is a BorderPane and consists of one TextField and a RulePane
  *
  * Row
  * =============
  * Center - a TextField for the expression
  * Right - a RulePane that consists of four textfields for the rule and rule prompts
- * 
+ *
  * Center can be reached by calling the BorderPanes method's getExpression().
  * Remember to cast to TextField.
  * E.g. (TextField) rList.get(rList.size()-1).getExpression()
- * 
+ *
  * Right - a RulePane the consists of four Textfields for the rule and rule prompts
- * The four textfields to the right can be reached by calling getRule(), getRulePrompt1(), 2 and 3. 
+ * The four textfields to the right can be reached by calling getRule(), getRulePrompt1(), 2 and 3.
  *
  * Keep in mind, that each child of rows is not a BorderPane. Boxes are additional VBoxes, with styling.
  * E.g.
@@ -92,7 +91,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
 	//hashmap for all the rules and number of arguments for all rules
 	private HashMap<String, Integer> ruleMap = new HashMap<String, Integer>();
-	
+
 	/**
 	 * This ia listener that is applied to the last textField. It creates a new row, each time the value of the textField is changed.
 	 */
@@ -127,7 +126,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
 
 	/**
-	 * Adds content to the TabPane in the proof and adds listeners to the premise and conclusion. 
+	 * Adds content to the TabPane in the proof and adds listeners to the premise and conclusion.
 	 * Vad är det som metoden gör med proof? lägg gärna till extra beskrivning om detta!!
 	 * @param tabPane
 	 * @param premisesAndConclusion
@@ -165,13 +164,13 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		tabPane.getTabs().add(this.tab);
 		tabPane.getSelectionModel().select(this.tab); // Byt till den nya tabben
 		newRow();
-		
+
 		initializeRuleMap();
 	}
 
 	/**
 	 * a method to initialize the ruleMap
-	 * TODO: keep track of when it is a interval 
+	 * TODO: keep track of when it is a interval
 	 */
 	private void initializeRuleMap() {
 		ruleMap.put("∧I", 2);
@@ -193,7 +192,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		ruleMap.put("∃E", 1);
 		ruleMap.put("=E", 2);
 		ruleMap.put("=I", 0);
-		
+
 	}
 
 
@@ -233,12 +232,28 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	/**
 	 * Creates a new row with a textfield for the expression and a textfield
 	 * for the rules and adds listeners to both of them.
-	 * @return bp, the BorderPane containing two textfields. 
+	 * @return bp, the BorderPane containing two textfields.
 	 */
 	private RowPane createRow(boolean isFirstRowInBox, int nrOfClosingBoxes) {
 		//borderpane which contains the textfield for the expression and the rule
 		RowPane bp = new RowPane(isFirstRowInBox,nrOfClosingBoxes);
-		
+
+
+		//Action Events for delete and insert buttons in RowButtonsPane
+		bp.getEditRowPane().getDeleteButton().setOnAction(event -> {
+			int rowOfPressedButton = rList.indexOf(bp.getEditRowPane().getParent()) + 1;
+			proof.deleteRow(rowOfPressedButton);
+		});
+		bp.getEditRowPane().getInsertBeforeButton().setOnAction(event -> {
+			int rowOfPressedButton = rList.indexOf(bp.getEditRowPane().getParent()) + 1;
+			proof.insertNewRow(rowOfPressedButton,BoxReference.BEFORE);
+		});
+		bp.getEditRowPane().getInsertAfterButton().setOnAction(event -> {
+			int rowOfPressedButton = rList.indexOf(bp.getEditRowPane().getParent()) + 1;
+			proof.insertNewRow(rowOfPressedButton,BoxReference.AFTER);
+		});
+
+
 		//adding listeners to the expression- and rule textfield
 		TextField tfExpression = bp.getExpression();
 		tfExpression.focusedProperty().addListener((observable, oldValue, newValue) -> {
@@ -250,7 +265,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			lastFocusedTf = tfRule;
 			caretPosition = tfRule.getCaretPosition();
 		});
-		
+
 		return bp;
 	}
 
