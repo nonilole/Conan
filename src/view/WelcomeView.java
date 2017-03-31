@@ -60,6 +60,7 @@ public class WelcomeView extends Symbolic implements View {
         });
 
         Hyperlink help = new Hyperlink("Help me!");
+
         help.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -67,6 +68,7 @@ public class WelcomeView extends Symbolic implements View {
 			}
 		});
         
+
         this.notAgain = new CheckBox("Do not show again");
         Button butNext = new Button("Continue");
         butNext.setOnAction(event -> {
@@ -81,6 +83,7 @@ public class WelcomeView extends Symbolic implements View {
         //gridPane.getRowConstraints().addAll(rowC1, rowC2, rowC3, rowC4, rowC5);
         gridPane.add(title, 0, 0);
         gridPane.add(help, 0, 1);
+
         gridPane.add(welcomeText, 0, 2);
         gridPane.add(premisesAndConclusion, 0, 3);
         gridPane.add(this.notAgain, 0, 4);
@@ -88,6 +91,7 @@ public class WelcomeView extends Symbolic implements View {
         gridPane.setHalignment(title, HPos.CENTER);
         gridPane.setValignment(title, VPos.CENTER);
         gridPane.setHalignment(help, HPos.CENTER);
+
         gridPane.setHalignment(premisesAndConclusion, HPos.CENTER);
         gridPane.setValignment(premisesAndConclusion, VPos.CENTER);
         gridPane.setHalignment(notAgain, HPos.LEFT);

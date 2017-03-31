@@ -9,7 +9,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+
 import view.*;
+
+
+import view.ProofView;
+import view.View;
+import view.ViewTab;
+import view.WelcomeView;
+import view.InferenceRuleView;
 
 import javafx.event.ActionEvent;
 
@@ -120,6 +128,10 @@ public class MainController implements Initializable {
         new WelcomeView(tabPane);
     }
 
+    @FXML
+    void showInferenceRules(ActionEvent event) {
+    new InferenceRuleView(tabPane);
+    }
 
     @FXML
     void openInstructions(ActionEvent event) { }
