@@ -1,5 +1,0 @@
-package View;
-
-class WelcomeView {
-
-}

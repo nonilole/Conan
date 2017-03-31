@@ -1,0 +1,18 @@
+//Well formed formulas for testing
+//Double slash comments only works in beginning of row
+//Please add more formulas!
+A ∧ B
+A(x) → P(q)
+A(x,y) → P(z) ∨ Q(f(z,x))
+∀x(A(x)∨B) → ∃x(Q(x))
+A(x,f(y) ,f(z))
+A → B → C → D → E → F
+A → B → (       C → D) → E → F
+A ∨ B → C → D → E ∧ F
+A → B → C ∨ D ∧ E → F
+A → B ∧ C → D → E → F
+A ∧ (B ∧ C)
+x = y
+f(x,y) = g
+∀xP(x) → ¬(B → C) ∧ D
+A ∧ ∀xB(f(x)) ∧ ¬C ∧ (A → B) ∧ ¬∀xE(x)

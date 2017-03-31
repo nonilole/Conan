@@ -1,0 +1,17 @@
+// Not well formed formulas for testing
+//Double slash comments only works in beginning of row
+//Please add more (misformed) formulas!
+//Should produce parsseErrors:
+asd
+Asd
+A(de
+A →→ B
+a ∨ b
+P(y) = g
+q ∧ P
+q ∧ P(y)
+q(u,s) ∧ P
+A ∨ B
+
+
+

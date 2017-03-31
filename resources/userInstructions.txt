@@ -1,0 +1,22 @@
+Below are step by step instructions for using Conan to construct proofs in propositional logic. The example provided is the deduction of B∧A from A∧B.
+
+1. Create a new proof. This action can be invoked by in the menu selecting file --> new.
+2. Notice that a new tab, titled "Proof", has appeared in the window and is selected.
+3. Inside "Proof", there exists a header row that consists of two empty fields on either side of a sequent symbol (⊢). The left field is called antecedents. The right field is called consequents.
+4. Enter A∧B in the antecedents. Note that the symbol ∧ (logical AND) easily can be inserted from the table to the left.  
+5. Enter B∧A in the consequents.
+6. Notice that a row has appeared below the header row. This is the first line in your construction of the proof. The row consists of two empty fields. The left field is for inserting logical expressions. The right field is for applying rules of inference.
+7. In the left field, enter A∧B.
+8. In the right field, enter the assumption rule. Note that all basic rules of inference easily can be inserted from the table to the left.
+9. Notice that a new row has appeared below the one you just finished. This (all upcoming rows) operate in the same way as previous row.
+10. In the left field, enter A.
+11. In the right field, enter ∧e1.
+12. Notice that a third field appeared when the ∧e1 rule was applied. This happened because that rule (and most other) operate on one or more preceding rows.
+13. In the new field, enter 1.
+14. Again, a new empty row has appeared. In its left field, enter B.
+15. In the right field, enter ∧e1.
+16. In the new field, enter 1.
+17. Again, a new empty row has appeared. In its left field, enter B∧A.
+18. In the right field, enter ∧i.
+19. In the new field, enter 2,3.
+20. The proof is now complete. Well done!
