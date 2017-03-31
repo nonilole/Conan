@@ -372,6 +372,8 @@ public void rowInserted(int rowNo, BoxReference br) {
 
 	public void rowUpdated(boolean wellFormed, int lineNo) {
 		TextField expression = (TextField) rList.get(lineNo-1).getExpression();
+		if (expression.getText().equals(""))
+			wellFormed = true;
 		applyStyleIf(expression, !wellFormed, "bad");
 	}
 	public void conclusionReached(boolean correct, int lineNo){
