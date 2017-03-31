@@ -89,7 +89,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	private String name;
 
 	private TextField lastTf;
-	
+
 	//hashmap for all the rules and number of arguments for all rules
 	private HashMap<String, Integer> ruleMap = new HashMap<String, Integer>();
 	
@@ -284,51 +284,60 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		lineNo.getChildren().add(createLabel());
 		updateLabelPaddings(rList.size());
 		addListeners(rp);
+		newRowListener(rp.getExpression());
 	}
 
-	//rowNo is which row the reference row is at, BoxReference tells you if you want to add the new row before or after
-	public void rowInserted(int rowNo, BoxReference br) {
-		RowPane referenceRow;//row we'll use to get a refence to the box where we add the new row
-		boolean isFirstRowInBox;
-		int nrOfClosingBoxes; //the nr of boxes that closes at line rowNo
-		int indexToInsertInParent;
-		VBox parentBox; // which vbox to display the new row in
-		int rListInsertionIndex = (br == BoxReference.BEFORE) ? rowNo-1 : rowNo;
-
-		if(br == BoxReference.BEFORE){
-			referenceRow = rList.get(rowNo-1);
-			isFirstRowInBox = referenceRow.getIsFirstRowInBox();
-			nrOfClosingBoxes = 0;
-			referenceRow.setIsFirstRowInBox(false);
-			parentBox = (VBox)referenceRow.getParent();
-			indexToInsertInParent = parentBox.getChildren().indexOf(referenceRow);
-		}
-		else{ //br == BoxReference.AFTER
-			referenceRow = rList.get(rowNo-1);
-			nrOfClosingBoxes = referenceRow.getNrOfClosingBoxes();
-			isFirstRowInBox = false;
-			referenceRow.setNrOfClosingBoxes(0);
-			parentBox = (VBox)referenceRow.getParent();
-			indexToInsertInParent = parentBox.getChildren().indexOf(referenceRow) + 1;
-		}
-		RowPane rp = createRow(isFirstRowInBox, nrOfClosingBoxes);
-		((TextField)rp.getExpression()).setText("*");
-		parentBox.getChildren().add(indexToInsertInParent,rp);
-		rList.add(rListInsertionIndex, rp);
-		lineNo.getChildren().add(createLabel());
-		updateLabelPaddings(rowNo);
-		addListeners(rp);
-		/*
+	public void newRowListener(TextField tf) {
         if (lastTf != null) {
             lastTf.textProperty().removeListener((ChangeListener<? super String>) lastTfListener);
         }
-        TextField tempTf = (TextField) bp.getCenter();
-        //...tempTf.setText(formula);
-        lastTf = tempTf;
+        lastTf = tf;
         lastTf.textProperty().addListener((ChangeListener<? super String>) lastTfListener);
-		 */
-
 	}
+
+	//rowNo is which row the reference row is at, BoxReference tells you if you want to add the new row before or after
+public void rowInserted(int rowNo, BoxReference br) {
+    RowPane referenceRow;//row we'll use to get a refence to the box where we add the new row
+    boolean isFirstRowInBox;
+    int nrOfClosingBoxes; //the nr of boxes that closes at line rowNo
+    int indexToInsertInParent;
+    VBox parentBox; // which vbox to display the new row in
+    int rListInsertionIndex = (br == BoxReference.BEFORE) ? rowNo-1 : rowNo;
+
+    if(br == BoxReference.BEFORE){
+        referenceRow = rList.get(rowNo-1);
+        isFirstRowInBox = referenceRow.getIsFirstRowInBox();
+        nrOfClosingBoxes = 0;
+        referenceRow.setIsFirstRowInBox(false);
+        parentBox = (VBox)referenceRow.getParent();
+        indexToInsertInParent = parentBox.getChildren().indexOf(referenceRow);
+    }
+    else{ //br == BoxReference.AFTER
+        referenceRow = rList.get(rowNo-1);
+        nrOfClosingBoxes = referenceRow.getNrOfClosingBoxes();
+        isFirstRowInBox = false;
+        referenceRow.setNrOfClosingBoxes(0);
+        parentBox = (VBox)referenceRow.getParent();
+        indexToInsertInParent = parentBox.getChildren().indexOf(referenceRow) + 1;
+    }
+    RowPane rp = createRow(isFirstRowInBox, nrOfClosingBoxes);
+    ((TextField)rp.getExpression()).setText("*");
+    parentBox.getChildren().add(indexToInsertInParent,rp);
+    rList.add(rListInsertionIndex, rp);
+    lineNo.getChildren().add(createLabel());
+    updateLabelPaddings(rowNo);
+    addListeners(rp);
+    /*
+    if (lastTf != null) {
+        lastTf.textProperty().removeListener((ChangeListener<? super String>) lastTfListener);
+    }
+    TextField tempTf = (TextField) bp.getCenter();
+    //...tempTf.setText(formula);
+    lastTf = tempTf;
+    lastTf.textProperty().addListener((ChangeListener<? super String>) lastTfListener);
+     */
+
+}
 	// public void focus() { // Save the last focused textfield here for quick resuming?
 	//     Platform.runLater(() -> lastTf.requestFocus());
 	// }
@@ -363,6 +372,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
 	public void rowUpdated(boolean wellFormed, int lineNo) {
 		TextField expression = (TextField) rList.get(lineNo-1).getExpression();
+		if (expression.getText().equals(""))
+			wellFormed = true;
 		applyStyleIf(expression, !wellFormed, "bad");
 	}
 	public void conclusionReached(boolean correct, int lineNo){
@@ -374,6 +385,9 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	//update view to reflect that row with nr rowNr has been deleted
 	public void rowDeleted(int rowNr){
 		RowPane rp = rList.get(rowNr-1);
+		if (rowNr-1 == rList.size()-1 && (rowNr-2 >= 0)) { // Just check if this is the last row
+                newRowListener(rList.get(rowNr-2).getExpression());
+        }
 		VBox box = (VBox)rp.getParent();
 		List<Node> parentComponentList = box.getChildren();
 		if(parentComponentList.remove(rp) == false){
