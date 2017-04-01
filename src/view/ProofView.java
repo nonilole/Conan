@@ -132,6 +132,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	 * @param premisesAndConclusion
 	 */
 	public ProofView(TabPane tabPane, Proof proof, HBox premisesAndConclusion) {
+
 		this.proof = proof;
 		this.proof.registerProofListener(this);
 		this.premises = (TextField) premisesAndConclusion.getChildren().get(0);
@@ -151,7 +152,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			lastFocusedTf = this.conclusion;
 			caretPosition = this.conclusion.getCaretPosition();
 		});
-		SplitPane sp = new SplitPane(premisesAndConclusion, createProofPane());
+		AnchorPane cp=createProofPane();
+		SplitPane sp = new SplitPane(premisesAndConclusion, cp);
 		sp.setOrientation(Orientation.VERTICAL);
 		sp.setDividerPosition(0, 0.1);
 		AnchorPane anchorPane = new AnchorPane(sp);
@@ -159,11 +161,28 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		anchorPane.setRightAnchor(sp, 0.0);
 		anchorPane.setLeftAnchor(sp, 0.0);
 		anchorPane.setBottomAnchor(sp, 0.0);
+
 		this.tab = new ViewTab("Proof", this);
 		this.tab.setContent(anchorPane);
 		tabPane.getTabs().add(this.tab);
 		tabPane.getSelectionModel().select(this.tab); // Byt till den nya tabben
 		newRow();
+
+		AssumptionPane ap=new AssumptionPane();
+		ap.setMinHeight(80);
+		anchorPane.setBottomAnchor(ap,0.00);
+
+		SplitPane sp2 = new SplitPane(ap);
+		sp.getItems().add(sp2);
+		anchorPane.setBottomAnchor(sp2,90.0);
+		//.getChildren().add(sp2);
+	    sp2.setMinHeight(70);
+		sp2.setMaxHeight(70);
+		sp2.setFocusTraversable(false);
+		sp2.setOrientation(Orientation.VERTICAL);
+		anchorPane.getChildren().add(sp2);
+
+//		tabPane.getChildrenUnmodifiable().add(ap);
 
 		initializeRuleMap();
 	}
@@ -239,6 +258,35 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		RowPane bp = new RowPane(isFirstRowInBox,nrOfClosingBoxes);
 
 
+        //setting up a context menu for right-clicking a textfield
+		ContextMenu contextMenu = new ContextMenu();
+		MenuItem delete = new MenuItem("Delete");
+		MenuItem insertAbove = new MenuItem("Insert Above");
+		MenuItem insertBelow = new MenuItem("Insert Below");
+		contextMenu.getItems().add(delete);
+		contextMenu.getItems().add(insertAbove);
+		contextMenu.getItems().add(insertBelow);
+		bp.getRule().setContextMenu(contextMenu);
+		bp.getRulePrompt1().setContextMenu(contextMenu);
+		bp.getRulePrompt2().setContextMenu(contextMenu);
+		bp.getRulePrompt3().setContextMenu(contextMenu);
+		((TextField)bp.getCenter()).setContextMenu(contextMenu);
+		bp.getRule().setContextMenu(contextMenu);
+		delete.setOnAction(event -> {
+			int rowOfPressedButton=rList.indexOf(bp) + 1;
+			proof.deleteRow(rowOfPressedButton);
+		});;
+		insertAbove.setOnAction(event -> {
+			int rowOfPressedButton=rList.indexOf(bp) + 1;
+			proof.insertNewRow(rowOfPressedButton,BoxReference.BEFORE);
+		});;
+		insertBelow.setOnAction(event -> {
+			int rowOfPressedButton=rList.indexOf(bp) + 1;
+			proof.insertNewRow(rowOfPressedButton,BoxReference.AFTER);
+		});;
+
+
+
 		//Action Events for delete and insert buttons in RowButtonsPane
 		bp.getEditRowPane().getDeleteButton().setOnAction(event -> {
 			int rowOfPressedButton = rList.indexOf(bp.getEditRowPane().getParent()) + 1;
@@ -254,8 +302,10 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		});
 
 
+
 		//adding listeners to the expression- and rule textfield
 		TextField tfExpression = bp.getExpression();
+
 		tfExpression.focusedProperty().addListener((observable, oldValue, newValue) -> {
 			lastFocusedTf = tfExpression;
 			caretPosition = tfExpression.getCaretPosition();
