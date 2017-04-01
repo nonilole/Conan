@@ -171,16 +171,21 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		AssumptionPane ap=new AssumptionPane();
 		ap.setMinHeight(80);
 		anchorPane.setBottomAnchor(ap,0.00);
-
 		SplitPane sp2 = new SplitPane(ap);
 		sp.getItems().add(sp2);
 		anchorPane.setBottomAnchor(sp2,90.0);
-		//.getChildren().add(sp2);
 	    sp2.setMinHeight(70);
 		sp2.setMaxHeight(70);
 		sp2.setFocusTraversable(false);
 		sp2.setOrientation(Orientation.VERTICAL);
 		anchorPane.getChildren().add(sp2);
+        ap.getOpenButton().setOnAction(event -> {
+			proof.openBox();
+		});
+
+		ap.getCloseButton().setOnAction(event -> {
+			proof.closeBox();
+		});;
 
 //		tabPane.getChildrenUnmodifiable().add(ap);
 
