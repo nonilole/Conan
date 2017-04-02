@@ -1,5 +1,10 @@
 package model.rules;
 
+import model.Box;
+import model.ProofRow;
+import model.formulas.Formula;
+import model.formulas.Implication;
+
 public class ImplicationIntroRule implements Rule {
 
 	private Intervall premiseIntervall;
@@ -31,4 +36,26 @@ public class ImplicationIntroRule implements Rule {
 		return String.format("→-I (%s)", premiseIntervall);
 	}
 
+	public boolean verify(Box data, int rowIndex) {
+		//System.out.println("Verification.verifyImplicationIntro");
+		// is the rule object of the correct type?
+		ProofRow rowToVerify = data.getRow( rowIndex );
+		assert(rowToVerify.getRule() instanceof ImplicationIntroRule) :
+				"Incorrect rule type function: Verification.verifyImplicationIntro";
+		ImplicationIntroRule rule = (ImplicationIntroRule) rowToVerify.getRule();
+
+		// are the references in the rule object in scope of rowIndex?
+		// are all the referenced rows verified?
+		// ProofData.isInScope should check both of these
+		Intervall premiseIntervall = rule.getPremiseIntervall();
+		if( data.isInScopeOf(premiseIntervall, rowIndex) == false) return false;
+
+		//do we have the needed premises/references to make the deduction?
+		if(rowToVerify.getFormula() instanceof Implication == false) return false;
+		Implication conclusion = (Implication)rowToVerify.getFormula();
+		Formula assumption      = data.getRow( premiseIntervall.startIndex ).getFormula();
+		Formula conclusionOfBox = data.getRow( premiseIntervall.endIndex ).getFormula();
+		return conclusion.equals(new Implication(assumption, conclusionOfBox));
+
+	}
 }

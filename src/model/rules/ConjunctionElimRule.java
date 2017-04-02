@@ -1,5 +1,10 @@
 package model.rules;
 
+import model.Box;
+import model.ProofRow;
+import model.formulas.Conjunction;
+import model.formulas.Formula;
+
 public class ConjunctionElimRule implements Rule{
 	private int type;
 	private Integer reference;
@@ -38,5 +43,30 @@ public class ConjunctionElimRule implements Rule{
 	@Override
 	public String toString(){
 	  return String.format("ConjunctionElimRule%s  (%s)",type,reference);
+	}
+
+	@Override
+	public boolean verify(Box data, int rowIndex) {
+		// is the rule object of the correct type? Probably just check with an assertion
+		ProofRow rowToVerify = data.getRow( rowIndex );
+		assert(rowToVerify.getRule() instanceof ConjunctionElimRule):"Incorrect rule type in Verification.verifyConjunctionIntro";
+		ConjunctionElimRule rule = (ConjunctionElimRule) rowToVerify.getRule();
+
+		// are the references in the rule object in scope of rowIndex?
+		// are all the referenced rows verified?
+		// Box.isInScope should check both scope and if the data is verified
+		if( data.isInScopeOf( rule.getPremise(), rowIndex ) == false ) return false;
+
+		// do we have the needed references to make the deduction?
+		Formula result = data.getRow(rowIndex).getFormula();
+		Formula reference = data.getRow( rule.getPremise() ).getFormula();
+		if( reference instanceof Conjunction == false) return false;
+		Conjunction ref = (Conjunction)reference;
+		if( rule.getType() == 1){
+			return result.equals(ref.lhs);
+		}
+		else{ //rule.getType() == 2
+			return result.equals(ref.rhs);
+		}
 	}
 }

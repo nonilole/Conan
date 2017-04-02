@@ -1,5 +1,7 @@
 package model.rules;
 
+import model.Box;
+
 public class Premise implements Rule {
 	
 	
@@ -13,4 +15,9 @@ public class Premise implements Rule {
 	public String toString(){
 		return "Premise";
 	}
+
+	@Override
+    public boolean verify(Box data, int rowIndex) {
+	    return true;
+    }
 }

@@ -139,24 +139,10 @@ public class Proof implements Serializable{
     	if(rule.hasCompleteInfo() == false ) return false;
     	
     	//call the appropriate verification function
-    	boolean isVerified;
-    	if(rule instanceof Premise){
-    		isVerified = true; 
-    	}
-    	else if(rule instanceof ConjunctionElimRule){
-    		isVerified = Verification.verifyConjunctionElim(proofData, rowIndex);
-    	}
-    	else if(rule instanceof ConjunctionIntroRule){
-    		isVerified = Verification.verifyConjunctionIntro(proofData, rowIndex);
-    	}
-    	else if(rule instanceof ImplicationIntroRule){
-    		isVerified = Verification.verifyImplicationIntro(proofData, rowIndex);
-    	}
-    	else{
-    		System.out.println(rule+" rule not implemented yet, have you added it to Proof.verifyRow ?");
-    		isVerified = false;
-    	}
-    	row.setVerified(isVerified);
+    	boolean isVerified = rule.verify(proofData, rowIndex);
+    	if (isVerified) {
+            row.setVerified(isVerified);
+        }
     	return isVerified;
     }
     
