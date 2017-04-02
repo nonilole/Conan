@@ -233,4 +233,8 @@ public class Proof implements Serializable{
     public void printProofIntervallScope(){
     	proofData.printProofIntervallScope();
     }*/
+    
+    public void rulePromptUpdate(int row, int promptIndex, String newValue) {
+    	
+    }
 }

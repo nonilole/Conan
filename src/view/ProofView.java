@@ -250,7 +250,18 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			lastFocusedTf = tfRule;
 			caretPosition = tfRule.getCaretPosition();
 		});
-		
+		TextField ruleprompt1 = bp.getRulePrompt1();
+		ruleprompt1.focusedProperty().addListener((observable, oldValue, newValue) -> {
+			proof.rulePromptUpdate(rList.indexOf(ruleprompt1), 0, ruleprompt1.getText());
+		});
+		TextField ruleprompt2 = bp.getRulePrompt2();
+		ruleprompt2.focusedProperty().addListener((observable, oldValue, newValue) -> {
+			proof.rulePromptUpdate(rList.indexOf(ruleprompt2), 0, ruleprompt1.getText());
+		});
+		TextField ruleprompt3 = bp.getRulePrompt3();
+		ruleprompt3.focusedProperty().addListener((observable, oldValue, newValue) -> {
+			proof.rulePromptUpdate(rList.indexOf(ruleprompt3), 0, ruleprompt1.getText());
+		});
 		return bp;
 	}
 
