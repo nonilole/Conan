@@ -9,6 +9,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
+
 public class AssumptionPane extends GridPane {
     Tooltip openTip=new Tooltip("Open a box");
     Tooltip closeTip=new Tooltip("Close the box");
