@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -11,7 +10,6 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -61,10 +59,7 @@
             <Menu mnemonicParsing="false" text="Preferences" />
         <Menu mnemonicParsing="false" text="Help">
           <items>
-
-
-            <MenuItem mnemonicParsing="false" text="About" />
-                  <MenuItem mnemonicParsing="false" onAction="#showInferenceRules" text="Show Inference Rules" />
+            <MenuItem mnemonicParsing="false" onAction="#showUserInstructions" text="About" />
           </items>
         </Menu>
       </menus>
@@ -73,15 +68,7 @@
         <items>
           <Button mnemonicParsing="false" onAction="#saveProof" text="Save" />
             <Button mnemonicParsing="false" onAction="#openProof" text="Load" />
-            <Button layoutX="118.0" layoutY="11.0" mnemonicParsing="false" onAction="#newRow" text="newRow" />
-            <Button layoutX="204.0" layoutY="11.0" mnemonicParsing="false" onAction="#openBox" text="openBox" />
-            <Button layoutX="281.0" layoutY="11.0" mnemonicParsing="false" onAction="#closeBox" text="closeBox" />
             <Button mnemonicParsing="false" onAction="#newProof" text="newProofButton" />
-            <Button mnemonicParsing="false" onAction="#deleteRow" text="deleteRow" />
-            <TextField fx:id="indexInput" prefHeight="26.0" prefWidth="45.0" />
-            <Button mnemonicParsing="false" onAction="#insertRow" text="InsertRow" />
-            <CheckBox fx:id="insertAfterCheck" mnemonicParsing="false" text="Insert after" />
-            <Button mnemonicParsing="false" onAction="#showInferenceRules" text="displayInferenceRules" />
         </items>
       </ToolBar>
     <SplitPane dividerPositions="0.2" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" scaleShape="false" VBox.vgrow="ALWAYS">
