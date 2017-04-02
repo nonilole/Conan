@@ -11,10 +11,10 @@ import javafx.scene.layout.Pane;
 
 
 public class AssumptionPane extends GridPane {
-    Tooltip openTip=new Tooltip("Open a box");
-    Tooltip closeTip=new Tooltip("Close the box");
-    Button openButton=new Button("\u2293");
-    Button closeButton=new Button("\u2294");
+    private Tooltip openTip=new Tooltip("Open a box");
+    private Tooltip closeTip=new Tooltip("Close the box");
+    private Button openButton=new Button("\u2293");
+    private Button closeButton=new Button("\u2294");
     public AssumptionPane(){
     //this.getChildren().addAll(openButton,closeButton);
     openButton.setMinWidth(100);

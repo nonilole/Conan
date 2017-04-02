@@ -6,17 +6,15 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.FlowPane;
 
-/**
- * Created by Rapie on 2017-03-31.
- */
-public class RowButtonsPane extends FlowPane {
-    Button deleteButton=new Button("X");
-    Button insertBeforeButton=new Button("\u2BC5");
-    Button insertAfterButton=new Button("\u2BC6");
 
-    final Tooltip deleteTooltip = new Tooltip("Delete");
-    final Tooltip insertBeforeTooltip = new Tooltip("Insert Above");
-    final Tooltip insertAfterTooltip = new Tooltip("Insert Below");
+public class RowButtonsPane extends FlowPane {
+    private Button deleteButton=new Button("X");
+    private Button insertBeforeButton=new Button("\u2BC5");
+    private Button insertAfterButton=new Button("\u2BC6");
+
+    private final Tooltip deleteTooltip = new Tooltip("Delete");
+    private final Tooltip insertBeforeTooltip = new Tooltip("Insert Above");
+    private final Tooltip insertAfterTooltip = new Tooltip("Insert Below");
 
     public RowButtonsPane(){
         this.setMaxWidth(80);
