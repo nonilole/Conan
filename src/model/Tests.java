@@ -1,6 +1,7 @@
 package model;
 
 import java.io.File;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -10,6 +11,7 @@ import model.formulas.Formula;
 import model.formulas.RandomFormulaGenerator;
 import model.rules.ConjunctionElim;
 import model.rules.ConjunctionIntro;
+import model.rules.DisjunctionIntro;
 import model.rules.ImplicationIntro;
 import model.rules.Intervall;
 import model.rules.Premise;
@@ -30,7 +32,20 @@ public class Tests {
 	
 	public static void verificationTest(){
 		Proof proof = new Proof();
+		
+		//DisjunctionIntro
+		System.out.println("DisjunctionIntro");
+		proof.addRow();//1
+		proof.addRow();//2
+		proof.updateFormulaRow("A", 1);
+		proof.addRule(1, new Premise());
+		proof.updateFormulaRow("A ∨ B", 2);
+		proof.addRule(2, new DisjunctionIntro(1));
+		proof.printProof(true);
+		
 		//ConjunctionElimRule test
+		System.out.println("ConjunctionElimRule");
+		proof = new Proof();
 		proof.addRow();//1
 		proof.openBox();
 		proof.addRow();//2
@@ -42,6 +57,7 @@ public class Tests {
 		proof.addRule(2, new Premise());
 		proof.updateFormulaRow("B", 3);
 		proof.addRule(3, new ConjunctionElim(2,0));
+		proof.printProof(true);
 		
 		//ImplicationIntroRule test
 		/*
@@ -61,7 +77,6 @@ public class Tests {
 		proof.updateFormulaRow("A → B", 4);
 		proof.addRule(4, new ImplicationIntroRule(new Intervall(1,2)));
 		*/
-		proof.printProof(true);
 	}
 	
 	public static void isInScopeIntervallTest(){
