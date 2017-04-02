@@ -168,26 +168,28 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		tabPane.getSelectionModel().select(this.tab); // Byt till den nya tabben
 		newRow();
 
-		AssumptionPane ap=new AssumptionPane();
-		ap.setMinHeight(80);
-		anchorPane.setBottomAnchor(ap,0.00);
-		SplitPane sp2 = new SplitPane(ap);
-		sp.getItems().add(sp2);
-		anchorPane.setBottomAnchor(sp2,90.0);
-	    sp2.setMinHeight(70);
-		sp2.setMaxHeight(70);
-		sp2.setFocusTraversable(false);
-		sp2.setOrientation(Orientation.VERTICAL);
-		anchorPane.getChildren().add(sp2);
-        ap.getOpenButton().setOnAction(event -> {
+
+		//Code for placing the splitpane containing an AssumptionPane containing buttons for open/close box
+		AssumptionPane assumptionPane=new AssumptionPane();
+		assumptionPane.setMinHeight(60);
+		anchorPane.setBottomAnchor(assumptionPane,0.00);
+		SplitPane splitPaneAssumptions = new SplitPane(assumptionPane);
+		sp.getItems().add(splitPaneAssumptions);
+		anchorPane.setBottomAnchor(splitPaneAssumptions,0.0);
+		splitPaneAssumptions.setMinHeight(57);
+		splitPaneAssumptions.setMaxHeight(57);
+		splitPaneAssumptions.setFocusTraversable(false);
+		splitPaneAssumptions.setOrientation(Orientation.VERTICAL);
+		
+		//controller for buttons in AssumptionPane
+		anchorPane.getChildren().add(splitPaneAssumptions);
+        assumptionPane.getOpenButton().setOnAction(event -> {
 			proof.openBox();
 		});
 
-		ap.getCloseButton().setOnAction(event -> {
+		assumptionPane.getCloseButton().setOnAction(event -> {
 			proof.closeBox();
 		});;
-
-//		tabPane.getChildrenUnmodifiable().add(ap);
 
 		initializeRuleMap();
 	}
