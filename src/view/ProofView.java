@@ -279,6 +279,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		bp.getRulePrompt3().setContextMenu(contextMenu);
 		((TextField)bp.getCenter()).setContextMenu(contextMenu);
 		bp.getRule().setContextMenu(contextMenu);
+
+		
 		delete.setOnAction(event -> {
 			int rowOfPressedButton=rList.indexOf(bp) + 1;
 			proof.deleteRow(rowOfPressedButton);
@@ -296,15 +298,15 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
 		//Action Events for delete and insert buttons in RowButtonsPane
 		bp.getEditRowPane().getDeleteButton().setOnAction(event -> {
-			int rowOfPressedButton = rList.indexOf(bp.getEditRowPane().getParent()) + 1;
+			int rowOfPressedButton=rList.indexOf(bp) + 1;;
 			proof.deleteRow(rowOfPressedButton);
 		});
 		bp.getEditRowPane().getInsertBeforeButton().setOnAction(event -> {
-			int rowOfPressedButton = rList.indexOf(bp.getEditRowPane().getParent()) + 1;
+			int rowOfPressedButton=rList.indexOf(bp) + 1;;
 			proof.insertNewRow(rowOfPressedButton,BoxReference.BEFORE);
 		});
 		bp.getEditRowPane().getInsertAfterButton().setOnAction(event -> {
-			int rowOfPressedButton = rList.indexOf(bp.getEditRowPane().getParent()) + 1;
+			int rowOfPressedButton=rList.indexOf(bp) + 1;;
 			proof.insertNewRow(rowOfPressedButton,BoxReference.AFTER);
 		});
 
