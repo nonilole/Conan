@@ -5,15 +5,15 @@ import model.ProofRow;
 import model.formulas.Conjunction;
 import model.formulas.Formula;
 
-public class ConjunctionIntroRule implements Rule{
+public class ConjunctionIntro implements Rule{
 
 	//indexes of the premises
 	private Integer premise1;
 	private Integer premise2;
 	
-	public ConjunctionIntroRule(){ super(); }
+	public ConjunctionIntro(){ super(); }
 	
-	public ConjunctionIntroRule(int premise1Index, int premise2Index){
+	public ConjunctionIntro(int premise1Index, int premise2Index){
 		super();
 		premise1 = premise1Index;
 		premise2 = premise2Index;
@@ -52,8 +52,8 @@ public class ConjunctionIntroRule implements Rule{
 		//System.out.println("Verification.verifyAndIntro");
 		// is the rule object of the correct type?
 		ProofRow rowToVerify = data.getRow( rowIndex );
-		assert(rowToVerify.getRule() instanceof ConjunctionIntroRule):"Incorrect rule type in Verification.verifyConjunctionIntro";
-		ConjunctionIntroRule rule = (ConjunctionIntroRule) rowToVerify.getRule();
+		assert(rowToVerify.getRule() instanceof ConjunctionIntro):"Incorrect rule type in Verification.verifyConjunctionIntro";
+		ConjunctionIntro rule = (ConjunctionIntro) rowToVerify.getRule();
 
 		// are the references in the rule object in scope of rowIndex?
 		// are all the referenced rows verified?

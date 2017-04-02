@@ -5,15 +5,15 @@ import model.ProofRow;
 import model.formulas.Formula;
 import model.formulas.Implication;
 
-public class ImplicationIntroRule implements Rule {
+public class ImplicationIntro implements Rule {
 
 	private Intervall premiseIntervall;
 
-	public ImplicationIntroRule(){
+	public ImplicationIntro(){
 		super();
 	}
 	
-	public ImplicationIntroRule(Intervall indexIntervall){
+	public ImplicationIntro(Intervall indexIntervall){
 		super();
 		premiseIntervall = indexIntervall;
 	}
@@ -40,9 +40,9 @@ public class ImplicationIntroRule implements Rule {
 		//System.out.println("Verification.verifyImplicationIntro");
 		// is the rule object of the correct type?
 		ProofRow rowToVerify = data.getRow( rowIndex );
-		assert(rowToVerify.getRule() instanceof ImplicationIntroRule) :
+		assert(rowToVerify.getRule() instanceof ImplicationIntro) :
 				"Incorrect rule type function: Verification.verifyImplicationIntro";
-		ImplicationIntroRule rule = (ImplicationIntroRule) rowToVerify.getRule();
+		ImplicationIntro rule = (ImplicationIntro) rowToVerify.getRule();
 
 		// are the references in the rule object in scope of rowIndex?
 		// are all the referenced rows verified?

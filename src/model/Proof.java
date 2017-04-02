@@ -1,10 +1,6 @@
 package model;
 
 import model.formulas.Formula;
-import model.rules.ConjunctionElimRule;
-import model.rules.ConjunctionIntroRule;
-import model.rules.ImplicationIntroRule;
-import model.rules.Premise;
 import model.rules.Rule;
 
 import java.io.Serializable;
@@ -235,8 +231,6 @@ public class Proof implements Serializable{
     	int x = zeroBasedNumbering ? 0 : 1;
     	proofData.printRows(1,x);
     }
-    
-
     
     public void rulePromptUpdate(int row, int promptIndex, String newValue) {}
   

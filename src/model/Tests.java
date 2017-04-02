@@ -8,9 +8,9 @@ import java.util.Scanner;
 
 import model.formulas.Formula;
 import model.formulas.RandomFormulaGenerator;
-import model.rules.ConjunctionElimRule;
-import model.rules.ConjunctionIntroRule;
-import model.rules.ImplicationIntroRule;
+import model.rules.ConjunctionElim;
+import model.rules.ConjunctionIntro;
+import model.rules.ImplicationIntro;
 import model.rules.Intervall;
 import model.rules.Premise;
 
@@ -41,7 +41,7 @@ public class Tests {
 		proof.updateFormulaRow("A ∧ B", 2);
 		proof.addRule(2, new Premise());
 		proof.updateFormulaRow("B", 3);
-		proof.addRule(3, new ConjunctionElimRule(2,0));
+		proof.addRule(3, new ConjunctionElim(2,0));
 		
 		//ImplicationIntroRule test
 		/*

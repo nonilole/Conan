@@ -5,17 +5,17 @@ import model.ProofRow;
 import model.formulas.Conjunction;
 import model.formulas.Formula;
 
-public class ConjunctionElimRule implements Rule{
+public class ConjunctionElim implements Rule{
 	private int type;
 	private Integer reference;
 	
-	public ConjunctionElimRule(int type){
+	public ConjunctionElim(int type){
 		super();
 		if( type != 1 && type != 2) throw new IllegalArgumentException("ConjunctionElim(int type): type must be 1 or 2");
 		this.type = type;
 	}
 	
-	public ConjunctionElimRule(int type, int premise){
+	public ConjunctionElim(int type, int premise){
 		super();
 		if( type != 1 && type != 2) throw new IllegalArgumentException("ConjunctionElim(int type): type must be 1 or 2");
 		this.type = type;
@@ -49,8 +49,8 @@ public class ConjunctionElimRule implements Rule{
 	public boolean verify(Box data, int rowIndex) {
 		// is the rule object of the correct type? Probably just check with an assertion
 		ProofRow rowToVerify = data.getRow( rowIndex );
-		assert(rowToVerify.getRule() instanceof ConjunctionElimRule):"Incorrect rule type in Verification.verifyConjunctionIntro";
-		ConjunctionElimRule rule = (ConjunctionElimRule) rowToVerify.getRule();
+		assert(rowToVerify.getRule() instanceof ConjunctionElim):"Incorrect rule type in Verification.verifyConjunctionIntro";
+		ConjunctionElim rule = (ConjunctionElim) rowToVerify.getRule();
 
 		// are the references in the rule object in scope of rowIndex?
 		// are all the referenced rows verified?
