@@ -35,19 +35,9 @@ public class WelcomeView extends Symbolic implements View {
         Label welcomeText = new Label(sWelcomeText);
         welcomeText.getStyleClass().add("myText");
         welcomeText.setWrapText(true);
-        RowConstraints rowC1 = new RowConstraints();
-        RowConstraints rowC2 = new RowConstraints();
-        RowConstraints rowC3 = new RowConstraints();
-        RowConstraints rowC4 = new RowConstraints();
-        RowConstraints rowC5 = new RowConstraints();
-        rowC1.setPrefHeight(20.0);
-        rowC2.setPrefHeight(20.0);
-        rowC3.setFillHeight(true);
-        rowC4.setPrefHeight(20.0);
-        rowC5.setPrefHeight(20.0);
-        HBox premisesAndConclusion = new premisesAndConclusion();
-        this.premises = (TextField) premisesAndConclusion.getChildren().get(0);
-        this.conclusion = (TextField) premisesAndConclusion.getChildren().get(2);
+        PremisesAndConclusion premisesAndConclusion = new PremisesAndConclusion();
+        this.premises = premisesAndConclusion.getPremises();
+        this.conclusion = premisesAndConclusion.getConclusion();
         this.premises.setId("expression");
         this.conclusion.setId("expression");
         this.premises.focusedProperty().addListener((observable, oldValue, newValue) -> {
@@ -80,7 +70,6 @@ public class WelcomeView extends Symbolic implements View {
             tabPane1.getTabs().remove(tab);
             new ProofView(tabPane1, new Proof(), premises.getText(), conclusion.getText());
         });
-        //gridPane.getRowConstraints().addAll(rowC1, rowC2, rowC3, rowC4, rowC5);
         gridPane.add(title, 0, 0);
         gridPane.add(help, 0, 1);
 

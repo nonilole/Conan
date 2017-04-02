@@ -132,12 +132,12 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	 * @param tabPane
 	 * @param premisesAndConclusion
 	 */
-	public ProofView(TabPane tabPane, Proof proof, HBox premisesAndConclusion) {
+	public ProofView(TabPane tabPane, Proof proof, PremisesAndConclusion premisesAndConclusion) {
 		this.proof = proof;
 		this.proof.registerProofListener(this);
-		this.premises = (TextField) premisesAndConclusion.getChildren().get(0);
+		this.premises = premisesAndConclusion.getPremises();
 		this.premises.setId("expression");
-		this.conclusion = (TextField) premisesAndConclusion.getChildren().get(2);
+		this.conclusion = premisesAndConclusion.getConclusion();
 		this.conclusion.setId("expression");
 		this.conclusion.textProperty().addListener((ov, oldValue, newValue) -> {
 			proof.updateConclusion(newValue);
@@ -198,10 +198,10 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
 
 	public ProofView(TabPane tabPane, Proof proof) {
-		this(tabPane, proof, new premisesAndConclusion());
+		this(tabPane, proof, new PremisesAndConclusion());
 	}
 	public ProofView(TabPane tabPane, Proof proof, String sPremises, String sConclusion) {
-		this(tabPane, proof, new premisesAndConclusion(sPremises, sConclusion));
+		this(tabPane, proof, new PremisesAndConclusion(sPremises, sConclusion));
 	}
 	/* Controller begin */
 	public void openBox() {

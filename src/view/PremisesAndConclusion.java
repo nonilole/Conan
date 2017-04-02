@@ -8,12 +8,11 @@ import model.Parser;
 import model.ParseException;
 
 // Kanske vill skriva om ProofListener och låta denna lyssna på ett bevis istället.
-public class premisesAndConclusion extends HBox {
+public class PremisesAndConclusion extends HBox {
     Parser parser = new Parser();
     private TextField premises;
     private TextField turnstile;
     private TextField conclusion;
-   // Kanske vill skriva om ProofListener och låta denna lyssna på ett bevis istället.
     private void applyStyleIf(TextField expression, boolean bool, String style) {
         expression.getStyleClass().removeIf((s) -> s.equals(style));
         if (bool) {
@@ -42,8 +41,15 @@ public class premisesAndConclusion extends HBox {
         this.setPrefHeight(30.0);
         this.setMaxHeight(30.0);
     }
+    public TextField getPremises() {
+        return this.premises;
+    }
 
-    public premisesAndConclusion(String sPremises, String sConclusion) {
+    public TextField getConclusion() {
+        return this.conclusion;
+    }
+
+    public PremisesAndConclusion(String sPremises, String sConclusion) {
         premises = new TextField(sPremises);
         premises.textProperty().addListener((ov, oldValue, newValue) -> {
             parseAndStyle(premises, newValue);
@@ -65,7 +71,7 @@ public class premisesAndConclusion extends HBox {
         this.getChildren().addAll(premises, turnstile, conclusion);
         setPrefs();
     }
-    public premisesAndConclusion() {
+    public PremisesAndConclusion() {
         this("","");
     }
 }
