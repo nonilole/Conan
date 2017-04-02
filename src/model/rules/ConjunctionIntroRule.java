@@ -1,6 +1,6 @@
 package model.rules;
 
-public class ConjunctionIntroRule extends Rule{
+public class ConjunctionIntroRule implements Rule{
 
 	//indexes of the premises
 	private Integer premise1;
@@ -8,10 +8,10 @@ public class ConjunctionIntroRule extends Rule{
 	
 	public ConjunctionIntroRule(){ super(); }
 	
-	public ConjunctionIntroRule(int p1, int p2){
+	public ConjunctionIntroRule(int premise1Index, int premise2Index){
 		super();
-		premise1 = p1;
-		premise2 = p2;
+		premise1 = premise1Index;
+		premise2 = premise2Index;
 	}
 	
 	@Override
@@ -39,7 +39,7 @@ public class ConjunctionIntroRule extends Rule{
 	public String toString(){
 		String p1 = premise1 == null ? "" : premise1.toString();
 		String p2 = premise2 == null ? "" : premise2.toString();
-		return String.format("∧-I (%i),(%i)",p1,p2);
+		return String.format("∧-I (%s),(%s)",p1,p2);
 	}
 	
 }
