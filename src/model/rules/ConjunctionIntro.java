@@ -68,9 +68,9 @@ public class ConjunctionIntro implements Rule{
 		// do we have the needed premises/references to make the deduction?
 		if(rowToVerify.getFormula() instanceof Conjunction == false) return false;
 		Conjunction conclusion = (Conjunction)rowToVerify.getFormula();
-		Formula premise1 = data.getRow( rule.getPremise1()-1 ).getFormula();//this currently assumes the premise is stored as a rowNr rather than index
-		Formula premise2 = data.getRow( rule.getPremise2()-1 ).getFormula();
-		return conclusion.equals(new Conjunction(premise1, premise2));
+		Formula content1 = data.getRow( rule.getPremise1()-1 ).getFormula();//this currently assumes the premise is stored as a rowNr rather than index
+		Formula content2 = data.getRow( rule.getPremise2()-1 ).getFormula();
+		return conclusion.equals(new Conjunction(content1, content2));
 	}
 	
 }
