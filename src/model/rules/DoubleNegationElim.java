@@ -34,8 +34,8 @@ public class DoubleNegationElim implements Rule {
             if (premise instanceof Negation == false) {
                 return false;
             } else {
-                    negation = (Negation) premise;
-                    return negation.formula.equals(data.getRow(rowIndex).getFormula());
+                negation = (Negation) premise;
+                return negation.formula.equals(data.getRow(rowIndex).getFormula());
             }
         }
     }
