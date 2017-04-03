@@ -394,8 +394,14 @@ public void rowInserted(int rowNo, BoxReference br) {
 		applyStyleIf(expression, correct, "conclusionReached");
 	}
 
+    @Override
+    public void rowVerified(boolean verified, int lineNo) {
+        TextField rule = (TextField) rList.get(lineNo-1).getRule();
+        applyStyleIf(rule, verified, "unverified");
+    }
 
-	//update view to reflect that row with nr rowNr has been deleted
+
+    //update view to reflect that row with nr rowNr has been deleted
 	public void rowDeleted(int rowNr){
 		RowPane rp = rList.get(rowNr-1);
 		if (rowNr-1 == rList.size()-1 && (rowNr-2 >= 0)) { // Just check if this is the last row

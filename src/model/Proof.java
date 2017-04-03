@@ -12,7 +12,7 @@ public class Proof implements Serializable{
     private Parser parser = new Parser(); //this won't be serialized
     private Formula conclusion;
     private Box proofData = new Box(null, true);
-    HashMap<String, Class<?>> ruleClass = new HashMap<String, Class<?>>();
+    private HashMap<String, Class<?>> ruleClass = new HashMap<String, Class<?>>();
 
     /***
      * Add a new row at the end of the proof.
@@ -111,6 +111,7 @@ public class Proof implements Serializable{
         Class<?> c = ruleClass.getOrDefault(rule, null);
         if (c != null)
             proofData.getRow(rowIndex).setRule((Rule) c.newInstance());
+        verifyRow(rowIndex);
     }
     
     //Adds a rule object to the given row
@@ -136,13 +137,17 @@ public class Proof implements Serializable{
     	assert(rowIndex < proofData.size()) : "Proof.verifyRow: index out of bounds";
     	ProofRow row = proofData.getRow(rowIndex);
     	Rule rule = row.getRule();
-    	if(rule == null) return false;
-    	if(rule.hasCompleteInfo() == false ) return false;
+    	if (rule == null) return false;
+    	boolean isVerified = true;
+    	if(rule.hasCompleteInfo() == false ) isVerified = false;
     	
     	//call the appropriate verification function
-    	boolean isVerified = rule.verify(proofData, rowIndex);
+    	isVerified = rule.verify(proofData, rowIndex);
     	if (isVerified) {
             row.setVerified(isVerified);
+        }
+        for (ProofListener listener : this.listeners) {
+            listener.rowVerified(isVerified, rowIndex+1);
         }
     	return isVerified;
     }
