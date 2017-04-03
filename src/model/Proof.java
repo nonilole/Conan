@@ -1,16 +1,18 @@
 package model;
 
 import model.formulas.Formula;
-import model.rules.Rule;
+import model.rules.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Proof implements Serializable{
     private ArrayList<ProofListener> listeners = new ArrayList<ProofListener>();
     private Parser parser = new Parser(); //this won't be serialized
     private Formula conclusion;
     private Box proofData = new Box(null, true);
+    HashMap<String, Class<?>> ruleClass = new HashMap<String, Class<?>>();
 
     /***
      * Add a new row at the end of the proof.
@@ -232,7 +234,9 @@ public class Proof implements Serializable{
     	proofData.printRows(1,x);
     }
     
-    public void rulePromptUpdate(int row, int promptIndex, String newValue) {}
+    public void rulePromptUpdate(int row, int promptIndex, String newValue) {
+
+    }
   
     public void printRowScopes(boolean zeroBasedNumbering){
     	proofData.printRowScopes(zeroBasedNumbering);
@@ -242,5 +246,15 @@ public class Proof implements Serializable{
     public void printIntervallScopes( boolean zeroBasedNumbering){
     	proofData.printIntervallScopes(zeroBasedNumbering);
 
+    }
+
+    public Proof() {
+        ruleClass.put("∧E", ConjunctionElim.class);
+        ruleClass.put("∧I", ConjunctionIntro.class);
+        ruleClass.put("∨I", DisjunctionIntro.class);
+        ruleClass.put("¬¬E", DoubleNegationElim.class);
+        ruleClass.put("=I", EqualityIntro.class);
+        ruleClass.put("→I", ImplicationIntro.class);
+        ruleClass.put("Premise", Premise.class);
     }
 }
