@@ -25,6 +25,7 @@ public class DoubleNegationElim implements Rule {
     @Override
     public boolean verify(Box data, int rowIndex) {
         Formula premise = data.getRow(getPremise1()).getFormula();
+        if (data.isInScopeOf(getPremise1(), rowIndex) == false) return false;
         if (premise instanceof Negation == false) {
             return false;
         } else {
