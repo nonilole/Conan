@@ -14,12 +14,17 @@ public class EqualityIntro implements Rule {
 
     @Override
     public boolean verify(Box data, int rowIndex) {
-        Formula formula = data.getRow(rowIndex).getFormula();
-        if (formula instanceof Equality == false) {
+        Formula result = data.getRow(rowIndex).getFormula();
+        if (result instanceof Equality == false) {
             return false;
         } else {
-            Equality equality = (Equality) formula;
-            return equality.lhs == equality.rhs;
+            Equality equality = (Equality) result;
+            return equality.lhs.equals(equality.rhs);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "=-I";
     }
 }

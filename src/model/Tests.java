@@ -9,15 +9,9 @@ import java.util.Scanner;
 
 import model.formulas.Formula;
 import model.formulas.RandomFormulaGenerator;
-import model.rules.ConjunctionElim;
-import model.rules.ConjunctionIntro;
-import model.rules.DisjunctionIntro;
-import model.rules.ImplicationIntro;
-import model.rules.Intervall;
-import model.rules.Premise;
+import model.rules.*;
 
 public class Tests {
-
 	public static void main(String[] args) {
 		System.out.println("Running tests!");
 		//equalsTest();
@@ -29,10 +23,9 @@ public class Tests {
 		verificationTest();
 		System.out.println("Done.");
 	}
-	
-	public static void verificationTest(){
+
+	public static void testDisjunctionIntro() {
 		Proof proof = new Proof();
-		
 		//DisjunctionIntro
 		System.out.println("DisjunctionIntro");
 		proof.addRow();//1
@@ -40,11 +33,13 @@ public class Tests {
 		proof.updateFormulaRow("A", 1);
 		proof.addRule(1, new Premise());
 		proof.updateFormulaRow("A ∨ B", 2);
-		proof.addRule(2, new DisjunctionIntro(1));
+		proof.addRule(2, new DisjunctionIntro(0));
 		proof.printProof(true);
-		
+	}
+	public static void testConjunctionElim() {
+		Proof proof = new Proof();
 		//ConjunctionElimRule test
-		System.out.println("ConjunctionElimRule");
+		System.out.println("ConjunctionElim");
 		proof = new Proof();
 		proof.addRow();//1
 		proof.openBox();
@@ -56,18 +51,21 @@ public class Tests {
 		proof.updateFormulaRow("A ∧ B", 2);
 		proof.addRule(2, new Premise());
 		proof.updateFormulaRow("B", 3);
-		proof.addRule(3, new ConjunctionElim(2,0));
+		proof.addRule(3, new ConjunctionElim(2, 0));
 		proof.printProof(true);
-		
+
+	}
+	public static void testImplicationIntro() {
+		Proof proof = new Proof();
+		//ConjunctionElimRule test
+		System.out.println("ImplicationIntro");
 		//ImplicationIntroRule test
-		/*
 		proof.addRow();//1
 		proof.openBox();
 		proof.addRow();//2
 		proof.addRow();//3
 		proof.closeBox();
 		proof.addRow();//4
-		
 		proof.updateFormulaRow("X", 1);
 		proof.addRule(1, new Premise());
 		proof.updateFormulaRow("A", 2);
@@ -75,8 +73,24 @@ public class Tests {
 		proof.updateFormulaRow("B", 3);
 		proof.addRule(3, new Premise());
 		proof.updateFormulaRow("A → B", 4);
-		proof.addRule(4, new ImplicationIntroRule(new Intervall(1,2)));
-		*/
+		proof.addRule(4, new ImplicationIntro(new Intervall(1,2)));
+		proof.printProof(true);
+	}
+
+	public static void testEqualityIntro() {
+		Proof proof = new Proof();
+		proof.addRow();
+		proof.updateFormulaRow("x = x", 1);
+		proof.addRule(1, new EqualityIntro());
+		proof.printProof(true);
+	}
+
+	
+	public static void verificationTest(){
+	    testConjunctionElim();
+	    testDisjunctionIntro();
+	    testImplicationIntro();
+	    testEqualityIntro();
 	}
 	
 	public static void isInScopeIntervallTest(){
