@@ -279,7 +279,7 @@ public class Proof implements Serializable{
     }
 
     public Proof() {
-        ruleClass.put("∧E1", ConjunctionElim.class);
+        ruleClass.put("∧E", ConjunctionElim.class);
         ruleClass.put("∧I", ConjunctionIntro.class);
         ruleClass.put("∨I", DisjunctionIntro.class);
         ruleClass.put("¬¬E", DoubleNegationElim.class);
