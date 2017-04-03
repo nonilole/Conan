@@ -34,4 +34,18 @@ public class RuleMapper {
         }
         return null;
     }
+//    public static Rule getRule(String rule) {
+//        switch(rule){
+//            case "∨I1":     return new DisjunctionIntro(1);
+//            case "∨I2":     return new DisjunctionIntro(2);
+//            case "∧I":      return new ConjunctionIntro();
+//            case "∧E1":     return new ConjunctionElim(1);
+//            case "∧E2":     return new ConjunctionElim(2);
+//            case "→I":      return new ImplicationIntro();
+//            case "¬¬E":     return new DoubleNegationElim();
+//            case "=I":      return new EqualityIntro();
+//            case "Premise": return new Premise();
+//            default:        return null;
+//        }
+//    }
 }
