@@ -139,13 +139,12 @@ public class Proof implements Serializable{
         ProofRow row = proofData.getRow(rowIndex);
         Rule rule = row.getRule();
         boolean isVerified;
-        if (rule == null || row.getFormula() == null || rule.hasCompleteInfo() == false ) {
+        if (row.getFormula() == null) {
+            isVerified = true;
+        } else if (rule == null || rule.hasCompleteInfo() == false ) {
             isVerified = false;
         } else {
             isVerified = rule.verify(proofData, rowIndex);
-        }
-        if (!isVerified && row.getFormula() == null) {
-            isVerified = true;
         }
         row.setVerified(isVerified);
         for (ProofListener listener : this.listeners) {
