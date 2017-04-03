@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.event.ActionEvent;
 import java.util.*;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
@@ -251,19 +250,23 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			caretPosition = tfRule.getCaretPosition();
 		});
 		TextField ruleprompt1 = bp.getRulePrompt1();
-		ruleprompt1.focusedProperty().addListener((observable, oldValue, newValue) -> {
-			proof.rulePromptUpdate(rList.indexOf(ruleprompt1), 0, ruleprompt1.getText());
-		});
-		TextField ruleprompt2 = bp.getRulePrompt2();
-		ruleprompt2.focusedProperty().addListener((observable, oldValue, newValue) -> {
-			proof.rulePromptUpdate(rList.indexOf(ruleprompt2), 0, ruleprompt1.getText());
-		});
-		TextField ruleprompt3 = bp.getRulePrompt3();
-		ruleprompt3.focusedProperty().addListener((observable, oldValue, newValue) -> {
-			proof.rulePromptUpdate(rList.indexOf(ruleprompt3), 0, ruleprompt1.getText());
-		});
+        setPromptListener(bp.getRulePrompt1(), 0);
+		setPromptListener(bp.getRulePrompt2(), 1);
+        setPromptListener(bp.getRulePrompt3(), 2);
 		return bp;
 	}
+
+	private void setPromptListener(TextField prompt, int promptIndex) {
+        prompt.textProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println(newValue);
+            String s = newValue.replaceAll("[^0-9-]", "");
+            System.out.println(s);
+            s = s.replaceAll("\\G((?!^).*?|[^-]*-.*?)-", "$1");
+            System.out.println(s);
+            prompt.setText(s);
+            proof.rulePromptUpdate(rList.indexOf(prompt), promptIndex, prompt.getText());
+        });
+    }
 
 	//should only be called AFTER a new row has been added to rList since it uses rList.size()
 	Label createLabel() {
