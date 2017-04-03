@@ -258,11 +258,10 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
 	private void setPromptListener(TextField prompt, int promptIndex) {
         prompt.textProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println(newValue);
+            // Strip all non-numbers and non-dashes
             String s = newValue.replaceAll("[^0-9-]", "");
-            System.out.println(s);
-            s = s.replaceAll("\\G((?!^).*?|[^-]*-.*?)-", "$1");
-            System.out.println(s);
+            // Match two dashes and stop, (if it doesn't match two dashes, we only have one dash).
+            s = s.replaceAll("(.*!?([0-9]*-[0-9]*).*!?)-", "$1");
             prompt.setText(s);
             proof.rulePromptUpdate(rList.indexOf(prompt), promptIndex, prompt.getText());
         });
