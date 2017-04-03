@@ -10,7 +10,7 @@ public class ReferenceParser {
     return new Interval(startNr-1, endNr-1);//Converts to indexes instead of row numbers
   }
   public static Integer parseIntegerReference(String refStr){
-    return Integer.parseInt(refStr);
+    return Integer.parseInt(refStr)-1;
   }
 }
 

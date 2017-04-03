@@ -110,8 +110,15 @@ public class Proof implements Serializable{
     	System.out.println("updateRuleRow: rule="+rule+", rowNr="+rowNumber);
         int rowIndex = rowNumber-1;
         Class<?> c = ruleClass.getOrDefault(rule, null);
-        if (c != null)
+        System.out.println("Outside");
+        System.out.println(rule);
+        System.out.println(c);
+        if (c != null) {
+            System.out.println("Inside");
+            System.out.println(rule);
+            System.out.println(c);
             proofData.getRow(rowIndex).setRule((Rule) c.newInstance());
+        }
         verifyRow(rowIndex);
         proofData.printRows(1,1);
     }
@@ -245,8 +252,12 @@ public class Proof implements Serializable{
 
     public void rulePromptUpdate(int rowNr, int promptIndex, String newValue) {
         System.out.println("rulePromptUpdate rowNr:"+rowNr+" promptIndex:"+promptIndex+" newValue:"+newValue);
+        int rowIndex = rowNr-1;
         ProofRow row = proofData.getRow(rowNr-1);
+
         Rule rule = row.getRule();
+        //System.out.println(rowIndex);
+        //System.out.println(rule.toString());
         try{
             rule.updateReference(promptIndex, newValue);
         }
@@ -259,7 +270,7 @@ public class Proof implements Serializable{
         catch(IllegalArgumentException e){
             System.out.println("Invalid argument for "+rule.getClass().getSimpleName());
         }
-        verifyRow(rowNr-1);
+        verifyRow(rowIndex);
 
     }
 
