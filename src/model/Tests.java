@@ -85,12 +85,23 @@ public class Tests {
 		proof.printProof(true);
 	}
 
+	public static void testDoubleNegationElim() {
+		Proof proof = new Proof();
+		proof.addRow();
+		proof.addRow();
+		proof.updateFormulaRow("¬¬X", 1);
+		proof.addRule(1, new Premise());
+		proof.updateFormulaRow("X", 2);
+		proof.addRule(2, new DoubleNegationElim(0));
+		proof.printProof(true);
+	}
 	
 	public static void verificationTest(){
 	    testConjunctionElim();
 	    testDisjunctionIntro();
 	    testImplicationIntro();
 	    testEqualityIntro();
+	    testDoubleNegationElim();
 	}
 	
 	public static void isInScopeIntervallTest(){
