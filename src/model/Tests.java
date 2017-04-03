@@ -18,7 +18,7 @@ public class Tests {
 		//parserTest();
 		//new RandomFormulaGenerator().printFormulas(20, 2);
 		//isInScopeRowTest();
-		//isInScopeIntervallTest();
+		//isInScopeIntervalTest();
 		//getBoxTest();
 		verificationTest();
 		System.out.println("Done.");
@@ -73,7 +73,7 @@ public class Tests {
 		proof.updateFormulaRow("B", 3);
 		proof.addRule(3, new Premise());
 		proof.updateFormulaRow("A → B", 4);
-		proof.addRule(4, new ImplicationIntro(new Intervall(1,2)));
+		proof.addRule(4, new ImplicationIntro(new Interval(1,2)));
 		proof.printProof(true);
 	}
 
@@ -104,7 +104,7 @@ public class Tests {
 	    testDoubleNegationElim();
 	}
 	
-	public static void isInScopeIntervallTest(){
+	public static void isInScopeIntervalTest(){
 		Proof proof = new Proof();
 		proof.addRow();//0
 		proof.openBox();
@@ -129,8 +129,8 @@ public class Tests {
 		proof.printProof(true);
 		proof.printBoxes();
 		//Box data = proof.getData();
-		//System.out.println("isInscopeOf( (1-2), 3) :"+data.isInScopeOf(new Intervall(1,2), 3));
-		proof.printIntervallScopes(true);
+		//System.out.println("isInscopeOf( (1-2), 3) :"+data.isInScopeOf(new Interval(1,2), 3));
+		proof.printIntervalScopes(true);
 	}
 	
 	public static void isInScopeRowTest(){

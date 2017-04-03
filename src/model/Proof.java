@@ -243,7 +243,7 @@ public class Proof implements Serializable{
       try{
         rule.updateReference(promptIndex, newValue);
       }
-      //if the string is not of the correct format ie an integer or intervall
+      //if the string is not of the correct format ie an integer or interval
       catch(NumberFormatException e){
         System.out.println("Incorrect reference format");
       }
@@ -261,8 +261,8 @@ public class Proof implements Serializable{
     }
     
     
-    public void printIntervallScopes( boolean zeroBasedNumbering){
-    	proofData.printIntervallScopes(zeroBasedNumbering);
+    public void printIntervalScopes( boolean zeroBasedNumbering){
+    	proofData.printIntervalScopes(zeroBasedNumbering);
 
     }
 

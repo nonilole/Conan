@@ -7,47 +7,47 @@ import model.formulas.Implication;
 
 public class ImplicationIntro implements Rule {
 
-	private Intervall premiseIntervall;
+	private Interval premiseInterval;
 
 	public ImplicationIntro(){
 		super();
 	}
 	
-	public ImplicationIntro(Intervall indexIntervall){
+	public ImplicationIntro(Interval indexInterval){
 		super();
-		premiseIntervall = indexIntervall;
+		premiseInterval = indexInterval;
 	}
 	
-	public Intervall getPremiseIntervall() {
-		return premiseIntervall;
+	public Interval getPremiseInterval() {
+		return premiseInterval;
 	}
 
-	public void setPremiseIntervall(Intervall premiseIntervall) {
-		this.premiseIntervall = premiseIntervall;
+	public void setPremiseInterval(Interval premiseInterval) {
+		this.premiseInterval = premiseInterval;
 	}
 	
 	@Override
     public void updateReference(int refNr, String refStr){
       if(refNr != 1) throw new IllegalArgumentException();
-      Intervall ref;
+      Interval ref;
       try{
-        ref = ReferenceParser.parseIntervallReference(refStr);
+        ref = ReferenceParser.parseIntervalReference(refStr);
       }
       catch(NumberFormatException e){
         ref = null;
         throw new NumberFormatException(); //Still want this to propagate up
       }
-      setPremiseIntervall(ref);
+      setPremiseInterval(ref);
     }
 	
 	@Override
 	public boolean hasCompleteInfo() {
-		return premiseIntervall != null;
+		return premiseInterval != null;
 	}
 	
 	@Override
 	public String toString(){
-		return String.format("→-I (%s)", premiseIntervall);
+		return String.format("→-I (%s)", premiseInterval);
 	}
 
 	public boolean verify(Box data, int rowIndex) {
@@ -57,14 +57,14 @@ public class ImplicationIntro implements Rule {
 		// are the references in the rule object in scope of rowIndex?
 		// are all the referenced rows verified?
 		// ProofData.isInScope should check both of these
-		Intervall premiseIntervall = getPremiseIntervall();
-		if( data.isInScopeOf(premiseIntervall, rowIndex) == false) return false;
+		Interval premiseInterval = getPremiseInterval();
+		if( data.isInScopeOf(premiseInterval, rowIndex) == false) return false;
 
 		//do we have the needed premises/references to make the deduction?
 		if(rowToVerify.getFormula() instanceof Implication == false) return false;
 		Implication conclusion = (Implication)rowToVerify.getFormula();
-		Formula assumption      = data.getRow( premiseIntervall.startIndex ).getFormula();
-		Formula conclusionOfBox = data.getRow( premiseIntervall.endIndex ).getFormula();
+		Formula assumption      = data.getRow( premiseInterval.startIndex ).getFormula();
+		Formula conclusionOfBox = data.getRow( premiseInterval.endIndex ).getFormula();
 		return conclusion.equals(new Implication(assumption, conclusionOfBox));
 
 	}
