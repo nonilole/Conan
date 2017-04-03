@@ -106,8 +106,11 @@ public class Proof implements Serializable{
         System.out.println("==========================================================");
     }
     
-    public void updateRuleRow(String rule, int rowNumber){
-    	System.out.println("Proof.updateRuleRow not implemented!");
+    public void updateRuleRow(String rule, int rowNumber) throws IllegalAccessException, InstantiationException {
+        int rowIndex = rowNumber-1;
+        Class<?> c = ruleClass.getOrDefault(rule, null);
+        if (c != null)
+            proofData.getRow(rowIndex).setRule((Rule) c.newInstance());
     }
     
     //Adds a rule object to the given row

@@ -468,7 +468,13 @@ public void rowInserted(int rowNo, BoxReference br) {
 		// Updates the Proof object if the textField is updated
 		ruleField.textProperty().addListener((ov, oldValue, newValue) -> {
 			int rpIndex = rList.indexOf(rp);
-			proof.updateRuleRow(newValue, rpIndex+1);
+            try {
+                proof.updateRuleRow(newValue, rpIndex+1);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            }
             rp.setPrompts(ruleMap.getOrDefault(newValue,-1));
 		});
 	}
