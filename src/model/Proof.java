@@ -109,8 +109,15 @@ public class Proof implements Serializable{
     public void updateRuleRow(String rule, int rowNumber) throws IllegalAccessException, InstantiationException {
         int rowIndex = rowNumber-1;
         Class<?> c = ruleClass.getOrDefault(rule, null);
-        if (c != null)
+        System.out.println("Outside");
+        System.out.println(rule);
+        System.out.println(c);
+        if (c != null) {
+            System.out.println("Inside");
+            System.out.println(rule);
+            System.out.println(c);
             proofData.getRow(rowIndex).setRule((Rule) c.newInstance());
+        }
         verifyRow(rowIndex);
     }
 
@@ -240,9 +247,11 @@ public class Proof implements Serializable{
         proofData.printRows(1,x);
     }
 
-    public void rulePromptUpdate(int rowNr, int promptIndex, String newValue) {
-        ProofRow row = proofData.getRow(rowNr-1);
+    public void rulePromptUpdate(int rowIndex, int promptIndex, String newValue) {
+        ProofRow row = proofData.getRow(rowIndex);
         Rule rule = row.getRule();
+        System.out.println(rowIndex);
+        System.out.println(rule.toString());
         try{
             rule.updateReference(promptIndex, newValue);
         }
@@ -255,7 +264,7 @@ public class Proof implements Serializable{
         catch(IllegalArgumentException e){
             System.out.println("Invalid argument for "+rule.getClass().getSimpleName());
         }
-        verifyRow(rowNr-1);
+        verifyRow(rowIndex);
 
     }
 
@@ -270,7 +279,7 @@ public class Proof implements Serializable{
     }
 
     public Proof() {
-        ruleClass.put("∧E", ConjunctionElim.class);
+        ruleClass.put("∧E1", ConjunctionElim.class);
         ruleClass.put("∧I", ConjunctionIntro.class);
         ruleClass.put("∨I", DisjunctionIntro.class);
         ruleClass.put("¬¬E", DoubleNegationElim.class);
