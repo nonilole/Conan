@@ -52,14 +52,12 @@ public class ConjunctionIntro implements Rule{
 		//System.out.println("Verification.verifyAndIntro");
 		// is the rule object of the correct type?
 		ProofRow rowToVerify = data.getRow( rowIndex );
-		assert(rowToVerify.getRule() instanceof ConjunctionIntro):"Incorrect rule type in Verification.verifyConjunctionIntro";
-		ConjunctionIntro rule = (ConjunctionIntro) rowToVerify.getRule();
 
 		// are the references in the rule object in scope of rowIndex?
 		// are all the referenced rows verified?
 		// ProofData.isInScope should check scope and if the data is verified
-		if( data.isInScopeOf( rule.getPremise1()-1, rowIndex) == false || //this currently assumes the premise is stored as a rowNr rather than index
-				data.isInScopeOf( rule.getPremise2()-1, rowIndex) == false )
+		if( data.isInScopeOf( getPremise1(), rowIndex) == false || //this currently assumes the premise is stored as a rowNr rather than index
+				data.isInScopeOf( getPremise2(), rowIndex) == false )
 		{
 			System.out.println("    Scope issue");
 			return false;
@@ -68,8 +66,8 @@ public class ConjunctionIntro implements Rule{
 		// do we have the needed premises/references to make the deduction?
 		if(rowToVerify.getFormula() instanceof Conjunction == false) return false;
 		Conjunction conclusion = (Conjunction)rowToVerify.getFormula();
-		Formula content1 = data.getRow( rule.getPremise1()-1 ).getFormula();//this currently assumes the premise is stored as a rowNr rather than index
-		Formula content2 = data.getRow( rule.getPremise2()-1 ).getFormula();
+		Formula content1 = data.getRow( getPremise1() ).getFormula();//this currently assumes the premise is stored as a rowNr rather than index
+		Formula content2 = data.getRow( getPremise2() ).getFormula();
 		return conclusion.equals(new Conjunction(content1, content2));
 	}
 	

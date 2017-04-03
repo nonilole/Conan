@@ -40,14 +40,10 @@ public class ImplicationIntro implements Rule {
 		//System.out.println("Verification.verifyImplicationIntro");
 		// is the rule object of the correct type?
 		ProofRow rowToVerify = data.getRow( rowIndex );
-		assert(rowToVerify.getRule() instanceof ImplicationIntro) :
-				"Incorrect rule type function: Verification.verifyImplicationIntro";
-		ImplicationIntro rule = (ImplicationIntro) rowToVerify.getRule();
-
 		// are the references in the rule object in scope of rowIndex?
 		// are all the referenced rows verified?
 		// ProofData.isInScope should check both of these
-		Intervall premiseIntervall = rule.getPremiseIntervall();
+		Intervall premiseIntervall = getPremiseIntervall();
 		if( data.isInScopeOf(premiseIntervall, rowIndex) == false) return false;
 
 		//do we have the needed premises/references to make the deduction?

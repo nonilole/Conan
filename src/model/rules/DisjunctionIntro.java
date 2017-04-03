@@ -38,20 +38,18 @@ public class DisjunctionIntro implements Rule{
 	@Override
 	public boolean verify(Box data, int rowIndex) {
 		ProofRow rowToVerify = data.getRow( rowIndex );
-		assert(rowToVerify.getRule() instanceof DisjunctionIntro):"Incorrect rule type in Verification.verifyConjunctionIntro";
-		DisjunctionIntro rule = (DisjunctionIntro) rowToVerify.getRule();
 
 		// are the references in the rule object in scope of rowIndex?
 		// are all the referenced rows verified?
 		// ProofData.isInScope should check scope and if the data is verified
-		if( data.isInScopeOf( rule.getPremise1()-1, rowIndex) == false) { //this currently assumes the premise is stored as a rowNr rather than index
+		if( data.isInScopeOf( getPremise1(), rowIndex) == false) { //this currently assumes the premise is stored as a rowNr rather than index
 			System.out.println("    Scope issue");
 			return false;
 		}
 
 		// do we have the needed premises/references to make the deduction?
 		if(rowToVerify.getFormula() instanceof Disjunction == false) return false;
-		return data.getRow( rule.getPremise1()-1 ).isVerified();
+		return data.getRow( getPremise1() ).isVerified();
 	}
 
 }

@@ -49,20 +49,18 @@ public class ConjunctionElim implements Rule{
 	public boolean verify(Box data, int rowIndex) {
 		// is the rule object of the correct type? Probably just check with an assertion
 		ProofRow rowToVerify = data.getRow( rowIndex );
-		assert(rowToVerify.getRule() instanceof ConjunctionElim):"Incorrect rule type in Verification.verifyConjunctionIntro";
-		ConjunctionElim rule = (ConjunctionElim) rowToVerify.getRule();
 
 		// are the references in the rule object in scope of rowIndex?
 		// are all the referenced rows verified?
 		// Box.isInScope should check both scope and if the data is verified
-		if( data.isInScopeOf( rule.getPremise(), rowIndex ) == false ) return false;
+		if( data.isInScopeOf( getPremise(), rowIndex ) == false ) return false;
 
 		// do we have the needed references to make the deduction?
 		Formula result = data.getRow(rowIndex).getFormula();
-		Formula reference = data.getRow( rule.getPremise() ).getFormula();
+		Formula reference = data.getRow( getPremise() ).getFormula();
 		if( reference instanceof Conjunction == false) return false;
 		Conjunction ref = (Conjunction)reference;
-		if( rule.getType() == 1){
+		if( getType() == 1){
 			return result.equals(ref.lhs);
 		}
 		else{ //rule.getType() == 2
