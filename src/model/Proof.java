@@ -5,14 +5,12 @@ import model.rules.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Proof implements Serializable{
     private ArrayList<ProofListener> listeners = new ArrayList<ProofListener>();
     private Parser parser = new Parser(); //this won't be serialized
     private Formula conclusion;
     private Box proofData = new Box(null, true);
-    private HashMap<String, Class<?>> ruleClass = new HashMap<String, Class<?>>();
 
     /***
      * Add a new row at the end of the proof.
@@ -106,20 +104,15 @@ public class Proof implements Serializable{
         System.out.println("==========================================================");
     }
 
-    public void updateRuleRow(String rule, int rowNumber) throws IllegalAccessException, InstantiationException {
-    	System.out.println("updateRuleRow: rule="+rule+", rowNr="+rowNumber);
-        int rowIndex = rowNumber-1;
-        Class<?> c = ruleClass.getOrDefault(rule, null);
-        System.out.println("Outside");
-        System.out.println(rule);
-        System.out.println(c);
-        if (c != null) {
-            System.out.println("Inside");
-            System.out.println(rule);
-            System.out.println(c);
-            proofData.getRow(rowIndex).setRule((Rule) c.newInstance());
+    public void updateRuleRow(String ruleString, int rowNumber) throws IllegalAccessException, InstantiationException {
+    	System.out.println("updateRuleRow: rule="+ruleString+", rowNr="+rowNumber);
+    	ProofRow pr = proofData.getRow(rowNumber-1);
+        Rule rule = (RuleMapper.getRule(ruleString));
+    	if (rule != null) {
+    	    pr.setRule(rule);
+            int rowIndex = rowNumber - 1;
+            verifyRow(rowIndex);
         }
-        verifyRow(rowIndex);
         proofData.printRows(1,1);
     }
 
@@ -282,15 +275,5 @@ public class Proof implements Serializable{
     public void printIntervalScopes( boolean zeroBasedNumbering){
         proofData.printIntervalScopes(zeroBasedNumbering);
 
-    }
-
-    public Proof() {
-        ruleClass.put("∧E", ConjunctionElim.class);
-        ruleClass.put("∧I", ConjunctionIntro.class);
-        ruleClass.put("∨I", DisjunctionIntro.class);
-        ruleClass.put("¬¬E", DoubleNegationElim.class);
-        ruleClass.put("=I", EqualityIntro.class);
-        ruleClass.put("→I", ImplicationIntro.class);
-        ruleClass.put("Premise", Premise.class);
     }
 }

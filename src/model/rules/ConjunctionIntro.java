@@ -12,7 +12,7 @@ public class ConjunctionIntro implements Rule{
 	private Integer premise2;
 	
 	public ConjunctionIntro(){ super(); }
-	
+
 	public ConjunctionIntro(int premise1Index, int premise2Index){
 		super();
 		premise1 = premise1Index;

@@ -68,14 +68,17 @@ public class RowPane extends BorderPane{
 		return (TextField) rulePane.getChildren().get(3);
 	}
 
-	public void hidePrompts() {
+	public void hideAndClearPrompts() {
 	    getRulePrompt1().setVisible(false);
+		getRulePrompt1().clear();
 		getRulePrompt2().setVisible(false);
+		getRulePrompt2().clear();
 		getRulePrompt3().setVisible(false);
+		getRulePrompt3().clear();
 	}
 
 	public void setPrompts(int n) {
-	    hidePrompts();
+	    hideAndClearPrompts();
 	    switch (n) {
             case 3:
                 getRulePrompt3().setVisible(true);

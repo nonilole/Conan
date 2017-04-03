@@ -5,7 +5,7 @@ import model.ProofRow;
 import model.formulas.Conjunction;
 import model.formulas.Formula;
 
-public class ConjunctionElim implements Rule{
+public class ConjunctionElim implements Rule {
 	private int type;
 	private Integer reference;
 	
