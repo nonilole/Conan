@@ -108,11 +108,9 @@ public class Proof implements Serializable{
     	System.out.println("updateRuleRow: rule="+ruleString+", rowNr="+rowNumber);
     	ProofRow pr = proofData.getRow(rowNumber-1);
         Rule rule = (RuleMapper.getRule(ruleString));
-    	if (rule != null) {
-    	    pr.setRule(rule);
-            int rowIndex = rowNumber - 1;
-            verifyRow(rowIndex);
-        }
+        pr.setRule(rule);
+        int rowIndex = rowNumber - 1;
+        verifyRow(rowIndex);
         proofData.printRows(1,1);
     }
 
@@ -145,6 +143,9 @@ public class Proof implements Serializable{
             isVerified = false;
         } else {
             isVerified = rule.verify(proofData, rowIndex);
+        }
+        if (!isVerified && row.getFormula() == null) {
+            isVerified = true;
         }
         row.setVerified(isVerified);
         for (ProofListener listener : this.listeners) {
