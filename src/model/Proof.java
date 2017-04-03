@@ -107,15 +107,18 @@ public class Proof implements Serializable{
     }
 
     public void updateRuleRow(String rule, int rowNumber) throws IllegalAccessException, InstantiationException {
+    	System.out.println("updateRuleRow: rule="+rule+", rowNr="+rowNumber);
         int rowIndex = rowNumber-1;
         Class<?> c = ruleClass.getOrDefault(rule, null);
         if (c != null)
             proofData.getRow(rowIndex).setRule((Rule) c.newInstance());
         verifyRow(rowIndex);
+        proofData.printRows(1,1);
     }
 
     //Adds a rule object to the given row
     public void addRule(int rowNr, Rule rule){
+    	System.out.println("addRule: "+rowNr+", Rule: "+rule);
         proofData.getRow(rowNr-1).setRule(rule);
         verifyRow(rowNr-1); //should use verifyProof later probably
     }
@@ -138,10 +141,10 @@ public class Proof implements Serializable{
         ProofRow row = proofData.getRow(rowIndex);
         Rule rule = row.getRule();
         boolean isVerified;
-        if (rule == null || row.getFormula() == null || rule.hasCompleteInfo() == false || rule.verify(proofData, rowIndex) == false) {
+        if (rule == null || row.getFormula() == null || rule.hasCompleteInfo() == false ) {
             isVerified = false;
         } else {
-            isVerified = true;
+            isVerified = rule.verify(proofData, rowIndex);
         }
         row.setVerified(isVerified);
         for (ProofListener listener : this.listeners) {
@@ -241,6 +244,7 @@ public class Proof implements Serializable{
     }
 
     public void rulePromptUpdate(int rowNr, int promptIndex, String newValue) {
+        System.out.println("rulePromptUpdate rowNr:"+rowNr+" promptIndex:"+promptIndex+" newValue:"+newValue);
         ProofRow row = proofData.getRow(rowNr-1);
         Rule rule = row.getRule();
         try{

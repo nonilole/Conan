@@ -262,7 +262,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
             // Match two dashes and stop, (if it doesn't match two dashes, we only have one dash).
             s = s.replaceAll("(.*!?([0-9]*-[0-9]*).*!?)-", "$1");
             prompt.setText(s);
-            proof.rulePromptUpdate(rList.indexOf(bp), promptIndex, prompt.getText());
+            proof.rulePromptUpdate(rList.indexOf(bp)+1, promptIndex, prompt.getText());
         });
     }
 
