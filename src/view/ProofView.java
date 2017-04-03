@@ -249,21 +249,20 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			lastFocusedTf = tfRule;
 			caretPosition = tfRule.getCaretPosition();
 		});
-		TextField ruleprompt1 = bp.getRulePrompt1();
-        setPromptListener(bp.getRulePrompt1(), 0);
-		setPromptListener(bp.getRulePrompt2(), 1);
-        setPromptListener(bp.getRulePrompt3(), 2);
+        setPromptListener(bp, bp.getRulePrompt1(), 0);
+		setPromptListener(bp, bp.getRulePrompt2(), 1);
+        setPromptListener(bp, bp.getRulePrompt3(), 2);
 		return bp;
 	}
 
-	private void setPromptListener(TextField prompt, int promptIndex) {
+	private void setPromptListener(BorderPane bp, TextField prompt, int promptIndex) {
         prompt.textProperty().addListener((observable, oldValue, newValue) -> {
             // Strip all non-numbers and non-dashes
             String s = newValue.replaceAll("[^0-9-]", "");
             // Match two dashes and stop, (if it doesn't match two dashes, we only have one dash).
             s = s.replaceAll("(.*!?([0-9]*-[0-9]*).*!?)-", "$1");
             prompt.setText(s);
-            proof.rulePromptUpdate(rList.indexOf(prompt), promptIndex, prompt.getText());
+            proof.rulePromptUpdate(rList.indexOf(bp), promptIndex, prompt.getText());
         });
     }
 
@@ -397,7 +396,7 @@ public void rowInserted(int rowNo, BoxReference br) {
     @Override
     public void rowVerified(boolean verified, int lineNo) {
         TextField rule = (TextField) rList.get(lineNo-1).getRule();
-        applyStyleIf(rule, verified, "unverified");
+        applyStyleIf(rule, !verified, "unVerified");
     }
 
 

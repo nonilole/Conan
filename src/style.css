@@ -43,8 +43,21 @@
 
 .unVerified {
     -fx-text-box-border: pink;
+    -fx-background-insets: 0, 2;
+}
+.unVerified:focused {
+    -fx-text-box-border: pink;
+    -fx-background-insets: 0, 2;
+}
+.unVerified:hover {
+    -fx-text-box-border: pink;
+    -fx-background-insets: 0, 2;
+}
+.unVerified:focused:hover {
+    -fx-text-box-border: pink;
+    -fx-background-insets: 0, 2;
 }
 
 .conclusionReached {
-    -fx-background-color: #90EE90;
+    -fx-text-box-border: #90EE90;
 }
