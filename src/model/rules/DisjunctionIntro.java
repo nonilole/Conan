@@ -77,7 +77,7 @@ public class DisjunctionIntro implements Rule {
         } else {
 			Disjunction disjunction = (Disjunction) rowToVerify.getFormula();
 			ProofRow premiseRow = data.getRow(getPremise());
-			if (type == 1)
+			if (type == 2)
                 return premiseRow.isVerified() && disjunction.lhs.equals(premiseRow.getFormula());
 			else
 				return premiseRow.isVerified() && disjunction.rhs.equals(premiseRow.getFormula());
