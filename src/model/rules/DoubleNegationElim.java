@@ -17,6 +17,21 @@ public class DoubleNegationElim implements Rule {
     public void setPremise1(int premise1) {
         this.premise1 = premise1;
     }
+    
+    @Override
+    public void updateReference(int refNr, String refStr){
+      if(refNr != 1) throw new IllegalArgumentException();
+      Integer ref;
+      try{
+        ref = ReferenceParser.parseIntegerReference(refStr);
+      }
+      catch(NumberFormatException e){
+        ref = null;
+        throw new NumberFormatException(); //Still want this to propagate up
+      }
+      setPremise1(ref);
+    }
+    
     @Override
     public boolean hasCompleteInfo() {
         return premise1 != null;

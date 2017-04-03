@@ -11,6 +11,11 @@ public class EqualityIntro implements Rule {
     public boolean hasCompleteInfo() {
         return true;
     }
+    
+    @Override
+    public void updateReference(int refNr, String refStr){
+      throw new IllegalArgumentException();
+    }
 
     @Override
     public boolean verify(Box data, int rowIndex) {

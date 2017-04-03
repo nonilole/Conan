@@ -27,6 +27,20 @@ public class ImplicationIntro implements Rule {
 	}
 	
 	@Override
+    public void updateReference(int refNr, String refStr){
+      if(refNr != 1) throw new IllegalArgumentException();
+      Intervall ref;
+      try{
+        ref = ReferenceParser.parseIntervallReference(refStr);
+      }
+      catch(NumberFormatException e){
+        ref = null;
+        throw new NumberFormatException(); //Still want this to propagate up
+      }
+      setPremiseIntervall(ref);
+    }
+	
+	@Override
 	public boolean hasCompleteInfo() {
 		return premiseIntervall != null;
 	}

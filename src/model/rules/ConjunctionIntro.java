@@ -20,6 +20,21 @@ public class ConjunctionIntro implements Rule{
 	}
 	
 	@Override
+    public void updateReference(int refNr, String refStr){
+      if(refNr < 1 || refNr > 2) throw new IllegalArgumentException();
+      Integer ref;
+      try{
+        ref = ReferenceParser.parseIntegerReference(refStr);
+      }
+      catch(NumberFormatException e){
+        ref = null;
+        throw new NumberFormatException(); //Still want this to propagate up
+      }
+      if(refNr == 1)setPremise1(ref);
+      else/*refNr == 2*/ setPremise2(ref);
+    }
+	
+	@Override
 	public boolean hasCompleteInfo() {
 		return premise1 != null && premise2 != null;
 	}

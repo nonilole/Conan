@@ -232,7 +232,24 @@ public class Proof implements Serializable{
     	proofData.printRows(1,x);
     }
     
-    public void rulePromptUpdate(int row, int promptIndex, String newValue) {}
+    public void rulePromptUpdate(int rowNr, int promptIndex, String newValue) {     
+      ProofRow row = proofData.getRow(rowNr-1);
+      Rule rule = row.getRule();
+      try{
+        rule.updateReference(promptIndex, newValue);
+      }
+      //if the string is not of the correct format ie an integer or intervall
+      catch(NumberFormatException e){
+        System.out.println("Incorrect reference format");
+      }
+      //if the promptIndex does not match the rule object, for example ConjunctionIntro has 2 references,
+      //so promptIndex = 3 wouldn't make sense
+      catch(IllegalArgumentException e){
+        System.out.println("Invalid argument for "+rule.getClass().getSimpleName());
+      }
+      verifyRow(rowNr-1);
+      
+    }
   
     public void printRowScopes(boolean zeroBasedNumbering){
     	proofData.printRowScopes(zeroBasedNumbering);

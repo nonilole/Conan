@@ -33,7 +33,21 @@ public class ConjunctionElim implements Rule{
 	public void setPremise(Integer premise) {
 		this.reference = premise;
 	}
-
+	
+	@Override
+    public void updateReference(int refNr, String refStr){
+      if(refNr != 1) throw new IllegalArgumentException();
+      Integer ref;
+      try{
+        ref = ReferenceParser.parseIntegerReference(refStr);
+      }
+      catch(NumberFormatException e){
+        ref = null;
+        throw new NumberFormatException(); //Still want this to propagate up
+      }
+      setPremise(ref);
+    }
+	
 	@Override
 	public boolean hasCompleteInfo() {
 		//type variable is guaranteed in constructor

@@ -16,6 +16,21 @@ public class DisjunctionIntro implements Rule{
 		premise1 = premise1Index;
 	}
 
+	
+	@Override
+    public void updateReference(int refNr, String refStr){
+      if(refNr != 1) throw new IllegalArgumentException();
+      Integer ref;
+      try{
+        ref = ReferenceParser.parseIntegerReference(refStr);
+      }
+      catch(NumberFormatException e){
+        ref = null;
+        throw new NumberFormatException(); //Still want this to propagate up
+      }
+      setPremise1(ref);
+    }
+	
 	@Override
 	public boolean hasCompleteInfo() {
 		return premise1 != null;
