@@ -40,6 +40,11 @@
 
 .bad {
   -fx-background-color: pink;
+
+}
+
+.bad:focused {
+  -fx-border-color: #039ED3;
 }
 
 .conclusionReached {
