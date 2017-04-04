@@ -7,6 +7,11 @@ public class LogicObject implements Term{
     public LogicObject(String id){
         this.id = id;
     }
+    
+    @Override
+    public Term replace(String newId,String oldId){
+    	return id.equals(oldId) ? new LogicObject(newId) : new LogicObject(id);
+    }
 
     @Override
     public boolean equals(Object o){

@@ -20,10 +20,25 @@ public class Tests {
 		//isInScopeRowTest();
 		//isInScopeIntervalTest();
 		//getBoxTest();
-		verificationTest();
+		//verificationTest();
+		replaceVarTest(20);
 		System.out.println("Done.");
 	}
-
+	
+	public static void replaceVarTest(int nrTests){
+		RandomFormulaGenerator gen = new RandomFormulaGenerator();
+		Random rand = new Random();
+		for(int i = 0; i < nrTests; i++){
+			int nrVarId = 2;
+			Formula randFormula = gen.generateFormula(5,nrVarId);
+			char oldChar = (char)(rand.nextInt(nrVarId+1)+'a');
+			char newChar = (char)(rand.nextInt(nrVarId+1)+'a');
+			System.out.println(oldChar+"->"+newChar+" | "+randFormula);
+			System.out.println("     | "+randFormula.replace(newChar+"", oldChar+""));
+			System.out.println("===============================================");
+		}
+	}
+	
 	public static void testDisjunctionIntro() {
 		Proof proof = new Proof();
 		//DisjunctionIntro

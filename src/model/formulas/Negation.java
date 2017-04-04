@@ -8,6 +8,11 @@ public class Negation extends Formula{
     	this.formula = formula;
         super.precedence = 3;
     }
+    
+    @Override
+    public Formula replace(String newId,String oldId){
+    	return new Negation(formula.replace(newId, oldId));
+    }
 
     @Override
     public boolean equals(Object o){

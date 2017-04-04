@@ -7,5 +7,7 @@ public abstract class Formula {
 	public int getPrecedence(){
 		return precedence;
 	}
+	
+	public abstract Formula replace(String newId,String oldId);
 }
 
