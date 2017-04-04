@@ -565,6 +565,15 @@ public void rowInserted(int rowNo, BoxReference br) {
 		}
 	}
 
+	/**Returns the row index of the last focused textfield in the proof.
+	 *@return row index of the last focused textfield in the proof, otherwise it returns -1
+	 * */
+	public int getRowIndexLastFocusedTF(){
+		    if(lastFocusedTf!=null&&rList.indexOf(lastFocusedTf.getParent())!=-1){
+		    	return rList.indexOf(lastFocusedTf.getParent())+1;
+		    }
+		        return -1;
+	}
 
 
 }
