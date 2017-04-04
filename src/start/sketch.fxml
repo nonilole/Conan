@@ -54,6 +54,10 @@
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" text="Select All" />
             <MenuItem mnemonicParsing="false" text="Unselect All" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#deleteRowMenu" text="Delete Rows" />
+                  <MenuItem mnemonicParsing="false" onAction="#insertAboveMenu" text="Insert Above" />
+                  <MenuItem mnemonicParsing="false" onAction="#insertBelowMenu" text="Insert Below" />
           </items>
         </Menu>
             <Menu mnemonicParsing="false" text="Preferences" />
