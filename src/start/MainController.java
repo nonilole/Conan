@@ -151,7 +151,36 @@ public class MainController implements Initializable {
             pv.addRule(event);
         }
     }
-    
+
+    @FXML
+    void deleteRowMenu(ActionEvent event) {
+        ProofView pv = convertProofView(getCurrentView());
+        if (pv == null)
+            return;
+        int rowNumber = pv.getRowIndexLastFocusedTF();
+        if(rowNumber!=-1) {
+            pv.getProof().deleteRow(rowNumber);
+        }
+    }
+
+    @FXML
+    void insertAboveMenu(ActionEvent event) {
+        ProofView pv = convertProofView(getCurrentView());
+        if (pv == null)
+            return;
+        int rowNumber = pv.getRowIndexLastFocusedTF();
+        pv.getProof().insertNewRow(rowNumber,BoxReference.BEFORE);
+    }
+
+    @FXML
+    void insertBelowMenu(ActionEvent event) {
+        ProofView pv = convertProofView(getCurrentView());
+        if (pv == null)
+            return;
+        int rowNumber = pv.getRowIndexLastFocusedTF();
+        pv.getProof().insertNewRow(rowNumber,BoxReference.AFTER);
+    }
+
     @FXML
     void saveProof(ActionEvent event) {
         ProofView pv = convertProofView(getCurrentView());
