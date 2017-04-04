@@ -2,6 +2,9 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.util.*;
+
+import com.sun.javafx.css.Rule;
+
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -489,16 +492,28 @@ public void rowInserted(int rowNo, BoxReference br) {
 	}
 
 	/**
-	 * Adds the rule symbol that has been pressed to the text field for the rule.
+	 * Adds the rule symbol that has been pressed to the text field for the rule when either "expression" or "righTextfield"
+	 * is focused.
 	 * @param event
 	 */
 	public void addRule(javafx.event.ActionEvent event){
-		if(lastFocusedTf != null && lastFocusedTf.getId() == "rightTextfield"){
+		if(lastFocusedTf.getId() == "rightTextfield"){
 			int tmpCaretPosition = caretPosition;
 			String[] parts = event.toString().split("'");
 			lastFocusedTf.setText(parts[1]);
 			lastFocusedTf.requestFocus();
 			lastFocusedTf.positionCaret(tmpCaretPosition+1);
+		}
+		else if(lastFocusedTf.getId() == "expression"){
+			TextField tmpLastFocusedTf = lastFocusedTf;
+			BorderPane borderpane = (BorderPane) lastFocusedTf.getParent();
+			RulePane rulepane = (RulePane) borderpane.getRight();
+			TextField tf = (TextField) rulepane.getChildren().get(0);
+			int tmpCaretPosition = caretPosition;
+			String[] parts = event.toString().split("'");
+			tf.setText(parts[1]);
+			tmpLastFocusedTf.requestFocus();
+			tmpLastFocusedTf.positionCaret(tmpCaretPosition);
 		}
 	}
 
