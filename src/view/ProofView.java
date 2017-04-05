@@ -1,17 +1,15 @@
 package view;
 
-import java.awt.event.ActionEvent;
 import java.util.*;
-
-import com.sun.javafx.css.Rule;
-
 import javafx.beans.value.ChangeListener;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.CacheHint;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.input.*;
 import model.BoxReference;
 import model.Proof;
 import model.ProofListener;
@@ -73,7 +71,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
 	// This is a list of RowPanes, which are the "lines" of the proof.
 	private List<RowPane> rList = new ArrayList<>();
-	private int counter = 1;
+	//private int counter = 1;
 	//private int carry = 0;
 
 	private VBox lineNo;
@@ -244,6 +242,13 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		
 		//adding listeners to the expression- and rule textfield
 		TextField tfExpression = bp.getExpression();
+		tfExpression.setOnKeyReleased(new EventHandler<KeyEvent>() {
+		    public void handle(KeyEvent ke) {
+		        if(ke.getCode() == KeyCode.ENTER){
+		        	newRow();
+		        }
+		    }
+		});
 		tfExpression.focusedProperty().addListener((observable, oldValue, newValue) -> {
 			lastFocusedTf = tfExpression;
 			caretPosition = tfExpression.getCaretPosition();
@@ -517,6 +522,8 @@ public void rowInserted(int rowNo, BoxReference br) {
 		}
 	}
 
-
+	public void handleKP(KeyEvent key){
+		
+	}
 
 }
