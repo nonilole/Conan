@@ -19,7 +19,7 @@ public class RuleMapper {
         ruleToClass.put("=I", EqualityIntro.class);
         ruleToClass.put("→I", ImplicationIntro.class);
         ruleToClass.put("Premise", Premise.class);
-        ruleToClass.put("Assumption", Assumption.class);
+        ruleToClass.put("Ass.", Assumption.class);
     }
 
     public static Rule getRule(String rule) {
