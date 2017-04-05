@@ -16,6 +16,7 @@ public class Assumption implements Rule {
 
     @Override
     public void updateReference(int index, String newValue) {
+    	throw new IllegalArgumentException();
     }
 
     @Override
