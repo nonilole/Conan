@@ -282,7 +282,7 @@
                                                             </Button>
                                                          </children>
                                                       </AnchorPane>
-                                                      <AnchorPane layoutX="20.0" layoutY="218.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6">
+                                                      <AnchorPane layoutX="20.0" layoutY="218.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                                          <children>
                                                             <Button layoutX="7.0" layoutY="6.0" mnemonicParsing="false" onAction="#ruleButtonPressed" prefHeight="27.0" prefWidth="74.0" text="Ass." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <font>
