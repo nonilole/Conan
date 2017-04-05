@@ -23,6 +23,7 @@ public class Proof implements Serializable{
         System.out.println("addRow()");
         proofData.printRows(1, 1);
         System.out.println("==========================================================");
+        //TODO: verify empty row 
     }
 
     /**
@@ -106,10 +107,10 @@ public class Proof implements Serializable{
 
     public void updateRuleRow(String ruleString, int rowNumber) throws IllegalAccessException, InstantiationException {
     	System.out.println("updateRuleRow: rule="+ruleString+", rowNr="+rowNumber);
-    	ProofRow pr = proofData.getRow(rowNumber-1);
-        Rule rule = (RuleMapper.getRule(ruleString));
+    	int rowIndex = rowNumber - 1;
+    	ProofRow pr = proofData.getRow(rowIndex);
+        Rule rule = RuleMapper.getRule(ruleString);
         pr.setRule(rule);
-        int rowIndex = rowNumber - 1;
         verifyRow(rowIndex);
         proofData.printRows(1,1);
     }
