@@ -45,3 +45,7 @@
 .conclusionReached {
   -fx-background-color: #90EE90;
 }
+
+.rulesSymbols {
+  //-fx-background-color: #6DD377;
+}

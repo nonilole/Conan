@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -11,9 +10,10 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -24,7 +24,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="start.MainController">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="start.MainController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -46,6 +46,7 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
           <items>
+                  <MenuItem mnemonicParsing="false" onAction="#newRow" text="New Row" />
             <MenuItem mnemonicParsing="false" text="Undo" />
             <MenuItem mnemonicParsing="false" text="Redo" />
             <SeparatorMenuItem mnemonicParsing="false" />
@@ -71,17 +72,52 @@
     </MenuBar>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-          <Button mnemonicParsing="false" onAction="#saveProof" text="Save" />
-            <Button mnemonicParsing="false" onAction="#openProof" text="Load" />
-            <Button layoutX="118.0" layoutY="11.0" mnemonicParsing="false" onAction="#newRow" text="newRow" />
-            <Button layoutX="204.0" layoutY="11.0" mnemonicParsing="false" onAction="#openBox" text="openBox" />
-            <Button layoutX="281.0" layoutY="11.0" mnemonicParsing="false" onAction="#closeBox" text="closeBox" />
-            <Button mnemonicParsing="false" onAction="#newProof" text="newProofButton" />
-            <Button mnemonicParsing="false" onAction="#deleteRow" text="deleteRow" />
-            <TextField fx:id="indexInput" prefHeight="26.0" prefWidth="45.0" />
-            <Button mnemonicParsing="false" onAction="#insertRow" text="InsertRow" />
-            <CheckBox fx:id="insertAfterCheck" mnemonicParsing="false" text="Insert after" />
-            <Button mnemonicParsing="false" onAction="#showInferenceRules" text="displayInferenceRules" />
+            <Button mnemonicParsing="false" onAction="#newProof">
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/ic_insert_drive_file_black_24dp/ic_insert_drive_file_black_24dp/web/ic_insert_drive_file_black_24dp_2x.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+          <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#saveProof">
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/ic_save_black_24dp/ic_save_black_24dp/web/ic_save_black_24dp_2x.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#openProof">
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/ic_folder_open_black_24dp/ic_folder_open_black_24dp/web/ic_folder_open_black_24dp_2x.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button layoutX="204.0" layoutY="11.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openBox" prefHeight="38.0" prefWidth="48.0">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/ic_space_bar_black_24dp/ic_space_bar_black_24dp/web/ic_space_bar_black_24dp_2x%20-%20kopia.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button layoutX="281.0" layoutY="11.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#closeBox" prefHeight="38.0" prefWidth="48.0">
+               <font>
+                  <Font name="Monospaced Regular" size="20.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/ic_space_bar_black_24dp/ic_space_bar_black_24dp/web/ic_space_bar_black_24dp_2x.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
         </items>
       </ToolBar>
     <SplitPane dividerPositions="0.2" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" scaleShape="false" VBox.vgrow="ALWAYS">
@@ -96,9 +132,9 @@
                                  <children>
                                     <VBox prefWidth="221.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <TitledPane animated="false" text="Rules of inference">
+                                          <TitledPane animated="false" styleClass="rulesSymbols" stylesheets="@../style.css" text="Rules of inference">
                                              <content>
-                                                <GridPane hgap="2.0" vgap="3.0">
+                                                <GridPane hgap="2.0" styleClass="rulesSymbols" stylesheets="@../style.css" vgap="3.0">
                                                   <columnConstraints>
                                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
