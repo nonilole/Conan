@@ -242,13 +242,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		
 		//adding listeners to the expression- and rule textfield
 		TextField tfExpression = bp.getExpression();
-		tfExpression.setOnKeyReleased(new EventHandler<KeyEvent>() {
-		    public void handle(KeyEvent ke) {
-		        if(ke.getCode() == KeyCode.ENTER){
-		        	newRow();
-		        }
-		    }
-		});
 		tfExpression.focusedProperty().addListener((observable, oldValue, newValue) -> {
 			lastFocusedTf = tfExpression;
 			caretPosition = tfExpression.getCaretPosition();
@@ -269,6 +262,21 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		TextField ruleprompt3 = bp.getRulePrompt3();
 		ruleprompt3.focusedProperty().addListener((observable, oldValue, newValue) -> {
 			proof.rulePromptUpdate(rList.indexOf(ruleprompt3), 0, ruleprompt1.getText());
+		});
+		tfExpression.setOnKeyPressed(new EventHandler<KeyEvent>() {
+		    public void handle(KeyEvent ke) {
+		        if(ke.getCode() == KeyCode.DIGIT1 && ke.isShiftDown()){
+		        	int tmpCaretPosition = tfExpression.getCaretPosition();
+		        	System.out.println("CaretPosition: " + tmpCaretPosition);		  
+		            tfExpression.setText(tfExpression.getText().substring(0, tmpCaretPosition) + "¬"
+		                    + lastFocusedTf.getText().substring(tmpCaretPosition, tfExpression.getLength()));	            
+		            tfExpression.setText(tfExpression.getText() + "");
+		            tfExpression.positionCaret(tmpCaretPosition);
+		            tfExpression.deletePreviousChar();
+		            tfExpression.positionCaret(tmpCaretPosition+1);
+		            
+		        }
+		    }
 		});
 		return bp;
 	}
