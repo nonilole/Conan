@@ -9,9 +9,7 @@ import model.formulas.Formula;
 public class DisjunctionIntro implements Rule {
 
 	private Integer premise;
-
 	private int type;
-	private Integer reference;
 
 	public DisjunctionIntro(int type) {
 		super();
