@@ -23,16 +23,15 @@ public class InferenceRuleView implements View {
         ImageView iv1 = new ImageView();
         iv1.setImage(image);
         iv1.setSmooth(true);
+
+        //scales based on current screen size
         iv1.fitHeightProperty().bind(tabPane.heightProperty());
         iv1.fitWidthProperty().bind(tabPane.widthProperty());
 
-        //current window size determines the scaling
         tab = new ViewTab("Inference Rules",this);
         tab.setContent(iv1);
         tabPane.getTabs().add(tab);
         tabPane.getSelectionModel().select(tab);
-
-
     }
 
     @Override
