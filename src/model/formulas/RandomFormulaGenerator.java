@@ -75,7 +75,7 @@ public class RandomFormulaGenerator {
 			return new Conjunction( generateFormula(scalingFactor), generateFormula(scalingFactor));
 		}
 		else if( ranInt < ( acc += DISJUNCTION_WEIGHT ) ){
-			return new Conjunction( generateFormula(scalingFactor), generateFormula(scalingFactor));
+			return new Disjunction( generateFormula(scalingFactor), generateFormula(scalingFactor));
 		}
 		else if( ranInt < ( acc += IMPLICATION_WEIGHT ) ){
 			return new Implication( generateFormula(scalingFactor), generateFormula(scalingFactor));

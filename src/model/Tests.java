@@ -8,6 +8,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import model.formulas.Formula;
+import model.formulas.QuantifiedFormula;
 import model.formulas.RandomFormulaGenerator;
 import model.rules.*;
 
@@ -21,8 +22,25 @@ public class Tests {
 		//isInScopeIntervalTest();
 		//getBoxTest();
 		//verificationTest();
-		replaceVarTest(20);
+		//replaceVarTest(20);
+		replaceVarTest2();
+		//printRandomFormulas(20);
 		System.out.println("Done.");
+	}
+	
+	public static void printRandomFormulas(int nrOfFormulas){
+		RandomFormulaGenerator gen = new RandomFormulaGenerator();
+		for(int i = 0; i<nrOfFormulas; i++){
+			System.out.println(""+gen.generateFormula(5));
+		}
+	}
+	
+	public static void replaceVarTest2(){
+		//∀ ∃ →
+		Formula parsed = new Parser().parse("P(x) ∧ ∀x(P(x) → Q(x))");
+		System.out.println("Parsed:\n"+parsed);
+		System.out.println("Replaced:\n"+parsed.replace("b", "x"));
+		System.out.println("Parsed again:\n"+parsed);
 	}
 	
 	public static void replaceVarTest(int nrTests){
