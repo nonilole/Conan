@@ -49,3 +49,11 @@
 .rulesSymbols {
   //-fx-background-color: #6DD377;
 }
+
+.root .button {
+	-fx-background-color: #91A437;
+}
+
+.root GridPane {
+	-fx-background-color: #E8F6A4;
+}
