@@ -27,4 +27,9 @@ public class Negation extends Formula{
     public String toString(){
     	return formula.getPrecedence() < 3 ? "¬("+formula+")" : "¬"+formula+"";
     }
+    
+    @Override
+	public boolean containsObjectId(String id) {
+		return formula.containsObjectId(id);
+	}
 }

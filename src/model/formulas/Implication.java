@@ -34,4 +34,9 @@ public class Implication extends Formula {
     		return lhs+" → "+rhs;
     	}
     }
+    
+    @Override
+	public boolean containsObjectId(String id) {
+		return lhs.containsObjectId(id) ||  rhs.containsObjectId(id);
+	}
 }

@@ -33,4 +33,9 @@ public class Disjunction extends Formula {
     	strB.append( rhs.getPrecedence() < 3 ? "("+rhs+")" : rhs+"" );
     	return strB.toString();
     }
+    
+    @Override
+	public boolean containsObjectId(String id) {
+		return lhs.containsObjectId(id) ||  rhs.containsObjectId(id);
+	}
 }

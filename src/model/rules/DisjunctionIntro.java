@@ -65,8 +65,7 @@ public class DisjunctionIntro implements Rule {
 		// are the references in the rule object in scope of rowIndex?
 		// are all the referenced rows verified?
 		// ProofData.isInScope should check scope and if the data is verified
-		if (data.isInScopeOf(getPremise(), rowIndex) == false) { //this currently assumes the premise is stored as a rowNr rather than index
-			System.out.println("    Scope issue");
+		if (data.isInScopeOf(getPremise(), rowIndex) == false) { 
 			return false;
 		}
 

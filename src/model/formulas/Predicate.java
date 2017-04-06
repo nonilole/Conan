@@ -56,4 +56,12 @@ public class Predicate extends Formula{
         }
         return strB.toString();
     }
+    
+    @Override
+	public boolean containsObjectId(String id) {
+    	for(Term arg : args){
+			if(arg.containsObjectId(id)) return true;
+		}
+		return false;
+	}
 }

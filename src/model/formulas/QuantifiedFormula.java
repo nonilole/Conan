@@ -19,6 +19,11 @@ public class QuantifiedFormula extends Formula{
         super.precedence = 3;
     }
     
+    //return the subformula of this quantifiedformula with the quantified variable instantiated to id
+    public Formula instantiate(String id){
+    	return formula.replace(id, var);
+    }
+    
     @Override
     public Formula replace(String newId,String oldId){
     	return var.equals(oldId) ? this : new QuantifiedFormula(formula.replace(newId, oldId), var, type);
@@ -42,4 +47,9 @@ public class QuantifiedFormula extends Formula{
     	strB.append( formula.getPrecedence() < 3 || formula instanceof Equality ? "("+formula+")" : formula+"");
     	return strB.toString();
     }
+    
+    @Override
+	public boolean containsObjectId(String id) {
+		return formula.containsObjectId(id);
+	}
 }

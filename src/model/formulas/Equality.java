@@ -29,5 +29,10 @@ public class Equality extends Formula {
     public String toString(){	
     	return lhs+" = "+rhs;
     }
+    
+    @Override
+	public boolean containsObjectId(String id) {
+		return lhs.containsObjectId(id) ||  rhs.containsObjectId(id);
+	}
 
 }

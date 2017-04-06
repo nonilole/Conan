@@ -52,5 +52,13 @@ public class Function implements Term{
         strB.append(")");
         return strB.toString();
     }
+
+	@Override
+	public boolean containsObjectId(String id) {
+		for(Term arg : args){
+			if(arg.containsObjectId(id)) return true;
+		}
+		return false;
+	}
     
 }

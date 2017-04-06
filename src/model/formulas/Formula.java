@@ -11,6 +11,8 @@ public abstract class Formula {
 	//return new formula that has replaced, for all free LogicObjects with id=oldId, with newId, 
 	public abstract Formula replace(String newId,String oldId);
 	
+	public abstract boolean containsObjectId(String id);
+	
 	public static String isInstantiationOf(Formula instantiation, Formula quant){ 
 		//TODO: implement
 		
