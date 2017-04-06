@@ -2,12 +2,15 @@ package view;
 
 import java.util.*;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.CacheHint;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.input.*;
 import model.BoxReference;
 import model.Proof;
 import model.ProofListener;
@@ -69,7 +72,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
 	// This is a list of RowPanes, which are the "lines" of the proof.
 	private List<RowPane> rList = new ArrayList<>();
-	private int counter = 1;
+	//private int counter = 1;
 	//private int carry = 0;
 
 	private VBox lineNo;
@@ -131,13 +134,13 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	 * @param tabPane
 	 * @param premisesAndConclusion
 	 */
-	public ProofView(TabPane tabPane, Proof proof, HBox premisesAndConclusion) {
 
+	public ProofView(TabPane tabPane, Proof proof, PremisesAndConclusion premisesAndConclusion) {
 		this.proof = proof;
 		this.proof.registerProofListener(this);
-		this.premises = (TextField) premisesAndConclusion.getChildren().get(0);
+		this.premises = premisesAndConclusion.getPremises();
 		this.premises.setId("expression");
-		this.conclusion = (TextField) premisesAndConclusion.getChildren().get(2);
+		this.conclusion = premisesAndConclusion.getConclusion();
 		this.conclusion.setId("expression");
 		this.conclusion.textProperty().addListener((ov, oldValue, newValue) -> {
 			proof.updateConclusion(newValue);
@@ -223,10 +226,10 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
 
 	public ProofView(TabPane tabPane, Proof proof) {
-		this(tabPane, proof, new premisesAndConclusion());
+		this(tabPane, proof, new PremisesAndConclusion());
 	}
 	public ProofView(TabPane tabPane, Proof proof, String sPremises, String sConclusion) {
-		this(tabPane, proof, new premisesAndConclusion(sPremises, sConclusion));
+		this(tabPane, proof, new PremisesAndConclusion(sPremises, sConclusion));
 	}
 	/* Controller begin */
 	public void openBox() {
@@ -306,7 +309,43 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			lastFocusedTf = tfRule;
 			caretPosition = tfRule.getCaretPosition();
 		});
-
+		TextField ruleprompt1 = bp.getRulePrompt1();
+		ruleprompt1.focusedProperty().addListener((observable, oldValue, newValue) -> {
+			proof.rulePromptUpdate(rList.indexOf(ruleprompt1), 0, ruleprompt1.getText());
+		});
+		TextField ruleprompt2 = bp.getRulePrompt2();
+		ruleprompt2.focusedProperty().addListener((observable, oldValue, newValue) -> {
+			proof.rulePromptUpdate(rList.indexOf(ruleprompt2), 0, ruleprompt1.getText());
+		});
+		TextField ruleprompt3 = bp.getRulePrompt3();
+		ruleprompt3.focusedProperty().addListener((observable, oldValue, newValue) -> {
+			proof.rulePromptUpdate(rList.indexOf(ruleprompt3), 0, ruleprompt1.getText());
+		});
+		//Här är det Elin och Jan kanske vill använda
+		//------------------------------------------------
+		tfExpression.setOnKeyPressed(new EventHandler<KeyEvent>() {
+		    public void handle(KeyEvent ke) {
+		        if(ke.getCode() == KeyCode.DOWN){
+		        	System.out.println("Arrow down pressed");
+		        }else if(ke.getCode() == KeyCode.UP){
+		        	System.out.println("Arrow up pressed");
+		        }
+		    }
+		});
+		tfExpression.textProperty().addListener(new ChangeListener<String>() {
+	        @Override
+	        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+	            if (newValue.contains("!")) {
+	                tfExpression.setText(newValue.replace("!", "¬"));
+	            }else if(newValue.contains("&")){
+	            	tfExpression.setText(newValue.replaceAll("&", "∧"));
+	            }else if(newValue.contains("->")){
+	            	tfExpression.setText(newValue.replaceAll("->", "→"));
+	            }/*else if(newValue.contains("forall")){
+	            	tfExpression.setText(newValue.replaceAll("forall", "∃"));
+	            }*/
+	        }
+	    });
 		return bp;
 	}
 
@@ -534,16 +573,28 @@ public void rowInserted(int rowNo, BoxReference br) {
 	}
 
 	/**
-	 * Adds the rule symbol that has been pressed to the text field for the rule.
+	 * Adds the rule symbol that has been pressed to the text field for the rule when either "expression" or "righTextfield"
+	 * is focused.
 	 * @param event
 	 */
 	public void addRule(javafx.event.ActionEvent event){
-		if(lastFocusedTf != null && lastFocusedTf.getId() == "rightTextfield"){
+		if(lastFocusedTf.getId() == "rightTextfield"){
 			int tmpCaretPosition = caretPosition;
 			String[] parts = event.toString().split("'");
 			lastFocusedTf.setText(parts[1]);
 			lastFocusedTf.requestFocus();
 			lastFocusedTf.positionCaret(tmpCaretPosition+1);
+		}
+		else if(lastFocusedTf.getId() == "expression"){
+			TextField tmpLastFocusedTf = lastFocusedTf;
+			BorderPane borderpane = (BorderPane) lastFocusedTf.getParent();
+			RulePane rulepane = (RulePane) borderpane.getRight();
+			TextField tf = (TextField) rulepane.getChildren().get(0);
+			int tmpCaretPosition = caretPosition;
+			String[] parts = event.toString().split("'");
+			tf.setText(parts[1]);
+			tmpLastFocusedTf.requestFocus();
+			tmpLastFocusedTf.positionCaret(tmpCaretPosition);
 		}
 	}
 
@@ -556,6 +607,5 @@ public void rowInserted(int rowNo, BoxReference br) {
 		    }
 		        return -1;
 	}
-
 
 }

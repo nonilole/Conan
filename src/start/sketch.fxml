@@ -21,6 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.input.KeyCodeCombination?>
 
 <VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="start.MainController">
   <children>
@@ -28,18 +29,18 @@
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#newProof" text="New" />
-            <MenuItem mnemonicParsing="false" onAction="#openProof" text="Open…" />
+            <MenuItem mnemonicParsing="false" onAction="#newProof" text="New" accelerator="Shortcut+N"/>
+            <MenuItem mnemonicParsing="false" onAction="#openProof" text="Open…" accelerator="Shortcut+O"/>
             <Menu mnemonicParsing="false" text="Open Recent" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" text="Close" />
-            <MenuItem mnemonicParsing="false" onAction="#saveProof" text="Save" />
+            <MenuItem mnemonicParsing="false" onAction="#saveProof" text="Save" accelerator="Shortcut+S"/>
             <MenuItem mnemonicParsing="false" onAction="#saveProofAs" text="Save As…" />
             <MenuItem mnemonicParsing="false" text="Revert" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" text="Preferences…" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
+            <MenuItem mnemonicParsing="false" text="Quit"/>
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">

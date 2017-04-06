@@ -4,6 +4,7 @@ import model.formulas.Formula;
 import model.rules.ConjunctionElimRule;
 import model.rules.ConjunctionIntroRule;
 import model.rules.ImplicationIntroRule;
+import model.rules.Premise;
 import model.rules.Rule;
 
 import java.io.Serializable;
@@ -30,6 +31,8 @@ public class Proof implements Serializable{
     
     /**
      * delete the row at index rowNumber-1
+     * TODO: update indexes of rule objects in rows below?
+     * TODO: verify rows below since they now might not be correct anymore
      * @param rowNumber
      */
     public void deleteRow(int rowNumber){
@@ -47,6 +50,8 @@ public class Proof implements Serializable{
     
     /**
      * Inserts a new row into the same box as the referenced row
+     * TODO: update indexes of rule objects in rows below?
+     * TODO: verify rows below since they now might not be correct anymore
      * @param rowNumber: the number of the row used as reference
      * @param br: Indicates whether the new row should be added before or after the reference row
      */
@@ -98,6 +103,7 @@ public class Proof implements Serializable{
             listener.rowUpdated(wellFormed, rowNumber);
         }
         verifyConclusion(rowIndex);
+        verifyRow(rowIndex); //should use verifyProof later probably, to verify rows lower in the proof aswell
         proofData.printRows(1,1);
         System.out.println("==========================================================");
     }
@@ -106,41 +112,51 @@ public class Proof implements Serializable{
     	System.out.println("Proof.updateRuleRow not implemented!");
     }
     
+    //Adds a rule object to the given row
+    public void addRule(int rowNr, Rule rule){
+    	proofData.getRow(rowNr-1).setRule(rule);
+    	verifyRow(rowNr-1); //should use verifyProof later probably
+    }
+    
     //should verify each line in the proof from line startIndex
     public boolean verifyProof(int startIndex){ 
     	assert(startIndex < proofData.size()) : "Proof.verifyProof: index out of bounds";
     	boolean returnValue = true;
     	for(int i = startIndex; i < proofData.size(); i++){
     		if(verifyRow(i) == false) returnValue = false;
+    		//TODO: inform listeners about each row
     	}
     	return returnValue;
     }
     
     //should verify that the row is correct with regards to it's rule and
-    //inform listeners of the status
+    //update the row object with this info
     public boolean verifyRow(int rowIndex){
     	assert(rowIndex < proofData.size()) : "Proof.verifyRow: index out of bounds";
     	ProofRow row = proofData.getRow(rowIndex);
     	Rule rule = row.getRule();
-    	
+    	if(rule == null) return false;
     	if(rule.hasCompleteInfo() == false ) return false;
-    	boolean isVerified;
     	
     	//call the appropriate verification function
-    	if(rule instanceof ConjunctionElimRule){
-    		System.out.println("ConjunctionElimRule verification not added yet!");
-    		isVerified = false;
+    	boolean isVerified;
+    	if(rule instanceof Premise){
+    		isVerified = true; 
+    	}
+    	else if(rule instanceof ConjunctionElimRule){
+    		isVerified = Verification.verifyConjunctionElim(proofData, rowIndex);
     	}
     	else if(rule instanceof ConjunctionIntroRule){
-    		isVerified = Verification.verifyAndIntro(proofData, rowIndex);
+    		isVerified = Verification.verifyConjunctionIntro(proofData, rowIndex);
     	}
     	else if(rule instanceof ImplicationIntroRule){
     		isVerified = Verification.verifyImplicationIntro(proofData, rowIndex);
     	}
     	else{
-    		System.out.println(rule+" rule not implemented yet, have you addded it to Proof.verifyRow ?");
+    		System.out.println(rule+" rule not implemented yet, have you added it to Proof.verifyRow ?");
     		isVerified = false;
     	}
+    	row.setVerified(isVerified);
     	return isVerified;
     }
     
@@ -149,6 +165,7 @@ public class Proof implements Serializable{
     //Instead, at that point, use openBox(int rowNr)
     public void openBox() {
     	proofData.openNewBox();
+    	//TODO: should probbly add a new row immediatly to avoid issues with empty boxes
         for (ProofListener listener : this.listeners) {
             listener.boxOpened();
         }
@@ -187,7 +204,7 @@ public class Proof implements Serializable{
     
     /**
      * Verifies if the row matches the conclusion
-     * @param rowIndex
+     * @param rowIndex: index of the row to verify
      */
     //TODO: check that the row has been verified, not just matches conclusion
     public void verifyConclusion(int rowIndex) {
@@ -219,18 +236,31 @@ public class Proof implements Serializable{
         this.listeners.add(listener);
     }
     
-    public void printProof(){
-    	proofData.printRows(1,1);
-    	/*for(int i = 0; i < proofData.size(); i++){
-    		System.out.println(i+"."+proofData.getRow(i));
-    	}*/
-    }
-    /*
-    public void printProofRowScope(){
-    	proofData.printProofRowScope();
+    //Only for debugging, do not use this for actual implementation
+    public Box getData(){
+    	return proofData;
     }
     
-    public void printProofIntervallScope(){
-    	proofData.printProofIntervallScope();
-    }*/
+    public void printBoxes(){
+    	proofData.printBoxes();
+    }
+    
+    public void printProof(boolean zeroBasedNumbering){
+    	int x = zeroBasedNumbering ? 0 : 1;
+    	proofData.printRows(1,x);
+    }
+    
+
+    
+    public void rulePromptUpdate(int row, int promptIndex, String newValue) {}
+  
+    public void printRowScopes(boolean zeroBasedNumbering){
+    	proofData.printRowScopes(zeroBasedNumbering);
+    }
+    
+    
+    public void printIntervallScopes( boolean zeroBasedNumbering){
+    	proofData.printIntervallScopes(zeroBasedNumbering);
+
+    }
 }
