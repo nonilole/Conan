@@ -90,17 +90,15 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	//Name of the proof/file of this view
 	private String name;
 
-	private TextField lastTf;
-
 	//hashmap for all the rules and number of arguments for all rules
 	private HashMap<String, Integer> ruleMap = new HashMap<String, Integer>();
 
+
+	// Shift enter key combination
+	final static KeyCombination shiftEnter = new KeyCodeCombination(KeyCode.ENTER, KeyCombination.SHIFT_DOWN);
 	/**
 	 * This ia listener that is applied to the last textField. It creates a new row, each time the value of the textField is changed.
 	 */
-	private ChangeListener<? extends String> lastTfListener = (ov, oldValue, newValue) -> {
-		newRow();
-	};
 
 	private AnchorPane createProofPane() {
 		lineNo = new VBox();
@@ -113,11 +111,11 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		hb.setPadding(new Insets(5, 5, 5, 5));
 		ScrollPane sp = new ScrollPane(hb);
 		sp.getStyleClass().add("fit");
-		hb.heightProperty().addListener((ov, oldValue, newValue) -> {
-			if (newValue.doubleValue() > oldValue.doubleValue()) { // Change this to only trigger on new row!!
-				sp.setVvalue(1.0);                                 // Otherwise it will scroll down when you insert a row in the middle
-			}
-		});
+//		hb.heightProperty().addListener((ov, oldValue, newValue) -> {
+//			if (newValue.doubleValue() > oldValue.doubleValue()) { // Change this to only trigger on new row!!
+//				sp.setVvalue(1.0);                                 // Otherwise it will scroll down when you insert a row in the middle
+//			}
+//		});
 		AnchorPane proofPane = new AnchorPane(sp);
 		proofPane.setTopAnchor(sp, 0.0);
 		proofPane.setRightAnchor(sp, 0.0);
@@ -170,30 +168,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		tabPane.getTabs().add(this.tab);
 		tabPane.getSelectionModel().select(this.tab); // Byt till den nya tabben
 		newRow();
-
-
-		//Code for placing the splitpane containing an AssumptionPane containing buttons for open/close box
-		AssumptionPane assumptionPane=new AssumptionPane();
-		assumptionPane.setMinHeight(60);
-		anchorPane.setBottomAnchor(assumptionPane,0.00);
-		SplitPane splitPaneAssumptions = new SplitPane(assumptionPane);
-		sp.getItems().add(splitPaneAssumptions);
-		anchorPane.setBottomAnchor(splitPaneAssumptions,0.0);
-		splitPaneAssumptions.setMinHeight(57);
-		splitPaneAssumptions.setMaxHeight(57);
-		splitPaneAssumptions.setFocusTraversable(false);
-		splitPaneAssumptions.setOrientation(Orientation.VERTICAL);
-		
-		//controller for buttons in AssumptionPane
-		anchorPane.getChildren().add(splitPaneAssumptions);
-        assumptionPane.getOpenButton().setOnAction(event -> {
-			proof.openBox();
-		});
-
-		assumptionPane.getCloseButton().setOnAction(event -> {
-			proof.closeBox();
-		});;
-
 		initializeRuleMap();
 	}
 
@@ -267,7 +241,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		//borderpane which contains the textfield for the expression and the rule
 		RowPane bp = new RowPane(isFirstRowInBox,nrOfClosingBoxes);
 
-
         //setting up a context menu for right-clicking a textfield
 		ContextMenu contextMenu = new ContextMenu();
 		MenuItem delete = new MenuItem("Delete");
@@ -277,10 +250,10 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		contextMenu.getItems().add(insertAbove);
 		contextMenu.getItems().add(insertBelow);
 		bp.getRule().setContextMenu(contextMenu);
-		bp.getRulePrompt1().setContextMenu(contextMenu);
-		bp.getRulePrompt2().setContextMenu(contextMenu);
-		bp.getRulePrompt3().setContextMenu(contextMenu);
-		((TextField)bp.getCenter()).setContextMenu(contextMenu);
+		for(int i = 0;i<3; i++) {
+			bp.getRulePrompt(i).setContextMenu(contextMenu);
+		}
+		bp.getExpression().setContextMenu(contextMenu);
 		bp.getRule().setContextMenu(contextMenu);
 
 		
@@ -297,6 +270,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			proof.insertNewRow(rowOfPressedButton,BoxReference.AFTER);
 		});;
 		
+
 		//adding listeners to the expression- and rule textfield
 		TextField tfExpression = bp.getExpression();
 
@@ -309,43 +283,92 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			lastFocusedTf = tfRule;
 			caretPosition = tfRule.getCaretPosition();
 		});
-		TextField ruleprompt1 = bp.getRulePrompt1();
-		ruleprompt1.focusedProperty().addListener((observable, oldValue, newValue) -> {
-			proof.rulePromptUpdate(rList.indexOf(ruleprompt1), 0, ruleprompt1.getText());
-		});
-		TextField ruleprompt2 = bp.getRulePrompt2();
-		ruleprompt2.focusedProperty().addListener((observable, oldValue, newValue) -> {
-			proof.rulePromptUpdate(rList.indexOf(ruleprompt2), 0, ruleprompt1.getText());
-		});
-		TextField ruleprompt3 = bp.getRulePrompt3();
-		ruleprompt3.focusedProperty().addListener((observable, oldValue, newValue) -> {
-			proof.rulePromptUpdate(rList.indexOf(ruleprompt3), 0, ruleprompt1.getText());
-		});
-		//Här är det Elin och Jan kanske vill använda
-		//------------------------------------------------
+		for (int i = 0; i < 3; i++) {
+			TextField ruleprompt = bp.getRulePrompt(i);
+			int finalI = i;
+			ruleprompt.focusedProperty().addListener((observable, oldValue, newValue) -> {
+				int index = rList.indexOf(bp);
+				proof.rulePromptUpdate(index, finalI, ruleprompt.getText());
+			});
+		}
+		for (int i = 0; i < 3; i++) {
+			int finalI = i;
+			bp.getRulePrompt(i).setOnKeyPressed(new EventHandler<KeyEvent>() {
+				public void handle(KeyEvent ke) {
+					int index = rList.indexOf(bp); //Kanske vill flytta in den här för prestanda
+					if (shiftEnter.match(ke)) {
+						insertNewRow(index + 1, BoxReference.BEFORE);
+						rList.get(index).getClosestPromptFromLeft(finalI).requestFocus();
+					} else if (ke.getCode() == KeyCode.ENTER) {
+						insertNewRow(index + 1, BoxReference.AFTER);
+						rList.get(index + 1).getClosestPromptFromLeft(finalI).requestFocus();
+					} else if (ke.getCode() == KeyCode.DOWN) {
+						if (index + 1 < rList.size()) {
+							rList.get(index + 1).getClosestPromptFromLeft(finalI).requestFocus();
+						}
+					} else if (ke.getCode() == KeyCode.UP) {
+						if (index - 1 >= 0) {
+							rList.get(index - 1).getClosestPromptFromLeft(finalI).requestFocus();
+						}
+					}
+				}
+			});
+		}
+
 		tfExpression.setOnKeyPressed(new EventHandler<KeyEvent>() {
-		    public void handle(KeyEvent ke) {
-		        if(ke.getCode() == KeyCode.DOWN){
-		        	System.out.println("Arrow down pressed");
-		        }else if(ke.getCode() == KeyCode.UP){
-		        	System.out.println("Arrow up pressed");
-		        }
-		    }
+			public void handle(KeyEvent ke) {
+				int index = rList.indexOf(bp); //Kanske vill flytta in den här för prestanda
+				if (shiftEnter.match(ke)) {
+                    insertNewRow(index+1, BoxReference.BEFORE);
+                    rList.get(index).getExpression().requestFocus();
+				} else if (ke.getCode() == KeyCode.ENTER) {
+			        insertNewRow(index+1, BoxReference.AFTER);
+					rList.get(index+1).getExpression().requestFocus();
+				} else if (ke.getCode() == KeyCode.DOWN) {
+					if(index+1<rList.size()) {
+						rList.get(index+1).getExpression().requestFocus();
+					}
+				} else if(ke.getCode() == KeyCode.UP) {
+					if(index-1>=0) {
+						rList.get(index-1).getExpression().requestFocus();
+					}
+				}
+			}
+		});
+		tfRule.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent ke) {
+				int index = rList.indexOf(bp);
+				if (shiftEnter.match(ke)) {
+					insertNewRow(index+1, BoxReference.BEFORE);
+					rList.get(index).getRule().requestFocus();
+				} else if (ke.getCode() == KeyCode.ENTER) {
+					insertNewRow(index+1, BoxReference.AFTER);
+					rList.get(index+1).getRule().requestFocus();
+				} else if (ke.getCode() == KeyCode.DOWN) {
+					if(index+1<rList.size()) {
+						rList.get(index+1).getRule().requestFocus();
+					}
+				} else if(ke.getCode() == KeyCode.UP) {
+					if(index-1>=0) {
+						rList.get(index-1).getRule().requestFocus();
+					}
+				}
+			}
 		});
 		tfExpression.textProperty().addListener(new ChangeListener<String>() {
-	        @Override
-	        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-	            if (newValue.contains("!")) {
-	                tfExpression.setText(newValue.replace("!", "¬"));
-	            }else if(newValue.contains("&")){
-	            	tfExpression.setText(newValue.replaceAll("&", "∧"));
-	            }else if(newValue.contains("->")){
-	            	tfExpression.setText(newValue.replaceAll("->", "→"));
-	            }/*else if(newValue.contains("forall")){
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (newValue.contains("!")) {
+					tfExpression.setText(newValue.replace("!", "¬"));
+				}else if(newValue.contains("&")){
+					tfExpression.setText(newValue.replaceAll("&", "∧"));
+				}else if(newValue.contains("->")){
+					tfExpression.setText(newValue.replaceAll("->", "→"));
+				}/*else if(newValue.contains("forall")){
 	            	tfExpression.setText(newValue.replaceAll("forall", "∃"));
 	            }*/
-	        }
-	    });
+			}
+		});
 		return bp;
 	}
 
@@ -379,60 +402,42 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		lineNo.getChildren().add(createLabel());
 		updateLabelPaddings(rList.size());
 		addListeners(rp);
-		newRowListener(rp.getExpression());
 	}
 
-	public void newRowListener(TextField tf) {
-        if (lastTf != null) {
-            lastTf.textProperty().removeListener((ChangeListener<? super String>) lastTfListener);
-        }
-        lastTf = tf;
-        lastTf.textProperty().addListener((ChangeListener<? super String>) lastTfListener);
-	}
 
 	//rowNo is which row the reference row is at, BoxReference tells you if you want to add the new row before or after
-public void rowInserted(int rowNo, BoxReference br) {
-    RowPane referenceRow;//row we'll use to get a refence to the box where we add the new row
-    boolean isFirstRowInBox;
-    int nrOfClosingBoxes; //the nr of boxes that closes at line rowNo
-    int indexToInsertInParent;
-    VBox parentBox; // which vbox to display the new row in
-    int rListInsertionIndex = (br == BoxReference.BEFORE) ? rowNo-1 : rowNo;
+	public void rowInserted(int rowNo, BoxReference br) {
+		RowPane referenceRow;//row we'll use to get a refence to the box where we add the new row
+		boolean isFirstRowInBox;
+		int nrOfClosingBoxes; //the nr of boxes that closes at line rowNo
+		int indexToInsertInParent;
+		VBox parentBox; // which vbox to display the new row in
+		int rListInsertionIndex = (br == BoxReference.BEFORE) ? rowNo-1 : rowNo;
 
-    if(br == BoxReference.BEFORE){
-        referenceRow = rList.get(rowNo-1);
-        isFirstRowInBox = referenceRow.getIsFirstRowInBox();
-        nrOfClosingBoxes = 0;
-        referenceRow.setIsFirstRowInBox(false);
-        parentBox = (VBox)referenceRow.getParent();
-        indexToInsertInParent = parentBox.getChildren().indexOf(referenceRow);
-    }
-    else{ //br == BoxReference.AFTER
-        referenceRow = rList.get(rowNo-1);
-        nrOfClosingBoxes = referenceRow.getNrOfClosingBoxes();
-        isFirstRowInBox = false;
-        referenceRow.setNrOfClosingBoxes(0);
-        parentBox = (VBox)referenceRow.getParent();
-        indexToInsertInParent = parentBox.getChildren().indexOf(referenceRow) + 1;
-    }
-    RowPane rp = createRow(isFirstRowInBox, nrOfClosingBoxes);
-    ((TextField)rp.getExpression()).setText("*");
-    parentBox.getChildren().add(indexToInsertInParent,rp);
-    rList.add(rListInsertionIndex, rp);
-    lineNo.getChildren().add(createLabel());
-    updateLabelPaddings(rowNo);
-    addListeners(rp);
-    /*
-    if (lastTf != null) {
-        lastTf.textProperty().removeListener((ChangeListener<? super String>) lastTfListener);
-    }
-    TextField tempTf = (TextField) bp.getCenter();
-    //...tempTf.setText(formula);
-    lastTf = tempTf;
-    lastTf.textProperty().addListener((ChangeListener<? super String>) lastTfListener);
-     */
-
-}
+		if(br == BoxReference.BEFORE){
+			referenceRow = rList.get(rowNo-1);
+			isFirstRowInBox = referenceRow.getIsFirstRowInBox();
+			nrOfClosingBoxes = 0;
+			referenceRow.setIsFirstRowInBox(false);
+			parentBox = (VBox)referenceRow.getParent();
+			indexToInsertInParent = parentBox.getChildren().indexOf(referenceRow);
+		}
+		else{ //br == BoxReference.AFTER
+			referenceRow = rList.get(rowNo-1);
+			nrOfClosingBoxes = referenceRow.getNrOfClosingBoxes();
+			isFirstRowInBox = false;
+			referenceRow.setNrOfClosingBoxes(0);
+			parentBox = (VBox)referenceRow.getParent();
+			indexToInsertInParent = parentBox.getChildren().indexOf(referenceRow) + 1;
+		}
+		RowPane rp = createRow(isFirstRowInBox, nrOfClosingBoxes);
+		// ((TextField)rp.getExpression()).setText("*");
+		parentBox.getChildren().add(indexToInsertInParent,rp);
+		rList.add(rListInsertionIndex, rp);
+		lineNo.getChildren().add(createLabel());
+		updateLabelPaddings(rowNo);
+		addListeners(rp);
+	}
 	// public void focus() { // Save the last focused textfield here for quick resuming?
 	//     Platform.runLater(() -> lastTf.requestFocus());
 	// }
@@ -480,9 +485,6 @@ public void rowInserted(int rowNo, BoxReference br) {
 	//update view to reflect that row with nr rowNr has been deleted
 	public void rowDeleted(int rowNr){
 		RowPane rp = rList.get(rowNr-1);
-		if (rowNr-1 == rList.size()-1 && (rowNr-2 >= 0)) { // Just check if this is the last row
-                newRowListener(rList.get(rowNr-2).getExpression());
-        }
 		VBox box = (VBox)rp.getParent();
 		List<Node> parentComponentList = box.getChildren();
 		if(parentComponentList.remove(rp) == false){
@@ -542,7 +544,7 @@ public void rowInserted(int rowNo, BoxReference br) {
 		// Updates the Proof object if the textField is updated
 		TextField formulaField = (TextField) rp.getExpression();
 		TextField ruleField = (TextField) rp.getRule();
-		
+
 		formulaField.textProperty().addListener((ov, oldValue, newValue) -> {
 			int rpIndex = rList.indexOf(rp);
 			proof.updateFormulaRow(newValue, rpIndex+1);
@@ -551,7 +553,7 @@ public void rowInserted(int rowNo, BoxReference br) {
 		ruleField.textProperty().addListener((ov, oldValue, newValue) -> {
 			int rpIndex = rList.indexOf(rp);
 			proof.updateRuleRow(newValue, rpIndex+1);
-            rp.setPrompts(ruleMap.getOrDefault(newValue,-1));
+			rp.setPrompts(ruleMap.getOrDefault(newValue,-1));
 		});
 	}
 

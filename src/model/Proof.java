@@ -56,10 +56,6 @@ public class Proof implements Serializable{
      * @param br: Indicates whether the new row should be added before or after the reference row
      */
     public void insertNewRow(int rowNumber, BoxReference br){
-        if(rowNumber == proofData.size() && br == BoxReference.AFTER) {
-            addRow();
-            return;
-        }
     	if(rowNumber < 1 || rowNumber > proofData.size()+1){
     		System.out.println("Proof.insertNewRow: incorrect rowNumber");
     		System.out.println("rows.size(): "+proofData.size()+", rowNumber: "+rowNumber);
