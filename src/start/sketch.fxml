@@ -58,12 +58,16 @@
                   <MenuItem mnemonicParsing="false" onAction="#deleteRowMenu" text="Delete Rows" />
                   <MenuItem mnemonicParsing="false" onAction="#insertAboveMenu" text="Insert Above" />
                   <MenuItem mnemonicParsing="false" onAction="#insertBelowMenu" text="Insert Below" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#openBox" text="Open Box" />
+                  <MenuItem mnemonicParsing="false" onAction="#closeBox" text="Close Box" />
           </items>
         </Menu>
             <Menu mnemonicParsing="false" text="Preferences" />
         <Menu mnemonicParsing="false" text="Help">
           <items>
             <MenuItem mnemonicParsing="false" onAction="#showUserInstructions" text="About" />
+                  <MenuItem mnemonicParsing="false" onAction="#showInferenceRules" text="Display Inference Rules" />
           </items>
         </Menu>
       </menus>
