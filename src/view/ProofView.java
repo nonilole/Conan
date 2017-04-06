@@ -258,11 +258,11 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		return bp;
 	}
 
-	private void setPromptListener(int rowIndex, TextField prompt, int promptIndex) {
+	private void setPromptListener(int rowIndex, TextField prompt, int promptNumber) {
         prompt.textProperty().addListener((observable, oldValue, newValue) -> {
 			Matcher m = p.matcher(newValue);
 			if (m.matches()) {
-				proof.rulePromptUpdate(rowIndex+1, promptIndex, newValue);
+				proof.rulePromptUpdate(rowIndex+1, promptNumber, newValue);
 			} else {
 				prompt.setText(oldValue);
 
@@ -485,9 +485,11 @@ public void rowInserted(int rowNo, BoxReference br) {
             }
             rp.setPrompts(ruleMap.getOrDefault(newValue,-1));
 		});
-        setPromptListener(rpIndex, rp.getRulePrompt1(), 1);
-        setPromptListener(rpIndex, rp.getRulePrompt2(), 2);
-        setPromptListener(rpIndex, rp.getRulePrompt3(), 3);
+		for (int i = 0 ; i < 3; i++) {
+			setPromptListener(rpIndex, rp.getRulePrompt(i), 1);
+			setPromptListener(rpIndex, rp.getRulePrompt(i), 2);
+			setPromptListener(rpIndex, rp.getRulePrompt(i), 3);
+		}
 	}
 
 	//

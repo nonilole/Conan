@@ -242,8 +242,8 @@ public class Proof implements Serializable{
         proofData.printRows(1,x);
     }
 
-    public void rulePromptUpdate(int rowNr, int promptIndex, String newValue) {
-        System.out.println("rulePromptUpdate rowNr:"+rowNr+" promptIndex:"+promptIndex+" newValue:"+newValue);
+    public void rulePromptUpdate(int rowNr, int promptNumber, String newValue) {
+        System.out.println("rulePromptUpdate rowNr:"+rowNr+" promptNumber:"+promptNumber+" newValue:"+newValue);
         int rowIndex = rowNr-1;
         ProofRow row = proofData.getRow(rowNr-1);
 
@@ -251,14 +251,14 @@ public class Proof implements Serializable{
         //System.out.println(rowIndex);
         //System.out.println(rule.toString());
         try{
-            rule.updateReference(promptIndex, newValue);
+            rule.updateReference(promptNumber, newValue);
         }
         //if the string is not of the correct format ie an integer or interval
         catch(NumberFormatException e){
             System.out.println("Incorrect reference format");
         }
-        //if the promptIndex does not match the rule object, for example ConjunctionIntro has 2 references,
-        //so promptIndex = 3 wouldn't make sense
+        //if the promptNumber does not match the rule object, for example ConjunctionIntro has 2 references,
+        //so promptNumber = 3 wouldn't make sense
         catch(IllegalArgumentException e){
             System.out.println("Invalid argument for "+rule.getClass().getSimpleName());
         }

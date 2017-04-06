@@ -53,39 +53,27 @@ public class RowPane extends BorderPane{
 		return (TextField) rulePane.getChildren().get(0);
 	}
 	
-	public TextField getRulePrompt1() {
+	public TextField getRulePrompt(int index) {
 		RulePane rulePane = (RulePane) this.getRight();
-		return (TextField) rulePane.getChildren().get(1);
+		return (TextField) rulePane.getChildren().get(1+index);
 	}
 	
-	public TextField getRulePrompt2() {
-		RulePane rulePane = (RulePane) this.getRight();
-		return (TextField) rulePane.getChildren().get(2);
-	}
-	
-	public TextField getRulePrompt3() {
-		RulePane rulePane = (RulePane) this.getRight();
-		return (TextField) rulePane.getChildren().get(3);
-	}
-
 	public void hideAndClearPrompts() {
-	    getRulePrompt1().setVisible(false);
-		getRulePrompt1().clear();
-		getRulePrompt2().setVisible(false);
-		getRulePrompt2().clear();
-		getRulePrompt3().setVisible(false);
-		getRulePrompt3().clear();
+	    for (int i = 0; i < 3; i++) {
+			getRulePrompt(i).setVisible(false);
+			getRulePrompt(i).clear();
+		}
 	}
 
 	public void setPrompts(int n) {
 	    hideAndClearPrompts();
 	    switch (n) {
             case 3:
-                getRulePrompt3().setVisible(true);
+				getRulePrompt(2).setVisible(true);
             case 2:
-                getRulePrompt2().setVisible(true);
+				getRulePrompt(1).setVisible(true);
             case 1:
-                getRulePrompt1().setVisible(true);
+				getRulePrompt(0).setVisible(true);
                 break;
             default:
                 break;
