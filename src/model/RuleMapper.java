@@ -20,6 +20,7 @@ public class RuleMapper {
         ruleToClass.put("→I", ImplicationIntro.class);
         ruleToClass.put("Premise", Premise.class);
         ruleToClass.put("Ass.", Assumption.class);
+        ruleToClass.put("Fresh", FreshVar.class);
     }
 
     public static Rule getRule(String rule) {

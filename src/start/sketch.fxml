@@ -24,7 +24,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="start.MainController">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="start.MainController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -289,6 +289,11 @@
                                                                   <Font name="Consolas Bold" size="12.0" />
                                                                </font>
                                                             </Button>
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                                                         <children>
+                                                            <Button layoutY="1.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="Fresh" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0" />
                                                          </children>
                                                       </AnchorPane>
                                                    </children>
