@@ -57,3 +57,20 @@
 .root GridPane {
 	-fx-background-color: #E8F6A4;
 }
+
+.root VBox {
+	-fx-background-color: #E8F6A4;
+}
+
+.root .scroll-pane {
+	-fx-background: #E8F6A4;
+}
+
+.root .titled-pane > .title {
+	-fx-background-color: #BCCD67;
+}
+
+.root .menu-bar {
+	-fx-background-color: #BCCD67;
+}
+
