@@ -254,22 +254,41 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			lastFocusedTf = tfRule;
 			caretPosition = tfRule.getCaretPosition();
 		});
-		TextField ruleprompt1 = bp.getRulePrompt1();
-		ruleprompt1.focusedProperty().addListener((observable, oldValue, newValue) -> {
-			proof.rulePromptUpdate(rList.indexOf(ruleprompt1), 0, ruleprompt1.getText());
-		});
-		TextField ruleprompt2 = bp.getRulePrompt2();
-		ruleprompt2.focusedProperty().addListener((observable, oldValue, newValue) -> {
-			proof.rulePromptUpdate(rList.indexOf(ruleprompt2), 0, ruleprompt1.getText());
-		});
-		TextField ruleprompt3 = bp.getRulePrompt3();
-		ruleprompt3.focusedProperty().addListener((observable, oldValue, newValue) -> {
-			proof.rulePromptUpdate(rList.indexOf(ruleprompt3), 0, ruleprompt1.getText());
-		});
+		for (int i = 0; i < 3; i++) {
+			TextField ruleprompt = bp.getRulePrompt(i);
+			int finalI = i;
+			ruleprompt.focusedProperty().addListener((observable, oldValue, newValue) -> {
+				int index = rList.indexOf(bp);
+				proof.rulePromptUpdate(index, finalI, ruleprompt.getText());
+			});
+		}
+		for (int i = 0; i < 3; i++) {
+			int finalI = i;
+			bp.getRulePrompt(i).setOnKeyPressed(new EventHandler<KeyEvent>() {
+				public void handle(KeyEvent ke) {
+					int index = rList.indexOf(bp); //Kanske vill flytta in den här för prestanda
+					if (shiftEnter.match(ke)) {
+						insertNewRow(index + 1, BoxReference.BEFORE);
+						rList.get(index).getClosestPromptFromLeft(finalI).requestFocus();
+					} else if (ke.getCode() == KeyCode.ENTER) {
+						insertNewRow(index + 1, BoxReference.AFTER);
+						rList.get(index + 1).getClosestPromptFromLeft(finalI).requestFocus();
+					} else if (ke.getCode() == KeyCode.DOWN) {
+						if (index + 1 < rList.size()) {
+							rList.get(index + 1).getClosestPromptFromLeft(finalI).requestFocus();
+						}
+					} else if (ke.getCode() == KeyCode.UP) {
+						if (index - 1 >= 0) {
+							rList.get(index - 1).getClosestPromptFromLeft(finalI).requestFocus();
+						}
+					}
+				}
+			});
+		}
+
 		tfExpression.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent ke) {
-				RowPane rp = (RowPane) tfExpression.getParent();
-				int index = rList.indexOf(rp);
+				int index = rList.indexOf(bp); //Kanske vill flytta in den här för prestanda
 				if (shiftEnter.match(ke)) {
                     insertNewRow(index+1, BoxReference.BEFORE);
                     rList.get(index).getExpression().requestFocus();
@@ -283,6 +302,26 @@ public class ProofView extends Symbolic implements ProofListener, View {
 				} else if(ke.getCode() == KeyCode.UP) {
 					if(index-1>=0) {
 						rList.get(index-1).getExpression().requestFocus();
+					}
+				}
+			}
+		});
+		tfRule.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent ke) {
+				int index = rList.indexOf(bp);
+				if (shiftEnter.match(ke)) {
+					insertNewRow(index+1, BoxReference.BEFORE);
+					rList.get(index).getRule().requestFocus();
+				} else if (ke.getCode() == KeyCode.ENTER) {
+					insertNewRow(index+1, BoxReference.AFTER);
+					rList.get(index+1).getRule().requestFocus();
+				} else if (ke.getCode() == KeyCode.DOWN) {
+					if(index+1<rList.size()) {
+						rList.get(index+1).getRule().requestFocus();
+					}
+				} else if(ke.getCode() == KeyCode.UP) {
+					if(index-1>=0) {
+						rList.get(index-1).getRule().requestFocus();
 					}
 				}
 			}
