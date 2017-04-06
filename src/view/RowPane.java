@@ -20,7 +20,6 @@ public class RowPane extends BorderPane{
 		tfExpression.setPrefWidth(580);
 		this.setCenter(tfExpression);
 		this.setRight(new RulePane());
-		this.setLeft(new RowButtonsPane());
 		this.setCache(true);
 		this.setCacheShape(true);
 		this.setCacheHint(CacheHint.SPEED);
@@ -90,7 +89,4 @@ public class RowPane extends BorderPane{
         }
     }
 
-    public RowButtonsPane getEditRowPane(){
-		return (RowButtonsPane) this.getLeft();
-	}
 }

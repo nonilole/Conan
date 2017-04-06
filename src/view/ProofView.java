@@ -293,25 +293,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			int rowOfPressedButton=rList.indexOf(bp) + 1;
 			proof.insertNewRow(rowOfPressedButton,BoxReference.AFTER);
 		});;
-
-
-
-		//Action Events for delete and insert buttons in RowButtonsPane
-		bp.getEditRowPane().getDeleteButton().setOnAction(event -> {
-			int rowOfPressedButton=rList.indexOf(bp) + 1;;
-			proof.deleteRow(rowOfPressedButton);
-		});
-		bp.getEditRowPane().getInsertBeforeButton().setOnAction(event -> {
-			int rowOfPressedButton=rList.indexOf(bp) + 1;;
-			proof.insertNewRow(rowOfPressedButton,BoxReference.BEFORE);
-		});
-		bp.getEditRowPane().getInsertAfterButton().setOnAction(event -> {
-			int rowOfPressedButton=rList.indexOf(bp) + 1;;
-			proof.insertNewRow(rowOfPressedButton,BoxReference.AFTER);
-		});
-
-
-
+		
 		//adding listeners to the expression- and rule textfield
 		TextField tfExpression = bp.getExpression();
 
