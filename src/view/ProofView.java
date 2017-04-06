@@ -264,24 +264,14 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		ruleprompt3.focusedProperty().addListener((observable, oldValue, newValue) -> {
 			proof.rulePromptUpdate(rList.indexOf(ruleprompt3), 0, ruleprompt1.getText());
 		});
+		//Här är det Elin och Jan kanske vill använda
+		//------------------------------------------------
 		tfExpression.setOnKeyPressed(new EventHandler<KeyEvent>() {
 		    public void handle(KeyEvent ke) {
-		        if(ke.getCode() == KeyCode.DIGIT1 && ke.isShiftDown()){
-		        	int tmpCaretPosition = tfExpression.getCaretPosition();
-		        	System.out.println("CaretPosition: " + tmpCaretPosition);		  
-		            tfExpression.setText(tfExpression.getText().substring(0, tmpCaretPosition) + "¬"
-		                    + lastFocusedTf.getText().substring(tmpCaretPosition, tfExpression.getLength()));	            
-		            tfExpression.setText(tfExpression.getText() + "");
-		            tfExpression.positionCaret(tmpCaretPosition+1);
-		            
-		        }else if(ke.getCode() == KeyCode.DIGIT6 && ke.isShiftDown()){
-		        	int tmpCaretPosition = tfExpression.getCaretPosition();
-		        	System.out.println("CaretPosition: " + tmpCaretPosition);		  
-		            tfExpression.setText(tfExpression.getText().substring(0, tmpCaretPosition) + "∧"
-		                    + lastFocusedTf.getText().substring(tmpCaretPosition, tfExpression.getLength()));	            
-		            tfExpression.setText(tfExpression.getText() + "");
-		            tfExpression.positionCaret(tmpCaretPosition+1);
-		            
+		        if(ke.getCode() == KeyCode.DOWN){
+		        	System.out.println("Arrow down pressed");
+		        }else if(ke.getCode() == KeyCode.UP){
+		        	System.out.println("Arrow up pressed");
 		        }
 		    }
 		});
@@ -289,10 +279,14 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	        @Override
 	        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 	            if (newValue.contains("!")) {
-	                tfExpression.setText(newValue.replaceAll("!", ""));
+	                tfExpression.setText(newValue.replace("!", "¬"));
 	            }else if(newValue.contains("&")){
-	            	tfExpression.setText(newValue.replaceAll("&", ""));
-	            }
+	            	tfExpression.setText(newValue.replaceAll("&", "∧"));
+	            }else if(newValue.contains("->")){
+	            	tfExpression.setText(newValue.replaceAll("->", "→"));
+	            }/*else if(newValue.contains("forall")){
+	            	tfExpression.setText(newValue.replaceAll("forall", "∃"));
+	            }*/
 	        }
 	    });
 		return bp;
