@@ -95,6 +95,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	//hashmap for all the rules and number of arguments for all rules
 	private HashMap<String, Integer> ruleMap = new HashMap<String, Integer>();
 
+	// Shift enter key combination
+	final static KeyCombination shiftEnter = new KeyCodeCombination(KeyCode.ENTER, KeyCombination.SHIFT_DOWN);
 	/**
 	 * This ia listener that is applied to the last textField. It creates a new row, each time the value of the textField is changed.
 	 */
@@ -264,19 +266,19 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		ruleprompt3.focusedProperty().addListener((observable, oldValue, newValue) -> {
 			proof.rulePromptUpdate(rList.indexOf(ruleprompt3), 0, ruleprompt1.getText());
 		});
-		//Här är det Elin och Jan kanske vill använda
-		//------------------------------------------------
 		tfExpression.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent ke) {
-				if(ke.getCode() == KeyCode.DOWN){
-					RowPane rp = (RowPane) tfExpression.getParent();
-					int index = rList.indexOf(rp);
+				RowPane rp = (RowPane) tfExpression.getParent();
+				int index = rList.indexOf(rp);
+				if (shiftEnter.match(ke)) {
+					insertNewRow(index+1, BoxReference.BEFORE);
+				} else if (ke.getCode() == KeyCode.ENTER) {
+			        insertNewRow(index+1, BoxReference.AFTER);
+				} else if (ke.getCode() == KeyCode.DOWN) {
 					if(index+1<rList.size()) {
 						rList.get(index+1).getExpression().requestFocus();
 					}
-				}else if(ke.getCode() == KeyCode.UP){
-					RowPane rp = (RowPane) tfExpression.getParent();
-					int index = rList.indexOf(rp);
+				} else if(ke.getCode() == KeyCode.UP) {
 					if(index-1>=0) {
 						rList.get(index-1).getExpression().requestFocus();
 					}
