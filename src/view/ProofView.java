@@ -115,11 +115,11 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		hb.setPadding(new Insets(5, 5, 5, 5));
 		ScrollPane sp = new ScrollPane(hb);
 		sp.getStyleClass().add("fit");
-		hb.heightProperty().addListener((ov, oldValue, newValue) -> {
-			if (newValue.doubleValue() > oldValue.doubleValue()) { // Change this to only trigger on new row!!
-				sp.setVvalue(1.0);                                 // Otherwise it will scroll down when you insert a row in the middle
-			}
-		});
+//		hb.heightProperty().addListener((ov, oldValue, newValue) -> {
+//			if (newValue.doubleValue() > oldValue.doubleValue()) { // Change this to only trigger on new row!!
+//				sp.setVvalue(1.0);                                 // Otherwise it will scroll down when you insert a row in the middle
+//			}
+//		});
 		AnchorPane proofPane = new AnchorPane(sp);
 		proofPane.setTopAnchor(sp, 0.0);
 		proofPane.setRightAnchor(sp, 0.0);
@@ -271,9 +271,11 @@ public class ProofView extends Symbolic implements ProofListener, View {
 				RowPane rp = (RowPane) tfExpression.getParent();
 				int index = rList.indexOf(rp);
 				if (shiftEnter.match(ke)) {
-					insertNewRow(index+1, BoxReference.BEFORE);
+                    insertNewRow(index+1, BoxReference.BEFORE);
+                    rList.get(index).getExpression().requestFocus();
 				} else if (ke.getCode() == KeyCode.ENTER) {
 			        insertNewRow(index+1, BoxReference.AFTER);
+					rList.get(index+1).getExpression().requestFocus();
 				} else if (ke.getCode() == KeyCode.DOWN) {
 					if(index+1<rList.size()) {
 						rList.get(index+1).getExpression().requestFocus();
