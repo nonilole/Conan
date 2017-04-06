@@ -24,9 +24,30 @@ public class Tests {
 		//verificationTest();
 		//replaceVarTest(20);
 		//replaceVarTest2();
-		existElimTest();
+		//existElimTest();
 		//printRandomFormulas(20);
+		isInstantiationOfTest(10000);
 		System.out.println("Done.");
+	}
+	
+	public static void isInstantiationOfTest(int nrTests){
+		RandomFormulaGenerator rangen = new RandomFormulaGenerator();
+		Random rand = new Random();
+		
+		for(int i = 0; i<nrTests; i++){
+			System.out.println("Test: "+(i+1));
+			Formula ranf = rangen.generateFormula(5, 5);
+			char chr = (char) (rand.nextInt(5)+'a');
+			QuantifiedFormula quant = new QuantifiedFormula(ranf,chr+"",'∀');
+			
+			if(Formula.isInstantiationOf(ranf, quant) == false){
+				System.out.println("isInstantiationOf:");
+				System.out.println(""+ranf);
+				System.out.println(""+quant);
+				System.out.println("=====================================");
+			}
+		}
+		//String blö = res[2];
 	}
 	
 	public static void existElimTest(){
