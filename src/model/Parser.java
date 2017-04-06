@@ -15,6 +15,7 @@ public class Parser{
      * @return
      */
     public Formula parse(String str){
+    	if(isObjectId(str)) return new FreshVarFormula(str);
         StringReader strR = new StringReader(str);
         br = new BufferedReader(strR);
         try{
@@ -26,6 +27,11 @@ public class Parser{
         }
         return null;
         
+    }
+    
+    //TODO: update to handle numbered var names for objects
+    boolean isObjectId(String str){
+    	return str.length() == 1 && str.charAt(0) >= 'a' && str.charAt(0) <= 'z';
     }
 
     /**

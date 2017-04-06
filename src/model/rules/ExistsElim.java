@@ -12,7 +12,7 @@ public class ExistsElim implements Rule{
 	
 	@Override
 	public boolean hasCompleteInfo(){
-		return (intervalRef == null && rowRef == null) == false;
+		return intervalRef != null && rowRef != null;
 	}
 
 	@Override
@@ -38,6 +38,11 @@ public class ExistsElim implements Rule{
 			}
 		}
 		
+	}
+	
+	@Override
+	public String toString(){
+		return String.format("∃E (%s) (%s)", rowRef, intervalRef);
 	}
 
 	@Override

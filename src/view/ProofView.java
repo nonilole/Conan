@@ -189,7 +189,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		ruleMap.put("∀I", 1);
 		ruleMap.put("∀E", 1);
 		ruleMap.put("∃I", 1);
-		ruleMap.put("∃E", 1);
+		ruleMap.put("∃E", 2);
 		ruleMap.put("=E", 2);
 		ruleMap.put("=I", 0);
 		ruleMap.put("Ass.", 0);

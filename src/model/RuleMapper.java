@@ -18,6 +18,7 @@ public class RuleMapper {
         ruleToClass.put("¬¬E", DoubleNegationElim.class);
         ruleToClass.put("=I", EqualityIntro.class);
         ruleToClass.put("→I", ImplicationIntro.class);
+        ruleToClass.put("∃E", ExistsElim.class);
         ruleToClass.put("Premise", Premise.class);
         ruleToClass.put("Ass.", Assumption.class);
         ruleToClass.put("Fresh", FreshVar.class);

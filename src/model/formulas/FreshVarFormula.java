@@ -17,5 +17,10 @@ public class FreshVarFormula extends Formula {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	@Override
+	public String toString(){
+		return var;
+	}
 
 }
