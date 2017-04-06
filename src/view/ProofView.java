@@ -2,6 +2,7 @@ package view;
 
 import java.util.*;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -271,13 +272,29 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		            tfExpression.setText(tfExpression.getText().substring(0, tmpCaretPosition) + "¬"
 		                    + lastFocusedTf.getText().substring(tmpCaretPosition, tfExpression.getLength()));	            
 		            tfExpression.setText(tfExpression.getText() + "");
-		            tfExpression.positionCaret(tmpCaretPosition);
-		            tfExpression.deletePreviousChar();
+		            tfExpression.positionCaret(tmpCaretPosition+1);
+		            
+		        }else if(ke.getCode() == KeyCode.DIGIT6 && ke.isShiftDown()){
+		        	int tmpCaretPosition = tfExpression.getCaretPosition();
+		        	System.out.println("CaretPosition: " + tmpCaretPosition);		  
+		            tfExpression.setText(tfExpression.getText().substring(0, tmpCaretPosition) + "∧"
+		                    + lastFocusedTf.getText().substring(tmpCaretPosition, tfExpression.getLength()));	            
+		            tfExpression.setText(tfExpression.getText() + "");
 		            tfExpression.positionCaret(tmpCaretPosition+1);
 		            
 		        }
 		    }
 		});
+		tfExpression.textProperty().addListener(new ChangeListener<String>() {
+	        @Override
+	        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+	            if (newValue.contains("!")) {
+	                tfExpression.setText(newValue.replaceAll("!", ""));
+	            }else if(newValue.contains("&")){
+	            	tfExpression.setText(newValue.replaceAll("&", ""));
+	            }
+	        }
+	    });
 		return bp;
 	}
 
@@ -529,9 +546,4 @@ public void rowInserted(int rowNo, BoxReference br) {
 			tmpLastFocusedTf.positionCaret(tmpCaretPosition);
 		}
 	}
-
-	public void handleKP(KeyEvent key){
-		
-	}
-
 }
