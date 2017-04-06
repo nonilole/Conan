@@ -54,18 +54,18 @@
     -fx-background-color: #91A437;
 }
 
-.root .tool-bar {
+.root .tool-bar, .root .scroll-pane, {
     -fx-background: #E8F6A4;
     -fx-base: #E8F6A4;
 }
 
-.root .titled-pane > .title , .root .menu-bar , .root .tab {
+.root .titled-pane > .title, .root .menu-bar , .root .tab {
     -fx-background-color: #BCCD67;
 }
 
-.root GridPane, .root VBox, .root .scroll-pane, .root .tab:selected, .root .split-pane {
+.root GridPane, .root VBox,  .root .tab:selected, .root .split-pane {
     -fx-background-color: #E8F6A4;
 }
-.root .tab-header-background , .root *.line {
+.root .tab-header-background , .root .line {
     -fx-background-color: #445200;
 }
