@@ -1,6 +1,8 @@
 package view;
 
 import java.util.*;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -91,7 +93,10 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
 	//hashmap for all the rules and number of arguments for all rules
 	private HashMap<String, Integer> ruleMap = new HashMap<String, Integer>();
-	
+	// Pattern for prompt
+	// Match at least one digit perhaps one dash and then any number of digits. Or match nothing at all.
+	static Pattern p = Pattern.compile("^(\\d+-?\\d*)?$");
+
 	/**
 	 * This ia listener that is applied to the last textField. It creates a new row, each time the value of the textField is changed.
 	 */
@@ -255,12 +260,13 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
 	private void setPromptListener(int rowIndex, TextField prompt, int promptIndex) {
         prompt.textProperty().addListener((observable, oldValue, newValue) -> {
-            // Strip all non-numbers and non-dashes
-            String s = newValue.replaceAll("[^0-9-]", "");
-            // Match two dashes and stop, (if it doesn't match two dashes, we only have one dash).
-            s = s.replaceAll("(.*!?([0-9]*-[0-9]*).*!?)-", "$1");
-            prompt.setText(s);
-            proof.rulePromptUpdate(rowIndex+1, promptIndex, s);
+			Matcher m = p.matcher(newValue);
+			if (m.matches()) {
+				proof.rulePromptUpdate(rowIndex+1, promptIndex, newValue);
+			} else {
+				prompt.setText(oldValue);
+
+			}
         });
     }
 
