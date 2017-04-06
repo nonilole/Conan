@@ -90,8 +90,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	//Name of the proof/file of this view
 	private String name;
 
-	private TextField lastTf;
-
 	//hashmap for all the rules and number of arguments for all rules
 	private HashMap<String, Integer> ruleMap = new HashMap<String, Integer>();
 
@@ -100,9 +98,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	/**
 	 * This ia listener that is applied to the last textField. It creates a new row, each time the value of the textField is changed.
 	 */
-	private ChangeListener<? extends String> lastTfListener = (ov, oldValue, newValue) -> {
-		newRow();
-	};
 
 	private AnchorPane createProofPane() {
 		lineNo = new VBox();
@@ -373,16 +368,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		lineNo.getChildren().add(createLabel());
 		updateLabelPaddings(rList.size());
 		addListeners(rp);
-		newRowListener(rp.getExpression());
 	}
 
-	public void newRowListener(TextField tf) {
-		if (lastTf != null) {
-			lastTf.textProperty().removeListener((ChangeListener<? super String>) lastTfListener);
-		}
-		lastTf = tf;
-		lastTf.textProperty().addListener((ChangeListener<? super String>) lastTfListener);
-	}
 
 	//rowNo is which row the reference row is at, BoxReference tells you if you want to add the new row before or after
 	public void rowInserted(int rowNo, BoxReference br) {
@@ -410,22 +397,12 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			indexToInsertInParent = parentBox.getChildren().indexOf(referenceRow) + 1;
 		}
 		RowPane rp = createRow(isFirstRowInBox, nrOfClosingBoxes);
-		((TextField)rp.getExpression()).setText("*");
+		// ((TextField)rp.getExpression()).setText("*");
 		parentBox.getChildren().add(indexToInsertInParent,rp);
 		rList.add(rListInsertionIndex, rp);
 		lineNo.getChildren().add(createLabel());
 		updateLabelPaddings(rowNo);
 		addListeners(rp);
-		/*
-    if (lastTf != null) {
-        lastTf.textProperty().removeListener((ChangeListener<? super String>) lastTfListener);
-    }
-    TextField tempTf = (TextField) bp.getCenter();
-    //...tempTf.setText(formula);
-    lastTf = tempTf;
-    lastTf.textProperty().addListener((ChangeListener<? super String>) lastTfListener);
-		 */
-
 	}
 	// public void focus() { // Save the last focused textfield here for quick resuming?
 	//     Platform.runLater(() -> lastTf.requestFocus());
@@ -474,9 +451,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	//update view to reflect that row with nr rowNr has been deleted
 	public void rowDeleted(int rowNr){
 		RowPane rp = rList.get(rowNr-1);
-		if (rowNr-1 == rList.size()-1 && (rowNr-2 >= 0)) { // Just check if this is the last row
-			newRowListener(rList.get(rowNr-2).getExpression());
-		}
 		VBox box = (VBox)rp.getParent();
 		List<Node> parentComponentList = box.getChildren();
 		if(parentComponentList.remove(rp) == false){
