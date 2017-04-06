@@ -263,6 +263,7 @@ public class Proof implements Serializable{
             System.out.println("Invalid argument for "+rule.getClass().getSimpleName());
         }
         verifyRow(rowIndex);
+        proofData.printRows(1,1);
     }
 
     public void printRowScopes(boolean zeroBasedNumbering){

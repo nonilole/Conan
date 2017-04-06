@@ -47,13 +47,14 @@ public class ExistsElim implements Rule{
 
 	@Override
 	public boolean verify(Box data, int rowIndex) {
+		//System.out.println("ExistsElim.verify(data, "+rowIndex+")");
 		// is the rule object of the correct type? Probably just check with an assertion
 		assert( data.getRow(rowIndex).getRule() instanceof ExistsElim);//can skip this...
 		// are the references in the rule object in scope of rowIndex?
 		// are all the referenced rows verified?
 		if( data.isInScopeOf(rowRef, rowIndex) == false )      return false;
 		if( data.isInScopeOf(intervalRef, rowIndex) == false ) return false;
-		
+		//System.out.println("1");
 		// is the referenced row of the correct type for this rule?
 		ProofRow referencedRow = data.getRow(rowRef); 
 		Formula referencedRowFormula = referencedRow.getFormula();
@@ -62,17 +63,23 @@ public class ExistsElim implements Rule{
 			if(quant.type != '∃') return false;
 		}
 		else return false;
+		//System.out.println("2");
 		
 		//does the box contain the needed data?
 		QuantifiedFormula refdQuant = (QuantifiedFormula) referencedRowFormula;
 		Box refBox = data.getBox(intervalRef);
 		if(refBox.size() < 3) return false;//needs at least fresh var, instantiation of quantifiedFormula and conclusion not containing fresh var
 		if(refBox.getRow(0).getRule() instanceof FreshVar == false) return false;
+		//System.out.println("3");
 		String freshVar = ((FreshVarFormula)refBox.getRow(0).getFormula()).var;
 		//second row needs to be the quantified formula instantiated with the fresh variable
-		if( refBox.getRow(1).equals(refdQuant.instantiate(freshVar)) == false) return false;
+		//System.out.println("Instantiated: "+refdQuant.instantiate(freshVar));
+		//System.out.println("Compared to: "+refBox.getRow(1).getFormula());
+		if( refBox.getRow(1).getFormula().equals(refdQuant.instantiate(freshVar)) == false) return false;
+		//System.out.println("4");
 		//last row in box needs to equal the formula in the referencingRow
-		if(data.getRow(rowIndex).getFormula().equals( refBox.getRow(refBox.size()-1)) == false) return false;
+		if(data.getRow(rowIndex).getFormula().equals( refBox.getRow(refBox.size()-1).getFormula()) == false) return false;
+		//System.out.println("5");
 		//last row in box cant contain the freshVar
 		if(refBox.getRow(refBox.size()-1).getFormula().containsObjectId(freshVar)) return false;
 		return true;

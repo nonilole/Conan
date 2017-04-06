@@ -23,9 +23,34 @@ public class Tests {
 		//getBoxTest();
 		//verificationTest();
 		//replaceVarTest(20);
-		replaceVarTest2();
+		//replaceVarTest2();
+		existElimTest();
 		//printRandomFormulas(20);
 		System.out.println("Done.");
+	}
+	
+	public static void existElimTest(){
+		Proof proof = new Proof();
+		proof.addRow();//1
+		proof.openBox();
+		proof.addRow();//2
+		proof.updateFormulaRow("∃xP(x)", 1);
+		proof.addRule(1, new Premise());
+		proof.updateFormulaRow("y", 2);
+		proof.addRule(2, new FreshVar());
+		proof.addRow();//3
+		proof.updateFormulaRow("P(y)", 3);
+		proof.addRule(3, new Premise());
+		proof.addRow();//4
+		proof.updateFormulaRow("Q", 4);
+		proof.addRule(4, new Premise());
+		proof.closeBox();
+		proof.addRow();
+		proof.updateFormulaRow("Q", 5);
+		proof.addRule(5, new ExistsElim());
+		proof.rulePromptUpdate(5, 1, "1");
+		proof.rulePromptUpdate(5, 2, "2-4");
+		proof.printProof(true);
 	}
 	
 	public static void printRandomFormulas(int nrOfFormulas){
