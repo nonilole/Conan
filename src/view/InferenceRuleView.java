@@ -18,35 +18,28 @@ public class InferenceRuleView implements View {
      */
     public InferenceRuleView(TabPane tabPane) {
 
-            //load the image
-            Image image = new Image("inferenceRules.jpg");
 
-            ImageView iv1 = new ImageView();
-            iv1.setImage(image);
-            iv1.setSmooth(true);
-            iv1.setPreserveRatio(true);
+        //load the image
+        Image image = new Image("inferenceRules.png");
+        ImageView iv1 = new ImageView();
+        iv1.setImage(image);
+        iv1.setSmooth(true);
+        iv1.setPreserveRatio(true);
 
-            //current window size determines the scaling
-            // iv1.fitHeightProperty().bind(tabPane.heightProperty());
-            // iv1.fitWidthProperty().bind(tabPane.widthProperty());
+        //putting the image on a scrollpane
+        ScrollPane sp=new ScrollPane();
+        tab = new ViewTab("Inference Rules",this);
+        sp.setContent(iv1);
+        tabPane.getTabs().add(tab);
+        tab.setContent(sp);
+        tabPane.getSelectionModel().select(tab);
 
-            //putting the image on a scrollpane
-            ScrollPane sp=new ScrollPane();
-            tab = new ViewTab("Inference Rules",this);
-            sp.setContent(iv1);
-            tabPane.getTabs().add(tab);
-            tab.setContent(sp);
-            tabPane.getSelectionModel().select(tab);
-
-
-            int widthOfToolbar=235; //note to self: breaks when changing toolbar size
-
-
-            //Fit the image with the tabpane by calculating screen width - width of toolbar while preserving ratio
-            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-            double w=primaryScreenBounds.getWidth()-widthOfToolbar;
-            iv1.setFitWidth(w);
-       }
+        //used for getting screensize
+        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+        //Avoids scaling too much
+        double w=primaryScreenBounds.getWidth()/2;
+        iv1.setFitWidth(w);
+    }
 
     @Override
     public ViewTab getTab() {
