@@ -276,19 +276,43 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		    }
 		});
 		tfExpression.textProperty().addListener(new ChangeListener<String>() {
-	        @Override
-	        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-	            if (newValue.contains("!")) {
-	                tfExpression.setText(newValue.replace("!", "¬"));
-	            }else if(newValue.contains("&")){
-	            	tfExpression.setText(newValue.replaceAll("&", "∧"));
-	            }else if(newValue.contains("->")){
-	            	tfExpression.setText(newValue.replaceAll("->", "→"));
-	            }/*else if(newValue.contains("forall")){
-	            	tfExpression.setText(newValue.replaceAll("forall", "∃"));
-	            }*/
-	        }
-	    });
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (newValue.contains("!")) {
+					tfExpression.setText(newValue.replace("!", "¬"));
+				}else if(newValue.contains("&")){
+					tfExpression.setText(newValue.replaceAll("&", "∧"));
+				}else if(newValue.contains("->")){
+					tfExpression.setText(newValue.replaceAll("->", "→"));
+				}else if(newValue.contains("fa")){
+	            	tfExpression.setText(newValue.replaceAll("fa", "∀"));
+	            }else if(newValue.contains("or")){
+	            	tfExpression.setText(newValue.replaceAll("or", "∨"));
+	            }else if(newValue.contains("te")){
+	            	tfExpression.setText(newValue.replace("te", "∃"));
+	            }else if(newValue.contains("alpha")){
+	            	tfExpression.setText(newValue.replace("al", "α"));
+	            }else if(newValue.contains("be")){
+	            	tfExpression.setText(newValue.replaceAll("be", "β"));
+	            }else if(newValue.contains("th")){
+	            	tfExpression.setText(newValue.replaceAll("th", "ϑ"));
+	            }else if(newValue.contains("Al")){
+	            	tfExpression.setText(newValue.replaceAll("Al", "Α"));
+	            }else if(newValue.contains("")){
+	            	tfExpression.setText(newValue.replaceAll("", ""));
+	            }else if(newValue.contains("")){
+	            	tfExpression.setText(newValue.replaceAll("", ""));
+	            }else if(newValue.contains("")){
+	            	tfExpression.setText(newValue.replaceAll("", ""));
+	            }else if(newValue.contains("")){
+	            	tfExpression.setText(newValue.replaceAll("", ""));
+	            }else if(newValue.contains("")){
+	            	tfExpression.setText(newValue.replaceAll("", ""));
+	            }else if(newValue.contains("")){
+	            	tfExpression.setText(newValue.replaceAll("", ""));
+	            }
+			}
+		});
 		return bp;
 	}
 
