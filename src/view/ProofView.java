@@ -1,6 +1,8 @@
 package view;
 
 import java.util.*;
+
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -195,7 +197,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		ruleMap.put("∃E", 1);
 		ruleMap.put("=E", 2);
 		ruleMap.put("=I", 0);
-
 	}
 
 
@@ -358,39 +359,27 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		tfExpression.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if (newValue.contains("!")) {
-					tfExpression.setText(newValue.replace("!", "¬"));
-				}else if(newValue.contains("&")){
-					tfExpression.setText(newValue.replaceAll("&", "∧"));
-				}else if(newValue.contains("->")){
-					tfExpression.setText(newValue.replaceAll("->", "→"));
-				}else if(newValue.contains("fa")){
-	            	tfExpression.setText(newValue.replaceAll("fa", "∀"));
-	            }else if(newValue.contains("or")){
-	            	tfExpression.setText(newValue.replaceAll("or", "∨"));
-	            }else if(newValue.contains("te")){
-	            	tfExpression.setText(newValue.replace("te", "∃"));
-	            }else if(newValue.contains("alpha")){
-	            	tfExpression.setText(newValue.replace("al", "α"));
-	            }else if(newValue.contains("be")){
-	            	tfExpression.setText(newValue.replaceAll("be", "β"));
-	            }else if(newValue.contains("th")){
-	            	tfExpression.setText(newValue.replaceAll("th", "ϑ"));
-	            }else if(newValue.contains("Al")){
-	            	tfExpression.setText(newValue.replaceAll("Al", "Α"));
-	            }else if(newValue.contains("")){
-	            	tfExpression.setText(newValue.replaceAll("", ""));
-	            }else if(newValue.contains("")){
-	            	tfExpression.setText(newValue.replaceAll("", ""));
-	            }else if(newValue.contains("")){
-	            	tfExpression.setText(newValue.replaceAll("", ""));
-	            }else if(newValue.contains("")){
-	            	tfExpression.setText(newValue.replaceAll("", ""));
-	            }else if(newValue.contains("")){
-	            	tfExpression.setText(newValue.replaceAll("", ""));
-	            }else if(newValue.contains("")){
-	            	tfExpression.setText(newValue.replaceAll("", ""));
-	            }
+				newValue = newValue.replaceAll("!", "¬");
+				newValue = newValue.replaceAll("\\bnot\\b", "¬");
+				newValue = newValue.replaceAll("\\bneg\\b", "¬");
+				newValue = newValue.replaceAll("&", "∧");
+				newValue = newValue.replaceAll("\\band\\b", "∧");
+				newValue = newValue.replaceAll("->", "→");
+				newValue = newValue.replaceAll("(?i)\\bforall\\b", "∀");
+				newValue = newValue.replaceAll("(?i)\\bor\\b", "∨");
+				newValue = newValue.replaceAll("(?i)\\bexists\\b", "∃");
+				newValue = newValue.replaceAll("(?i)\\bte\\b", "∃");
+				newValue = newValue.replaceAll("(?i)\\balpha\\b", "α");
+				newValue = newValue.replaceAll("(?i)\\bbeta\\b", "β");
+				newValue = newValue.replaceAll("(?i)\\btheta\\b", "ϑ");
+				String finalNewValue = newValue;
+				Platform.runLater(() -> {
+					int lendiff = tfExpression.getLength();
+                    int pos = tfExpression.getCaretPosition();
+					tfExpression.setText(finalNewValue);
+					lendiff = lendiff - tfExpression.getLength();
+					tfExpression.positionCaret(pos-lendiff);
+				});
 			}
 		});
 		return bp;
