@@ -19,7 +19,7 @@ public abstract class Formula {
 			return instantiation.equals(quant.formula);
 		}
 		else {
-			System.out.println("diff[0]: "+diff[0]+", diff[1]: "+diff[1]);
+			//System.out.println("diff[0]: "+diff[0]+", diff[1]: "+diff[1]);
 			return instantiation.equals(quant.formula.replace(diff[0], diff[1]));
 		}
 	}

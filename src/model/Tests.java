@@ -33,17 +33,23 @@ public class Tests {
 	public static void isInstantiationOfTest(int nrTests){
 		RandomFormulaGenerator rangen = new RandomFormulaGenerator();
 		Random rand = new Random();
+		final int idVariety = 3;
+		final boolean printAll = false;
 		
-		for(int i = 0; i<nrTests; i++){
-			System.out.println("Test: "+(i+1));
-			Formula ranf = rangen.generateFormula(5, 5);
-			char chr = (char) (rand.nextInt(5)+'a');
+		for(int i = 0; i < nrTests; i++){
+			//System.out.println("Test: "+(i+1));
+			Formula ranf = rangen.generateFormula(5, idVariety);
+			char chr = (char) (rand.nextInt(idVariety)+'a');
+			char chr2 = (char) (rand.nextInt(idVariety)+'a');
+			//create quantified formula  from generated formula
 			QuantifiedFormula quant = new QuantifiedFormula(ranf,chr+"",'∀');
+			ranf = ranf.replace(chr2+"", chr+"");
 			
-			if(Formula.isInstantiationOf(ranf, quant) == false){
+			if(printAll || Formula.isInstantiationOf(ranf, quant) == false){
 				System.out.println("isInstantiationOf:");
 				System.out.println(""+ranf);
 				System.out.println(""+quant);
+				System.out.println("isInstantiationOf: "+Formula.isInstantiationOf(ranf, quant));
 				System.out.println("=====================================");
 			}
 		}

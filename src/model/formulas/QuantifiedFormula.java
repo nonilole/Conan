@@ -24,7 +24,7 @@ public class QuantifiedFormula extends Formula{
     	return formula.replace(id, var);
     }
     
-    @Override
+    @Override //TODO: can't replaceif var.equals(newId)?
     public Formula replace(String newId,String oldId){
     	return var.equals(oldId) ? this : new QuantifiedFormula(formula.replace(newId, oldId), var, type);
     }
