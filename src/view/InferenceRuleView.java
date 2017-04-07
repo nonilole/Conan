@@ -18,20 +18,27 @@ public class InferenceRuleView implements View {
      */
     public InferenceRuleView(TabPane tabPane) {
 
+
         //load the image
         Image image = new Image("inferenceRules.png");
         ImageView iv1 = new ImageView();
         iv1.setImage(image);
         iv1.setSmooth(true);
+        iv1.setPreserveRatio(true);
 
-        //scales based on current screen size
-        iv1.fitHeightProperty().bind(tabPane.heightProperty());
-        iv1.fitWidthProperty().bind(tabPane.widthProperty());
-
+        //putting the image on a scrollpane
+        ScrollPane sp=new ScrollPane();
         tab = new ViewTab("Inference Rules",this);
-        tab.setContent(iv1);
+        sp.setContent(iv1);
         tabPane.getTabs().add(tab);
+        tab.setContent(sp);
         tabPane.getSelectionModel().select(tab);
+
+        //used for getting screensize
+        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+        //Avoids scaling too much
+        double w=primaryScreenBounds.getWidth()/2;
+        iv1.setFitWidth(w);
     }
 
     @Override
