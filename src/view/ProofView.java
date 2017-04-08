@@ -356,14 +356,10 @@ public class ProofView extends Symbolic implements ProofListener, View {
 						rList.get(index+1).getExpression().requestFocus();
 					}
 				} else if(ke.getCode() == KeyCode.UP) {
-					if(index-1>=0) {
-						rList.get(index-1).getExpression().requestFocus();
-					}
-				}  else if(ke.getCode() == KeyCode.LEFT) {
-				    undo();
-				}  else if(ke.getCode() == KeyCode.RIGHT) {
-				    redo();
-				}
+                    if (index - 1 >= 0) {
+                        rList.get(index - 1).getExpression().requestFocus();
+                    }
+                }
 			}
 		});
 		tfRule.setOnKeyPressed(new EventHandler<KeyEvent>() {
