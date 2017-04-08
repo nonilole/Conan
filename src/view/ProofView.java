@@ -14,6 +14,7 @@ import javafx.scene.input.*;
 import model.BoxReference;
 import model.Proof;
 import model.ProofListener;
+import view.Command.AddRow;
 import view.Command.Command;
 import view.Command.DeleteRow;
 import view.Command.InsertRow;
@@ -217,18 +218,20 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	public void closeBox() {
 		proof.closeBox();
 	}
-	public void newRow() {
-		proof.addRow();
-	}
-		//needs rowNr
+
 	private void executeCommand(Command c) {
+	    for (Command d : commandList) {
+	        System.out.println(d);
+        }
 	    if (c.execute()) {
-	        System.out.println(curCommand + "/" + commandList.size());
-			++curCommand;
+            ++curCommand;
 	        if (0 <= curCommand && curCommand < commandList.size())
                 commandList.subList(curCommand, commandList.size()).clear();
 			commandList.add(c);
 		}
+    }
+    public void newRow() {
+        executeCommand(new AddRow(proof, rList));
     }
 	public void insertNewRow(int rowNo, BoxReference br){
 		executeCommand(new InsertRow(proof, rowNo, br, rList));
@@ -237,7 +240,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		executeCommand(new DeleteRow(proof, rowNo, rList));
 	}
 	public void undo() {
-	    if (curCommand >= 0 && curCommand < commandList.size()) {
+	    if (0 <= curCommand && curCommand < commandList.size()) {
 	        commandList.get(curCommand).undo();
 	        --curCommand;
 		}

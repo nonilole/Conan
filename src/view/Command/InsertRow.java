@@ -42,4 +42,8 @@ public class InsertRow implements Command {
         }
         proof.deleteRow(rowNo+offset);
     }
+    @Override
+    public String toString() {
+        return "Insert row to " + rowNo;
+    }
 }
