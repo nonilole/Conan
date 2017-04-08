@@ -71,8 +71,10 @@ public class Box implements ProofEntry{
 		assert(index < size);
 		ProofRow referenceRow = getRow(index);
 		Box parent = referenceRow.getParent();
-		parent.entries.remove(referenceRow);
-		parent.decSize();
+		if (parent == null) {
+			parent.entries.remove(referenceRow);
+			parent.decSize();
+		}
 	}
 	
 	/*public boolean updateFormulaRow(int index, String userFormulaInput){

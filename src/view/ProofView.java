@@ -14,6 +14,10 @@ import javafx.scene.input.*;
 import model.BoxReference;
 import model.Proof;
 import model.ProofListener;
+import view.Command.AddRow;
+import view.Command.Command;
+import view.Command.DeleteRow;
+import view.Command.InsertRow;
 
 
 /***
@@ -74,6 +78,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	private List<RowPane> rList = new ArrayList<>();
 	//private int counter = 1;
 	//private int carry = 0;
+	private List<Command> commandList = new LinkedList<Command>();
+	private int curCommand = -1;
 
 	private VBox lineNo;
 	private VBox rows;
@@ -212,14 +218,35 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	public void closeBox() {
 		proof.closeBox();
 	}
-	public void newRow() {
-		proof.addRow();
-	}
-	public void rowDeleteRow(){
-		//needs rowNr
-	}
+
+	private void executeCommand(Command c) {
+	    if (c.execute()) {
+            ++curCommand;
+	        if (0 <= curCommand && curCommand < commandList.size())
+                commandList.subList(curCommand, commandList.size()).clear();
+			commandList.add(c);
+		}
+    }
+    public void newRow() {
+        executeCommand(new AddRow(proof, rList));
+    }
 	public void insertNewRow(int rowNo, BoxReference br){
-		proof.insertNewRow(rowNo, br);
+		executeCommand(new InsertRow(proof, rowNo, br, rList));
+	}
+	public void deleteRow(int rowNo){
+		executeCommand(new DeleteRow(proof, rowNo, rList));
+	}
+	public void undo() {
+	    if (0 <= curCommand && curCommand < commandList.size()) {
+	        commandList.get(curCommand).undo();
+	        --curCommand;
+		}
+	}
+	public void redo() {
+		if (0 <= curCommand+1 && curCommand+1 < commandList.size()) {
+			commandList.get(curCommand+1).execute();
+			++curCommand;
+		}
 	}
 	/* End of controller */
 
@@ -259,15 +286,15 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		
 		delete.setOnAction(event -> {
 			int rowOfPressedButton=rList.indexOf(bp) + 1;
-			proof.deleteRow(rowOfPressedButton);
+			deleteRow(rowOfPressedButton);
 		});;
 		insertAbove.setOnAction(event -> {
 			int rowOfPressedButton=rList.indexOf(bp) + 1;
-			proof.insertNewRow(rowOfPressedButton,BoxReference.BEFORE);
+			insertNewRow(rowOfPressedButton, BoxReference.BEFORE);
 		});;
 		insertBelow.setOnAction(event -> {
 			int rowOfPressedButton=rList.indexOf(bp) + 1;
-			proof.insertNewRow(rowOfPressedButton,BoxReference.AFTER);
+			insertNewRow(rowOfPressedButton, BoxReference.AFTER);
 		});;
 		
 
@@ -329,10 +356,10 @@ public class ProofView extends Symbolic implements ProofListener, View {
 						rList.get(index+1).getExpression().requestFocus();
 					}
 				} else if(ke.getCode() == KeyCode.UP) {
-					if(index-1>=0) {
-						rList.get(index-1).getExpression().requestFocus();
-					}
-				}
+                    if (index - 1 >= 0) {
+                        rList.get(index - 1).getExpression().requestFocus();
+                    }
+                }
 			}
 		});
 		tfRule.setOnKeyPressed(new EventHandler<KeyEvent>() {

@@ -109,6 +109,20 @@ public class MainController implements Initializable {
     }
 
     @FXML
+    void undo(ActionEvent event) {
+        ProofView pv = convertProofView(getCurrentView());
+        if (pv == null)
+            return;
+        pv.undo();
+    }
+    @FXML
+    void redo(ActionEvent event) {
+        ProofView pv = convertProofView(getCurrentView());
+        if (pv == null)
+            return;
+        pv.redo();
+    }
+    @FXML
     void deleteRow(ActionEvent event) {
         ProofView pv = convertProofView(getCurrentView());
         if (pv == null)
