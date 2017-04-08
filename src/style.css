@@ -39,18 +39,19 @@
 
 
 .bad {
-  -fx-background-color: pink;
+    -fx-control-inner-background: pink;
 }
 
-.bad:focused {
-  -fx-border-color: #039ED3;
-    -fx-background-color: pink;
+.unVerified {
+    -fx-text-box-border: pink;
+    -fx-border-style: solid;
+    -fx-border-color: pink;
+    -fx-border-width: 2 2 0 2;
+    -fx-background-insets: 0, 2;
 }
 .conclusionReached {
-    -fx-background-color: #90EE90;
+    -fx-control-inner-background: #90EE90;
 }
-
-
 
 //--------------------------------------
 //This is were you change the colors
@@ -74,4 +75,3 @@
 .root .tab-header-background , .root .line {
     -fx-background-color: #445200;
 }
-
