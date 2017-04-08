@@ -35,9 +35,9 @@ public class Proof implements Serializable{
      * TODO: verify rows below since they now might not be correct anymore
      * @param rowNumber
      */
-    public void deleteRow(int rowNumber){
+    public boolean deleteRow(int rowNumber) {
     	if(rowNumber < 1 || rowNumber > proofData.size()){
-    		throw new IllegalArgumentException();
+    	    return false;
     	}
     	proofData.deleteRow(rowNumber-1);
     	for (ProofListener listener : this.listeners) {
@@ -46,6 +46,7 @@ public class Proof implements Serializable{
     	System.out.println("deleteRow("+rowNumber+")");
     	proofData.printRows(1,1);
         System.out.println("==========================================================");
+        return true;
     }
     
     /**
@@ -55,11 +56,11 @@ public class Proof implements Serializable{
      * @param rowNumber: the number of the row used as reference
      * @param br: Indicates whether the new row should be added before or after the reference row
      */
-    public void insertNewRow(int rowNumber, BoxReference br){
+    public boolean insertNewRow(int rowNumber, BoxReference br){
     	if(rowNumber < 1 || rowNumber > proofData.size()+1){
     		System.out.println("Proof.insertNewRow: incorrect rowNumber");
     		System.out.println("rows.size(): "+proofData.size()+", rowNumber: "+rowNumber);
-    		return;
+    		return false;
     	}
     	proofData.insertRow(rowNumber-1, br);
     	for(ProofListener pl : listeners){
@@ -68,6 +69,7 @@ public class Proof implements Serializable{
     	System.out.println("insertNewRow("+rowNumber+", "+br+")");
     	proofData.printRows(1,1);
         System.out.println("==========================================================");
+        return true;
     }
     
     //Will you ever update both the formula and rule fields at the same time?

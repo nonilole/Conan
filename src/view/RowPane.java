@@ -46,9 +46,15 @@ public class RowPane extends BorderPane{
 	public void incrementNrOfClosingBoxes(){
 		nrOfClosingBoxes++;
 	}
-	
+
+	public void setExpression(String s) {
+		getExpression().setText(s);
+	}
 	public TextField getExpression() {
 		return (TextField) this.getCenter(); 
+	}
+	public void setRule(String s) {
+		getRule().setText(s);
 	}
 	public TextField getRule() {
 		RulePane rulePane = (RulePane) this.getRight();
@@ -62,6 +68,9 @@ public class RowPane extends BorderPane{
 	    return getRulePrompt(index);
 	}
 
+	public void setRulePrompt(int i, String s) {
+	    getRulePrompt(i).setText(s);
+	}
 	public TextField getRulePrompt(int index) {
 		RulePane rulePane = (RulePane) this.getRight();
 		return (TextField) rulePane.getChildren().get(1+index);
