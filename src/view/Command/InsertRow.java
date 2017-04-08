@@ -20,6 +20,9 @@ public class InsertRow implements Command {
         this.rowNo = rowNo;
         this.br = br;
         this.rList = rList;
+        prompt.add("");
+        prompt.add("");
+        prompt.add("");
     };
     @Override
     public boolean execute() {
@@ -28,6 +31,9 @@ public class InsertRow implements Command {
             RowPane rp = rList.get(rowNo);
             rp.setExpression(expression);
             rp.setRule(rule);
+            for (int i = 0; i < 3; i++) {
+                rp.setRulePrompt(i, prompt.get(i));
+            }
         }
         return result;
     }
@@ -39,6 +45,9 @@ public class InsertRow implements Command {
             RowPane rp = rList.get(rowNo-1+offset);
             this.expression = rp.getExpression().getText();
             this.rule = rp.getRule().getText();
+            for (int i = 0; i < 3; i++) {
+                prompt.set(i, rp.getRulePrompt(i).getText());
+            }
         }
         proof.deleteRow(rowNo+offset);
     }

@@ -18,6 +18,9 @@ public class DeleteRow implements Command {
         this.proof = proof;
         this.rowNo = rowNo;
         this.rList = rList;
+        prompt.add("");
+        prompt.add("");
+        prompt.add("");
     };
     @Override
     public boolean execute() {
@@ -25,20 +28,30 @@ public class DeleteRow implements Command {
             RowPane rp = rList.get(rowNo-1);
             this.expression = rp.getExpression().getText();
             this.rule = rp.getRule().getText();
-//            for (int i = 0; i < 3; i++) {
-//                prompt.set(i, rp.getRulePrompt(i).getText());
-//            }
+            for (int i = 0; i < 3; i++) {
+                this.prompt.set(i, rp.getRulePrompt(i).getText());
+            }
         }
         return proof.deleteRow(rowNo);
     }
     @Override
     public void undo() {
-        proof.insertNewRow(rowNo-1, BoxReference.AFTER);
+        if (rowNo == -1) {
+            proof.addRow();
+        } else if (rowNo == 1) {
+            proof.insertNewRow(rowNo, BoxReference.BEFORE);
+        } else {
+            proof.insertNewRow(rowNo-1, BoxReference.AFTER);
+        }
         RowPane rp = rList.get(rowNo-1);
         rp.setExpression(expression);
         rp.setRule(rule);
-//        for (int i = 0; i < 3; i++) {
-//            rp.setRulePrompt(i, prompt.get(i));
-//        }
+        for (int i = 0; i < 3; i++) {
+            rp.setRulePrompt(i, prompt.get(i));
+        }
+    }
+    @Override
+    public String toString() {
+        return "Delete row to " + rowNo;
     }
 }

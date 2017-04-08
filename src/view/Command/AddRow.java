@@ -17,6 +17,9 @@ public class AddRow implements Command {
     public AddRow(Proof proof, List<RowPane> rList) {
         this.proof = proof;
         this.rList = rList;
+        prompt.add("");
+        prompt.add("");
+        prompt.add("");
     };
     @Override
     public boolean execute() {
@@ -25,6 +28,9 @@ public class AddRow implements Command {
         RowPane rp = rList.get(rowIdx);
         rp.setExpression(expression);
         rp.setRule(rule);
+        for (int i = 0; i < 3; i++) {
+            rp.setRulePrompt(i, prompt.get(i));
+        }
         return true;
     }
 
@@ -33,6 +39,9 @@ public class AddRow implements Command {
         RowPane rp = rList.get(rowIdx);
         this.expression = rp.getExpression().getText();
         this.rule = rp.getRule().getText();
+        for (int i = 0; i < 3; i++) {
+            this.prompt.set(i, rp.getRulePrompt(i).getText());
+        }
         proof.deleteRow(rowIdx+1);
     }
 

@@ -220,9 +220,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	}
 
 	private void executeCommand(Command c) {
-	    for (Command d : commandList) {
-	        System.out.println(d);
-        }
 	    if (c.execute()) {
             ++curCommand;
 	        if (0 <= curCommand && curCommand < commandList.size())
