@@ -486,9 +486,7 @@ public void rowInserted(int rowNo, BoxReference br) {
             rp.setPrompts(ruleMap.getOrDefault(newValue,-1));
 		});
 		for (int i = 0 ; i < 3; i++) {
-			setPromptListener(rpIndex, rp.getRulePrompt(i), 1);
-			setPromptListener(rpIndex, rp.getRulePrompt(i), 2);
-			setPromptListener(rpIndex, rp.getRulePrompt(i), 3);
+			setPromptListener(rpIndex, rp.getRulePrompt(i), i+1);
 		}
 	}
 
