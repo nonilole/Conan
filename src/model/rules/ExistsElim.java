@@ -54,6 +54,7 @@ public class ExistsElim implements Rule{
 		// are all the referenced rows verified?
 		if( data.isInScopeOf(rowRef, rowIndex) == false )      return false;
 		if( data.isInScopeOf(intervalRef, rowIndex) == false ) return false;
+		
 		//System.out.println("1");
 		// is the referenced row of the correct type for this rule?
 		ProofRow referencedRow = data.getRow(rowRef); 

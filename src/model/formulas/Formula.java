@@ -34,7 +34,7 @@ public abstract class Formula {
 	 */
 	public static String[] findObjectIdDifference(Formula formula1, Formula formula2){
 		if(formula1.getClass() != formula2.getClass()) {
-			System.err.println(formula1.getClass()+" != "+formula2.getClass());
+			//System.err.println(formula1.getClass()+" != "+formula2.getClass());
 			return null;
 		}
 		else if(formula1 instanceof Conjunction){

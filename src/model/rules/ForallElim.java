@@ -1,6 +1,8 @@
 package model.rules;
 
 import model.Box;
+import model.formulas.Formula;
+import model.formulas.QuantifiedFormula;
 
 public class ForallElim implements Rule{
 	private Integer rowRef;
@@ -25,8 +27,15 @@ public class ForallElim implements Rule{
 
 	@Override
 	public boolean verify(Box data, int rowIndex) {
-		throw new RuntimeException("ForallElim.verify: not implemented");
-		//return false;
+		System.out.println("ForallElim.verify("+rowIndex+")");
+		assert(data.getRow(rowIndex).getRule() == this ) : "ForallElim.verify...";
+		
+		//check that reference is in scope and that it's verified
+		data.isInScopeOf(rowRef, rowIndex);
+		Formula toVerify = data.getRow(rowIndex).getFormula();
+		if(toVerify instanceof QuantifiedFormula == false) return false;
+		return Formula.isInstantiationOf(data.getRow(rowRef).getFormula(), (QuantifiedFormula)toVerify);
+		
 	}
 	
 	@Override

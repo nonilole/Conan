@@ -1,6 +1,8 @@
 package model.rules;
 
 import model.Box;
+import model.formulas.Formula;
+import model.formulas.QuantifiedFormula;
 
 public class ExistsIntro implements Rule{
 	private Integer rowRef;
@@ -25,7 +27,7 @@ public class ExistsIntro implements Rule{
 
 	@Override
 	public boolean verify(Box data, int rowIndex) {
-		System.out.println("ExistsIntro.verify("+rowIndex+")");
+		//System.out.println("ExistsIntro.verify("+rowIndex+")");
 		// is the rule object of the correct type? Probably just check with an assertion
 		assert(data.getRow(rowIndex).getRule() == this) : "ExistsIntro: incorrect usage";
 		
@@ -34,8 +36,12 @@ public class ExistsIntro implements Rule{
 		if( data.isInScopeOf(this.rowRef, rowIndex) == false) return false;
 		
 		// does the referenced rows contain the data for this rule to be correct?
-		//TODO:isInstantiationOf...
-		return true;
+		Formula toVerify = data.getRow(rowIndex).getFormula();
+		Formula ref = data.getRow(this.rowRef).getFormula();
+		if( toVerify instanceof QuantifiedFormula ){
+			return Formula.isInstantiationOf(ref, (QuantifiedFormula)toVerify);
+		} 
+		return false;
 	}
 	
 	@Override
