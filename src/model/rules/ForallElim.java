@@ -27,14 +27,15 @@ public class ForallElim implements Rule{
 
 	@Override
 	public boolean verify(Box data, int rowIndex) {
-		System.out.println("ForallElim.verify("+rowIndex+")");
+		//System.out.println("ForallElim.verify("+rowIndex+")");
 		assert(data.getRow(rowIndex).getRule() == this ) : "ForallElim.verify...";
-		
 		//check that reference is in scope and that it's verified
 		data.isInScopeOf(rowRef, rowIndex);
+		
+		if(data.getRow(rowRef).getFormula() instanceof QuantifiedFormula == false) return false;
+		QuantifiedFormula ref = (QuantifiedFormula)data.getRow(rowRef).getFormula();
 		Formula toVerify = data.getRow(rowIndex).getFormula();
-		if(toVerify instanceof QuantifiedFormula == false) return false;
-		return Formula.isInstantiationOf(data.getRow(rowRef).getFormula(), (QuantifiedFormula)toVerify);
+		return Formula.isInstantiationOf(toVerify, ref);
 		
 	}
 	
