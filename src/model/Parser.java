@@ -2,6 +2,9 @@ package model;
 
 import java.io.*;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import model.formulas.*;
 
 public class Parser{
@@ -16,6 +19,7 @@ public class Parser{
      */
     public Formula parse(String str){
     	if(isObjectId(str)) return new FreshVarFormula(str);
+    	if(isContradiction(str)) return new Contradiction();
         StringReader strR = new StringReader(str);
         br = new BufferedReader(strR);
         try{
@@ -32,6 +36,13 @@ public class Parser{
     //TODO: update to handle numbered var names for objects
     boolean isObjectId(String str){
     	return str.length() == 1 && str.charAt(0) >= 'a' && str.charAt(0) <= 'z';
+    }
+    
+    boolean isContradiction(String str) {
+    	//TODO kolla igenom strängen så att det enbart finns whitespece och contradiction
+    	Pattern p = Pattern.compile("⊥{1}");
+    	Matcher m = p.matcher(str);
+    	return m.matches();
     }
 
     /**
