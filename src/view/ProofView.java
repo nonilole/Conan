@@ -140,8 +140,10 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		this.proof.registerProofListener(this);
 		this.premises = premisesAndConclusion.getPremises();
 		this.premises.setId("expression");
+		this.premises.setPromptText("Premise");
 		this.conclusion = premisesAndConclusion.getConclusion();
 		this.conclusion.setId("expression");
+		this.conclusion.setPromptText("Conclusion");
 		this.conclusion.textProperty().addListener((ov, oldValue, newValue) -> {
 			proof.updateConclusion(newValue);
 		});
@@ -274,12 +276,16 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
 		//adding listeners to the expression- and rule textfield
 		TextField tfExpression = bp.getExpression();
+		tfExpression.setPromptText("Expression");
 
 		tfExpression.focusedProperty().addListener((observable, oldValue, newValue) -> {
 			lastFocusedTf = tfExpression;
 			caretPosition = tfExpression.getCaretPosition();
 		});
+		
 		TextField tfRule = bp.getRule();
+		tfRule.setPromptText("Rule");
+		
 		tfRule.focusedProperty().addListener((observable, oldValue, newValue) -> {
 			lastFocusedTf = tfRule;
 			caretPosition = tfRule.getCaretPosition();
