@@ -51,7 +51,7 @@ public class ContradictionElim implements Rule {
         // are all the referenced rows verified?
         // ProofData.isInScope should check both of these
         if( data.isInScopeOf(getPremise(), rowIndex) == false) return false;
-        
+
         if(premise instanceof Contradiction ) return true;
         return false;
 
