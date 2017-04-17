@@ -4,6 +4,10 @@ import model.Box;
 
 public class DisjunctionElim implements Rule{
 
+	private Integer rowRef;
+	private Interval interval1;
+	private Interval interval2;
+	
 	@Override
 	public boolean hasCompleteInfo() {
 		// TODO Auto-generated method stub
@@ -19,6 +23,9 @@ public class DisjunctionElim implements Rule{
 	@Override
 	public boolean verify(Box data, int rowIndex) {
 		// TODO Auto-generated method stub
+		if(data.isInScopeOf(rowRef, rowIndex) == false ) return false;
+		if(data.isInScopeOf(interval1, rowIndex) == false ) return false;
+		if(data.isInScopeOf(interval2, rowIndex) == false ) return false;
 		return false;
 	}
 	
