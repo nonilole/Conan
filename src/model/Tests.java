@@ -21,6 +21,7 @@ public class Tests {
 		//isInScopeRowTest();
 		//isInScopeIntervalTest();
 		//getBoxTest();
+		testContradictionElim();
 		//verificationTest();
 		//replaceVarTest(20);
 		//replaceVarTest2();
@@ -159,6 +160,19 @@ public class Tests {
 		proof.addRule(3, new Premise());
 		proof.updateFormulaRow("A → B", 4);
 		proof.addRule(4, new ImplicationIntro(new Interval(1,2)));
+		proof.printProof(true);
+	}
+
+
+	public static void testContradictionElim() {
+		Proof proof = new Proof();
+		System.out.println("ContradictionElim");
+		proof.addRow();
+		proof.updateFormulaRow("⊥", 1);
+		proof.addRule(1,new Premise());
+		proof.addRow();
+		proof.updateFormulaRow("(P ∧ Q) → (Q ∨ R) ", 2);
+		proof.addRule(2,new ContradictionElim(0));
 		proof.printProof(true);
 	}
 
