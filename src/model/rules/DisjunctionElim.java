@@ -1,6 +1,8 @@
 package model.rules;
 
 import model.Box;
+import model.formulas.Disjunction;
+import model.formulas.Formula;
 
 public class DisjunctionElim implements Rule{
 
@@ -70,19 +72,46 @@ public class DisjunctionElim implements Rule{
 
 	@Override
 	public boolean verify(Box data, int rowIndex) {
-		//
+		
+		//check the row and the two intervals in scope
 		if(data.isInScopeOf(rowRef, rowIndex) == false ) return false;
 		if(data.isInScopeOf(interval1, rowIndex) == false ) return false;
 		if(data.isInScopeOf(interval2, rowIndex) == false ) return false;
+		
+		//check if the expression in the referenced row is an or-statement
+		Formula referencedRowFormula = data.getRow(rowRef).getFormula();
+		if( !(referencedRowFormula instanceof Disjunction) ) {
+			return false;
+		}
+		
+		//save the rhs and lhs of the disjunction expression in the row
+		Disjunction disj = (Disjunction)referencedRowFormula;
+		Formula lhsDisj = disj.lhs;
+		Formula rhsDisj = disj.rhs;
+		
+		//check if the start expression in the referenced interval1 and interval2 is correct  
+		Formula interval1StartFormula = data.getRow(interval1.startIndex).getFormula();	
+		Formula interval2StartFormula = data.getRow(interval2.startIndex).getFormula();
+		if(interval1StartFormula != lhsDisj || interval1StartFormula != rhsDisj) {
+			return false;
+		} else if(interval1StartFormula == lhsDisj) {
+			if (interval2StartFormula != rhsDisj) {
+				return false;
+			}
+		} else if(interval1StartFormula == rhsDisj) {
+			if (interval2StartFormula != lhsDisj) {
+				return false;
+			}
+		}
+		
+		//check if the end expression in the referenced interval1 and interval2 is correct
+		Formula interval1EndFormula = data.getRow(interval1.endIndex).getFormula();	
+		Formula interval2EndFormula = data.getRow(interval2.endIndex).getFormula();
+		if (!(interval1EndFormula == data.getRow(rowIndex).getFormula() &&
+				interval2EndFormula == data.getRow(rowIndex).getFormula())) {
+			return false;
+		}
 		return true;
 	}
-
-	//kolla att en rad och två intervall anges. 
-	//kolla så att alla rader/boxar som används är verified. 
-	//kolla så att båda boxar avslutas med det som ska bevisas.
-	//kolla så att den ena boxen börjar med ena sidan av ursprungliga OR-uttrycket.
-	//kolla att den andra boxen börjar med andra sidan av OR-uttrycket. 
-
-	//fundering: hur har vi koll på boxarna just nu? 
 
 }
