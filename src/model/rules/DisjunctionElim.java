@@ -92,7 +92,7 @@ public class DisjunctionElim implements Rule{
 		//check if the start expression in the referenced interval1 and interval2 is correct  
 		Formula interval1StartFormula = data.getRow(interval1.startIndex).getFormula();	
 		Formula interval2StartFormula = data.getRow(interval2.startIndex).getFormula();
-		if(interval1StartFormula != lhsDisj || interval1StartFormula != rhsDisj) {
+		if(interval1StartFormula != lhsDisj && interval1StartFormula != rhsDisj) {
 			return false;
 		} else if(interval1StartFormula == lhsDisj) {
 			if (interval2StartFormula != rhsDisj) {
