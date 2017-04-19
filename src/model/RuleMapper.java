@@ -15,6 +15,7 @@ public class RuleMapper {
         ruleToClass.put("∧I", ConjunctionIntro.class);
         ruleToClass.put("∨I1", DisjunctionIntro1.class);
         ruleToClass.put("∨I2", DisjunctionIntro2.class);
+        ruleToClass.put("∨E", DisjunctionElim.class);
         ruleToClass.put("¬¬E", DoubleNegationElim.class);
         ruleToClass.put("=I", EqualityIntro.class);
         ruleToClass.put("→I", ImplicationIntro.class);
