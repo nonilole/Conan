@@ -1,6 +1,9 @@
 package model.rules;
 
 import model.Box;
+import model.formulas.Contradiction;
+import model.formulas.Formula;
+import model.formulas.Negation;
 
 public class NegationIntro implements Rule{
 
@@ -34,7 +37,7 @@ public class NegationIntro implements Rule{
 			}
 		}
 	}
-	
+
 	@Override
 	public String toString(){
 		return String.format("¬I (%s)", interval);
@@ -42,12 +45,31 @@ public class NegationIntro implements Rule{
 
 	@Override
 	public boolean verify(Box data, int rowIndex) {
-		// TODO Auto-generated method stub
-		return false;
+
+		//check the interval in scope
+		if(data.isInScopeOf(interval, rowIndex) == false ) return false;
+
+		//check if the expression in the row to verify is a negation-statement
+		Formula RowToVerifyFormula = data.getRow(rowIndex).getFormula();
+		if( !(RowToVerifyFormula instanceof Negation) ) {
+			return false;
+		}
+
+		//check if the end expression in the interval is a contradiction
+		Formula intervalEndFormula = data.getRow(interval.endIndex).getFormula();
+		if ( !(intervalEndFormula instanceof Contradiction) ) {
+			return false;
+		}
+
+		//Check if the start expression in the interval is 
+		//the negation of the expression in the row to verify
+		Formula intervalStartFormula = data.getRow(interval.startIndex).getFormula();
+		Negation neg = (Negation) RowToVerifyFormula;
+		Formula RowToVerifyFormulaNoNeg = neg.formula;
+		if(!intervalStartFormula.equals(RowToVerifyFormulaNoNeg)) {
+			return false;
+		}
+
+		return true;
 	}
-
-	//implementera negationElim först
-	//kolla så att uttrycket är den negerade versionen av det som stod överst i boxen.
-	//kolla så att det är en contradiction längst ner i boxen.
-
 }

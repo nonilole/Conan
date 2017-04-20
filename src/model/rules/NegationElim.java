@@ -1,7 +1,6 @@
 package model.rules;
 
 import model.Box;
-import model.ProofRow;
 import model.formulas.Contradiction;
 import model.formulas.Formula;
 import model.formulas.Negation;
@@ -70,7 +69,6 @@ public class NegationElim implements Rule{
 		if(data.isInScopeOf(rowRef2, rowIndex) == false ) return false;
 		
 		//Check if the formula in the row to verify i a contradiction
-		ProofRow rowToVerify = data.getRow(rowIndex);
 		Formula rowToVerifyFormula = data.getRow(rowIndex).getFormula();
 		if( !(rowToVerifyFormula instanceof Contradiction) ) {
 			return false;
