@@ -81,12 +81,13 @@ public class NegationElim implements Rule{
 		Formula rowRef2Formula = data.getRow(rowRef2).getFormula();
 		if(!(rowRef2Formula instanceof Negation)) {
 			return false;
-		}	
+		}
 		Negation neg = (Negation) rowRef2Formula;
-		//neg.getPrecedence();
-		//TODO
+		Formula rowRef2NoNeg = neg.formula;
+		if(!rowRef2NoNeg.equals(rowRef1Formula)) {
+			return false;
+		}
+		
 		return true;
 	}
-
-	//kolla så att de två raderna är negationen av varandra
 }
