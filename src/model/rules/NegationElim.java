@@ -1,6 +1,10 @@
 package model.rules;
 
 import model.Box;
+import model.ProofRow;
+import model.formulas.Contradiction;
+import model.formulas.Formula;
+import model.formulas.Negation;
 
 public class NegationElim implements Rule{
 
@@ -60,12 +64,29 @@ public class NegationElim implements Rule{
 
 	@Override
 	public boolean verify(Box data, int rowIndex) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		//check the rows are in scope
+		if(data.isInScopeOf(rowRef1, rowIndex) == false ) return false;
+		if(data.isInScopeOf(rowRef2, rowIndex) == false ) return false;
+		
+		//Check if the formula in the row to verify i a contradiction
+		ProofRow rowToVerify = data.getRow(rowIndex);
+		Formula rowToVerifyFormula = data.getRow(rowIndex).getFormula();
+		if( !(rowToVerifyFormula instanceof Contradiction) ) {
+			return false;
+		}
+		
+		//Check if the to referenced rows are the negation of each other 
+		Formula rowRef1Formula = data.getRow(rowRef1).getFormula();
+		Formula rowRef2Formula = data.getRow(rowRef2).getFormula();
+		if(!(rowRef2Formula instanceof Negation)) {
+			return false;
+		}	
+		Negation neg = (Negation) rowRef2Formula;
+		//neg.getPrecedence();
+		//TODO
+		return true;
 	}
 
-	//lägg till contradiction-symbolen
-	//kolla att man har valt två rader som funkar
 	//kolla så att de två raderna är negationen av varandra
-	//kolla så att själva raden innehåller en contradiction 
 }
