@@ -4,16 +4,40 @@ import model.Box;
 
 public class NegationIntro implements Rule{
 
+	private Interval interval;
+
+	public NegationIntro() {
+		super();
+	}
+
+	public NegationIntro(Interval interval) {
+		super();
+		this.interval = interval;
+	}
+
 	@Override
 	public boolean hasCompleteInfo() {
-		// TODO Auto-generated method stub
-		return false;
+		return interval != null;
 	}
 
 	@Override
 	public void updateReference(int index, String newValue) {
-		// TODO Auto-generated method stub
-		
+		if(index < 1 || index > 1) throw new IllegalArgumentException();
+
+		if(index == 1){
+			try{
+				interval = ReferenceParser.parseIntervalReference(newValue);
+			}
+			catch(NumberFormatException e){
+				interval = null;
+				throw new NumberFormatException();
+			}
+		}
+	}
+	
+	@Override
+	public String toString(){
+		return String.format("¬I (%s)", interval);
 	}
 
 	@Override
@@ -21,10 +45,8 @@ public class NegationIntro implements Rule{
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+
 	//implementera negationElim först
-	//lägg till contradiction-symbolen
-	//kolla så att alla rader i boxen är verified
 	//kolla så att uttrycket är den negerade versionen av det som stod överst i boxen.
 	//kolla så att det är en contradiction längst ner i boxen.
 
