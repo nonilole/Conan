@@ -81,6 +81,7 @@ public class DisjunctionElim implements Rule{
 		//check if the expression in the referenced row is an or-statement
 		Formula referencedRowFormula = data.getRow(rowRef).getFormula();
 		if( !(referencedRowFormula instanceof Disjunction) ) {
+			System.out.println("hej1");
 			return false;
 		}
 		
@@ -92,14 +93,17 @@ public class DisjunctionElim implements Rule{
 		//check if the start expression in the referenced interval1 and interval2 is correct  
 		Formula interval1StartFormula = data.getRow(interval1.startIndex).getFormula();	
 		Formula interval2StartFormula = data.getRow(interval2.startIndex).getFormula();
-		if(interval1StartFormula != lhsDisj && interval1StartFormula != rhsDisj) {
+		if(!interval1StartFormula.equals(lhsDisj) && !interval1StartFormula.equals(rhsDisj)) {
+			System.out.println("hej2");
 			return false;
-		} else if(interval1StartFormula == lhsDisj) {
-			if (interval2StartFormula != rhsDisj) {
+		} else if(interval1StartFormula.equals(lhsDisj)) {
+			if (!interval2StartFormula.equals(rhsDisj)) {
+				System.out.println("hej3");
 				return false;
 			}
-		} else if(interval1StartFormula == rhsDisj) {
-			if (interval2StartFormula != lhsDisj) {
+		} else if(interval1StartFormula.equals(rhsDisj)) {
+			if (!interval2StartFormula.equals(lhsDisj)) {
+				System.out.println("hej4");
 				return false;
 			}
 		}
@@ -107,10 +111,12 @@ public class DisjunctionElim implements Rule{
 		//check if the end expression in the referenced interval1 and interval2 is correct
 		Formula interval1EndFormula = data.getRow(interval1.endIndex).getFormula();	
 		Formula interval2EndFormula = data.getRow(interval2.endIndex).getFormula();
-		if (!(interval1EndFormula == data.getRow(rowIndex).getFormula() &&
-				interval2EndFormula == data.getRow(rowIndex).getFormula())) {
+		if (!(interval1EndFormula.equals(data.getRow(rowIndex).getFormula()) &&
+				interval2EndFormula.equals(data.getRow(rowIndex).getFormula()))) {
+			System.out.println("hej5");
 			return false;
 		}
+		System.out.println("hej6");
 		return true;
 	}
 
