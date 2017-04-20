@@ -81,7 +81,6 @@ public class DisjunctionElim implements Rule{
 		//check if the expression in the referenced row is an or-statement
 		Formula referencedRowFormula = data.getRow(rowRef).getFormula();
 		if( !(referencedRowFormula instanceof Disjunction) ) {
-			System.out.println("hej1");
 			return false;
 		}
 		
@@ -94,16 +93,13 @@ public class DisjunctionElim implements Rule{
 		Formula interval1StartFormula = data.getRow(interval1.startIndex).getFormula();	
 		Formula interval2StartFormula = data.getRow(interval2.startIndex).getFormula();
 		if(!interval1StartFormula.equals(lhsDisj) && !interval1StartFormula.equals(rhsDisj)) {
-			System.out.println("hej2");
 			return false;
 		} else if(interval1StartFormula.equals(lhsDisj)) {
 			if (!interval2StartFormula.equals(rhsDisj)) {
-				System.out.println("hej3");
 				return false;
 			}
 		} else if(interval1StartFormula.equals(rhsDisj)) {
 			if (!interval2StartFormula.equals(lhsDisj)) {
-				System.out.println("hej4");
 				return false;
 			}
 		}
@@ -113,10 +109,8 @@ public class DisjunctionElim implements Rule{
 		Formula interval2EndFormula = data.getRow(interval2.endIndex).getFormula();
 		if (!(interval1EndFormula.equals(data.getRow(rowIndex).getFormula()) &&
 				interval2EndFormula.equals(data.getRow(rowIndex).getFormula()))) {
-			System.out.println("hej5");
 			return false;
 		}
-		System.out.println("hej6");
 		return true;
 	}
 
