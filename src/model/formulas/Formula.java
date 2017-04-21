@@ -1,6 +1,9 @@
 
 package model.formulas;
 
+import java.util.ArrayList;
+import java.util.List;
+
 //Use interface instead?
 public abstract class Formula {
 	protected int precedence;
@@ -22,6 +25,58 @@ public abstract class Formula {
 			//System.out.println("diff[0]: "+diff[0]+", diff[1]: "+diff[1]);
 			return instantiation.equals(quant.formula.replace(diff[0], diff[1]));
 		}
+	}
+	
+	//check that two formulas are equal except for substitutions permitted by the eq argmunet
+	public static boolean almostEqual(Formula f1, Formula f2, Equality eq, List<String> boundObjectIds){
+		if(f1.getClass() != f2.getClass()) {
+			//System.err.println(formula1.getClass()+" != "+formula2.getClass());
+			return false;
+		}
+		else if(f1 instanceof Conjunction){
+			return almostEqual(((Conjunction)f1).lhs,((Conjunction)f2).lhs, eq, boundObjectIds) 
+				&& almostEqual(((Conjunction)f1).rhs,((Conjunction)f2).rhs, eq, boundObjectIds) ;
+		}
+		else if(f1 instanceof Disjunction){
+			return almostEqual(((Disjunction)f1).lhs,((Disjunction)f2).lhs, eq, boundObjectIds) 
+				&& almostEqual(((Disjunction)f1).rhs,((Disjunction)f2).rhs, eq, boundObjectIds) ;
+		}
+		else if(f1 instanceof Implication){
+			return almostEqual(((Implication)f1).lhs, ((Implication)f2).lhs, eq, boundObjectIds) 
+				&& almostEqual(((Implication)f1).rhs, ((Implication)f2).rhs, eq, boundObjectIds) ;
+		}
+		else if(f1 instanceof Equality){
+			Equality eql = (Equality)f1;
+			Equality eqr = (Equality)f2;
+			boolean lhs = Term.equalOrSub(eql.lhs, eqr.lhs, eq, boundObjectIds);
+			boolean rhs = Term.equalOrSub(eql.rhs, eqr.rhs, eq, boundObjectIds);
+			return lhs && rhs;
+		}
+		else if(f1 instanceof Negation){
+			return almostEqual( ((Negation)f1).formula, ((Negation)f2).formula, eq, boundObjectIds);
+		}
+		else if(f1 instanceof QuantifiedFormula){
+			ArrayList<String> newBoundObjectIds = new ArrayList<String>(boundObjectIds);
+			newBoundObjectIds.add( ((QuantifiedFormula)f1).var );
+			return almostEqual( ((QuantifiedFormula)f1).formula, ((QuantifiedFormula)f2).formula, eq, newBoundObjectIds);
+		}
+		else if(f1 instanceof Predicate){
+			Predicate p1 = (Predicate) f1;
+			Predicate p2 = (Predicate) f2;
+			List<Term> p1args = p1.getArgs();
+			List<Term> p2args = p2.getArgs();
+			
+			if(p1args.size() != p2args.size() ) return false;
+			for(int i = 0; i < p1args.size(); i++){
+				boolean logEq = Term.equalOrSub(p1args.get(i), p2args.get(i), eq, boundObjectIds);
+				if( !logEq ) return false;
+			}
+			return true;
+		}
+		else{
+			System.err.println("Formula.findObjectIdDifference: non-exhaustive matching for class:"+f1.getClass().getSimpleName());
+		}
+		return false;
 	}
 	
 	/**

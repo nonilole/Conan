@@ -18,7 +18,9 @@ public class RuleMapper {
         ruleToClass.put("∨E", DisjunctionElim.class);
         ruleToClass.put("¬¬E", DoubleNegationElim.class);
         ruleToClass.put("=I", EqualityIntro.class);
+        ruleToClass.put("=E", EqualityElim.class);
         ruleToClass.put("→I", ImplicationIntro.class);
+        ruleToClass.put("→E", ImplicationElim.class);
         ruleToClass.put("⊥E",ContradictionElim.class);
         ruleToClass.put("∃E", ExistsElim.class);
         ruleToClass.put("∃I", ExistsIntro.class);

@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import model.formulas.Equality;
 import model.formulas.Formula;
+import model.formulas.LogicObject;
 import model.formulas.QuantifiedFormula;
 import model.formulas.RandomFormulaGenerator;
 import model.rules.*;
@@ -21,14 +23,28 @@ public class Tests {
 		//isInScopeRowTest();
 		//isInScopeIntervalTest();
 		//getBoxTest();
-		testContradictionElim();
+		//testContradictionElim();
 		//verificationTest();
 		//replaceVarTest(20);
 		//replaceVarTest2();
 		//existElimTest();
 		//printRandomFormulas(20);
-		isInstantiationOfTest(10000);
+		testEqualOrSub();
+		//isInstantiationOfTest(10000);
 		System.out.println("Done.");
+	}
+	
+	public static void testEqualOrSub(){
+		Parser parser = new Parser();
+		Equality xeqy = (Equality)parser.parse("g=z");
+		
+		//Try different formulas for f1 and f2
+		Formula f1 = parser.parse("∀xI(b(g),x)");
+		Formula f2 = parser.parse("∀xI(b(z),x)");
+		
+		boolean result = Formula.almostEqual(f1, f2, xeqy, new ArrayList<String>());
+		System.out.println(result);
+		
 	}
 	
 	public static void isInstantiationOfTest(int nrTests){
