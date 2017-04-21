@@ -81,7 +81,7 @@ public abstract class Formula {
 			return null;
 		}
 		else{
-			System.err.println("Formula.findObjectIdDifference: non-exhaustive matching");
+			System.err.println("Formula.findObjectIdDifference: non-exhaustive matching for class:"+formula1.getClass().getSimpleName());
 		}
 		return null;
 	}
