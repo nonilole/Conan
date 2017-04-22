@@ -39,7 +39,9 @@ public class WelcomeView extends Symbolic implements View {
         this.premises = premisesAndConclusion.getPremises();
         this.conclusion = premisesAndConclusion.getConclusion();
         this.premises.setId("expression");
+        this.premises.setPromptText("Premise");
         this.conclusion.setId("expression");
+        this.conclusion.setPromptText("Conclusion");
         this.premises.focusedProperty().addListener((observable, oldValue, newValue) -> {
             lastFocusedTf = this.premises;
             caretPosition = this.premises.getCaretPosition();
