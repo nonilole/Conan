@@ -24,6 +24,7 @@ public class Box implements ProofEntry{
 		int insertionIndex = br == BoxReference.BEFORE ? internalReferenceIndex : internalReferenceIndex+1;
 		boxToInsertInto.entries.add(insertionIndex, new ProofRow(boxToInsertInto));
 		boxToInsertInto.incSize();
+
 	}
 	public void insertBox(int index){
 		assert(index < size);
@@ -31,11 +32,22 @@ public class Box implements ProofEntry{
 		Box boxToInsertInto = referenceRow.getParent();
 		int internalReferenceIndex = boxToInsertInto.entries.indexOf(referenceRow);
 		Box closedBox = new Box(boxToInsertInto, false);
+		closedBox.entries.add(referenceRow);
+        closedBox.incSize();
+        boxToInsertInto.decSize();
+        referenceRow.setParent(closedBox);
 		boxToInsertInto.entries.remove(internalReferenceIndex);
 		boxToInsertInto.entries.add(internalReferenceIndex, closedBox);
-		closedBox.entries.add(0, referenceRow);
-		closedBox.incSize();
 	}
+    public void removeBox(int index){
+        assert(index < size);
+        ProofRow referenceRow = getRow(index);
+        Box boxToDelete = referenceRow.getParent();
+        int idx = boxToDelete.getParent().entries.indexOf(boxToDelete);
+        Box metaBox = boxToDelete.getParent();
+        metaBox.entries.remove(idx);
+        referenceRow.setParent(metaBox);
+    }
 
 	public void addRow(){
 		//System.out.println("Box.addRow(");
@@ -220,8 +232,9 @@ public class Box implements ProofEntry{
 	public Box getParent(){
 		return parent;
 	}
-	
-	//increment size variable of this box and do the same for parent box
+
+
+        //increment size variable of this box and do the same for parent box
 	//this will propagate all the way to the top box
 	public void incSize(){
 		size++;

@@ -24,7 +24,10 @@ public class ProofRow implements ProofEntry{
     public Box getParent(){
     	return parent;
     }
-    
+    public void setParent(Box parent) {
+        this.parent = parent;
+    }
+
     public void setFormula(Formula formula) {
         this.formula = formula;
     }

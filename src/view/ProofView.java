@@ -421,8 +421,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			rp = createRow(false, 0);
 			rList.add(rp);
 			rows.getChildren().add(rp);
-		}
-		else{
+		} else {
 			VBox box = curBoxDepth.peek();
 			List<Node> children = box.getChildren();
 			boolean isFirstRowInBox = (children.isEmpty()) ? true : false;
@@ -452,6 +451,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			referenceRow.setIsFirstRowInBox(false);
 			parentBox = (VBox)referenceRow.getParent();
 			indexToInsertInParent = parentBox.getChildren().indexOf(referenceRow);
+
 		}
 		else{ //br == BoxReference.AFTER
 			referenceRow = rList.get(rowNo-1);
@@ -494,6 +494,13 @@ public class ProofView extends Symbolic implements ProofListener, View {
 //		rp.setIsFirstRowInBox(true);
 //		rp.incrementNrOfClosingBoxes();
 		updateLabelPaddings(rowNumber);
+    }
+    public void boxRemoved(int rowNumber) {
+        RowPane rp = rList.get(rowNumber-1);
+        rp.decrementNrOfClosingBoxes();
+        VBox metabox = (VBox) rp.getParent().getParent();
+        metabox.getChildren().
+        updateLabelPaddings(rowNumber);
     }
 
 	public void boxClosed(){
@@ -603,6 +610,9 @@ public class ProofView extends Symbolic implements ProofListener, View {
 //			    deleteRow(rpIndex+1);
 //				insertNewBox(rpIndex);
 //			}
+            if (newValue.equals("Ass")) {
+                insertNewBox(rpIndex+1);
+            }
 			rp.setPrompts(ruleMap.getOrDefault(newValue,-1));
 		});
 	}
@@ -618,7 +628,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 				VBox box2 = curBoxDepth.pop();
 				assert(box == box2);
 			}
-			if( parentBox.getChildren().isEmpty() ){
+			if( parentBox.getChildren().isEmpty() ) {
 				removeRecursivelyIfEmpty(parentBox);
 			}
 		}
