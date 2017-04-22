@@ -481,14 +481,20 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	}
 
     public void boxClosed(int rowNumber){
-        //Update last row and its padding
-        RowPane rp = rList.get(rowNumber-1);
+		RowPane refRp = rList.get(rowNumber-1);
+		VBox metabox = (VBox) refRp.getParent();
+		int indexOfRefRp = metabox.getChildren().indexOf(refRp);
+		RowPane rp = createRow(true, 1);
+        VBox parentBox = new VBox();
+		parentBox.getStyleClass().clear();
+		parentBox.getStyleClass().add("closedBox");
         rp.incrementNrOfClosingBoxes();
-        updateLabelPaddings(rowNumber-1);
-        VBox vb = new VBox();
-        VBox vb = (VBox) rp.getParent();
-        vb.getStyleClass().clear();
-        vb.getStyleClass().add("closedBox");
+		rList.add(rowNumber-1, rp);
+		lineNo.getChildren().add(createLabel());
+		parentBox.getChildren().add(rp);
+		metabox.getChildren().add(indexOfRefRp, parentBox);
+		updateLabelPaddings(rowNumber+1);
+		addListeners(rp);
     }
 
 	public void boxClosed(){
