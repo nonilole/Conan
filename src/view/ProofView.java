@@ -492,9 +492,9 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		lineNo.getChildren().add(createLabel());
 		parentBox.getChildren().add(rp);
 		metabox.getChildren().add(indexOfRefRp, parentBox);
-		rp.incrementNrOfClosingBoxes();
-		updateLabelPaddings(rowNumber);
+		updateLabelPaddings(rowNumber-1);
 		addListeners(rp);
+		rp.getExpression().requestFocus();
     }
 
 	public void boxClosed(){
@@ -600,6 +600,10 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		ruleField.textProperty().addListener((ov, oldValue, newValue) -> {
 			int rpIndex = rList.indexOf(rp);
 			proof.updateRuleRow(newValue, rpIndex+1);
+//			if (newValue.equals("Ass")) {
+//			    deleteRow(rpIndex+1);
+//				insertNewBox(rpIndex);
+//			}
 			rp.setPrompts(ruleMap.getOrDefault(newValue,-1));
 		});
 	}

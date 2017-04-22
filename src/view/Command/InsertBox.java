@@ -26,7 +26,7 @@ public class InsertBox implements Command {
     public boolean execute() {
         boolean result = proof.openBox(rowNo-1);
         if (result) {
-            RowPane rp = rList.get(rowNo);
+            RowPane rp = rList.get(rowNo-1);
             rp.setExpression(expression);
             rp.setRule(rule);
             for (int i = 0; i < 3; i++) {
@@ -51,6 +51,6 @@ public class InsertBox implements Command {
     }
     @Override
     public String toString() {
-        return "Insert row to " + rowNo;
+        return "Insert box to " + rowNo;
     }
 }

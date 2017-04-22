@@ -168,8 +168,12 @@ public class Proof implements Serializable{
             listener.boxOpened();
         }
     }
-    
+
     public boolean openBox(int rowIndex){
+        ProofRow pr = proofData.getRow(rowIndex);
+        if (pr.getParent() != null && pr.getParent().getRow(0) == pr) {
+            return false; // Don't insert box if it's the first row in a box.
+        }
         proofData.insertBox(rowIndex);
     	for (ProofListener listener : this.listeners) {
             listener.boxClosed(rowIndex+1);
