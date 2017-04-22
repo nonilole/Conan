@@ -30,11 +30,10 @@ public class Box implements ProofEntry{
 		ProofRow referenceRow = getRow(index);
 		Box boxToInsertInto = referenceRow.getParent();
 		int internalReferenceIndex = boxToInsertInto.entries.indexOf(referenceRow);
-		int insertionIndex = internalReferenceIndex;
 		Box closedBox = new Box(boxToInsertInto, false);
+		boxToInsertInto.entries.add(internalReferenceIndex, closedBox);
 		closedBox.entries.add(0, new ProofRow(closedBox));
-		boxToInsertInto.entries.add(insertionIndex, closedBox);
-		boxToInsertInto.incSize();
+		closedBox.incSize();
 	}
 
 	public void addRow(){
@@ -82,10 +81,8 @@ public class Box implements ProofEntry{
 		assert(index < size);
 		ProofRow referenceRow = getRow(index);
 		Box parent = referenceRow.getParent();
-		if (parent == null) {
-			parent.entries.remove(referenceRow);
-			parent.decSize();
-		}
+        parent.entries.remove(referenceRow);
+        parent.decSize();
 	}
 	
 	/*public boolean updateFormulaRow(int index, String userFormulaInput){
