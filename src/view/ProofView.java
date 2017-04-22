@@ -3,6 +3,7 @@ package view;
 import java.util.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -97,8 +98,9 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	private HashMap<String, Integer> ruleMap = new HashMap<String, Integer>();
 
 
-	// Shift enter key combination
+	// Key combinations
 	final static KeyCombination shiftEnter = new KeyCodeCombination(KeyCode.ENTER, KeyCombination.SHIFT_DOWN);
+    final static KeyCombination ctrlB = new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN);
 	/**
 	 * This ia listener that is applied to the last textField. It creates a new row, each time the value of the textField is changed.
 	 */
@@ -327,7 +329,9 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			bp.getRulePrompt(i).setOnKeyPressed(new EventHandler<KeyEvent>() {
 				public void handle(KeyEvent ke) {
 					int index = rList.indexOf(bp); //Kanske vill flytta in den här för prestanda
-					if (shiftEnter.match(ke)) {
+                    if (ctrlB.match(ke)) {
+                        insertNewBox(index + 1);
+                    } else if (shiftEnter.match(ke)) {
 						insertNewRow(index + 1, BoxReference.BEFORE);
 						rList.get(index).getClosestPromptFromLeft(finalI).requestFocus();
 					} else if (ke.getCode() == KeyCode.ENTER) {
@@ -348,8 +352,10 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
 		tfExpression.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent ke) {
-				int index = rList.indexOf(bp); //Kanske vill flytta in den här för prestanda
-				if (shiftEnter.match(ke)) {
+                int index = rList.indexOf(bp); //Kanske vill flytta in den här för prestanda
+                if (ctrlB.match(ke)) {
+                    insertNewBox(index+1);
+                } else if (shiftEnter.match(ke)) {
                     insertNewRow(index+1, BoxReference.BEFORE);
                     rList.get(index).getExpression().requestFocus();
 				} else if (ke.getCode() == KeyCode.ENTER) {
@@ -369,7 +375,9 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		tfRule.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent ke) {
 				int index = rList.indexOf(bp);
-				if (shiftEnter.match(ke)) {
+                if (ctrlB.match(ke)) {
+                    insertNewBox(index + 1);
+                } else if (shiftEnter.match(ke)) {
 					insertNewRow(index+1, BoxReference.BEFORE);
 					rList.get(index).getRule().requestFocus();
 				} else if (ke.getCode() == KeyCode.ENTER) {
@@ -499,7 +507,14 @@ public class ProofView extends Symbolic implements ProofListener, View {
         RowPane rp = rList.get(rowNumber-1);
         rp.decrementNrOfClosingBoxes();
         VBox metabox = (VBox) rp.getParent().getParent();
-        metabox.getChildren().
+
+        ObservableList<Node> children = metabox.getChildren();
+        int idx = children.indexOf(rp.getParent());
+        children.remove(idx);
+        children.add(idx, rp);
+        if (idx != 0) {
+            rp.setIsFirstRowInBox(false);
+        }
         updateLabelPaddings(rowNumber);
     }
 

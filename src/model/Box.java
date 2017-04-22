@@ -43,10 +43,12 @@ public class Box implements ProofEntry{
         assert(index < size);
         ProofRow referenceRow = getRow(index);
         Box boxToDelete = referenceRow.getParent();
-        int idx = boxToDelete.getParent().entries.indexOf(boxToDelete);
         Box metaBox = boxToDelete.getParent();
-        metaBox.entries.remove(idx);
+        List<ProofEntry> peList = metaBox.entries;
+        int idx = peList.indexOf(boxToDelete);
+        peList.remove(idx);
         referenceRow.setParent(metaBox);
+        peList.add(idx,referenceRow);
     }
 
 	public void addRow(){

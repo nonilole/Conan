@@ -16,12 +16,12 @@ public class InsertBox implements Command {
     };
     @Override
     public boolean execute() {
-        boolean result = proof.insertBox(rowNo-1);
-        return false; // Implement undo in the future?
+        return proof.insertBox(rowNo-1);
     }
 
     @Override
     public void undo() {
+        proof.removeBox(rowNo-1);
     }
     @Override
     public String toString() {
