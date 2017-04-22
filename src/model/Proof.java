@@ -172,7 +172,6 @@ public class Proof implements Serializable{
     public boolean openBox(int rowIndex){
         proofData.insertBox(rowIndex);
     	for (ProofListener listener : this.listeners) {
-            listener.rowInserted(rowIndex+1, BoxReference.BEFORE);
             listener.boxClosed(rowIndex+1);
         }
         return true;
