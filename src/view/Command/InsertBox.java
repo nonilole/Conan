@@ -24,15 +24,15 @@ public class InsertBox implements Command {
     };
     @Override
     public boolean execute() {
-        boolean result = proof.openBox(rowNo-1);
-        if (result) {
-            RowPane rp = rList.get(rowNo-1);
-            rp.setExpression(expression);
-            rp.setRule(rule);
-            for (int i = 0; i < 3; i++) {
-                rp.setRulePrompt(i, prompt.get(i));
-            }
-        }
+        boolean result = proof.insertBox(rowNo-1);
+//        if (result) {
+//            RowPane rp = rList.get(rowNo-1);
+//            rp.setExpression(expression);
+//            rp.setRule(rule);
+//            for (int i = 0; i < 3; i++) {
+//                rp.setRulePrompt(i, prompt.get(i));
+//            }
+//        }
         return result;
     }
 

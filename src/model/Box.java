@@ -31,8 +31,9 @@ public class Box implements ProofEntry{
 		Box boxToInsertInto = referenceRow.getParent();
 		int internalReferenceIndex = boxToInsertInto.entries.indexOf(referenceRow);
 		Box closedBox = new Box(boxToInsertInto, false);
+		boxToInsertInto.entries.remove(internalReferenceIndex);
 		boxToInsertInto.entries.add(internalReferenceIndex, closedBox);
-		closedBox.entries.add(0, new ProofRow(closedBox));
+		closedBox.entries.add(0, referenceRow);
 		closedBox.incSize();
 	}
 

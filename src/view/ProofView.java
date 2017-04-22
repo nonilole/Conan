@@ -480,21 +480,20 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		newRow();
 	}
 
-    public void boxClosed(int rowNumber){
-		RowPane refRp = rList.get(rowNumber-1);
-		VBox metabox = (VBox) refRp.getParent();
-		int indexOfRefRp = metabox.getChildren().indexOf(refRp);
-		RowPane rp = createRow(true, 1);
-        VBox parentBox = new VBox();
-		parentBox.getStyleClass().clear();
-		parentBox.getStyleClass().add("closedBox");
-		rList.add(rowNumber-1, rp);
-		lineNo.getChildren().add(createLabel());
-		parentBox.getChildren().add(rp);
-		metabox.getChildren().add(indexOfRefRp, parentBox);
-		updateLabelPaddings(rowNumber-1);
-		addListeners(rp);
-		rp.getExpression().requestFocus();
+    public void boxInserted(int rowNumber){
+		RowPane rp = rList.get(rowNumber-1);
+		VBox metabox = (VBox) rp.getParent();
+		int indexOfRp = metabox.getChildren().indexOf(rp);
+        VBox newBox = new VBox();
+		newBox.getStyleClass().clear();
+		newBox.getStyleClass().add("closedBox");
+		newBox.getChildren().add(rp);
+		metabox.getChildren().add(indexOfRp, newBox);
+		rp.setIsFirstRowInBox(true);
+		rp.incrementNrOfClosingBoxes();
+//		rp.setIsFirstRowInBox(true);
+//		rp.incrementNrOfClosingBoxes();
+		updateLabelPaddings(rowNumber);
     }
 
 	public void boxClosed(){
