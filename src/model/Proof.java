@@ -36,7 +36,7 @@ public class Proof implements Serializable{
      * @param rowNumber
      */
     public boolean deleteRow(int rowNumber) {
-    	if(rowNumber < 1 || rowNumber > proofData.size()){
+    	if(rowNumber < 1 || rowNumber > proofData.size() || proofData.size() == 1){
     	    return false;
     	}
     	proofData.deleteRow(rowNumber-1);
