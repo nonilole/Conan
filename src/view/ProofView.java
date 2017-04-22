@@ -365,19 +365,13 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		tfExpression.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				newValue = newValue.replaceAll("!", "¬");
-				newValue = newValue.replaceAll("\\bnot\\b", "¬");
-				newValue = newValue.replaceAll("\\bneg\\b", "¬");
-				newValue = newValue.replaceAll("&", "∧");
-				newValue = newValue.replaceAll("\\band\\b", "∧");
+				newValue = newValue.replaceAll("not|neg|!", "¬");
+				newValue = newValue.replaceAll("&|and", "∧");
 				newValue = newValue.replaceAll("->", "→");
-				newValue = newValue.replaceAll("(?i)\\bforall\\b", "∀");
-				newValue = newValue.replaceAll("(?i)\\bor\\b", "∨");
-				newValue = newValue.replaceAll("(?i)\\bexists\\b", "∃");
-				newValue = newValue.replaceAll("(?i)\\bte\\b", "∃");
-				newValue = newValue.replaceAll("(?i)\\balpha\\b", "α");
-				newValue = newValue.replaceAll("(?i)\\bbeta\\b", "β");
-				newValue = newValue.replaceAll("(?i)\\btheta\\b", "ϑ");
+				newValue = newValue.replaceAll("forall", "∀");
+				newValue = newValue.replaceAll("(?<!f)or", "∨");
+				newValue = newValue.replaceAll("exists", "∃");
+				newValue = newValue.replaceAll("te", "∃");
 				String finalNewValue = newValue;
 				Platform.runLater(() -> {
 					int lendiff = tfExpression.getLength();
