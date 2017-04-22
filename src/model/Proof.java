@@ -39,6 +39,7 @@ public class Proof implements Serializable{
     	if(rowNumber < 1 || rowNumber > proofData.size() || proofData.size() == 1){
     	    return false;
     	}
+    	System.out.println(proofData.size());
     	proofData.deleteRow(rowNumber-1);
     	for (ProofListener listener : this.listeners) {
             listener.rowDeleted(rowNumber);
@@ -169,14 +170,21 @@ public class Proof implements Serializable{
         }
     }
 
-    public boolean openBox(int rowIndex){
+    public boolean insertBox(int rowIndex){
         ProofRow pr = proofData.getRow(rowIndex);
         if (pr.getParent() != null && pr.getParent().getRow(0) == pr) {
             return false; // Don't insert box if it's the first row in a box.
         }
         proofData.insertBox(rowIndex);
     	for (ProofListener listener : this.listeners) {
-            listener.boxClosed(rowIndex+1);
+            listener.boxInserted(rowIndex+1);
+        }
+        return true;
+    }
+    public boolean removeBox(int rowIndex) {
+        proofData.removeBox(rowIndex);
+        for (ProofListener listener : this.listeners) {
+            listener.boxRemoved(rowIndex+1);
         }
         return true;
     }

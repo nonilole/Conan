@@ -46,6 +46,7 @@ public class RowPane extends BorderPane{
 	public void incrementNrOfClosingBoxes(){
 		nrOfClosingBoxes++;
 	}
+	public void decrementNrOfClosingBoxes(){ nrOfClosingBoxes--; }
 
 	public void setExpression(String s) {
 		getExpression().setText(s);
