@@ -488,12 +488,12 @@ public class ProofView extends Symbolic implements ProofListener, View {
         VBox parentBox = new VBox();
 		parentBox.getStyleClass().clear();
 		parentBox.getStyleClass().add("closedBox");
-        rp.incrementNrOfClosingBoxes();
 		rList.add(rowNumber-1, rp);
 		lineNo.getChildren().add(createLabel());
 		parentBox.getChildren().add(rp);
 		metabox.getChildren().add(indexOfRefRp, parentBox);
-		updateLabelPaddings(rowNumber+1);
+		rp.incrementNrOfClosingBoxes();
+		updateLabelPaddings(rowNumber);
 		addListeners(rp);
     }
 
