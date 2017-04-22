@@ -25,7 +25,18 @@ public class Box implements ProofEntry{
 		boxToInsertInto.entries.add(insertionIndex, new ProofRow(boxToInsertInto));
 		boxToInsertInto.incSize();
 	}
-	
+	public void insertBox(int index){
+		assert(index < size);
+		ProofRow referenceRow = getRow(index);
+		Box boxToInsertInto = referenceRow.getParent();
+		int internalReferenceIndex = boxToInsertInto.entries.indexOf(referenceRow);
+		int insertionIndex = internalReferenceIndex;
+		Box closedBox = new Box(boxToInsertInto, false);
+		closedBox.entries.add(0, new ProofRow(closedBox));
+		boxToInsertInto.entries.add(insertionIndex, closedBox);
+		boxToInsertInto.incSize();
+	}
+
 	public void addRow(){
 		//System.out.println("Box.addRow(");
 		if(entries.isEmpty()) {

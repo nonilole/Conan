@@ -14,10 +14,7 @@ import javafx.scene.input.*;
 import model.BoxReference;
 import model.Proof;
 import model.ProofListener;
-import view.Command.AddRow;
-import view.Command.Command;
-import view.Command.DeleteRow;
-import view.Command.InsertRow;
+import view.Command.*;
 
 
 /***
@@ -233,6 +230,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	public void insertNewRow(int rowNo, BoxReference br){
 		executeCommand(new InsertRow(proof, rowNo, br, rList));
 	}
+	public void insertNewBox(int rowNo){ executeCommand(new InsertBox(proof, rowNo, rList));}
 	public void deleteRow(int rowNo){
 		executeCommand(new DeleteRow(proof, rowNo, rList));
 	}
@@ -273,9 +271,11 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		MenuItem delete = new MenuItem("Delete");
 		MenuItem insertAbove = new MenuItem("Insert Above");
 		MenuItem insertBelow = new MenuItem("Insert Below");
+		MenuItem insertBox = new MenuItem("Insert Box");
 		contextMenu.getItems().add(delete);
 		contextMenu.getItems().add(insertAbove);
 		contextMenu.getItems().add(insertBelow);
+		contextMenu.getItems().add(insertBox);
 		bp.getRule().setContextMenu(contextMenu);
 		for(int i = 0;i<3; i++) {
 			bp.getRulePrompt(i).setContextMenu(contextMenu);
@@ -296,7 +296,11 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			int rowOfPressedButton=rList.indexOf(bp) + 1;
 			insertNewRow(rowOfPressedButton, BoxReference.AFTER);
 		});;
-		
+		insertBox.setOnAction(event -> {
+			int rowOfPressedButton=rList.indexOf(bp) + 1;
+			insertNewBox(rowOfPressedButton);
+		});;
+
 
 		//adding listeners to the expression- and rule textfield
 		TextField tfExpression = bp.getExpression();
@@ -476,6 +480,16 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		newRow();
 	}
 
+    public void boxClosed(int rowNumber){
+        //Update last row and its padding
+        RowPane rp = rList.get(rowNumber-1);
+        rp.incrementNrOfClosingBoxes();
+        updateLabelPaddings(rowNumber-1);
+        VBox vb = new VBox();
+        VBox vb = (VBox) rp.getParent();
+        vb.getStyleClass().clear();
+        vb.getStyleClass().add("closedBox");
+    }
 
 	public void boxClosed(){
 		if (!curBoxDepth.isEmpty()) {

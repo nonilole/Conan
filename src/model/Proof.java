@@ -169,14 +169,15 @@ public class Proof implements Serializable{
         }
     }
     
-    public void openBox(int rowNr){
-    	System.out.println("Proof.openBox(int) not implemented!");
-    	//if rowNr refers to the last line, the new box should be open
-    	//otherwise closed
+    public boolean openBox(int rowIndex){
+        proofData.insertBox(rowIndex);
     	for (ProofListener listener : this.listeners) {
-            listener.boxOpened();
+            listener.rowInserted(rowIndex+1, BoxReference.BEFORE);
+            listener.boxClosed(rowIndex+1);
         }
+        return true;
     }
+
     
     public void closeBox(){
         proofData.closeBox();
