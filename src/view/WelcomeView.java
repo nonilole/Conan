@@ -1,5 +1,8 @@
 package view;
 
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -40,6 +43,19 @@ public class WelcomeView extends Symbolic implements View {
         this.conclusion = premisesAndConclusion.getConclusion();
         this.premises.setId("expression");
         this.premises.setPromptText("Premise");
+        premises.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				String finalNewValue = checkShortcut(newValue);
+				Platform.runLater(() -> {
+					int lendiff = premises.getLength();
+                    int pos = premises.getCaretPosition();
+					premises.setText(finalNewValue);
+					lendiff = lendiff - premises.getLength();
+					premises.positionCaret(pos-lendiff);
+				});
+			}
+		});
         this.conclusion.setId("expression");
         this.conclusion.setPromptText("Conclusion");
         this.premises.focusedProperty().addListener((observable, oldValue, newValue) -> {
@@ -50,6 +66,19 @@ public class WelcomeView extends Symbolic implements View {
             lastFocusedTf = this.conclusion;
             caretPosition = this.conclusion.getCaretPosition();
         });
+        conclusion.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				String finalNewValue = checkShortcut(newValue);
+				Platform.runLater(() -> {
+					int lendiff = conclusion.getLength();
+                    int pos = conclusion.getCaretPosition();
+					conclusion.setText(finalNewValue);
+					lendiff = lendiff - conclusion.getLength();
+					conclusion.positionCaret(pos-lendiff);
+				});
+			}
+		});
 
         Hyperlink help = new Hyperlink("Help me!");
 
@@ -105,5 +134,16 @@ public class WelcomeView extends Symbolic implements View {
     public ViewTab getTab() {
         return this.tab;
     }
+    
+    public String checkShortcut(String newValue){
+		newValue = newValue.replaceAll("not|neg|!", "¬");
+		newValue = newValue.replaceAll("&|and", "∧");
+		newValue = newValue.replaceAll("->", "→");
+		newValue = newValue.replaceAll("forall", "∀");
+		newValue = newValue.replaceAll("(?<!f)or", "∨");
+		newValue = newValue.replaceAll("exists", "∃");
+		newValue = newValue.replaceAll("te", "∃");
+		return newValue;
+	}
 }
 
