@@ -558,7 +558,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		VBox metaBox = (VBox) referenceRow.getParent().getParent();
 		int nrOfClosingBoxes = referenceRow.getNrOfClosingBoxes();
 		int extraClosedBoxes = rList.get(rowNo).getNrOfClosingBoxes();
-		referenceRow.setNrOfClosingBoxes(referenceRow.getNrOfClosingBoxes()+extraClosedBoxes);
+		referenceRow.setNrOfClosingBoxes(nrOfClosingBoxes+extraClosedBoxes);
 		int idx = metaBox.getChildren().indexOf(referenceRow.getParent()) + 1;
 		metaBox.getChildren().remove(idx);
 		rList.remove(rowNo);
