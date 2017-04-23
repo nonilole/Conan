@@ -85,5 +85,10 @@ public class ConjunctionIntro implements Rule{
 		Formula content2 = data.getRow( getPremise2() ).getFormula();
 		return conclusion.equals(new Conjunction(content1, content2));
 	}
-	
+
+	@Override
+	public Formula generateFormula(Box data, int rowIndex) {
+		return null;
+	}
+
 }

@@ -56,6 +56,11 @@ public class DoubleNegationElim implements Rule {
     }
 
     @Override
+    public Formula generateFormula(Box data, int rowIndex) {
+        return null;
+    }
+
+    @Override
     public String toString(){
         String p1 = premise1 == null ? "" : premise1.toString();
         return String.format("¬¬-E (%s)", p1);

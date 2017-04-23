@@ -55,7 +55,12 @@ public class ForallIntro implements Rule{
 		//System.out.println(""+lastRowInRefBox);
 		return toVerify.instantiate(freshVarId).equals(lastRowInRefBox);
 	}
-	
+
+	@Override
+	public Formula generateFormula(Box data, int rowIndex) {
+		return null;
+	}
+
 	@Override
 	public String toString(){
 		return "∀I ("+intervalRef+")";

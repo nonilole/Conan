@@ -55,7 +55,12 @@ public class EqualityElim implements Rule{
 		Formula toVerify = data.getRow(rowIndex).getFormula();
 		return Formula.almostEqual(ref, toVerify, eq, new ArrayList<String>());
 	}
-	
+
+	@Override
+	public Formula generateFormula(Box data, int rowIndex) {
+		return null;
+	}
+
 	@Override
 	public String toString(){
 		return "=E "+rowRef1+", "+rowRef2;

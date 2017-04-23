@@ -85,4 +85,9 @@ public class ExistsElim implements Rule{
 		if(refBox.getRow(refBox.size()-1).getFormula().containsObjectId(freshVar)) return false;
 		return true;
 	}
+
+	@Override
+	public Formula generateFormula(Box data, int rowIndex) {
+		return null;
+	}
 }

@@ -40,7 +40,7 @@ public class ProofByContradiction implements Rule{
 
 	@Override
 	public String toString(){
-		return String.format("¬I (%s)", interval);
+		return String.format("PBC (%s)", interval);
 	}
 
 	@Override
@@ -64,4 +64,23 @@ public class ProofByContradiction implements Rule{
 			return false;
 		return true;
 	}
+
+	@Override
+	public Formula generateFormula(Box data, int rowIndex) {
+		//check the interval in scope
+		if(data.isInScopeOf(interval, rowIndex) == false ) return null;
+
+		//check if the end expression in the interval is a contradiction
+		Formula intervalEndFormula = data.getRow(interval.endIndex).getFormula();
+		if ( !(intervalEndFormula instanceof Contradiction) ) {
+			return null;
+		}
+
+		Formula intervalStartFormula = data.getRow(interval.startIndex).getFormula();
+		if (!(intervalStartFormula instanceof Negation))
+			return null;
+		Negation start = (Negation) intervalStartFormula;
+		return start.formula;
+	}
+
 }

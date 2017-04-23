@@ -43,7 +43,12 @@ public class ExistsIntro implements Rule{
 		} 
 		return false;
 	}
-	
+
+	@Override
+	public Formula generateFormula(Box data, int rowIndex) {
+		return null;
+	}
+
 	@Override
 	public String toString(){
 		return "∃E ("+rowRef+")";

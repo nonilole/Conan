@@ -81,4 +81,9 @@ public class ConjunctionElim implements Rule {
 			return result.equals(ref.rhs);
 		}
 	}
+
+	@Override
+	public Formula generateFormula(Box data, int rowIndex) {
+		return null;
+	}
 }

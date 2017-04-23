@@ -1,6 +1,7 @@
 package model.rules;
 
 import model.Box;
+import model.formulas.Formula;
 
 public class FreshVar implements Rule{
 
@@ -19,7 +20,12 @@ public class FreshVar implements Rule{
 		//maybe check that this is first row in parent box
 		return true;
 	}
-	
+
+	@Override
+	public Formula generateFormula(Box data, int rowIndex) {
+		return null;
+	}
+
 	@Override
 	public String toString(){
 		return "Fresh var.";

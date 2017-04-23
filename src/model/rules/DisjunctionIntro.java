@@ -2,7 +2,6 @@ package model.rules;
 
 import model.Box;
 import model.ProofRow;
-import model.formulas.Conjunction;
 import model.formulas.Disjunction;
 import model.formulas.Formula;
 
@@ -79,6 +78,11 @@ public class DisjunctionIntro implements Rule {
 			else
 				return premiseRow.isVerified() && disjunction.rhs.equals(premiseRow.getFormula());
         }
+	}
+
+	@Override
+	public Formula generateFormula(Box data, int rowIndex) {
+		return null;
 	}
 
 }

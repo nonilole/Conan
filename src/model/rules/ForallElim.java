@@ -38,7 +38,12 @@ public class ForallElim implements Rule{
 		return Formula.isInstantiationOf(toVerify, ref);
 		
 	}
-	
+
+	@Override
+	public Formula generateFormula(Box data, int rowIndex) {
+		return null;
+	}
+
 	@Override
 	public String toString(){
 		return "∀E ("+rowRef+")";

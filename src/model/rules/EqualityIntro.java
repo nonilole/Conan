@@ -29,6 +29,11 @@ public class EqualityIntro implements Rule {
     }
 
     @Override
+    public Formula generateFormula(Box data, int rowIndex) {
+        return null;
+    }
+
+    @Override
     public String toString() {
         return "=-I";
     }

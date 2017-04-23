@@ -1,6 +1,7 @@
 package model.rules;
 
 import model.Box;
+import model.formulas.Formula;
 
 public class Premise implements Rule {
 	
@@ -23,4 +24,9 @@ public class Premise implements Rule {
     public boolean verify(Box data, int rowIndex) {
 	    return true;
     }
+
+	@Override
+	public Formula generateFormula(Box data, int rowIndex) {
+		return null;
+	}
 }

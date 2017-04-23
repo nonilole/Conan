@@ -1,10 +1,8 @@
 package model.rules;
 
 import model.Box;
-import model.ProofRow;
 import model.formulas.Contradiction;
 import model.formulas.Formula;
-import model.formulas.FreshVarFormula;
 
 public class ContradictionElim implements Rule {
 
@@ -56,6 +54,11 @@ public class ContradictionElim implements Rule {
         return false;
 
 
+    }
+
+    @Override
+    public Formula generateFormula(Box data, int rowIndex) {
+        return null;
     }
 
     public Integer getPremise() {

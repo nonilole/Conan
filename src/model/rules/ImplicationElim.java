@@ -58,7 +58,12 @@ public class ImplicationElim implements Rule{
 		
 		return true;
 	}
-	
+
+	@Override
+	public Formula generateFormula(Box data, int rowIndex) {
+		return null;
+	}
+
 	@Override
 	public String toString(){
 		return "→E "+rowRef1+", "+rowRef2;

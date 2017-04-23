@@ -114,4 +114,9 @@ public class DisjunctionElim implements Rule{
 		return true;
 	}
 
+	@Override
+	public Formula generateFormula(Box data, int rowIndex) {
+		return null;
+	}
+
 }

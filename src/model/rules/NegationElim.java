@@ -88,4 +88,28 @@ public class NegationElim implements Rule{
 		
 		return true;
 	}
+
+	@Override
+	public Formula generateFormula(Box data, int rowIndex) {
+
+		//check the rows are in scope
+		if(data.isInScopeOf(rowRef1, rowIndex) == false ) return null;
+		if(data.isInScopeOf(rowRef2, rowIndex) == false ) return null;
+
+		//Check if the formula in the row to verify i a contradiction
+		Formula rowToVerifyFormula = data.getRow(rowIndex).getFormula();
+		//Check if the to referenced rows are the negation of each other
+		Formula rowRef1Formula = data.getRow(rowRef1).getFormula();
+		Formula rowRef2Formula = data.getRow(rowRef2).getFormula();
+		if(!(rowRef2Formula instanceof Negation)) {
+			return null;
+		}
+		Negation neg = (Negation) rowRef2Formula;
+		Formula rowRef2NoNeg = neg.formula;
+		if(!rowRef2NoNeg.equals(rowRef1Formula)) {
+			return null;
+		}
+
+		return new Contradiction();
+	}
 }

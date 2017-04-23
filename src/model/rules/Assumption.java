@@ -2,6 +2,7 @@ package model.rules;
 
 import model.Box;
 import model.ProofRow;
+import model.formulas.Formula;
 
 public class Assumption implements Rule {
     @Override
@@ -27,5 +28,10 @@ public class Assumption implements Rule {
         if (parent.isTopLevelBox())
             return false;
         return parent.getRow(0).equals(rowToVerify);
+    }
+
+    @Override
+    public Formula generateFormula(Box data, int rowIndex) {
+        return null;
     }
 }

@@ -72,4 +72,21 @@ public class NegationIntro implements Rule{
 
 		return true;
 	}
+
+	@Override
+	public Formula generateFormula(Box data, int rowIndex) {
+		if(data.isInScopeOf(interval, rowIndex) == false ) return null;
+
+		//check if the end expression in the interval is a contradiction
+		Formula intervalEndFormula = data.getRow(interval.endIndex).getFormula();
+		if ( !(intervalEndFormula instanceof Contradiction) ) {
+			return null;
+		}
+
+		//Check if the start expression in the interval is
+		//the negation of the expression in the row to verify
+		Formula intervalStartFormula = data.getRow(interval.startIndex).getFormula();
+
+		return new Negation(intervalStartFormula);
+	}
 }
