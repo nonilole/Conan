@@ -85,5 +85,19 @@ public class ConjunctionIntro implements Rule{
 		Formula content2 = data.getRow( getPremise2() ).getFormula();
 		return conclusion.equals(new Conjunction(content1, content2));
 	}
-	
+
+	@Override
+	public Formula generateFormula(Box data, int rowIndex) {
+		if( data.isInScopeOf( getPremise1(), rowIndex) == false || //this currently assumes the premise is stored as a rowNr rather than index
+				data.isInScopeOf( getPremise2(), rowIndex) == false )
+		{
+			return null;
+		}
+
+		// do we have the needed premises/references to make the deduction?
+		Formula content1 = data.getRow( getPremise1() ).getFormula();//this currently assumes the premise is stored as a rowNr rather than index
+		Formula content2 = data.getRow( getPremise2() ).getFormula();
+		return new Conjunction(content1, content2);
+	}
+
 }

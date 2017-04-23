@@ -39,20 +39,34 @@ public class DoubleNegationElim implements Rule {
 
     @Override
     public boolean verify(Box data, int rowIndex) {
-        Formula premise = data.getRow(getPremise1()).getFormula();
         if (data.isInScopeOf(getPremise1(), rowIndex) == false) return false;
+        Formula premise = data.getRow(getPremise1()).getFormula();
         if (premise instanceof Negation == false) {
             return false;
-        } else {
-            Negation negation = (Negation) premise;
-            premise = negation.formula;
-            if (premise instanceof Negation == false) {
-                return false;
-            } else {
-                negation = (Negation) premise;
-                return negation.formula.equals(data.getRow(rowIndex).getFormula());
-            }
         }
+        Negation negation = (Negation) premise;
+        premise = negation.formula;
+        if (premise instanceof Negation == false) {
+            return false;
+        }
+        negation = (Negation) premise;
+        return negation.formula.equals(data.getRow(rowIndex).getFormula());
+    }
+
+    @Override
+    public Formula generateFormula(Box data, int rowIndex) {
+        if (data.isInScopeOf(getPremise1(), rowIndex) == false) return null;
+        Formula premise = data.getRow(getPremise1()).getFormula();
+        if (premise instanceof Negation == false) {
+            return null;
+        }
+        Negation negation = (Negation) premise;
+        premise = negation.formula;
+        if (premise instanceof Negation == false) {
+            return null;
+        }
+        negation = (Negation) premise;
+        return negation.formula;
     }
 
     @Override

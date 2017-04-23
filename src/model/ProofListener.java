@@ -5,7 +5,7 @@ public interface ProofListener {
     public void boxClosed();
     public void boxInserted(int lineNo);
     public void boxRemoved(int lineNo);
-    public void rowUpdated(boolean wellFormed, int lineNo);
+    public void rowUpdated(String newText, boolean wellFormed, int lineNo);
     public void conclusionReached(boolean correct, int lineNo);
     public void rowVerified(boolean verified, int lineNo);
     public void rowDeleted(int rowNr);

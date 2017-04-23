@@ -1,6 +1,7 @@
 package model.rules;
 
 import model.Box;
+import model.formulas.Formula;
 
 	/*
 	 * To implement verification of a new rule you need to do the following:
@@ -31,4 +32,5 @@ public interface Rule {
 	//Update the reference in the rule object
 	public void updateReference(int index, String newValue);
 	public boolean verify(Box data, int rowIndex);
+	public Formula generateFormula(Box data, int rowIndex);
 }

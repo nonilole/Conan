@@ -5,6 +5,9 @@ import model.rules.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.prefs.Preferences;
+
+import static java.util.prefs.Preferences.*;
 
 public class Proof implements Serializable{
     private ArrayList<ProofListener> listeners = new ArrayList<ProofListener>();
@@ -118,7 +121,7 @@ public class Proof implements Serializable{
         toBeUpdated.setWellformed(wellFormed);
 
         for (ProofListener listener : this.listeners) {
-            listener.rowUpdated(wellFormed, rowNumber);
+            listener.rowUpdated(null, wellFormed, rowNumber);
         }
         verifyConclusion(rowIndex);
         verifyRow(rowIndex); //should use verifyProof later probably, to verify rows lower in the proof aswell
@@ -278,6 +281,8 @@ public class Proof implements Serializable{
         ProofRow row = proofData.getRow(rowNr-1);
 
         Rule rule = row.getRule();
+        if (rule == null)
+            return;
         //System.out.println(rowIndex);
         //System.out.println(rule.toString());
         try{
@@ -292,8 +297,28 @@ public class Proof implements Serializable{
         catch(IllegalArgumentException e){
             System.out.println("Invalid argument for "+rule.getClass().getSimpleName());
         }
+        generateRow(rowIndex);
         verifyRow(rowIndex);
         proofData.printRows(1,1);
+    }
+
+    private void generateRow(int rowIndex) {
+        Preferences prefs = userRoot().node("General");
+        if (!prefs.getBoolean("generate", true))
+            return;
+        assert(rowIndex < proofData.size());
+        ProofRow row = proofData.getRow(rowIndex);
+        Rule rule = row.getRule();
+        if (rule == null || rule.hasCompleteInfo() == false ) {
+            return;
+        }
+        Formula generated = rule.generateFormula(proofData, rowIndex);
+        if (generated == null)
+            return;
+        row.setFormula(generated);
+        for (ProofListener listener : this.listeners) {
+            listener.rowUpdated(generated.toString(), false, rowIndex+1);
+        }
     }
 
     public void printRowScopes(boolean zeroBasedNumbering){

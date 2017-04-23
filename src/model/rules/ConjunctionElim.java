@@ -81,4 +81,26 @@ public class ConjunctionElim implements Rule {
 			return result.equals(ref.rhs);
 		}
 	}
+
+	@Override
+	public Formula generateFormula(Box data, int rowIndex) {
+		// is the rule object of the correct type? Probably just check with an assertion
+		ProofRow rowToVerify = data.getRow( rowIndex );
+
+		// are the references in the rule object in scope of rowIndex?
+		// are all the referenced rows verified?
+		// Box.isInScope should check both scope and if the data is verified
+		if (!data.isInScopeOf(getPremise(), rowIndex)) return null;
+
+		// do we have the needed references to make the deduction?
+		Formula reference = data.getRow( getPremise() ).getFormula();
+		if (!(reference instanceof Conjunction)) return null;
+		Conjunction ref = (Conjunction)reference;
+		if (getType() == 1){
+			return ref.lhs;
+		}
+		else {
+			return ref.rhs;
+		}
+	}
 }

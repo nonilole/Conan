@@ -68,4 +68,21 @@ public class ImplicationIntro implements Rule {
 		return conclusion.equals(new Implication(assumption, conclusionOfBox));
 
 	}
+
+	@Override
+	public Formula generateFormula(Box data, int rowIndex) {
+		//System.out.println("Verification.verifyImplicationIntro");
+		// is the rule object of the correct type?
+		ProofRow rowToVerify = data.getRow( rowIndex );
+		// are the references in the rule object in scope of rowIndex?
+		// are all the referenced rows verified?
+		// ProofData.isInScope should check both of these
+		Interval premiseInterval = getPremiseInterval();
+		if( data.isInScopeOf(premiseInterval, rowIndex) == false) return null;
+
+		//do we have the needed premises/references to make the deduction?
+		Formula assumption      = data.getRow( premiseInterval.startIndex ).getFormula();
+		Formula conclusionOfBox = data.getRow( premiseInterval.endIndex ).getFormula();
+		return new Implication(assumption, conclusionOfBox);
+	}
 }

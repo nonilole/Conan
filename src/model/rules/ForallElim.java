@@ -38,7 +38,17 @@ public class ForallElim implements Rule{
 		return Formula.isInstantiationOf(toVerify, ref);
 		
 	}
-	
+
+	@Override
+	public Formula generateFormula(Box data, int rowIndex) {
+		assert(data.getRow(rowIndex).getRule() == this );
+		data.isInScopeOf(rowRef, rowIndex);
+
+		if(data.getRow(rowRef).getFormula() instanceof QuantifiedFormula == false) return null;
+		QuantifiedFormula ref = (QuantifiedFormula)data.getRow(rowRef).getFormula();
+		return ref.formula;
+	}
+
 	@Override
 	public String toString(){
 		return "∀E ("+rowRef+")";
