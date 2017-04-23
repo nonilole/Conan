@@ -104,6 +104,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	// Key combinations
 	final static KeyCombination shiftEnter = new KeyCodeCombination(KeyCode.ENTER, KeyCombination.SHIFT_DOWN);
     final static KeyCombination ctrlB = new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN);
+	final static KeyCombination ctrlD = new KeyCodeCombination(KeyCode.D, KeyCombination.CONTROL_DOWN);
 	// Pattern for prompt
 	// Match at least one digit perhaps one dash and then any number of digits. Or match nothing at all.
 	static Pattern p = Pattern.compile("^(\\d+-?\\d*)?$");
@@ -356,7 +357,9 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			bp.getRulePrompt(i).setOnKeyPressed(new EventHandler<KeyEvent>() {
 				public void handle(KeyEvent ke) {
 					int index = rList.indexOf(bp); //Kanske vill flytta in den här för prestanda
-                    if (ctrlB.match(ke)) {
+					if (ctrlD.match(ke)) {
+						deleteRow(index+1);
+					} else if (ctrlB.match(ke)) {
                         insertNewBox(index + 1);
                     } else if (shiftEnter.match(ke)) {
 						insertNewRow(index + 1, BoxReference.BEFORE);
@@ -380,7 +383,9 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		tfExpression.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent ke) {
                 int index = rList.indexOf(bp); //Kanske vill flytta in den här för prestanda
-                if (ctrlB.match(ke)) {
+				if (ctrlD.match(ke)) {
+					deleteRow(index + 1);
+				} else if (ctrlB.match(ke)) {
                     insertNewBox(index+1);
                 } else if (shiftEnter.match(ke)) {
                     insertNewRow(index+1, BoxReference.BEFORE);
@@ -402,7 +407,9 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		tfRule.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent ke) {
 				int index = rList.indexOf(bp);
-                if (ctrlB.match(ke)) {
+				if (ctrlD.match(ke)) {
+					deleteRow(index + 1);
+				} if (ctrlB.match(ke)) {
                     insertNewBox(index + 1);
                 } else if (shiftEnter.match(ke)) {
 					insertNewRow(index+1, BoxReference.BEFORE);
@@ -623,6 +630,12 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		List<Node> labelList = lineNo.getChildren();
 		labelList.remove(labelList.size()-1);
 		updateLabelPaddings( updatePreviousRowLabel ? rowNr-1 : rowNr  );
+		int idxToFocus = rowNr-1;
+		if (idxToFocus >= rList.size()) {
+			idxToFocus = rList.size()-1;
+		}
+        RowPane focusThisPane = rList.get(idxToFocus);
+		focusThisPane.getExpression().requestFocus();
 	}
 
 	public ViewTab getTab(){ return tab;}
