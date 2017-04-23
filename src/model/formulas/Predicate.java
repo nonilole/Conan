@@ -13,6 +13,15 @@ public class Predicate extends Formula{
         this.args = args;
         super.precedence = 3;
     }
+    
+    @Override
+    public Formula replace(String newId,String oldId){
+    	List<Term> newArgs = new ArrayList<Term>();
+    	for(Term t : args){
+    		newArgs.add(t.replace(newId, oldId));
+    	}
+    	return new Predicate(id, newArgs);
+    }
 
     public List<Term> getArgs(){
         return new ArrayList<Term>(args);
@@ -47,4 +56,12 @@ public class Predicate extends Formula{
         }
         return strB.toString();
     }
+    
+    @Override
+	public boolean containsObjectId(String id) {
+    	for(Term arg : args){
+			if(arg.containsObjectId(id)) return true;
+		}
+		return false;
+	}
 }

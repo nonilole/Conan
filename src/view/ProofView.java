@@ -1,8 +1,9 @@
 package view;
 
 import java.util.*;
-
 import javafx.application.Platform;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -104,6 +105,12 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
 	// Shift enter key combination
 	final static KeyCombination shiftEnter = new KeyCodeCombination(KeyCode.ENTER, KeyCombination.SHIFT_DOWN);
+
+	// Pattern for prompt
+	// Match at least one digit perhaps one dash and then any number of digits. Or match nothing at all.
+	static Pattern p = Pattern.compile("^(\\d+-?\\d*)?$");
+
+
 	/**
 	 * This ia listener that is applied to the last textField. It creates a new row, each time the value of the textField is changed.
 	 */
@@ -224,15 +231,17 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		ruleMap.put("→E", 2);
 		ruleMap.put("⊥E", 1);
 		ruleMap.put("¬I", 1);
-		ruleMap.put("¬E", 1);
+		ruleMap.put("¬E", 2);
 		ruleMap.put("¬¬E", 1);
 		ruleMap.put("Premise", 0);
 		ruleMap.put("∀I", 1);
 		ruleMap.put("∀E", 1);
 		ruleMap.put("∃I", 1);
-		ruleMap.put("∃E", 1);
+		ruleMap.put("∃E", 2);
 		ruleMap.put("=E", 2);
 		ruleMap.put("=I", 0);
+		ruleMap.put("Ass.", 0);
+		ruleMap.put("Fresh", 0);
 	}
 
 
@@ -345,6 +354,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			lastFocusedTf = tfRule;
 			caretPosition = tfRule.getCaretPosition();
 		});
+
 		for (int i = 0; i < 3; i++) {
 			TextField ruleprompt = bp.getRulePrompt(i);
 			int finalI = i;
@@ -445,6 +455,18 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		});
 		return bp;
 	}
+
+	private void setPromptListener(int rowIndex, TextField prompt, int promptNumber) {
+        prompt.textProperty().addListener((observable, oldValue, newValue) -> {
+			Matcher m = p.matcher(newValue);
+			if (m.matches()) {
+				proof.rulePromptUpdate(rowIndex+1, promptNumber, newValue);
+			} else {
+				prompt.setText(oldValue);
+
+			}
+        });
+    }
 
 	//should only be called AFTER a new row has been added to rList since it uses rList.size()
 	Label createLabel() {
@@ -555,8 +577,14 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		applyStyleIf(expression, correct, "conclusionReached");
 	}
 
+    @Override
+    public void rowVerified(boolean verified, int lineNo) {
+        TextField rule = (TextField) rList.get(lineNo-1).getRule();
+        applyStyleIf(rule, !verified, "unVerified");
+    }
 
-	//update view to reflect that row with nr rowNr has been deleted
+
+    //update view to reflect that row with nr rowNr has been deleted
 	public void rowDeleted(int rowNr){
 		RowPane rp = rList.get(rowNr-1);
 		VBox box = (VBox)rp.getParent();
@@ -616,19 +644,28 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	private void addListeners(RowPane rp){
 
 		// Updates the Proof object if the textField is updated
-		TextField formulaField = (TextField) rp.getExpression();
-		TextField ruleField = (TextField) rp.getRule();
+		TextField formulaField = rp.getExpression();
+		TextField ruleField = rp.getRule();
+
+        int rpIndex = rList.indexOf(rp);
 
 		formulaField.textProperty().addListener((ov, oldValue, newValue) -> {
-			int rpIndex = rList.indexOf(rp);
 			proof.updateFormulaRow(newValue, rpIndex+1);
 		});
 		// Updates the Proof object if the textField is updated
 		ruleField.textProperty().addListener((ov, oldValue, newValue) -> {
-			int rpIndex = rList.indexOf(rp);
-			proof.updateRuleRow(newValue, rpIndex+1);
-			rp.setPrompts(ruleMap.getOrDefault(newValue,-1));
+            try {
+                proof.updateRuleRow(newValue, rpIndex+1);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            }
+            rp.setPrompts(ruleMap.getOrDefault(newValue,-1));
 		});
+		for (int i = 0 ; i < 3; i++) {
+			setPromptListener(rpIndex, rp.getRulePrompt(i), i+1);
+		}
 	}
 
 	//
