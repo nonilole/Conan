@@ -94,7 +94,7 @@ public class ConjunctionElim implements Rule {
 
 		// do we have the needed references to make the deduction?
 		Formula reference = data.getRow( getPremise() ).getFormula();
-		if (!(reference instanceof Conjunction == false)) return null;
+		if (!(reference instanceof Conjunction)) return null;
 		Conjunction ref = (Conjunction)reference;
 		if (getType() == 1){
 			return ref.lhs;
