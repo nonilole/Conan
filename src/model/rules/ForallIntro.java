@@ -58,7 +58,17 @@ public class ForallIntro implements Rule{
 
 	@Override
 	public Formula generateFormula(Box data, int rowIndex) {
-		return null;
+
+		System.out.println("ForallIntro.verify("+rowIndex+")");
+		assert(data.getRow(rowIndex).getRule() == this) : "ForallIntro: incorrect usage";
+		if( data.isInScopeOf(intervalRef, rowIndex) == false ) return null;
+		Box refBox = data.getBox(intervalRef);
+		if( refBox.size() < 2) return null;
+		if( refBox.getRow(0).getRule() instanceof FreshVar == false) return null;
+		if( refBox.getRow(0).getFormula() instanceof FreshVarFormula == false) return null;
+		String freshVarId = ((FreshVarFormula)refBox.getRow(0).getFormula()).var;
+		Formula lastRowInRefBox = refBox.getRow(refBox.size()-1).getFormula();
+		return new QuantifiedFormula(lastRowInRefBox,freshVarId,'∀'); // Maybe wrong string?
 	}
 
 	@Override
