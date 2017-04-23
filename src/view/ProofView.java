@@ -380,6 +380,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
 					} else if (ke.getCode() == KeyCode.DOWN) {
 						if (index + 1 < rList.size()) {
 							rList.get(index + 1).getClosestPromptFromLeft(finalI).requestFocus();
+						} else {
+						    addRowAfterBox(index+1);
 						}
 					} else if (ke.getCode() == KeyCode.UP) {
 						if (index - 1 >= 0) {
@@ -406,6 +408,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
 				} else if (ke.getCode() == KeyCode.DOWN) {
 					if(index+1<rList.size()) {
 						rList.get(index+1).getExpression().requestFocus();
+					} else {
+						addRowAfterBox(index + 1);
 					}
 				} else if(ke.getCode() == KeyCode.UP) {
                     if (index - 1 >= 0) {
@@ -430,7 +434,9 @@ public class ProofView extends Symbolic implements ProofListener, View {
 				} else if (ke.getCode() == KeyCode.DOWN) {
 					if(index+1<rList.size()) {
 						rList.get(index+1).getRule().requestFocus();
-					}
+                    } else {
+                        addRowAfterBox(index + 1);
+                    }
 				} else if(ke.getCode() == KeyCode.UP) {
 					if(index-1>=0) {
 						rList.get(index-1).getRule().requestFocus();
@@ -595,11 +601,13 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
 		}
 	}
-	public void rowUpdated(boolean wellFormed, int lineNo) {
+	public void rowUpdated(String newText, boolean wellFormed, int lineNo) {
 		TextField expression = (TextField) rList.get(lineNo-1).getExpression();
 		if (expression.getText().equals(""))
 			wellFormed = true;
 		applyStyleIf(expression, !wellFormed, "bad");
+		if (newText != null)
+			expression.setText(newText);
 	}
 	public void conclusionReached(boolean correct, int lineNo){
 		TextField expression = (TextField) rList.get(lineNo-1).getExpression();
