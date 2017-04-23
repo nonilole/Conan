@@ -107,9 +107,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	// Pattern for prompt
 	// Match at least one digit perhaps one dash and then any number of digits. Or match nothing at all.
 	static Pattern p = Pattern.compile("^(\\d+-?\\d*)?$");
-	/**
-	 * This ia listener that is applied to the last textField. It creates a new row, each time the value of the textField is changed.
-	 */
+
+	ScrollPane sp;
 
 	private AnchorPane createProofPane() {
 		lineNo = new VBox();
@@ -670,7 +669,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
             } catch (InstantiationException e) {
                 e.printStackTrace();
             }
-            if (newValue.equals("Ass")) {
+            if (newValue.equals("Ass.")) {
                 insertNewBox(rpIndex+1);
             }
 			rp.setPrompts(ruleMap.getOrDefault(newValue,-1));
