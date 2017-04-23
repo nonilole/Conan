@@ -64,7 +64,8 @@ public class ImplicationElim implements Rule{
 		return null;
 	}
 
-	@Override
+	@Ove
+    cd ride
 	public String toString(){
 		return "→E "+rowRef1+", "+rowRef2;
 	}
