@@ -699,15 +699,15 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		// Updates the Proof object if the textField is updated
 		ruleField.textProperty().addListener((ov, oldValue, newValue) -> {
             int rpIndex = rList.indexOf(rp);
+			if (newValue.equals("Ass.") || newValue.equals("Fresh")) {
+				insertNewBox(rpIndex+1);
+			}
             try {
                 proof.updateRuleRow(newValue, rpIndex+1);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (InstantiationException e) {
                 e.printStackTrace();
-            }
-            if (newValue.equals("Ass.") || newValue.equals("Fresh")) {
-                insertNewBox(rpIndex+1);
             }
 			rp.setPrompts(ruleMap.getOrDefault(newValue,-1));
 		});
