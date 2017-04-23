@@ -174,6 +174,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		tabPane.getTabs().add(this.tab);
 		tabPane.getSelectionModel().select(this.tab); // Byt till den nya tabben
 		newRow();
+        --curCommand;
+		commandList.clear();
 		initializeRuleMap();
 	}
 
