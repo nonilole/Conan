@@ -88,6 +88,32 @@ public class ExistsElim implements Rule{
 
 	@Override
 	public Formula generateFormula(Box data, int rowIndex) {
-		return null;
+		if( data.isInScopeOf(rowRef, rowIndex) == false )      return null;
+		if( data.isInScopeOf(intervalRef, rowIndex) == false ) return null;
+
+		//System.out.println("1");
+		// is the referenced row of the correct type for this rule?
+		ProofRow referencedRow = data.getRow(rowRef);
+		Formula referencedRowFormula = referencedRow.getFormula();
+		if( referencedRowFormula instanceof QuantifiedFormula ){
+			QuantifiedFormula quant = (QuantifiedFormula )referencedRowFormula;
+			if(quant.type != '∃') return null;
+		}
+		else return null;
+		//System.out.println("2");
+
+		//does the box contain the needed data?
+		QuantifiedFormula refdQuant = (QuantifiedFormula) referencedRowFormula;
+		Box refBox = data.getBox(intervalRef);
+		if(refBox.size() < 3) return null;//needs at least fresh var, instantiation of quantifiedFormula and conclusion not containing fresh var
+		if(refBox.getRow(0).getRule() instanceof FreshVar == false) return null;
+		//System.out.println("3");
+		String freshVar = ((FreshVarFormula)refBox.getRow(0).getFormula()).var;
+		//second row needs to be the quantified formula instantiated with the fresh variable
+		//System.out.println("Instantiated: "+refdQuant.instantiate(freshVar));
+		//System.out.println("Compared to: "+refBox.getRow(1).getFormula());
+		if( refBox.getRow(1).getFormula().equals(refdQuant.instantiate(freshVar)) == false) return null;
+		if(refBox.getRow(refBox.size()-1).getFormula().containsObjectId(freshVar)) return null;
+		return refBox.getRow(refBox.size()-1).getFormula();
 	}
 }
