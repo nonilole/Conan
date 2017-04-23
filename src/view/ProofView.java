@@ -669,7 +669,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
             } catch (InstantiationException e) {
                 e.printStackTrace();
             }
-            if (newValue.equals("Ass.")) {
+            if (newValue.equals("Ass.") || newValue.equals("Fresh")) {
                 insertNewBox(rpIndex+1);
             }
 			rp.setPrompts(ruleMap.getOrDefault(newValue,-1));
