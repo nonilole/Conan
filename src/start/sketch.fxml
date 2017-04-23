@@ -36,7 +36,7 @@
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" text="Close" />
             <MenuItem accelerator="Shortcut+S" mnemonicParsing="false" onAction="#saveProof" text="Save" />
-            <MenuItem mnemonicParsing="false" onAction="#saveProofAs" text="Save As…" />
+            <MenuItem accelerator="Shortcut+S+SHIFT" mnemonicParsing="false" onAction="#saveProofAs" text="Save As…" />
             <MenuItem mnemonicParsing="false" text="Revert" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" text="Preferences…" />
@@ -65,7 +65,7 @@
 
 
             <MenuItem mnemonicParsing="false" text="About" />
-                  <MenuItem mnemonicParsing="false" onAction="#showInferenceRules" text="Show Inference Rules" />
+                  <MenuItem accelerator="Shortcut+I" mnemonicParsing="false" onAction="#showInferenceRules" text="Show Inference Rules" />
           </items>
         </Menu>
       </menus>
