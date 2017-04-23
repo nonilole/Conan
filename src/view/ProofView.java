@@ -605,9 +605,10 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		TextField expression = (TextField) rList.get(lineNo-1).getExpression();
 		if (expression.getText().equals(""))
 			wellFormed = true;
-		applyStyleIf(expression, !wellFormed, "bad");
 		if (newText != null)
 			expression.setText(newText);
+        else
+            applyStyleIf(expression, !wellFormed, "bad");
 	}
 	public void conclusionReached(boolean correct, int lineNo){
 		TextField expression = (TextField) rList.get(lineNo-1).getExpression();
