@@ -371,7 +371,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 					} else if (ctrlB.match(ke)) {
                         insertNewBox(index + 1);
                     } else if (shiftEnter.match(ke)) {
-						insertNewRow(index + 1, BoxReference.BEFORE);
+						addRowAfterBox(index+1);
 						rList.get(index).getClosestPromptFromLeft(finalI).requestFocus();
 					} else if (ke.getCode() == KeyCode.ENTER) {
 						insertNewRow(index + 1, BoxReference.AFTER);
@@ -397,7 +397,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
 				} else if (ctrlB.match(ke)) {
                     insertNewBox(index+1);
                 } else if (shiftEnter.match(ke)) {
-//                    insertNewRow(index+1, BoxReference.BEFORE);
                     addRowAfterBox(index+1);
                     rList.get(index+1).getExpression().requestFocus();
 				} else if (ke.getCode() == KeyCode.ENTER) {
@@ -422,7 +421,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 				} if (ctrlB.match(ke)) {
                     insertNewBox(index + 1);
                 } else if (shiftEnter.match(ke)) {
-					insertNewRow(index+1, BoxReference.BEFORE);
+					addRowAfterBox(index+1);
 					rList.get(index).getRule().requestFocus();
 				} else if (ke.getCode() == KeyCode.ENTER) {
 					insertNewRow(index+1, BoxReference.AFTER);
