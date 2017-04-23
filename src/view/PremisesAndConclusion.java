@@ -1,6 +1,8 @@
 package view;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -11,7 +13,7 @@ import model.ParseException;
 public class PremisesAndConclusion extends HBox {
     Parser parser = new Parser();
     private TextField premises;
-    private TextField turnstile;
+    private Label turnstile;
     private TextField conclusion;
     private void applyStyleIf(TextField expression, boolean bool, String style) {
         expression.getStyleClass().removeIf((s) -> s.equals(style));
@@ -56,12 +58,11 @@ public class PremisesAndConclusion extends HBox {
         });
         parseAndStyle(premises, sPremises);
         premises.getStyleClass().add("myText");
-        turnstile = new TextField("⊢");
+        turnstile = new Label("⊢");
         turnstile.getStyleClass().add("myText");
         turnstile.setPrefWidth(26.0);
+        turnstile.setPadding(new Insets(5,0,0,0));
         turnstile.setAlignment(Pos.CENTER);
-        turnstile.setEditable(false);
-        turnstile.setFocusTraversable(false);
         conclusion = new TextField(sConclusion);
         conclusion.textProperty().addListener((ov, oldValue, newValue) -> {
             parseAndStyle(conclusion, newValue);
