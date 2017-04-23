@@ -10,6 +10,8 @@ public interface ProofListener {
     public void rowVerified(boolean verified, int lineNo);
     public void rowDeleted(int rowNr);
     public void rowInserted(int rowNo, BoxReference order);
+    public void addedRowAfterBox(int rowNo);
+    public void deletedRowAfterBox(int rowNo);
     public void rowAdded();
     
 }

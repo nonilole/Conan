@@ -240,7 +240,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	public void closeBox() {
 		proof.closeBox();
 	}
-
 	private void executeCommand(Command c) {
 	    if (c.execute()) {
             ++curCommand;
@@ -252,6 +251,17 @@ public class ProofView extends Symbolic implements ProofListener, View {
     public void newRow() {
         executeCommand(new AddRow(proof, rList));
     }
+	public void addRowAfterBox(int rowNo){
+		// Let's assume this is possible and check if it's the last row in a box or else we execute insertNewRow
+		RowPane rp = rList.get(rowNo-1);
+		VBox parent = (VBox) rp.getParent();
+		int idxOfRp = parent.getChildren().indexOf(rp);
+		if (parent.getParent() instanceof VBox && idxOfRp == parent.getChildren().size()-1)
+            executeCommand(new AddRowAfterBox(proof, rowNo, rList));
+		else
+            executeCommand(new InsertRow(proof, rowNo, BoxReference.AFTER, rList));
+
+	}
 	public void insertNewRow(int rowNo, BoxReference br){
 		executeCommand(new InsertRow(proof, rowNo, br, rList));
 	}
@@ -295,10 +305,12 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		ContextMenu contextMenu = new ContextMenu();
 		MenuItem delete = new MenuItem("Delete");
 		MenuItem insertAbove = new MenuItem("Insert Above");
+		MenuItem insertHere = new MenuItem("Insert Here");
 		MenuItem insertBelow = new MenuItem("Insert Below");
 		MenuItem insertBox = new MenuItem("Insert Box");
 		contextMenu.getItems().add(delete);
 		contextMenu.getItems().add(insertAbove);
+		contextMenu.getItems().add(insertHere);
 		contextMenu.getItems().add(insertBelow);
 		contextMenu.getItems().add(insertBox);
 		bp.getRule().setContextMenu(contextMenu);
@@ -317,9 +329,13 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			int rowOfPressedButton=rList.indexOf(bp) + 1;
 			insertNewRow(rowOfPressedButton, BoxReference.BEFORE);
 		});;
-		insertBelow.setOnAction(event -> {
+		insertHere.setOnAction(event -> {
 			int rowOfPressedButton=rList.indexOf(bp) + 1;
 			insertNewRow(rowOfPressedButton, BoxReference.AFTER);
+		});;
+		insertBelow.setOnAction(event -> {
+			int rowOfPressedButton=rList.indexOf(bp) + 1;
+			addRowAfterBox(rowOfPressedButton);
 		});;
 		insertBox.setOnAction(event -> {
 			int rowOfPressedButton=rList.indexOf(bp) + 1;
@@ -388,8 +404,9 @@ public class ProofView extends Symbolic implements ProofListener, View {
 				} else if (ctrlB.match(ke)) {
                     insertNewBox(index+1);
                 } else if (shiftEnter.match(ke)) {
-                    insertNewRow(index+1, BoxReference.BEFORE);
-                    rList.get(index).getExpression().requestFocus();
+//                    insertNewRow(index+1, BoxReference.BEFORE);
+                    addRowAfterBox(index+1);
+                    rList.get(index+1).getExpression().requestFocus();
 				} else if (ke.getCode() == KeyCode.ENTER) {
 			        insertNewRow(index+1, BoxReference.AFTER);
 					rList.get(index+1).getExpression().requestFocus();
@@ -466,6 +483,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		return lbl;
 	}
 
+
+	// PROOF LISTENER METHODS
 	//Adds a new row at the end of the proof
 	public void rowAdded(){
 		RowPane rp;
@@ -485,8 +504,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		updateLabelPaddings(rList.size());
 		addListeners(rp);
 	}
-
-
 	//rowNo is which row the reference row is at, BoxReference tells you if you want to add the new row before or after
 	public void rowInserted(int rowNo, BoxReference br) {
 		RowPane referenceRow;//row we'll use to get a refence to the box where we add the new row
@@ -521,9 +538,34 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		updateLabelPaddings(rowNo);
 		addListeners(rp);
 	}
-	// public void focus() { // Save the last focused textfield here for quick resuming?
-	//     Platform.runLater(() -> lastTf.requestFocus());
-	// }
+	public void addedRowAfterBox(int rowNo) {
+		RowPane referenceRow;
+		referenceRow = rList.get(rowNo-1); //Assume this is the last row in box
+		VBox metaBox = (VBox) referenceRow.getParent().getParent();
+		int nrOfClosingBoxes = referenceRow.getNrOfClosingBoxes();
+		referenceRow.setNrOfClosingBoxes(1);
+		RowPane rp = createRow(false, nrOfClosingBoxes-1);
+		int idx = metaBox.getChildren().indexOf(referenceRow.getParent()) + 1;
+		metaBox.getChildren().add(idx, rp);
+		rList.add(rowNo, rp);
+		lineNo.getChildren().add(createLabel());
+		updateLabelPaddings(rowNo);
+		addListeners(rp);
+	}
+	public void deletedRowAfterBox(int rowNo) {
+		RowPane referenceRow;
+		referenceRow = rList.get(rowNo-1); //Assume this is the last row in box
+		VBox metaBox = (VBox) referenceRow.getParent().getParent();
+		int nrOfClosingBoxes = referenceRow.getNrOfClosingBoxes();
+		int extraClosedBoxes = rList.get(rowNo).getNrOfClosingBoxes();
+		referenceRow.setNrOfClosingBoxes(referenceRow.getNrOfClosingBoxes()+extraClosedBoxes);
+		int idx = metaBox.getChildren().indexOf(referenceRow.getParent()) + 1;
+		metaBox.getChildren().remove(idx);
+		rList.remove(rowNo);
+		List<Node> labelList = lineNo.getChildren();
+		labelList.remove(labelList.size()-1);
+		updateLabelPaddings(rowNo-1);
+	}
 	public void boxOpened(){
 		VBox vb = new VBox();
 		vb.getStyleClass().add("openBox");
@@ -531,12 +573,11 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		curBoxDepth.push(vb);
 		newRow();
 	}
-
-    public void boxInserted(int rowNumber){
+	public void boxInserted(int rowNumber){
 		RowPane rp = rList.get(rowNumber-1);
 		VBox metabox = (VBox) rp.getParent();
 		int indexOfRp = metabox.getChildren().indexOf(rp);
-        VBox newBox = new VBox();
+		VBox newBox = new VBox();
 		newBox.getStyleClass().clear();
 		newBox.getStyleClass().add("closedBox");
 		newBox.getChildren().add(rp);
@@ -544,22 +585,21 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		rp.setIsFirstRowInBox(true);
 		rp.incrementNrOfClosingBoxes();
 		updateLabelPaddings(rowNumber);
-    }
-    public void boxRemoved(int rowNumber) {
-        RowPane rp = rList.get(rowNumber-1);
-        rp.decrementNrOfClosingBoxes();
-        VBox metabox = (VBox) rp.getParent().getParent();
+	}
+	public void boxRemoved(int rowNumber) {
+		RowPane rp = rList.get(rowNumber-1);
+		rp.decrementNrOfClosingBoxes();
+		VBox metabox = (VBox) rp.getParent().getParent();
 
-        ObservableList<Node> children = metabox.getChildren();
-        int idx = children.indexOf(rp.getParent());
-        children.remove(idx);
-        children.add(idx, rp);
-        if (idx != 0) {
-            rp.setIsFirstRowInBox(false);
-        }
-        updateLabelPaddings(rowNumber);
-    }
-
+		ObservableList<Node> children = metabox.getChildren();
+		int idx = children.indexOf(rp.getParent());
+		children.remove(idx);
+		children.add(idx, rp);
+		if (idx != 0) {
+			rp.setIsFirstRowInBox(false);
+		}
+		updateLabelPaddings(rowNumber);
+	}
 	public void boxClosed(){
 		if (!curBoxDepth.isEmpty()) {
 			VBox vb = curBoxDepth.pop();
@@ -573,13 +613,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
 		}
 	}
-	private void applyStyleIf(TextField expression, boolean bool, String style) {
-		expression.getStyleClass().removeIf((s) -> s.equals(style));
-		if (bool) {
-			expression.getStyleClass().add(style);
-		}
-	}
-
 	public void rowUpdated(boolean wellFormed, int lineNo) {
 		TextField expression = (TextField) rList.get(lineNo-1).getExpression();
 		if (expression.getText().equals(""))
@@ -590,15 +623,11 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		TextField expression = (TextField) rList.get(lineNo-1).getExpression();
 		applyStyleIf(expression, correct, "conclusionReached");
 	}
-
-    @Override
-    public void rowVerified(boolean verified, int lineNo) {
-        TextField rule = (TextField) rList.get(lineNo-1).getRule();
-        applyStyleIf(rule, !verified, "unVerified");
-    }
-
-
-    //update view to reflect that row with nr rowNr has been deleted
+	public void rowVerified(boolean verified, int lineNo) {
+		TextField rule = (TextField) rList.get(lineNo-1).getRule();
+		applyStyleIf(rule, !verified, "unVerified");
+	}
+	//update view to reflect that row with nr rowNr has been deleted
 	public void rowDeleted(int rowNr){
 		RowPane rp = rList.get(rowNr-1);
 		VBox box = (VBox)rp.getParent();
@@ -634,10 +663,23 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		if (idxToFocus >= rList.size()) {
 			idxToFocus = rList.size()-1;
 		}
-        RowPane focusThisPane = rList.get(idxToFocus);
+		RowPane focusThisPane = rList.get(idxToFocus);
 		focusThisPane.getExpression().requestFocus();
 	}
+	// END OF PROOF LISTENER METHODS
 
+
+
+
+	// public void focus() { // Save the last focused textfield here for quick resuming?
+	//     Platform.runLater(() -> lastTf.requestFocus());
+	// }
+	private void applyStyleIf(TextField expression, boolean bool, String style) {
+		expression.getStyleClass().removeIf((s) -> s.equals(style));
+		if (bool) {
+			expression.getStyleClass().add(style);
+		}
+	}
 	public ViewTab getTab(){ return tab;}
 	public Proof getProof(){ return proof;}
 	public String getPath(){ return path;}

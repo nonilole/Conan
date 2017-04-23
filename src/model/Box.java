@@ -26,6 +26,24 @@ public class Box implements ProofEntry{
 		boxToInsertInto.incSize();
 
 	}
+	public void addRowAfterBox(int index) {
+		ProofRow referenceRow = getRow(index);
+		Box parentBox = referenceRow.getParent();
+		Box metaBox = parentBox.getParent();
+		List<ProofEntry> metaBoxList = metaBox.entries;
+		int insertionIndex = metaBoxList.indexOf(parentBox) + 1;
+		metaBoxList.add(insertionIndex, new ProofRow(metaBox));
+		metaBox.incSize();
+	}
+	public void deleteRowAfterBox(int index) {
+		ProofRow referenceRow = getRow(index);
+		Box parentBox = referenceRow.getParent();
+		Box metaBox = parentBox.getParent();
+		List<ProofEntry> metaBoxList = metaBox.entries;
+		int insertionIndex = metaBoxList.indexOf(parentBox) + 1;
+		metaBoxList.remove(insertionIndex);
+		metaBox.decSize();
+	}
 	public void insertBox(int index){
 		assert(index < size);
 		ProofRow referenceRow = getRow(index);

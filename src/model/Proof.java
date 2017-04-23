@@ -71,6 +71,26 @@ public class Proof implements Serializable{
         System.out.println("==========================================================");
         return true;
     }
+    public boolean addRowAfterBox(int rowNumber){
+        if(rowNumber < 1 || rowNumber > proofData.size()+1){
+            return false;
+        }
+        proofData.addRowAfterBox(rowNumber-1);
+        for(ProofListener pl : listeners){
+            pl.addedRowAfterBox(rowNumber);
+        }
+        return true;
+    }
+    public boolean deleteRowAfterBox(int rowNumber){
+        if(rowNumber < 1 || rowNumber > proofData.size()+1){
+            return false;
+        }
+        proofData.deleteRowAfterBox(rowNumber-1);
+        for(ProofListener pl : listeners){
+            pl.deletedRowAfterBox(rowNumber);
+        }
+        return true;
+    }
 
     //Will you ever update both the formula and rule fields at the same time?
     public void updateRow(String formula, String rule, int rowNumber){}
