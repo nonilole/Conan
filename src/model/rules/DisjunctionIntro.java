@@ -64,39 +64,31 @@ public class DisjunctionIntro implements Rule {
 		// are the references in the rule object in scope of rowIndex?
 		// are all the referenced rows verified?
 		// ProofData.isInScope should check scope and if the data is verified
-		if (data.isInScopeOf(getPremise(), rowIndex) == false) { 
+		if (!data.isInScopeOf(getPremise(), rowIndex)) {
 			return false;
 		}
 
 		// do we have the needed premises/references to make the deduction?
-        if (rowToVerify.getFormula() instanceof Disjunction == false) { return false;
+        if (!(rowToVerify.getFormula() instanceof Disjunction)) { return false;
         }
 
         Disjunction disjunction = (Disjunction) rowToVerify.getFormula();
         ProofRow premiseRow = data.getRow(getPremise());
         if (type == 1)
-            return premiseRow.isVerified() && disjunction.lhs.equals(premiseRow.getFormula());
-        return premiseRow.isVerified() && disjunction.rhs.equals(premiseRow.getFormula());
+            return disjunction.lhs.equals(premiseRow.getFormula());
+        return disjunction.rhs.equals(premiseRow.getFormula());
 	}
 
 	@Override
 	public Formula generateFormula(Box data, int rowIndex) {
-		ProofRow rowToVerify = data.getRow(rowIndex);
-
-		// are the references in the rule object in scope of rowIndex?
-		// are all the referenced rows verified?
-		// ProofData.isInScope should check scope and if the data is verified
-		if (data.isInScopeOf(getPremise(), rowIndex) == false) {
-		    return null;
-		}
-
-		// do we have the needed premises/references to make the deduction?
-		if (rowToVerify.getFormula() instanceof Disjunction == false) {
-		    return null;
-		}
-        Disjunction disjunction = (Disjunction) rowToVerify.getFormula();
-        ProofRow premiseRow = data.getRow(getPremise());
-        return null;
+	    return null;
+//		if (!data.isInScopeOf(getPremise(), rowIndex)) return null;
+//		Formula premise = data.getRow(getPremise()).getFormula();
+//		if (type == 1)
+//            return new Disjunction(premise, null);// PLACEHOLDER
+//		return new Disjunction(null, premise); // WANT TO GENERATE EMPTY FORMULA
+//		return new Disjunction(premise, null);
+//		return new Disjunction(null, premise);
 	}
 
 }
