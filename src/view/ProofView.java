@@ -348,7 +348,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			int finalI = i;
 			ruleprompt.focusedProperty().addListener((observable, oldValue, newValue) -> {
 				int index = rList.indexOf(bp);
-				proof.rulePromptUpdate(index, finalI, ruleprompt.getText());
+				proof.rulePromptUpdate(index+1, finalI+1, ruleprompt.getText());
 			});
 		}
 		for (int i = 0; i < 3; i++) {
