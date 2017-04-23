@@ -118,6 +118,18 @@
                      </image>
                   </ImageView>
                </graphic></Button>
+            <Button fx:id="newRow" layoutX="212.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#closeBox" prefHeight="38.0" prefWidth="48.0">
+               <font>
+                  <Font name="Monospaced Regular" size="20.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/icons/ic_playlist_add_black_24dp_2x.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
         </items>
       </ToolBar>
     <SplitPane dividerPositions="0.2" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" scaleShape="false" VBox.vgrow="ALWAYS">
