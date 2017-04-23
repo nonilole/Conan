@@ -46,7 +46,7 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#newRow" text="New Row" />
+            <MenuItem accelerator="Shortcut+R" mnemonicParsing="false" onAction="#newRow" text="New Row" />
             <MenuItem accelerator="Shortcut+U" mnemonicParsing="false" onAction="#undo" text="Undo" />
             <MenuItem accelerator="Shortcut+Y" mnemonicParsing="false" onAction="#redo" text="Redo" />
             <SeparatorMenuItem mnemonicParsing="false" />
@@ -118,6 +118,18 @@
                      </image>
                   </ImageView>
                </graphic></Button>
+            <Button layoutX="212.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#newRow" prefHeight="38.0" prefWidth="48.0">
+               <font>
+                  <Font name="Monospaced Regular" size="20.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/icons/ic_playlist_add_black_24dp_2x.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
         </items>
       </ToolBar>
     <SplitPane dividerPositions="0.2" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" scaleShape="false" VBox.vgrow="ALWAYS">
@@ -143,6 +155,7 @@
                                                   <rowConstraints>
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
                                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
                                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
                                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
@@ -258,7 +271,7 @@
                                                       </AnchorPane>
                                                       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
                                                          <children>
-                                                            <Button layoutX="16.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="Premise" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Button layoutX="16.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="=I" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <font>
                                                                   <Font name="Consolas Bold" size="12.0" />
                                                                </font>
@@ -285,7 +298,7 @@
                                                       </AnchorPane>
                                                       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5">
                                                          <children>
-                                                            <Button layoutX="21.0" layoutY="1.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="∃I" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Button layoutX="21.0" layoutY="1.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="=E" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <font>
                                                                   <Font name="Consolas Bold" size="12.0" />
                                                                </font>
@@ -294,7 +307,7 @@
                                                       </AnchorPane>
                                                       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                                          <children>
-                                                            <Button layoutX="19.0" layoutY="3.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="∃E" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Button layoutX="19.0" layoutY="3.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="∃I" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <font>
                                                                   <Font name="Consolas Bold" size="12.0" />
                                                                </font>
@@ -303,7 +316,7 @@
                                                       </AnchorPane>
                                                       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
                                                          <children>
-                                                            <Button layoutX="-11.0" layoutY="-2.0" mnemonicParsing="false" onAction="#ruleButtonPressed" prefHeight="27.0" prefWidth="74.0" text="=I" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Button layoutX="-11.0" layoutY="-2.0" mnemonicParsing="false" onAction="#ruleButtonPressed" prefHeight="27.0" prefWidth="74.0" text="∃E" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <font>
                                                                   <Font name="Consolas Bold" size="12.0" />
                                                                </font>
@@ -311,7 +324,7 @@
                                                          </children></AnchorPane>
                                                       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="6">
                                                          <children>
-                                                            <Button layoutX="7.0" layoutY="6.0" mnemonicParsing="false" onAction="#ruleButtonPressed" prefHeight="27.0" prefWidth="74.0" text="=E" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Button layoutX="7.0" layoutY="6.0" mnemonicParsing="false" onAction="#ruleButtonPressed" prefHeight="27.0" prefWidth="74.0" text="Copy" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <font>
                                                                   <Font name="Consolas Bold" size="12.0" />
                                                                </font>
@@ -330,6 +343,15 @@
                                                       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
                                                          <children>
                                                             <Button layoutY="1.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="Fresh" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="7">
+                                                         <children>
+                                                            <Button mnemonicParsing="false" onAction="#ruleButtonPressed" prefHeight="27.0" prefWidth="74.0" text="Premise">
+                                                               <font>
+                                                                  <Font name="Consolas Bold" size="12.0" />
+                                                               </font>
+                                                            </Button>
                                                          </children>
                                                       </AnchorPane>
                                                    </children>
@@ -351,27 +373,22 @@
                                                    <children>
                                                       <AnchorPane>
                                                          <children>
-                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="→E" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="MT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane GridPane.columnIndex="1">
                                                          <children>
-                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="∧I" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="¬¬I" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane GridPane.columnIndex="2">
                                                          <children>
-                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="∨I" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="PBC" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane GridPane.rowIndex="1">
                                                          <children>
-                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="∧E" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                                         </children>
-                                                      </AnchorPane>
-                                                      <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                                         <children>
-                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" text="+" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                            <Button layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="LEM" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                          </children>
                                                       </AnchorPane>
                                                    </children>
