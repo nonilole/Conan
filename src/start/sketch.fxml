@@ -46,7 +46,7 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#newRow" text="New Row" />
+            <MenuItem accelerator="Shortcut+R" mnemonicParsing="false" onAction="#newRow" text="New Row" />
             <MenuItem accelerator="Shortcut+U" mnemonicParsing="false" onAction="#undo" text="Undo" />
             <MenuItem accelerator="Shortcut+Y" mnemonicParsing="false" onAction="#redo" text="Redo" />
             <SeparatorMenuItem mnemonicParsing="false" />
