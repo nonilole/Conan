@@ -736,12 +736,10 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	public String checkShortcut(String newValue){
 		newValue = newValue.replaceAll("!|ne|no", "¬");
 		newValue = newValue.replaceAll("&|an", "∧");
-		newValue = newValue.replaceAll("->", "→");
-		newValue = newValue.replaceAll("im", "→");
-		newValue = newValue.replaceAll("fa", "∀");
-		newValue = newValue.replaceAll("(?<!f)or", "∨");
-		newValue = newValue.replaceAll("ex", "∃");
-		newValue = newValue.replaceAll("te", "∃");
+		newValue = newValue.replaceAll("->|im", "→");
+		newValue = newValue.replaceAll("fa|fo", "∀");
+		newValue = newValue.replaceAll("or", "∨");
+		newValue = newValue.replaceAll("ex|te|th", "∃");
 		return newValue;
 	}
 
