@@ -31,6 +31,7 @@ public class AddRow implements Command {
         for (int i = 0; i < 3; i++) {
             rp.setRulePrompt(i, prompt.get(i));
         }
+        rp.getExpression().requestFocus();
         return true;
     }
 

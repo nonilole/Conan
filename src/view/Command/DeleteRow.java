@@ -49,6 +49,7 @@ public class DeleteRow implements Command {
         for (int i = 0; i < 3; i++) {
             rp.setRulePrompt(i, prompt.get(i));
         }
+        rp.getExpression().requestFocus();
     }
     @Override
     public String toString() {

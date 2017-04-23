@@ -7,7 +7,10 @@ import view.RowPane;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InsertRow implements Command {
+/**
+ * Created by jan on 4/23/17.
+ */
+public class AddRowAfterBox implements Command{
     Proof proof;
     int rowNo;
     String expression = "";
@@ -15,7 +18,7 @@ public class InsertRow implements Command {
     List<String> prompt = new ArrayList<String>(3);
     BoxReference br;
     List<RowPane> rList;
-    public InsertRow(Proof proof, int rowNo, BoxReference br, List<RowPane> rList) {
+    public AddRowAfterBox(Proof proof, int rowNo, List<RowPane> rList) {
         this.proof = proof;
         this.rowNo = rowNo;
         this.br = br;
@@ -26,35 +29,30 @@ public class InsertRow implements Command {
     };
     @Override
     public boolean execute() {
-        boolean result = proof.insertNewRow(rowNo, br);
+        boolean result = proof.addRowAfterBox(rowNo);
         if (result) {
-            int offset = br == BoxReference.BEFORE ? 0 : 1;
-            RowPane rp = rList.get(rowNo-1+offset);
+            RowPane rp = rList.get(rowNo);
             rp.setExpression(expression);
             rp.setRule(rule);
             for (int i = 0; i < 3; i++) {
                 rp.setRulePrompt(i, prompt.get(i));
             }
-            rp.getExpression().requestFocus();
         }
         return result;
     }
 
     @Override
     public void undo() {
-        int offset = br == BoxReference.BEFORE ? 0 : 1;
-        if (1 <= rowNo+offset && rowNo+offset <= rList.size()) {
-            RowPane rp = rList.get(rowNo-1+offset);
-            this.expression = rp.getExpression().getText();
-            this.rule = rp.getRule().getText();
-            for (int i = 0; i < 3; i++) {
-                prompt.set(i, rp.getRulePrompt(i).getText());
-            }
+        RowPane rp = rList.get(rowNo);
+        this.expression = rp.getExpression().getText();
+        this.rule = rp.getRule().getText();
+        for (int i = 0; i < 3; i++) {
+            prompt.set(i, rp.getRulePrompt(i).getText());
         }
-        proof.deleteRow(rowNo+offset);
+        proof.deleteRowAfterBox(rowNo);
     }
     @Override
     public String toString() {
-        return "Insert row to " + rowNo;
+        return "Adding row after box that has row " + rowNo;
     }
 }
