@@ -46,7 +46,10 @@ public class ExistsIntro implements Rule{
 
 	@Override
 	public Formula generateFormula(Box data, int rowIndex) {
-		return null;
+		assert(data.getRow(rowIndex).getRule() == this) : "ExistsIntro: incorrect usage";
+		if( data.isInScopeOf(this.rowRef, rowIndex) == false) return null;
+		Formula ref = data.getRow(this.rowRef).getFormula();
+		return new QuantifiedFormula(ref,"x",'∃'); // Maybe not x?
 	}
 
 	@Override
