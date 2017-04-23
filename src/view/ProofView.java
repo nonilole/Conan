@@ -150,14 +150,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		premises.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				String finalNewValue = checkShortcut(newValue);
-				Platform.runLater(() -> {
-					int lendiff = premises.getLength();
-                    int pos = premises.getCaretPosition();
-					premises.setText(finalNewValue);
-					lendiff = lendiff - premises.getLength();
-					premises.positionCaret(pos-lendiff);
-				});
+				premises.setText(checkShortcut(newValue));
 			}
 		});
 		this.conclusion = premisesAndConclusion.getConclusion();
@@ -166,14 +159,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		conclusion.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				String finalNewValue = checkShortcut(newValue);
-				Platform.runLater(() -> {
-					int lendiff = conclusion.getLength();
-                    int pos = conclusion.getCaretPosition();
-                    conclusion.setText(finalNewValue);
-					lendiff = lendiff - conclusion.getLength();
-					conclusion.positionCaret(pos-lendiff);
-				});
+				conclusion.setText(checkShortcut(newValue));
 			}
 		});
 		this.conclusion.textProperty().addListener((ov, oldValue, newValue) -> {
@@ -420,27 +406,13 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		tfRule.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				String finalNewValue = checkShortcut(newValue);
-				Platform.runLater(() -> {
-					int lendiff = tfRule.getLength();
-                    int pos = tfRule.getCaretPosition();
-					tfRule.setText(finalNewValue);
-					lendiff = lendiff - tfRule.getLength();
-					tfRule.positionCaret(pos-lendiff);
-				});
+				tfRule.setText(checkShortcut(newValue));
 			}
 		});
 		tfExpression.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				String finalNewValue = checkShortcut(newValue);
-				Platform.runLater(() -> {
-					int lendiff = tfExpression.getLength();
-                    int pos = tfExpression.getCaretPosition();
-					tfExpression.setText(finalNewValue);
-					lendiff = lendiff - tfExpression.getLength();
-					tfExpression.positionCaret(pos-lendiff);
-				});
+				tfExpression.setText(checkShortcut(newValue));
 			}
 		});
 		return bp;
@@ -685,12 +657,13 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	}
 	
 	public String checkShortcut(String newValue){
-		newValue = newValue.replaceAll("not|neg|!", "¬");
-		newValue = newValue.replaceAll("&|and", "∧");
+		newValue = newValue.replaceAll("!|ne|no", "¬");
+		newValue = newValue.replaceAll("&|an", "∧");
 		newValue = newValue.replaceAll("->", "→");
-		newValue = newValue.replaceAll("forall", "∀");
+		newValue = newValue.replaceAll("im", "→");
+		newValue = newValue.replaceAll("fa", "∀");
 		newValue = newValue.replaceAll("(?<!f)or", "∨");
-		newValue = newValue.replaceAll("exists", "∃");
+		newValue = newValue.replaceAll("ex", "∃");
 		newValue = newValue.replaceAll("te", "∃");
 		return newValue;
 	}
