@@ -116,7 +116,43 @@ public class DisjunctionElim implements Rule{
 
 	@Override
 	public Formula generateFormula(Box data, int rowIndex) {
-		return null;
+		//check the row and the two intervals in scope
+		if(data.isInScopeOf(rowRef, rowIndex) == false ) return null;
+		if(data.isInScopeOf(interval1, rowIndex) == false ) return null;
+		if(data.isInScopeOf(interval2, rowIndex) == false ) return null;
+
+		//check if the expression in the referenced row is an or-statement
+		Formula referencedRowFormula = data.getRow(rowRef).getFormula();
+		if( !(referencedRowFormula instanceof Disjunction) ) {
+		    return null;
+		}
+
+		//save the rhs and lhs of the disjunction expression in the row
+		Disjunction disj = (Disjunction)referencedRowFormula;
+		Formula lhsDisj = disj.lhs;
+		Formula rhsDisj = disj.rhs;
+
+		//check if the start expression in the referenced interval1 and interval2 is correct
+		Formula interval1StartFormula = data.getRow(interval1.startIndex).getFormula();
+		Formula interval2StartFormula = data.getRow(interval2.startIndex).getFormula();
+		if(!interval1StartFormula.equals(lhsDisj) && !interval1StartFormula.equals(rhsDisj)) {
+		    return null;
+		} else if(interval1StartFormula.equals(lhsDisj)) {
+			if (!interval2StartFormula.equals(rhsDisj)) {
+			    return null;
+			}
+		} else if(interval1StartFormula.equals(rhsDisj)) {
+			if (!interval2StartFormula.equals(lhsDisj)) {
+			    return null;
+			}
+		}
+
+		//check if the end expression in the referenced interval1 and interval2 is correct
+		Formula interval1EndFormula = data.getRow(interval1.endIndex).getFormula();
+		Formula interval2EndFormula = data.getRow(interval2.endIndex).getFormula();
+		if (!interval1EndFormula.equals(interval2EndFormula))
+			return null;
+		return interval1EndFormula;
 	}
 
 }

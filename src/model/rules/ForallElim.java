@@ -41,7 +41,12 @@ public class ForallElim implements Rule{
 
 	@Override
 	public Formula generateFormula(Box data, int rowIndex) {
-		return null;
+		assert(data.getRow(rowIndex).getRule() == this );
+		data.isInScopeOf(rowRef, rowIndex);
+
+		if(data.getRow(rowRef).getFormula() instanceof QuantifiedFormula == false) return null;
+		QuantifiedFormula ref = (QuantifiedFormula)data.getRow(rowRef).getFormula();
+		return ref.formula;
 	}
 
 	@Override
