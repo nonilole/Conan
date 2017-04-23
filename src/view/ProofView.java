@@ -499,8 +499,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		metabox.getChildren().add(indexOfRp, newBox);
 		rp.setIsFirstRowInBox(true);
 		rp.incrementNrOfClosingBoxes();
-//		rp.setIsFirstRowInBox(true);
-//		rp.incrementNrOfClosingBoxes();
 		updateLabelPaddings(rowNumber);
     }
     public void boxRemoved(int rowNumber) {
