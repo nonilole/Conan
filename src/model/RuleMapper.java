@@ -31,6 +31,7 @@ public class RuleMapper {
         ruleToClass.put("Premise", Premise.class);
         ruleToClass.put("Ass.", Assumption.class);
         ruleToClass.put("Fresh", FreshVar.class);
+        ruleToClass.put("MT", ModusTollens.class);
     }
 
     public static Rule getRule(String rule) {

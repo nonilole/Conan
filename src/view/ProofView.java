@@ -224,6 +224,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		ruleMap.put("=I", 0);
 		ruleMap.put("Ass.", 0);
 		ruleMap.put("Fresh", 0);
+		ruleMap.put("MT", 2);
+		ruleMap.put("LEM", 0);
 	}
 
 
