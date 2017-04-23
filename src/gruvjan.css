@@ -8,6 +8,7 @@
     -fx-background-radius: 3;
     -fx-text-box-border: #928374;
     -fx-text-fill: #ebdbb2;
+    -fx-prompt-text-fill: #ebdbb2;
     -fx-control-inner-background: #282828;
 }
 
