@@ -118,7 +118,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="newRow" layoutX="212.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#closeBox" prefHeight="38.0" prefWidth="48.0">
+            <Button layoutX="212.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#newRow" prefHeight="38.0" prefWidth="48.0">
                <font>
                   <Font name="Monospaced Regular" size="20.0" />
                </font>
