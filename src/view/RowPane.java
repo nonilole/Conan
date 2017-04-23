@@ -1,5 +1,7 @@
 package view;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Text;
+
 import javafx.scene.CacheHint;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -88,13 +90,20 @@ public class RowPane extends BorderPane{
 	public void setPrompts(int n) {
 		hideAndClearPrompts();
 	    this.numberOfPrompts = n;
+	    TextField tf;
 	    switch (n) {
             case 3:
                 getRulePrompt(2).setVisible(true);
+                tf = getRulePrompt(2);
+                tf.setPromptText("Rows");
             case 2:
                 getRulePrompt(1).setVisible(true);
+                tf = getRulePrompt(1);
+                tf.setPromptText("Rows");
             case 1:
                 getRulePrompt(0).setVisible(true);
+                tf = getRulePrompt(0);
+                tf.setPromptText("Rows");
                 break;
             default:
                 break;

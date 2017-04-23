@@ -753,6 +753,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		newValue = newValue.replaceAll("fa|fo", "∀");
 		newValue = newValue.replaceAll("or", "∨");
 		newValue = newValue.replaceAll("ex|te|th", "∃");
+		newValue = newValue.replaceAll("co|bo", "⊥");
 		return newValue;
 	}
 
