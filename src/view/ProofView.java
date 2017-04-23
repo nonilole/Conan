@@ -361,15 +361,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			lastFocusedTf = tfRule;
 			caretPosition = tfRule.getCaretPosition();
 		});
-
-		for (int i = 0; i < 3; i++) {
-			TextField ruleprompt = bp.getRulePrompt(i);
-			int finalI = i;
-			ruleprompt.focusedProperty().addListener((observable, oldValue, newValue) -> {
-				int index = rList.indexOf(bp);
-				proof.rulePromptUpdate(index+1, finalI+1, ruleprompt.getText());
-			});
-		}
 		for (int i = 0; i < 3; i++) {
 			int finalI = i;
 			bp.getRulePrompt(i).setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -462,17 +453,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		return bp;
 	}
 
-	private void setPromptListener(int rowIndex, TextField prompt, int promptNumber) {
-        prompt.textProperty().addListener((observable, oldValue, newValue) -> {
-			Matcher m = p.matcher(newValue);
-			if (m.matches()) {
-				proof.rulePromptUpdate(rowIndex+1, promptNumber, newValue);
-			} else {
-				prompt.setText(oldValue);
-
-			}
-        });
-    }
 
 	//should only be called AFTER a new row has been added to rList since it uses rList.size()
 	Label createLabel() {
@@ -731,9 +711,19 @@ public class ProofView extends Symbolic implements ProofListener, View {
             }
 			rp.setPrompts(ruleMap.getOrDefault(newValue,-1));
 		});
-        int rpIndex = rList.indexOf(rp);
 		for (int i = 0 ; i < 3; i++) {
-			setPromptListener(rpIndex, rp.getRulePrompt(i), i+1);
+		    TextField prompt = rp.getRulePrompt(i);
+			int finalI = i+1;
+			prompt.textProperty().addListener((observable, oldValue, newValue) -> {
+				Matcher m = p.matcher(newValue);
+				if (m.matches()) {
+					int rpNr = rList.indexOf(rp)+1;
+                    proof.rulePromptUpdate(rpNr, finalI, newValue);
+				} else {
+					prompt.setText(oldValue);
+
+				}
+			});
 		}
 	}
 
