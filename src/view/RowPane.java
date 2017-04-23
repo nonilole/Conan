@@ -60,6 +60,7 @@ public class RowPane extends BorderPane{
 		RulePane rulePane = (RulePane) this.getRight();
 		return (TextField) rulePane.getChildren().get(0);
 	}
+
 	public TextField getClosestPromptFromLeft(int index) {
 	    if (index > this.numberOfPrompts-1)
 	    	index = this.numberOfPrompts-1;
@@ -76,14 +77,15 @@ public class RowPane extends BorderPane{
 		return (TextField) rulePane.getChildren().get(1+index);
 	}
 	
-	public void hidePrompts() {
+	public void hideAndClearPrompts() {
 	    for (int i = 0; i < 3; i++) {
 			getRulePrompt(i).setVisible(false);
+			getRulePrompt(i).clear();
 		}
 	}
 
 	public void setPrompts(int n) {
-	    hidePrompts();
+		hideAndClearPrompts();
 	    this.numberOfPrompts = n;
 	    switch (n) {
             case 3:

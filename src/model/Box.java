@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.rules.Intervall;
+import model.rules.Interval;
 
 public class Box implements ProofEntry{
 	private boolean open;
@@ -134,14 +134,14 @@ public class Box implements ProofEntry{
 	}
 	
 	/**
-	 * Checks if the intervall is a box that is within scope of the row at index referencingRow
-	 * @param intervall: should be an intervall of the start and end index of a box
+	 * Checks if the interval is a box that is within scope of the row at index referencingRow
+	 * @param interval: should be an interval of the start and end index of a box
 	 * @param referencingRow
 	 * @return
 	 */
-	public boolean isInScopeOf(Intervall intervall, int referencingRow){
-		int start = intervall.startIndex; 
-		int end = intervall.endIndex;
+	public boolean isInScopeOf(Interval interval, int referencingRow){
+		int start = interval.startIndex;
+		int end = interval.endIndex;
 		if( end < start || referencingRow <= end) return false;
 		//System.out.println("end < start || referencingRow <= end : true");
 		
@@ -152,15 +152,15 @@ public class Box implements ProofEntry{
 		
 		//ProofRow row1 = getRow(start);
 		//ProofRow row2 = getRow(end);
-		Box theBox = getBox(intervall);
+		Box theBox = getBox(interval);
 		if( theBox == null) return false;
-		Box parentOfIntervallBox = theBox.getParent();
+		Box parentOfIntervalBox = theBox.getParent();
 		//System.out.println("theBox == null : false");
 		
 		//check if the box is an ancestor of the referencingRow
 		Box referencingRowAncestorBox = getRow(referencingRow).getParent();
 		while(referencingRowAncestorBox != null){
-			if( parentOfIntervallBox == referencingRowAncestorBox) return true;
+			if( parentOfIntervalBox == referencingRowAncestorBox) return true;
 			referencingRowAncestorBox = referencingRowAncestorBox.getParent();
 		}
 		System.out.println("reached the end");
@@ -168,13 +168,13 @@ public class Box implements ProofEntry{
 	}
 	
 	/**
-	 * If this intervall represents a box in this proof, return that box
-	 * @param intervall: the indexes of the box you want to get/check
-	 * @return the box if the indexes given by the intervall represents a box in the proof, otherwise null
+	 * If this interval represents a box in this proof, return that box
+	 * @param interval: the indexes of the box you want to get/check
+	 * @return the box if the indexes given by the interval represents a box in the proof, otherwise null
 	 */
-	public Box getBox(Intervall intervall){
-		ProofRow startRow = getRow(intervall.startIndex);
-		ProofRow endRow   = getRow(intervall.endIndex);
+	public Box getBox(Interval interval){
+		ProofRow startRow = getRow(interval.startIndex);
+		ProofRow endRow   = getRow(interval.endIndex);
 		Box parent = startRow.getParent();
 		
 		while(parent != null){
@@ -232,12 +232,12 @@ public class Box implements ProofEntry{
 	}
 	
 	public void printBoxes(){
-		List<Intervall> foundBoxes = new ArrayList<Intervall>();
+		List<Interval> foundBoxes = new ArrayList<Interval>();
 		for(int i = 0; i < size(); i++){
 			for( int j = i; j < size(); j++){
-				Intervall intervall = new Intervall(i,j);
-				Box box = getBox(intervall);
-				if( box != null) foundBoxes.add(intervall);
+				Interval interval = new Interval(i,j);
+				Box box = getBox(interval);
+				if( box != null) foundBoxes.add(interval);
 			}
 		}
 		//printRows(1,0);
@@ -273,13 +273,13 @@ public class Box implements ProofEntry{
 		
 	}
 	
-	public void printIntervallScopes(boolean zeroBasedNumbering){
+	public void printIntervalScopes(boolean zeroBasedNumbering){
 		int offset = zeroBasedNumbering ? 0 : 1;
 		for(int rowI = 0; rowI < size; rowI++){
-			System.out.print("Intervalls in scope for row "+(rowI+offset)+": ");
+			System.out.print("Intervals in scope for row "+(rowI+offset)+": ");
 			for(int i = 0; i < size; i++){
 				for(int j = 0; j < size; j++){
-					Intervall inter  = new Intervall(i,j);
+					Interval inter  = new Interval(i,j);
 					if( isInScopeOf(inter, rowI) ) System.out.print(""+inter+", ");
 				}
 			}

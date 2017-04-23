@@ -12,6 +12,15 @@ public class Function implements Term{
         this.id = id;
         this.args = args;
     }
+    
+    @Override
+    public Term replace(String newId,String oldId){
+    	List<Term> newArgs = new ArrayList<Term>();
+    	for(Term t : args){
+    		newArgs.add(t.replace(newId, oldId));
+    	}
+    	return new Function(id, newArgs);
+    }
 
     @Override
     public boolean equals(Object o){
@@ -43,5 +52,13 @@ public class Function implements Term{
         strB.append(")");
         return strB.toString();
     }
+
+	@Override
+	public boolean containsObjectId(String id) {
+		for(Term arg : args){
+			if(arg.containsObjectId(id)) return true;
+		}
+		return false;
+	}
     
 }

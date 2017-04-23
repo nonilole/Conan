@@ -1,10 +1,10 @@
 package model.rules;
 
-public class Intervall {
+public class Interval {
 	public int startIndex;//inclusive
 	public int endIndex;//inclusive
 	
-	public Intervall(int start, int end){ 
+	public Interval(int start, int end){
 		startIndex = start;
 		endIndex = end;
 	}

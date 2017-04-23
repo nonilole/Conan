@@ -21,6 +21,9 @@ public class RandomFormulaGenerator {
 	final int FUNCTION_WEIGHT = 10;
 	final int TERM_WEIGHT_SUM = FUNCTION_WEIGHT + LOGICALOBJECT_WEIGHT;
 	
+	//
+	int idVariety = 10;
+	
 	Random rand = new Random();
 	
 	public void printFormulas(int nrOfFormulas, int scalingFactor){
@@ -31,8 +34,17 @@ public class RandomFormulaGenerator {
 	}
 	
 	//generate a random formula, paramater scalingFactor is a way to regulate the length of the formula
+		//bigger scalingFactor -> longer formula
+		//idVariaty dictates hom many possible id's can be generated, 
+		//so idVariatey=3 means only identifierss a,b,cwill be generated for terms
+	public Formula generateFormula(int scalingFactor, int idVariety){
+		this.idVariety = idVariety;
+		return generateFormula(scalingFactor);
+	}
+	
+	//generate a random formula, paramater scalingFactor is a way to regulate the length of the formula
 	//bigger scalingFactor -> longer formula
-	Formula generateFormula(int scalingFactor){
+	public Formula generateFormula(int scalingFactor){
 		//scalingFactor should decrease each time to prevent infinitely large formulas
 		//rand.nextInt will throw runtime error if given argument < 1
 		if(scalingFactor < 2) {
@@ -63,7 +75,7 @@ public class RandomFormulaGenerator {
 			return new Conjunction( generateFormula(scalingFactor), generateFormula(scalingFactor));
 		}
 		else if( ranInt < ( acc += DISJUNCTION_WEIGHT ) ){
-			return new Conjunction( generateFormula(scalingFactor), generateFormula(scalingFactor));
+			return new Disjunction( generateFormula(scalingFactor), generateFormula(scalingFactor));
 		}
 		else if( ranInt < ( acc += IMPLICATION_WEIGHT ) ){
 			return new Implication( generateFormula(scalingFactor), generateFormula(scalingFactor));
@@ -111,12 +123,12 @@ public class RandomFormulaGenerator {
 	
 	String randomPredicateId(){
 		//This returns a single character string like "A" or "Z"
-		return ""+((char) (rand.nextInt('Z' - 'A' + 1) + 'A'));
+		return ""+((char) (rand.nextInt(idVariety + 1) + 'A'));
 	}
 	
 	String randomTermId(){
 		//This returns a single character string like "a" or "z"
-		return ""+((char) (rand.nextInt('z' - 'a' + 1) + 'a'));
+		return ""+((char) (rand.nextInt(idVariety + 1) + 'a'));
 	}
 	
 	char generateQuantifier(){
