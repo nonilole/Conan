@@ -281,6 +281,8 @@ public class Proof implements Serializable{
         ProofRow row = proofData.getRow(rowNr-1);
 
         Rule rule = row.getRule();
+        if (rule == null)
+            return;
         //System.out.println(rowIndex);
         //System.out.println(rule.toString());
         try{
