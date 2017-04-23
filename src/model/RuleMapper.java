@@ -32,6 +32,7 @@ public class RuleMapper {
         ruleToClass.put("Ass.", Assumption.class);
         ruleToClass.put("Fresh", FreshVar.class);
         ruleToClass.put("MT", ModusTollens.class);
+        ruleToClass.put("PBC", ProofByContradiction.class);
     }
 
     public static Rule getRule(String rule) {

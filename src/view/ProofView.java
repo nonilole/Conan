@@ -226,6 +226,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		ruleMap.put("Fresh", 0);
 		ruleMap.put("MT", 2);
 		ruleMap.put("LEM", 0);
+		ruleMap.put("PBC", 1);
 	}
 
 
@@ -366,8 +367,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			TextField ruleprompt = bp.getRulePrompt(i);
 			int finalI = i;
 			ruleprompt.focusedProperty().addListener((observable, oldValue, newValue) -> {
-				int index = rList.indexOf(bp);
-				proof.rulePromptUpdate(index+1, finalI+1, ruleprompt.getText());
+				int rowNr = rList.indexOf(bp)+1;
+				proof.rulePromptUpdate(rowNr, finalI+1, ruleprompt.getText());
 			});
 		}
 		for (int i = 0; i < 3; i++) {
