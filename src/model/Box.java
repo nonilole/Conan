@@ -31,11 +31,11 @@ public class Box implements ProofEntry, Serializable{
             return;
         }
         ProofEntry child = referenceRow;
-		for (int i = 1; i < depth; i++) {
+		for (int i = 0; i < depth; i++) {
 		    child = parent;
 		    parent = parent.getParent();
         }
-        parent.entries.add(parent.entries.indexOf(child), new ProofRow(parent));
+        parent.entries.add(parent.entries.indexOf(child)+1, new ProofRow(parent));
         parent.incSize();
 	}
 	public void addRowAfterBox(int index) {

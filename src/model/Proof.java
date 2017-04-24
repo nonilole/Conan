@@ -77,7 +77,7 @@ public class Proof implements Serializable{
         }
         proofData.insertRow(rowNumber - 1, br, depth);
         for (ProofListener pl : listeners) {
-            pl.rowInserted(rowNumber, br);
+            pl.rowInserted(rowNumber, br, depth);
         }
         verifyProof(rowNumber-1 + (br == BoxReference.BEFORE ? 0 : 1));
         System.out.println("insertNewRow(" + rowNumber + ", " + br + ")");
