@@ -12,15 +12,16 @@ public class ExportLatex {
 
     static {
         unicodeToLaTeX = new HashMap<Character, String>();
-        unicodeToLaTeX.put('∧',"\\land ");
-        unicodeToLaTeX.put('∨',"\\lor ");
-        unicodeToLaTeX.put('¬',"\\neg ");
-        unicodeToLaTeX.put('→',"\\to ");
-        unicodeToLaTeX.put('∃',"\\exists ");
-        unicodeToLaTeX.put('∀',"\\forall ");
-        unicodeToLaTeX.put('⊥',"\\bot ");
-    };
-    public static void export (Proof proof, Path file) throws IOException {
+        unicodeToLaTeX.put('∧', "\\land ");
+        unicodeToLaTeX.put('∨', "\\lor ");
+        unicodeToLaTeX.put('¬', "\\neg ");
+        unicodeToLaTeX.put('→', "\\to ");
+        unicodeToLaTeX.put('∃', "\\exists ");
+        unicodeToLaTeX.put('∀', "\\forall ");
+        unicodeToLaTeX.put('⊥', "\\bot ");
+    }
+
+    public static void export(Proof proof, Path file) throws IOException {
         String[] lines = proof.getProofString().split("\\r?\\n");
         String output = "";
         int maxDepth = -1;
@@ -37,8 +38,8 @@ public class ExportLatex {
                 ++curDepth;
             }
             while (curDepth > depth) {
-                if (output.substring(output.length()-3,output.length()-1).equals("\\\n")) {
-                    output = output.substring(0, output.length()-3) + '\n';
+                if (output.substring(output.length() - 3, output.length()).equals("\\\\\n")) {
+                    output = output.substring(0, output.length() - 3) + '\n';
                 }
                 output += "\\end{subproof}\n";
                 --curDepth;
@@ -53,7 +54,7 @@ public class ExportLatex {
             output += "\\end{subproof}\n";
             --curDepth;
         }
-        output = "\\begin{logicproof}{" +maxDepth + "}\n" + output + "\\end{logicproof}";
+        output = "\\begin{logicproof}{" + maxDepth + "}\n" + output + "\\end{logicproof}";
         Files.write(file, output.getBytes());
     }
 
@@ -67,5 +68,12 @@ public class ExportLatex {
                 ret += next;
         }
         return ret;
+    }
+
+    private static String trimEnd(String s) {
+        if (s.substring(s.length() - 3, s.length()).equals("\\\\\n"))
+            return s.substring(0, s.length() - 3) + '\n';
+        return s;
+
     }
 }
