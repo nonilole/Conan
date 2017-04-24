@@ -46,6 +46,12 @@
             <MenuItem accelerator="Shortcut+Y" mnemonicParsing="false" onAction="#redo" text="Redo" />
           </items>
         </Menu>
+            <Menu mnemonicParsing="false" text="Preferences">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#setTheme" text="Light theme" />
+                  <MenuItem mnemonicParsing="false" onAction="#setTheme" text="Dark theme" />
+               </items>
+            </Menu>
         <Menu mnemonicParsing="false" text="Help">
           <items>
                   <MenuItem accelerator="Shortcut+I" mnemonicParsing="false" onAction="#showInferenceRules" text="Show Inference Rules" />
@@ -63,19 +69,19 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-          <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#saveProof">
-               <graphic>
-                  <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../resources/icons/ic_save_black_24dp_2x.png" />
-                     </image>
-                  </ImageView>
-               </graphic></Button>
             <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#openProof">
                <graphic>
                   <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../resources/icons/ic_folder_open_black_24dp_2x.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+          <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#saveProof">
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/icons/ic_save_black_24dp_2x.png" />
                      </image>
                   </ImageView>
                </graphic></Button>

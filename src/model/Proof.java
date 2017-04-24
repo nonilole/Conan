@@ -134,7 +134,7 @@ public class Proof implements Serializable {
             listener.rowUpdated(null, wellFormed, rowNumber);
         }
         verifyConclusion(rowIndex);
-        verifyRow(rowIndex); //should use verifyProof later probably, to verify rows lower in the proof aswell
+        verifyProof(rowIndex); //should use verifyProof later probably, to verify rows lower in the proof aswell
         proofData.printRows(1, 1);
         System.out.println("==========================================================");
     }
@@ -153,7 +153,7 @@ public class Proof implements Serializable {
     public void addRule(int rowNr, Rule rule) {
         System.out.println("addRule: " + rowNr + ", Rule: " + rule);
         proofData.getRow(rowNr - 1).setRule(rule);
-        verifyRow(rowNr-1);
+        verifyRow(rowNr - 1);
     }
 
     //should verify each line in the proof from line startIndex
