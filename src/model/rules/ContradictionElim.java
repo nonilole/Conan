@@ -8,6 +8,7 @@ public class ContradictionElim extends Rule {
 
     private Integer premise;
 
+    public ContradictionElim() {};
     public ContradictionElim(Integer premise) {
         this.premise = premise;
     }
