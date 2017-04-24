@@ -1,8 +1,5 @@
-
 .myText {
     -fx-font-size: 14px;
-    /* -fx-border-radius: 0; */
-    /* -fx-border-size: 0; */
     -fx-background-insets: 2, 4;
     -fx-background-radius: 3;
     -fx-text-box-border: #928374;
@@ -11,7 +8,6 @@
     -fx-control-inner-background: #282828;
     -fx-font-smoothing-type: gray;
 }
-
 .myTitle {
     -fx-font-size: 25px;
 }
@@ -40,14 +36,12 @@
 }
 
 .unVerified {
-    -fx-background-insets: 2, 6;
-    -fx-text-box-border: #cc241d;
+    -fx-control-inner-background: #cc241d;
 }
 .conclusionReached {
     -fx-control-inner-background: #98971a;
 }
 .root .button {
-    /* -fx-body-color: #504945; */
     -fx-text-fill: #ebdbb2;
 }
 .root .tool-bar, .root .scroll-pane, {

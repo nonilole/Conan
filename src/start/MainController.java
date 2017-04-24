@@ -3,7 +3,9 @@ package start;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TabPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -38,6 +40,20 @@ public class MainController implements Initializable {
     @FXML
     void verificationToggle(ActionEvent event) {
 
+    }
+    @FXML
+    void setTheme(ActionEvent event) {
+        Scene scene = tabPane.getScene();
+        scene.getStylesheets().clear();
+        MenuItem caller = (MenuItem) event.getSource();
+        switch(caller.getText()) {
+            case "Dark theme":
+                scene.getStylesheets().add("gruvjan.css");
+                break;
+            case "Light theme":
+                scene.getStylesheets().add("minimalistStyle.css");
+                break;
+        }
     }
 
     @FXML
