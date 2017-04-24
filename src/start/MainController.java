@@ -22,6 +22,7 @@ import view.InferenceRuleView;
 import javafx.event.ActionEvent;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -89,7 +90,12 @@ public class MainController implements Initializable {
         ProofView pv = convertProofView(getCurrentView());
         if (pv == null)
             return;
-        pv.openBox();
+        try {
+            pv.exportToLatex();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        pv.openBox();
     }
 
     @FXML
