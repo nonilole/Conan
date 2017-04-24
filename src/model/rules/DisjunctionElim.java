@@ -107,7 +107,7 @@ public class DisjunctionElim extends Rule {
 
     @Override
     public Formula generateRow(Box data) {
-        return null;
+        return data.getRow(interval1.endIndex).getFormula();
     }
 
     @Override
