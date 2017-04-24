@@ -130,7 +130,7 @@ public class InstructionsView extends Tab {
      */
     private Label constructInstructions() {
     	Label instructions = new Label(loadInstrctions());
-        instructions.getStyleClass().add("myText");
+        instructions.getStyleClass().add("infoText");
         instructions.setWrapText(true);
         return instructions;
 	}
