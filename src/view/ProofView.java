@@ -270,7 +270,17 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	}
 	public void insertNewBox(int rowNo){ executeCommand(new InsertBox(proof, rowNo, rList));}
 	public void deleteRow(int rowNo){
-		executeCommand(new DeleteRow(proof, rowNo, rList));
+		RowPane rp = rList.get(rowNo-1);
+		VBox parent = (VBox) rp.getParent();
+		if (parent.getParent() instanceof VBox && parent.getChildrenUnmodifiable().size() == 1) {
+			executeCommand(new DeleteBox(proof, rowNo, rList));
+			return;
+        }
+        if (rowNo >= 2 && parent.equals(rList.get(rowNo-2).getParent().getParent())) {
+			executeCommand(new DeleteRowAfterBox(proof, rowNo-1, rList));
+			return;
+		}
+        executeCommand(new DeleteRow(proof, rowNo, rList));
 	}
 	public void undo() {
 	    if (0 <= curCommand && curCommand < commandList.size()) {
