@@ -38,9 +38,7 @@ public class ExportLatex {
                 ++curDepth;
             }
             while (curDepth > depth) {
-                if (output.substring(output.length() - 3, output.length()).equals("\\\\\n")) {
-                    output = output.substring(0, output.length() - 3) + '\n';
-                }
+                output = trimEnd(output);
                 output += "\\end{subproof}\n";
                 --curDepth;
             }
