@@ -12,7 +12,7 @@ import model.formulas.Formula;
 	 */
 
 //Prototype method:
-	/*
+    /*
 	//Author
 	static boolean verifyRuleName(ProofData data, int rowToVerify ){
 		// Stuff to check:
@@ -44,8 +44,6 @@ public abstract class Rule {
             return generateRow(data);
         return null;
     }
-
-    ;
 
     public boolean verify(Box data, int rowIndex) {
         return (verifyReferences(data, rowIndex) && verifyRow(data, rowIndex));
