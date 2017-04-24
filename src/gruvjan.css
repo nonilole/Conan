@@ -40,8 +40,9 @@
 }
 
 .unVerified {
-    -fx-background-insets: 2, 6;
-    -fx-text-box-border: #cc241d;
+    /* -fx-background-insets: 2, 6; */
+    -fx-control-inner-background: #cc241d;
+    /* -fx-text-box-border: #cc241d; */
 }
 .conclusionReached {
     -fx-control-inner-background: #98971a;
