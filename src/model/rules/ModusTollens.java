@@ -42,15 +42,15 @@ public class ModusTollens extends Rule {
         if (!(data.isInScopeOf(rowRef2, rowIndex))) return false;
         Formula referencedRow1 = data.getRow(rowRef1).getFormula();
         Formula referencedRow2 = data.getRow(rowRef2).getFormula();
-        if (!(referencedRow2 instanceof Implication)) return false;
-        if (!(referencedRow1 instanceof Negation)) return false;
+        if (!(referencedRow1 instanceof Implication)) return false;
+        if (!(referencedRow2 instanceof Negation)) return false;
         return true;
     }
 
     @Override
     public boolean verifyRow(Box data, int rowIndex) {
-        Formula referencedRow2 = data.getRow(rowRef2).getFormula();
-        Implication implRef = (Implication) referencedRow2;
+        Formula referencedRow1 = data.getRow(rowRef1).getFormula();
+        Implication implRef = (Implication) referencedRow1;
         Formula result = data.getRow(rowIndex).getFormula();
         if (result instanceof Negation == false) return false;
         Negation negResult = (Negation) result;
@@ -59,7 +59,7 @@ public class ModusTollens extends Rule {
 
     @Override
     public Formula generateRow(Box data) {
-        Formula referencedRow2 = data.getRow(rowRef2).getFormula();
+        Formula referencedRow2 = data.getRow(rowRef1).getFormula();
         Implication implRef = (Implication) referencedRow2;
         return new Negation(implRef.lhs);
     }
