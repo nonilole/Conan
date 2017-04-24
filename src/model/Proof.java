@@ -46,7 +46,8 @@ public class Proof implements Serializable {
             return false;
         }
         System.out.println(proofData.size());
-        proofData.deleteRow(rowNumber - 1);
+        if (!(proofData.deleteRow(rowNumber - 1)))
+            return false;
         for (ProofListener listener : this.listeners) {
             listener.rowDeleted(rowNumber);
         }
@@ -209,11 +210,13 @@ public class Proof implements Serializable {
         return true;
     }
 
-    public void removeBox(int rowIndex) {
+    public boolean removeBox(int rowIndex) {
+        // We assume this is possible by precondition
         proofData.removeBox(rowIndex);
         for (ProofListener listener : this.listeners) {
             listener.boxRemoved(rowIndex + 1);
         }
+        return true;
     }
 
     public void closeBox() {
