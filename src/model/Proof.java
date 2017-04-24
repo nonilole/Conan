@@ -45,7 +45,7 @@ public class Proof implements Serializable{
 
     public int deleteRow(int rowNumber) {
         if (rowNumber < 1 || rowNumber > proofData.size() || proofData.size() == 1) {
-            return false;
+            return -1;
         }
         System.out.println(proofData.size());
         int delDepth = (proofData.deleteRow(rowNumber - 1));

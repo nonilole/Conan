@@ -122,10 +122,10 @@ public class Box implements ProofEntry, Serializable{
             return -1;
 		}
         int depth = 0;
-		if (entries.indexOf(referenceRow) != 0) {
-		    parent =
+        int refIdx = entries.indexOf(referenceRow);
+		if (refIdx != 0) {
+            parent = entries.get(refIdx-1).getParent();
             while (!(parent.isTopLevelBox())) {
-
             }
         }
 		parent.entries.remove(referenceRow);
