@@ -66,7 +66,7 @@ public class ModusTollens extends Rule {
 
     @Override
     public String toString() {
-        return "MT " + rowRef1 + ", " + rowRef2;
+        return String.format("MT, %s, %s", rowRef1 == null ? "" : new Integer(rowRef1+1), rowRef2 == null ? "" : new Integer(rowRef2+1));
     }
 
 }

@@ -74,6 +74,6 @@ public class ExistsElim extends Rule {
 
     @Override
     public String toString() {
-        return String.format("∃E (%s) (%s)", rowRef, intervalRef);
+        return String.format("∃e, %s, %s", rowRef == null ? "" : new Integer(rowRef+1), intervalRef);
     }
 }

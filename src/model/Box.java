@@ -287,7 +287,20 @@ public class Box implements ProofEntry{
 		//printRows(1,0);
 		System.out.println("Found boxes: "+foundBoxes);
 	}
-	
+	public String rowsToString(int depth) {
+		String ret = "";
+		for(ProofEntry entry : entries){
+			if(entry instanceof Box){
+				ret += ((Box)entry).rowsToString(depth+1);
+			}
+			else{
+				ret += Integer.toString(depth);
+				ret += "::" + entry +"\n";
+			}
+		}
+		return ret;
+	}
+
 	public void printRows(int depth, int startNr){
 		int currentNr = startNr;
 		//System.out.println("size:"+size);

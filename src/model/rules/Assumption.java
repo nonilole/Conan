@@ -7,7 +7,7 @@ import model.formulas.Formula;
 public class Assumption extends Rule {
     @Override
     public String toString() {
-        return "Assumption";
+        return "assumption";
     }
 
     @Override

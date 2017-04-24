@@ -39,6 +39,6 @@ public class EqualityIntro extends Rule {
 
     @Override
     public String toString() {
-        return "=-I";
+        return "=i";
     }
 }

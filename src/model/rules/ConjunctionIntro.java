@@ -85,8 +85,8 @@ public class ConjunctionIntro extends Rule {
 
     @Override
     public String toString() {
-        String p1 = premise1 == null ? "" : premise1.toString();
-        String p2 = premise2 == null ? "" : premise2.toString();
-        return String.format("∧-I (%s),(%s)", p1, p2);
+        String p1 = premise1 == null ? "" : new Integer(premise1+1).toString();
+        String p2 = premise2 == null ? "" : new Integer(premise2+1).toString();
+        return String.format("∧i, %s,s", p1, p2);
     }
 }

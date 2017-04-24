@@ -1,19 +1,22 @@
 package model;
 
 import model.formulas.Formula;
-import model.rules.*;
+import model.rules.Rule;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
 
-import static java.util.prefs.Preferences.*;
+import static java.util.prefs.Preferences.userRoot;
 
 public class Proof implements Serializable{
     private ArrayList<ProofListener> listeners = new ArrayList<ProofListener>();
     private Parser parser = new Parser(); //this won't be serialized
     private Formula conclusion;
     private Box proofData = new Box(null, true);
+    public String getProofString() {
+        return proofData.rowsToString(1);
+    }
 
     /***
      * Add a new row at the end of the proof.

@@ -64,6 +64,6 @@ public class NegationIntro extends Rule {
 
     @Override
     public String toString() {
-        return String.format("¬I (%s)", interval);
+        return String.format("¬i, %s", interval);
     }
 }

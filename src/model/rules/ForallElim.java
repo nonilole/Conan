@@ -53,6 +53,6 @@ public class ForallElim extends Rule {
 
     @Override
     public String toString() {
-        return "∀E (" + rowRef + ")";
+        return String.format("∀e, %s", rowRef == null ? "" : new Integer(rowRef+1));
     }
 }

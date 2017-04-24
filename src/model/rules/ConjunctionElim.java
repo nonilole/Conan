@@ -56,7 +56,7 @@ public class ConjunctionElim extends Rule {
 	
 	@Override
 	public String toString(){
-	  return String.format("ConjunctionElimRule%s  (%s)",type,reference);
+	  return String.format("∧e_{%s}, %s", type, reference == null ? "" : new Integer(reference+1));
 	}
 
 	@Override

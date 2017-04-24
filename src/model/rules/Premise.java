@@ -32,7 +32,7 @@ public class Premise extends Rule {
 
     @Override
     public String toString() {
-        return "Premise";
+        return "premise";
     }
 
     @Override

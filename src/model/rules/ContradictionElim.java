@@ -51,7 +51,7 @@ public class ContradictionElim extends Rule {
 
     @Override
     public String toString() {
-        return String.format("⊥E (%s)", premise);
+        return String.format("⊥e, %s", premise == null ? "" : new Integer(premise+1));
     }
 
     @Override

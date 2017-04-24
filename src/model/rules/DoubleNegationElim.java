@@ -71,7 +71,7 @@ public class DoubleNegationElim extends Rule {
 
     @Override
     public String toString() {
-        String p1 = premise1 == null ? "" : premise1.toString();
-        return String.format("¬¬-E (%s)", p1);
+        String p1 = premise1 == null ? "" : new Integer(premise1+1).toString();
+        return String.format("¬¬e, %s", p1);
     }
 }
