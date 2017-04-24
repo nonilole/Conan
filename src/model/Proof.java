@@ -26,10 +26,10 @@ public class Proof implements Serializable{
         for (ProofListener listener : this.listeners) {
             listener.rowAdded();
         }
+        verifyRow(proofData.size()-1);
         System.out.println("addRow()");
         proofData.printRows(1, 1);
         System.out.println("==========================================================");
-        //TODO: verify empty row 
     }
 
     /**
