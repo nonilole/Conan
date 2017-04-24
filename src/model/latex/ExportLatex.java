@@ -5,9 +5,10 @@ import model.Proof;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 
 public class ExportLatex {
-    private Map<Char>
+    private HashMap<Character, String> unicodeToLaTex;
     public static void export (Proof proof, Path file) throws IOException {
         String[] lines = proof.getProofString().split("\\r?\\n");
         String output = "";
