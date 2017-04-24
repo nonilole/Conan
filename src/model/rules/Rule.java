@@ -48,9 +48,6 @@ public abstract class Rule {
     ;
 
     public boolean verify(Box data, int rowIndex) {
-        if (verifyReferences(data, rowIndex))
-            return verifyRow(data, rowIndex);
-        return false;
-
+        return (verifyReferences(data, rowIndex) && verifyRow(data, rowIndex));
     }
 }
