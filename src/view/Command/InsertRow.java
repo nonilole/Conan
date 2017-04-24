@@ -28,12 +28,14 @@ public class InsertRow implements Command {
     public boolean execute() {
         boolean result = proof.insertNewRow(rowNo, br);
         if (result) {
-            RowPane rp = rList.get(rowNo);
+            int offset = br == BoxReference.BEFORE ? 0 : 1;
+            RowPane rp = rList.get(rowNo-1+offset);
             rp.setExpression(expression);
             rp.setRule(rule);
             for (int i = 0; i < 3; i++) {
                 rp.setRulePrompt(i, prompt.get(i));
             }
+            rp.getExpression().requestFocus();
         }
         return result;
     }

@@ -1,5 +1,8 @@
 package view;
 
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -39,7 +42,15 @@ public class WelcomeView extends Symbolic implements View {
         this.premises = premisesAndConclusion.getPremises();
         this.conclusion = premisesAndConclusion.getConclusion();
         this.premises.setId("expression");
+        this.premises.setPromptText("Premise");
+        premises.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				premises.setText(checkShortcut(newValue));
+			}
+		});
         this.conclusion.setId("expression");
+        this.conclusion.setPromptText("Conclusion");
         this.premises.focusedProperty().addListener((observable, oldValue, newValue) -> {
             lastFocusedTf = this.premises;
             caretPosition = this.premises.getCaretPosition();
@@ -48,6 +59,12 @@ public class WelcomeView extends Symbolic implements View {
             lastFocusedTf = this.conclusion;
             caretPosition = this.conclusion.getCaretPosition();
         });
+        conclusion.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				conclusion.setText(checkShortcut(newValue));
+			}
+		});
 
         Hyperlink help = new Hyperlink("Help me!");
 
@@ -103,5 +120,17 @@ public class WelcomeView extends Symbolic implements View {
     public ViewTab getTab() {
         return this.tab;
     }
+    
+    public String checkShortcut(String newValue){
+		newValue = newValue.replaceAll("!|ne|no", "¬");
+		newValue = newValue.replaceAll("&|an", "∧");
+		newValue = newValue.replaceAll("->", "→");
+		newValue = newValue.replaceAll("im", "→");
+		newValue = newValue.replaceAll("fa", "∀");
+		newValue = newValue.replaceAll("(?<!f)or", "∨");
+		newValue = newValue.replaceAll("ex", "∃");
+		newValue = newValue.replaceAll("te", "∃");
+		return newValue;
+	}
 }
 

@@ -10,7 +10,12 @@ public class Equality extends Formula {
         this.rhs = rhs;
         super.precedence = 3;
     }
-
+    
+    @Override
+    public Formula replace(String newId,String oldId){
+    	return new Equality(lhs.replace(newId, oldId), rhs.replace(newId, oldId));
+    }
+    
     @Override
     public boolean equals(Object o){
     	if(o instanceof Equality){
@@ -24,5 +29,10 @@ public class Equality extends Formula {
     public String toString(){	
     	return lhs+" = "+rhs;
     }
+    
+    @Override
+	public boolean containsObjectId(String id) {
+		return lhs.containsObjectId(id) ||  rhs.containsObjectId(id);
+	}
 
 }

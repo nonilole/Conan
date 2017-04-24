@@ -1,0 +1,80 @@
+
+.myText {
+    -fx-font-family: Monospace;
+    -fx-font-size: 14px;
+    /* -fx-border-radius: 0; */
+    /* -fx-border-size: 0; */
+    -fx-background-insets: 3, 5;
+    -fx-background-radius: 3;
+    -fx-text-box-border: #928374;
+    -fx-text-fill: #ebdbb2;
+    -fx-prompt-text-fill: #ebdbb2;
+    -fx-control-inner-background: #282828;
+}
+
+.myTitle {
+    -fx-font-family: Monospace;
+    -fx-font-size: 25px;
+}
+.fit {
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
+}
+
+.openBox, .closedBox {
+    -fx-padding: 1 0 3 3;
+    -fx-border-style: solid;
+    -fx-border-color: #fff;
+    -fx-border-width: 2 2 0 2;
+}
+
+.closedBox {
+    -fx-border-width: 2px;
+}
+
+.lineNo {
+    /* -fx-background-color: grey; */
+    /* -fx-border-style: solid; */
+    /* -fx-border-color: red; */
+    /* -fx-border-width: 1px; */
+    -fx-font-family: Monospace;
+    -fx-font-size: 14px;
+    -fx-text-box-border: transparent;
+}
+
+
+.bad {
+    -fx-control-inner-background: #cc241d;
+}
+
+.unVerified {
+    -fx-text-box-border: #cc241d;
+}
+.conclusionReached {
+    -fx-control-inner-background: #98971a;
+}
+
+.root .button {
+    -fx-control-inner-background: #282828;
+    /* -fx-background-color: #282828; */
+    -fx-text-fill: #ebdbb2;
+}
+
+.root .tool-bar, .root .scroll-pane, {
+    -fx-background: #282828;
+    -fx-base: #282828;
+}
+
+.root .tab {
+    -fx-background-color: #3A3A3A;
+}
+
+.root .tab:selected {
+    -fx-background-color: #282828;
+}
+
+.root {
+  -fx-focus-color: #458588;
+  /* -fx-focus-color: transparent; */
+  /*-fx-faint-focus-color: #458588;*/
+}

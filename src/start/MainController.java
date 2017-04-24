@@ -30,11 +30,10 @@ import model.Proof;
 import java.util.prefs.Preferences;
 
 public class MainController implements Initializable {
-	@FXML
-    private TextField indexInput; // temporary for inserting rows
-
     @FXML
-    private CheckBox insertAfterCheck; // temporary for inserting rows
+    private CheckBox verification;
+    @FXML
+    private CheckBox generation;
     @FXML
     private TabPane tabPane;
 
@@ -46,6 +45,23 @@ public class MainController implements Initializable {
     @FXML
     private Color x4;
 
+    @FXML
+    void verificationToggle(ActionEvent event) {
+
+    }
+    @FXML
+    void generationToggle(ActionEvent event) {
+        Preferences prefs = Preferences.userRoot().node("General");
+        if (generation.isIndeterminate())
+            return;
+        if (this.generation.selectedProperty().getValue()) {
+            prefs.putBoolean("generate", true);
+            verification.setSelected(true);
+            verificationToggle(event);
+        } else {
+            prefs.putBoolean("generate", false);
+        }
+    }
     @FXML
     void newProof(ActionEvent event) {
     	new ProofView(tabPane, new Proof());
@@ -68,30 +84,6 @@ public class MainController implements Initializable {
     	pv.newRow();
     }
     
-    @FXML
-    void insertRow(ActionEvent event) {
-        ProofView pv = convertProofView(getCurrentView());
-        if (pv == null)
-            return;
-    	int rowNumber;
-    	try{
-    		rowNumber = Integer.parseInt(indexInput.getText());
-    		//System.out.println("    rowNumber:"+rowNumber);
-    		BoxReference br = insertAfterCheck.isSelected() ? BoxReference.AFTER : BoxReference.BEFORE;
-    		//System.out.println("    insertAfterCheck:"+br);
-        	pv.getProof().insertNewRow(rowNumber, br);
-    	}catch(NumberFormatException e){
-    		System.out.println("Improperly formatted number string");
-    		return;
-    	}
-    	catch(Exception e){
-    		System.out.println(e);
-    		System.out.println(e.getMessage());
-    		e.printStackTrace();
-    		return;
-    	}
-    }
-
     @FXML
     void openBox(ActionEvent event) { // Remove this later
         ProofView pv = convertProofView(getCurrentView());
@@ -122,20 +114,6 @@ public class MainController implements Initializable {
             return;
         pv.redo();
     }
-    @FXML
-    void deleteRow(ActionEvent event) {
-        ProofView pv = convertProofView(getCurrentView());
-        if (pv == null)
-            return;
-    	int rowNumber;
-        try{
-    		rowNumber = Integer.parseInt(indexInput.getText());
-        	pv.getProof().deleteRow(rowNumber);
-    	}catch(NumberFormatException e){
-    		System.out.println("Improperly formatted number string");
-    		return;
-    	}
-    }
 
     @FXML
     void newProofButton(ActionEvent event) { // Remove this later
@@ -146,9 +124,6 @@ public class MainController implements Initializable {
     void showInferenceRules(ActionEvent event) {
     new InferenceRuleView(tabPane);
     }
-
-    @FXML
-    void openInstructions(ActionEvent event) { }
 
     @FXML
     void symbolButtonPressed(ActionEvent event) {

@@ -21,6 +21,11 @@ public class Conjunction extends Formula {
     }
     
     @Override
+    public Formula replace(String newId,String oldId){
+    	return new Conjunction(lhs.replace(newId, oldId), rhs.replace(newId, oldId));
+    }
+    
+    @Override
     public String toString(){	
     	StringBuilder strB = new StringBuilder();
     	strB.append( lhs.getPrecedence() < 2 ? "("+lhs+")" : lhs+"" );
@@ -28,4 +33,9 @@ public class Conjunction extends Formula {
     	strB.append( rhs.getPrecedence() < 3 ? "("+rhs+")" : rhs+"" );
     	return strB.toString();
     }
+
+	@Override
+	public boolean containsObjectId(String id) {
+		return lhs.containsObjectId(id) ||  rhs.containsObjectId(id);
+	}
 }

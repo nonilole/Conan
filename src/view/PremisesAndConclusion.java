@@ -1,5 +1,6 @@
 package view;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -60,6 +61,7 @@ public class PremisesAndConclusion extends HBox {
         turnstile = new Label("⊢");
         turnstile.setPrefHeight(25);
         turnstile.setPrefWidth(26.0);
+        turnstile.setPadding(new Insets(5,0,0,0));
         turnstile.setAlignment(Pos.CENTER);
         conclusion = new TextField(sConclusion);
         conclusion.textProperty().addListener((ov, oldValue, newValue) -> {
