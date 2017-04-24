@@ -252,7 +252,8 @@ public class Proof implements Serializable {
                 listener.conclusionReached(false, rowIndex + 1);
             }
         }*/
-        if (this.conclusion != null && row.getFormula() != null && this.conclusion.equals(row.getFormula())) {
+        if (this.conclusion != null && row.getFormula() != null && row.isVerified()
+                && this.conclusion.equals(row.getFormula())) {
             for (ProofListener listener : this.listeners) {
                 listener.conclusionReached(true, rowIndex + 1);
             }
