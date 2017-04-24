@@ -4,7 +4,7 @@ import model.Box;
 import model.formulas.Formula;
 
 	/*
-	 * To implement verification of a new rule you need to do the following:
+     * To implement verification of a new rule you need to do the following:
 	 * 1. Create the rule object.
 	 * 2. Add an else if clause to the Proof.verifyRow function
 	 * 3. Implement the method for verification in this class, a prototype method is below this comment.
@@ -24,13 +24,33 @@ import model.formulas.Formula;
 	}
 	*/
 
-public interface Rule {
-	
-	//if this is false there is no reason to continue the verification
-	//since info is missing
-	public boolean hasCompleteInfo();
-	//Update the reference in the rule object
-	public void updateReference(int index, String newValue);
-	public boolean verify(Box data, int rowIndex);
-	public Formula generateFormula(Box data, int rowIndex);
+public abstract class Rule {
+
+    //if this is false there is no reason to continue the verification
+    //since info is missing
+    public abstract boolean hasCompleteInfo();
+
+    //Update the reference in the rule object
+    public abstract void updateReference(int index, String newValue);
+
+    public abstract boolean verifyReferences(Box data, int rowIndex);
+
+    public abstract boolean verifyRow(Box data, int rowIndex);
+
+    public abstract Formula generateRow(Box data);
+
+    public Formula generateFormula(Box data, int rowIndex) {
+        if (verifyReferences(data, rowIndex))
+            return generateRow(data);
+        return null;
+    }
+
+    ;
+
+    public boolean verify(Box data, int rowIndex) {
+        if (verifyReferences(data, rowIndex))
+            return verifyRow(data, rowIndex);
+        return false;
+
+    }
 }
