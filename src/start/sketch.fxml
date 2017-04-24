@@ -67,7 +67,7 @@
                <graphic>
                   <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="file:/home/jan/SD/Conan/resources/icons/ic_save_black_24dp_2x.png" />
+                        <Image url="@../../resources/icons/ic_save_black_24dp_2x.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
@@ -75,7 +75,7 @@
                <graphic>
                   <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="file:/home/jan/SD/Conan/resources/icons/ic_folder_open_black_24dp_2x.png" />
+                        <Image url="@../../resources/icons/ic_folder_open_black_24dp_2x.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
@@ -86,7 +86,7 @@
                <graphic>
                   <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="file:/home/jan/SD/Conan/resources/icons/ic_space_bar_black_upside_down_24dp_2x.png" />
+                        <Image url="@../../resources/icons/ic_space_bar_black_upside_down_24dp_2x.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
@@ -97,7 +97,7 @@
                <graphic>
                   <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="file:/home/jan/SD/Conan/resources/icons/ic_space_bar_black_24dp_2x.png" />
+                        <Image url="@../../resources/icons/ic_space_bar_black_24dp_2x.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
@@ -108,7 +108,7 @@
                <graphic>
                   <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="file:/home/jan/SD/Conan/resources/icons/ic_playlist_add_black_24dp_2x.png" />
+                        <Image url="@../../resources/icons/ic_playlist_add_black_24dp_2x.png" />
                      </image>
                   </ImageView>
                </graphic>
