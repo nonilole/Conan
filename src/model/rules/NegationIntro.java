@@ -5,88 +5,65 @@ import model.formulas.Contradiction;
 import model.formulas.Formula;
 import model.formulas.Negation;
 
-public class NegationIntro implements Rule{
+public class NegationIntro extends Rule {
 
-	private Interval interval;
+    private Interval interval;
 
-	public NegationIntro() {
-		super();
-	}
+    public NegationIntro() {
+        super();
+    }
 
-	public NegationIntro(Interval interval) {
-		super();
-		this.interval = interval;
-	}
+    public NegationIntro(Interval interval) {
+        super();
+        this.interval = interval;
+    }
 
-	@Override
-	public boolean hasCompleteInfo() {
-		return interval != null;
-	}
+    @Override
+    public boolean hasCompleteInfo() {
+        return interval != null;
+    }
 
-	@Override
-	public void updateReference(int index, String newValue) {
-		if(index < 1 || index > 1) throw new IllegalArgumentException();
+    @Override
+    public void updateReference(int index, String newValue) {
+        if (index < 1 || index > 1) throw new IllegalArgumentException();
 
-		if(index == 1){
-			try{
-				interval = ReferenceParser.parseIntervalReference(newValue);
-			}
-			catch(NumberFormatException e){
-				interval = null;
-				throw new NumberFormatException();
-			}
-		}
-	}
+        if (index == 1) {
+            try {
+                interval = ReferenceParser.parseIntervalReference(newValue);
+            } catch (NumberFormatException e) {
+                interval = null;
+                throw new NumberFormatException();
+            }
+        }
+    }
 
-	@Override
-	public String toString(){
-		return String.format("¬I (%s)", interval);
-	}
+    @Override
+    public boolean verifyReferences(Box data, int rowIndex) {
+        if (!(data.isInScopeOf(interval, rowIndex))) return false;
+        Formula intervalEndFormula = data.getRow(interval.endIndex).getFormula();
+        return (intervalEndFormula instanceof Contradiction);
+    }
 
-	@Override
-	public boolean verify(Box data, int rowIndex) {
+    @Override
+    public boolean verifyRow(Box data, int rowIndex) {
+        Formula intervalStartFormula = data.getRow(interval.startIndex).getFormula();
+        Formula RowToVerifyFormula = data.getRow(rowIndex).getFormula();
+        if (!(RowToVerifyFormula instanceof Negation)) {
+            return false;
+        }
+        Negation neg = (Negation) RowToVerifyFormula;
+        Formula RowToVerifyFormulaNoNeg = neg.formula;
+        return intervalStartFormula.equals(RowToVerifyFormulaNoNeg);
+    }
 
-		//check the interval in scope
-		if(data.isInScopeOf(interval, rowIndex) == false ) return false;
+    @Override
+    public Formula generateRow(Box data) {
+        Formula intervalStartFormula = data.getRow(interval.startIndex).getFormula();
+        return new Negation(intervalStartFormula);
+    }
 
-		//check if the expression in the row to verify is a negation-statement
-		Formula RowToVerifyFormula = data.getRow(rowIndex).getFormula();
-		if( !(RowToVerifyFormula instanceof Negation) ) {
-			return false;
-		}
-
-		//check if the end expression in the interval is a contradiction
-		Formula intervalEndFormula = data.getRow(interval.endIndex).getFormula();
-		if ( !(intervalEndFormula instanceof Contradiction) ) {
-			return false;
-		}
-
-		//Check if the start expression in the interval is 
-		//the negation of the expression in the row to verify
-		Formula intervalStartFormula = data.getRow(interval.startIndex).getFormula();
-		Negation neg = (Negation) RowToVerifyFormula;
-		Formula RowToVerifyFormulaNoNeg = neg.formula;
-		if(!intervalStartFormula.equals(RowToVerifyFormulaNoNeg)) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
-	public Formula generateFormula(Box data, int rowIndex) {
-		if(data.isInScopeOf(interval, rowIndex) == false ) return null;
-
-		//check if the end expression in the interval is a contradiction
-		Formula intervalEndFormula = data.getRow(interval.endIndex).getFormula();
-		if ( !(intervalEndFormula instanceof Contradiction) ) {
-			return null;
-		}
-
-		//Check if the start expression in the interval is
-		//the negation of the expression in the row to verify
-		Formula intervalStartFormula = data.getRow(interval.startIndex).getFormula();
-
-		return new Negation(intervalStartFormula);
-	}
+    @Override
+    public String toString() {
+        return String.format("¬I (%s)", interval);
+    }
 }

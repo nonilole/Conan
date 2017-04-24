@@ -5,7 +5,7 @@ import model.ProofRow;
 import model.formulas.Conjunction;
 import model.formulas.Formula;
 
-public class ConjunctionElim implements Rule {
+public class ConjunctionElim extends Rule {
 	private int type;
 	private Integer reference;
 	
@@ -47,7 +47,7 @@ public class ConjunctionElim implements Rule {
       }
       setPremise(ref);
     }
-	
+
 	@Override
 	public boolean hasCompleteInfo() {
 		//type variable is guaranteed in constructor
@@ -60,47 +60,32 @@ public class ConjunctionElim implements Rule {
 	}
 
 	@Override
-	public boolean verify(Box data, int rowIndex) {
-		// is the rule object of the correct type? Probably just check with an assertion
-		ProofRow rowToVerify = data.getRow( rowIndex );
-
-		// are the references in the rule object in scope of rowIndex?
-		// are all the referenced rows verified?
-		// Box.isInScope should check both scope and if the data is verified
-		if( data.isInScopeOf( getPremise(), rowIndex ) == false ) return false;
-
-		// do we have the needed references to make the deduction?
-		Formula result = data.getRow(rowIndex).getFormula();
-		Formula reference = data.getRow( getPremise() ).getFormula();
-		if( reference instanceof Conjunction == false) return false;
-		Conjunction ref = (Conjunction)reference;
-		if( getType() == 1){
-			return result.equals(ref.lhs);
-		}
-		else{ //rule.getType() == 2
-			return result.equals(ref.rhs);
-		}
+	public boolean verifyRow(Box data, int rowIndex) {
+        Formula result = data.getRow(rowIndex).getFormula();
+        Conjunction ref = (Conjunction) data.getRow( getPremise() ).getFormula();
+        if(getType() == 1){
+            return result.equals(ref.lhs);
+        } else {
+            return result.equals(ref.rhs);
+        }
 	}
 
 	@Override
-	public Formula generateFormula(Box data, int rowIndex) {
-		// is the rule object of the correct type? Probably just check with an assertion
-		ProofRow rowToVerify = data.getRow( rowIndex );
-
-		// are the references in the rule object in scope of rowIndex?
-		// are all the referenced rows verified?
-		// Box.isInScope should check both scope and if the data is verified
-		if (!data.isInScopeOf(getPremise(), rowIndex)) return null;
-
-		// do we have the needed references to make the deduction?
-		Formula reference = data.getRow( getPremise() ).getFormula();
-		if (!(reference instanceof Conjunction)) return null;
-		Conjunction ref = (Conjunction)reference;
-		if (getType() == 1){
-			return ref.lhs;
-		}
-		else {
-			return ref.rhs;
-		}
+	public Formula generateRow(Box data) {
+        Conjunction ref = (Conjunction) data.getRow( getPremise() ).getFormula();
+        if(getType() == 1){
+            return ref.lhs;
+        } else {
+            return ref.rhs;
+        }
 	}
+
+	@Override
+	public boolean verifyReferences(Box data, int rowIndex) {
+		if( data.isInScopeOf( getPremise(), rowIndex ) == false ) return false;
+		Formula reference = data.getRow( getPremise() ).getFormula();
+		if( reference instanceof Conjunction == false) return false;
+		return true;
+	}
+
 }

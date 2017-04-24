@@ -59,7 +59,7 @@ public class PremisesAndConclusion extends HBox {
         parseAndStyle(premises, sPremises);
         premises.getStyleClass().add("myText");
         turnstile = new Label("⊢");
-        //turnstile.getStyleClass().add("myText");
+        turnstile.setPrefHeight(25);
         turnstile.setPrefWidth(26.0);
         turnstile.setPadding(new Insets(5,0,0,0));
         turnstile.setAlignment(Pos.CENTER);

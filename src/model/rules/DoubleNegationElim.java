@@ -4,12 +4,16 @@ import model.Box;
 import model.formulas.Formula;
 import model.formulas.Negation;
 
-public class DoubleNegationElim implements Rule {
+public class DoubleNegationElim extends Rule {
     private Integer premise1;
-    public DoubleNegationElim() {}
+
+    public DoubleNegationElim() {
+    }
+
     public DoubleNegationElim(int premise1Index) {
         this.premise1 = premise1Index;
     }
+
     public Integer getPremise1() {
         return premise1;
     }
@@ -19,13 +23,12 @@ public class DoubleNegationElim implements Rule {
     }
 
     @Override
-    public void updateReference(int refNr, String refStr){
-        if(refNr != 1) throw new IllegalArgumentException();
+    public void updateReference(int refNr, String refStr) {
+        if (refNr != 1) throw new IllegalArgumentException();
         Integer ref;
-        try{
+        try {
             ref = ReferenceParser.parseIntegerReference(refStr);
-        }
-        catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             ref = null;
             throw new NumberFormatException(); //Still want this to propagate up
         }
@@ -33,12 +36,7 @@ public class DoubleNegationElim implements Rule {
     }
 
     @Override
-    public boolean hasCompleteInfo() {
-        return premise1 != null;
-    }
-
-    @Override
-    public boolean verify(Box data, int rowIndex) {
+    public boolean verifyReferences(Box data, int rowIndex) {
         if (data.isInScopeOf(getPremise1(), rowIndex) == false) return false;
         Formula premise = data.getRow(getPremise1()).getFormula();
         if (premise instanceof Negation == false) {
@@ -49,28 +47,30 @@ public class DoubleNegationElim implements Rule {
         if (premise instanceof Negation == false) {
             return false;
         }
-        negation = (Negation) premise;
+        return true;
+    }
+
+    @Override
+    public boolean verifyRow(Box data, int rowIndex) {
+        Formula premise = data.getRow(getPremise1()).getFormula();
+        Negation negation = (Negation) premise;
         return negation.formula.equals(data.getRow(rowIndex).getFormula());
     }
 
     @Override
-    public Formula generateFormula(Box data, int rowIndex) {
-        if (data.isInScopeOf(getPremise1(), rowIndex) == false) return null;
+    public Formula generateRow(Box data) {
         Formula premise = data.getRow(getPremise1()).getFormula();
-        if (premise instanceof Negation == false) {
-            return null;
-        }
         Negation negation = (Negation) premise;
-        premise = negation.formula;
-        if (premise instanceof Negation == false) {
-            return null;
-        }
-        negation = (Negation) premise;
         return negation.formula;
     }
 
     @Override
-    public String toString(){
+    public boolean hasCompleteInfo() {
+        return premise1 != null;
+    }
+
+    @Override
+    public String toString() {
         String p1 = premise1 == null ? "" : premise1.toString();
         return String.format("¬¬-E (%s)", p1);
     }

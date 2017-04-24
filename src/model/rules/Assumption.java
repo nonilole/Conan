@@ -4,7 +4,7 @@ import model.Box;
 import model.ProofRow;
 import model.formulas.Formula;
 
-public class Assumption implements Rule {
+public class Assumption extends Rule {
     @Override
     public String toString() {
         return "Assumption";
@@ -17,11 +17,16 @@ public class Assumption implements Rule {
 
     @Override
     public void updateReference(int index, String newValue) {
-    	throw new IllegalArgumentException();
+        throw new IllegalArgumentException();
     }
 
     @Override
-    public boolean verify(Box data, int rowIndex) {
+    public boolean verifyReferences(Box data, int rowIndex) {
+        return true;
+    }
+
+    @Override
+    public boolean verifyRow(Box data, int rowIndex) {
         ProofRow rowToVerify = data.getRow(rowIndex);
         // Check if first row of box and box is an actual box.
         Box parent = rowToVerify.getParent();
@@ -31,7 +36,7 @@ public class Assumption implements Rule {
     }
 
     @Override
-    public Formula generateFormula(Box data, int rowIndex) {
+    public Formula generateRow(Box data) {
         return null;
     }
 }

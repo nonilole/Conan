@@ -1,24 +1,28 @@
 package model.rules;
 
 import model.Box;
-import model.ProofRow;
 import model.formulas.Equality;
 import model.formulas.Formula;
 
-public class EqualityIntro implements Rule {
+public class EqualityIntro extends Rule {
 
     @Override
     public boolean hasCompleteInfo() {
         return true;
     }
-    
+
     @Override
-    public void updateReference(int refNr, String refStr){
-      throw new IllegalArgumentException();
+    public void updateReference(int refNr, String refStr) {
+        throw new IllegalArgumentException();
     }
 
     @Override
-    public boolean verify(Box data, int rowIndex) {
+    public boolean verifyReferences(Box data, int rowIndex) {
+        return true;
+    }
+
+    @Override
+    public boolean verifyRow(Box data, int rowIndex) {
         Formula result = data.getRow(rowIndex).getFormula();
         if (result instanceof Equality == false) {
             return false;
@@ -29,7 +33,7 @@ public class EqualityIntro implements Rule {
     }
 
     @Override
-    public Formula generateFormula(Box data, int rowIndex) {
+    public Formula generateRow(Box data) {
         return null;
     }
 
