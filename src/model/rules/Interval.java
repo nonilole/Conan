@@ -15,6 +15,6 @@ public class Interval {
 
     @Override
     public String toString() {
-        return startIndex+1 + "-" + endIndex+1;
+        return startIndex+1 + "--" + endIndex+1;
     }
 }

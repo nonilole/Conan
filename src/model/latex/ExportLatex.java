@@ -43,7 +43,8 @@ public class ExportLatex {
             }
             output += replaceAllUnicode(info[1]);
             output += "&";
-            output += replaceAllUnicode(info[2]).replace("i","\\mathrm{i}");
+            output += replaceAllUnicode(info[2]).replaceAll(
+                    "(i|e)_(\\{\\d\\})","\\$\\\\mathrm\\{$1\\}_$2\\$");
             output += "\\\\\n";
 
         }
@@ -70,7 +71,6 @@ public class ExportLatex {
     }
 
     private static String trimEnd(String s) {
-        System.out.println(s.substring(s.length()-3, s.length()));
         if (s.substring(s.length() - 3, s.length()).equals("\\\\\n")) // Might need \r for cross platform
             return s.substring(0, s.length() - 3) + '\n';
         return s;
