@@ -33,7 +33,7 @@ public class WelcomeView extends Symbolic implements View {
         Label title = new Label(sTitle);
         title.getStyleClass().add("myTitle");
         Label welcomeText = new Label(sWelcomeText);
-        welcomeText.getStyleClass().add("myText");
+        welcomeText.getStyleClass().add("infoText");
         welcomeText.setWrapText(true);
         PremisesAndConclusion premisesAndConclusion = new PremisesAndConclusion();
         this.premises = premisesAndConclusion.getPremises();

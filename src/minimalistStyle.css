@@ -4,12 +4,26 @@
     -fx-font-size: 14px;
     -fx-border-radius: 0;
     -fx-border-size: 0;
-    -fx-text-box-border: transparent;
+  	-fx-background-color: black , white;
+   	-fx-background-insets: 0 5 -1 5, 0 -300 0 0;
 }
 
+.myText:focused {
+	-fx-background-color: black , white;
+	-fx-background-insets: 0 5 -1 5, 0 -1 0 0;
+}
+
+.infoText {
+    -fx-font-size: 18px;
+    -fx-line-height: 1.4;
+    -fx-border-radius: 0;
+    -fx-border-size: 0;
+    -fx-padding: 0 100px 0 100px;
+}
+
+
 .myTitle {
-    -fx-font-family: Monospace;
-    -fx-font-size: 25px;
+    -fx-font-size: 32px;
 }
 .fit {
     -fx-fit-to-height: true;
@@ -39,28 +53,16 @@
 
 
 .bad {
-    -fx-control-inner-background: pink;
+  	-fx-background-color: black, pink, pink;
+  	    
 }
 
 .unVerified {
-    -fx-text-box-border: pink;
-    -fx-border-style: solid;
-    -fx-border-color: pink;
-    -fx-border-width: 2 2 0 2;
-    -fx-background-insets: 0, 2;
+  	-fx-background-color: pink, white, white;
+   -fx-background-insets: 0, 2;
 }
 .conclusionReached {
     -fx-control-inner-background: #90EE90;
-}
-
-.text-field {
-    -fx-background-color: black , white , white;
-   -fx-background-insets: 0 0 -1 0, 0 0 0 0, 0 0 0 0;
-}
-
-.text-field:focused {
-    -fx-background-color: black , white , white;
-    -fx-background-insets: 0 0 -1 0, 0 0 0 0, 0 0 0 0;
 }
 
 .root {
@@ -71,11 +73,17 @@
     -fx-background-color: transparent;
 }
 
-.button:hover {
+/*.button:hover {
     -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
     -fx-background-radius: 3px, 3px, 2px, 1px;
     -fx-text-fill: -fx-text-base-color;
+    -fx-cursor: hand;
+}*/
+.button:hover {
+	-fx-background-color: black , white;
+   	-fx-background-insets: -1 -1 -1 -1, 0 0 0 0;    
+   	-fx-background-radius: 3px, 3px, 2px, 1px;
     -fx-cursor: hand;
 }
 
