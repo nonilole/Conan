@@ -33,17 +33,11 @@
           <items>
             <MenuItem accelerator="Shortcut+N" mnemonicParsing="false" onAction="#newProof" text="New" />
             <MenuItem accelerator="Shortcut+O" mnemonicParsing="false" onAction="#openProof" text="Open…" />
-            <Menu mnemonicParsing="false" text="Open Recent" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Close" />
             <MenuItem accelerator="Shortcut+S" mnemonicParsing="false" onAction="#saveProof" text="Save" />
             <MenuItem accelerator="Shortcut+S+SHIFT" mnemonicParsing="false" onAction="#saveProofAs" text="Save As…" />
             <MenuItem accelerator="Shortcut+E+SHIFT" mnemonicParsing="false" onAction="#exportProofToLatex" text="Export to LaTeX" />
-            <MenuItem mnemonicParsing="false" text="Revert" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Preferences…" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
@@ -51,22 +45,10 @@
             <MenuItem accelerator="Shortcut+R" mnemonicParsing="false" onAction="#newRow" text="New Row" />
             <MenuItem accelerator="Shortcut+U" mnemonicParsing="false" onAction="#undo" text="Undo" />
             <MenuItem accelerator="Shortcut+Y" mnemonicParsing="false" onAction="#redo" text="Redo" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
-            <MenuItem mnemonicParsing="false" text="Unselect All" />
           </items>
         </Menu>
-            <Menu mnemonicParsing="false" text="Preferences" />
         <Menu mnemonicParsing="false" text="Help">
           <items>
-
-
-            <MenuItem mnemonicParsing="false" text="About" />
                   <MenuItem accelerator="Shortcut+I" mnemonicParsing="false" onAction="#showInferenceRules" text="Show Inference Rules" />
           </items>
         </Menu>
