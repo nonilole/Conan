@@ -1,7 +1,9 @@
 package model.rules;
 
 import model.Box;
+import model.ProofRow;
 import model.formulas.Formula;
+import model.formulas.FreshVarFormula;
 
 public class FreshVar implements Rule{
 
@@ -17,7 +19,12 @@ public class FreshVar implements Rule{
 
 	@Override
 	public boolean verify(Box data, int rowIndex) {
-		//maybe check that this is first row in parent box
+		ProofRow row = data.getRow(rowIndex);
+		//check that the rule is the first row in the box
+		if(row.getParent().getRow(0) != row) return false;
+		//check that it's the correct type of formula
+		if(row.getFormula() instanceof FreshVarFormula == false) return false;
+		//TODO: check that the var is actually fresh!
 		return true;
 	}
 
