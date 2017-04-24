@@ -157,7 +157,10 @@ public class DisjunctionElim implements Rule{
 	
 	@Override
 	public String[] getReferenceStrings() {
-		return new String[]{rowRef+"", interval1+"",interval2+""};
+		return new String[]{
+				(rowRef+1)+"", 
+				(interval1.startIndex+1)+"-"+(interval1.endIndex+1),
+				(interval2.startIndex+1)+"-"+(interval2.endIndex+1)};
 	}
 
 	@Override

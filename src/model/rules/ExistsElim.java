@@ -109,7 +109,7 @@ public class ExistsElim implements Rule{
 	
 	@Override
 	public String[] getReferenceStrings() {
-		return new String[]{rowRef+"", intervalRef+""};
+		return new String[]{rowRef+"", (intervalRef.startIndex+1)+"-"+(intervalRef.endIndex+1)};
 	}
 
 	@Override

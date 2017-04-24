@@ -77,7 +77,7 @@ public class DoubleNegationElim implements Rule {
     
     @Override
 	public String[] getReferenceStrings() {
-		return new String[]{premise1+""};
+		return new String[]{(premise1+1)+""};
 	}
     
 	@Override

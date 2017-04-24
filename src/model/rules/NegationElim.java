@@ -115,7 +115,7 @@ public class NegationElim implements Rule{
 	
 	@Override
 	public String[] getReferenceStrings() {
-		return new String[]{this.rowRef1+"", this.rowRef2+""};
+		return new String[]{(this.rowRef1+1)+"", (this.rowRef2+1)+""};
 	}
 
 	@Override

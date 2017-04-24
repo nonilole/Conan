@@ -78,7 +78,7 @@ public class ForallIntro implements Rule{
 	
 	@Override
 	public String[] getReferenceStrings() {
-		return new String[]{intervalRef+""};
+		return new String[]{(intervalRef.startIndex+1)+"_"+(intervalRef.endIndex+1)};
 	}
 
 	@Override

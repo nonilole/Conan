@@ -102,7 +102,7 @@ public class ConjunctionIntro implements Rule{
 	
 	@Override
 	public String[] getReferenceStrings() {
-		return new String[]{premise1+"", premise2+""};
+		return new String[]{(premise1+1)+"", (premise2+1)+""};
 	}
 
 	@Override
