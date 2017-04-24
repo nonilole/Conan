@@ -168,7 +168,7 @@ public class MainController implements Initializable {
         if (pv == null)
             return;
         int rowNumber = pv.getRowIndexLastFocusedTF();
-        pv.getProof().insertNewRow(rowNumber, BoxReference.BEFORE);
+        pv.getProof().insertNewRow(rowNumber, BoxReference.BEFORE,0);
     }
 
     @FXML
@@ -177,7 +177,7 @@ public class MainController implements Initializable {
         if (pv == null)
             return;
         int rowNumber = pv.getRowIndexLastFocusedTF();
-        pv.getProof().insertNewRow(rowNumber, BoxReference.AFTER);
+        pv.getProof().insertNewRow(rowNumber, BoxReference.AFTER, 0);
     }
 
     @FXML

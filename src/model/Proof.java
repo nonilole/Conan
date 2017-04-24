@@ -69,13 +69,13 @@ public class Proof implements Serializable{
      * @param br:        Indicates whether the new row should be added before or after the reference row
      */
 
-    public boolean insertNewRow(int rowNumber, BoxReference br) {
+    public boolean insertNewRow(int rowNumber, BoxReference br, int depth) {
         if (rowNumber < 1 || rowNumber > proofData.size() + 1) {
             System.out.println("Proof.insertNewRow: incorrect rowNumber");
             System.out.println("rows.size(): " + proofData.size() + ", rowNumber: " + rowNumber);
             return false;
         }
-        proofData.insertRow(rowNumber - 1, br);
+        proofData.insertRow(rowNumber - 1, br, depth);
         for (ProofListener pl : listeners) {
             pl.rowInserted(rowNumber, br);
         }

@@ -46,9 +46,9 @@ public class DeleteRow implements Command {
         if (rowNo == -1) {
             proof.addRow();
         } else if (rowNo == 1) {
-            proof.insertNewRow(rowNo, BoxReference.BEFORE);
+            proof.insertNewRow(rowNo, BoxReference.BEFORE,0);
         } else {
-            proof.insertNewRow(rowNo-1, BoxReference.AFTER);
+            proof.insertNewRow(rowNo-1, BoxReference.AFTER, delDepth);
         }
         RowPane rp = rList.get(rowNo-1);
         rp.setExpression(expression);

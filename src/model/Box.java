@@ -19,15 +19,24 @@ public class Box implements ProofEntry, Serializable{
 		this.open = open;
 	}
 	
-	public void insertRow(int index, BoxReference br){
+	public void insertRow(int index, BoxReference br, int depth){
 		assert(index < size);
 		ProofRow referenceRow = getRow(index);
-		Box boxToInsertInto = referenceRow.getParent();
-		int internalReferenceIndex = boxToInsertInto.entries.indexOf(referenceRow);
-		int insertionIndex = br == BoxReference.BEFORE ? internalReferenceIndex : internalReferenceIndex+1;
-		boxToInsertInto.entries.add(insertionIndex, new ProofRow(boxToInsertInto));
-		boxToInsertInto.incSize();
-
+		Box parent = referenceRow.getParent();
+		if (br.equals(BoxReference.BEFORE)) {
+            int internalReferenceIndex = parent.entries.indexOf(referenceRow);
+            int insertionIndex = br == BoxReference.BEFORE ? internalReferenceIndex : internalReferenceIndex+1;
+            parent.entries.add(insertionIndex, new ProofRow(parent));
+            parent.incSize();
+            return;
+        }
+        ProofEntry child = referenceRow;
+		for (int i = 1; i < depth; i++) {
+		    child = parent;
+		    parent = parent.getParent();
+        }
+        parent.entries.add(parent.entries.indexOf(child), new ProofRow(parent));
+        parent.incSize();
 	}
 	public void addRowAfterBox(int index) {
 		ProofRow referenceRow = getRow(index);
@@ -122,14 +131,20 @@ public class Box implements ProofEntry, Serializable{
             return -1;
 		}
         int depth = 0;
-        int refIdx = entries.indexOf(referenceRow);
-		if (refIdx != 0) {
-            parent = entries.get(refIdx-1).getParent();
-            while (!(parent.isTopLevelBox())) {
+		if (index != 0) {
+		    Box cur = getRow(index-1).getParent();
+		    while (!cur.equals(parent)) {
+		        depth++;
+		        if (cur.isTopLevelBox()) {
+		            depth = 0;
+                    break;
+                }
+                cur = cur.getParent();
             }
         }
 		parent.entries.remove(referenceRow);
         parent.decSize();
+        System.out.println(depth);
         return depth;
 	}
 	
