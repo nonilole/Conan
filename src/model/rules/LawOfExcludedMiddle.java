@@ -1,50 +1,65 @@
 package model.rules;
 
 import model.Box;
+import model.formulas.Disjunction;
 import model.formulas.Formula;
+import model.formulas.Negation;
 
 public class LawOfExcludedMiddle extends Rule {
 
 	@Override
 	public boolean hasCompleteInfo() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public void updateReference(int index, String newValue) {
-		// TODO Auto-generated method stub
-		
+		throw new IllegalArgumentException();
 	}
 
 	@Override
 	public boolean verifyReferences(Box data, int rowIndex) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean verifyRow(Box data, int rowIndex) {
-		// TODO Auto-generated method stub
-		return false;
+		Formula rowToVerify = data.getRow(rowIndex).getFormula();
+		if (!(rowToVerify instanceof Disjunction)) {
+            return false;
+        }
+		Disjunction disj = (Disjunction) rowToVerify;
+		Formula lhs = disj.lhs; 
+		Formula rhs = disj.rhs;
+		if(!(rhs instanceof Negation)) {
+			return false;
+		}
+		Negation neg = (Negation) rhs;
+		Formula notNeg = neg.formula;
+		if(!(notNeg.equals(lhs))) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
 	public Formula generateRow(Box data) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String[] getReferenceStrings() {
-		// TODO Auto-generated method stub
-		return null;
+		return new String[0];
 	}
 
 	@Override
 	public String getDisplayName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "LEM";
 	}
+	
+	@Override
+    public String toString() {
+        return "LEM";
+    }
 
 }
