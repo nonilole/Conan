@@ -7,6 +7,8 @@ import view.RowPane;
 import java.util.ArrayList;
 import java.util.List;
 
+
+// This is a temporary measure for deleteRow inverse for one edge case. Should be replaced.
 public class DeleteRowAfterBox implements Command {
     Proof proof;
     int rowNo;
