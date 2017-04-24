@@ -112,7 +112,7 @@ public class DisjunctionElim extends Rule {
 
     @Override
     public String toString() {
-        return String.format("∨E (%s) (%s) (%s)", rowRef, interval1, interval2);
+        return String.format("∨e, %s, %s, %s", rowRef == null ? "" : new Integer(rowRef+1), interval1, interval2);
     }
 
 

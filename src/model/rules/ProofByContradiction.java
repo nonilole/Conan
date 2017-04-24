@@ -65,6 +65,6 @@ public class ProofByContradiction extends Rule {
 
     @Override
     public String toString() {
-        return String.format("PBC (%s)", interval);
+        return String.format("PBC, %s", interval);
     }
 }

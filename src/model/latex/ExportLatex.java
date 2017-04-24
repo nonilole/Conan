@@ -23,11 +23,10 @@ public class ExportLatex {
 
     public static void export(Proof proof, String file) throws IOException {
         String[] lines = proof.getProofString().split("\\r?\\n");
-        String output = "";
+        String output = "% For use with https://www.ctan.org/pkg/logicproof\n";
         int maxDepth = -1;
         int curDepth = 1;
         for (String line : lines) {
-            System.out.println(line);
             String[] info = line.split("::");
             int depth = Integer.parseInt(info[0]);
             if (maxDepth < depth) {
@@ -44,14 +43,16 @@ public class ExportLatex {
             }
             output += replaceAllUnicode(info[1]);
             output += "&";
-            output += replaceAllUnicode(info[2]);
+            output += replaceAllUnicode(info[2]).replace("i","\\mathrm{i}");
             output += "\\\\\n";
 
         }
         while (curDepth > 1) {
+            output = trimEnd(output);
             output += "\\end{subproof}\n";
             --curDepth;
         }
+        output = trimEnd(output);
         output = "\\begin{logicproof}{" + maxDepth + "}\n" + output + "\\end{logicproof}";
         Files.write(Paths.get(file), output.getBytes());
     }
@@ -69,7 +70,8 @@ public class ExportLatex {
     }
 
     private static String trimEnd(String s) {
-        if (s.substring(s.length() - 3, s.length()).equals("\\\\\n"))
+        System.out.println(s.substring(s.length()-3, s.length()));
+        if (s.substring(s.length() - 3, s.length()).equals("\\\\\n")) // Might need \r for cross platform
             return s.substring(0, s.length() - 3) + '\n';
         return s;
 

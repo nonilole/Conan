@@ -56,7 +56,7 @@ public class ForallIntro extends Rule {
 
     @Override
     public String toString() {
-        return "∀I (" + intervalRef + ")";
+        return String.format("∀i, %s", intervalRef);
     }
 
 }

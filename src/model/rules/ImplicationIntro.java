@@ -70,6 +70,6 @@ public class ImplicationIntro extends Rule {
 
     @Override
     public String toString() {
-        return String.format("→-I (%s)", premiseInterval);
+        return String.format("→i, %s", premiseInterval);
     }
 }

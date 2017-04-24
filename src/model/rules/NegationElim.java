@@ -81,8 +81,8 @@ public class NegationElim extends Rule {
 
     @Override
     public String toString() {
-        String p1 = rowRef1 == null ? "" : rowRef1.toString();
-        String p2 = rowRef2 == null ? "" : rowRef2.toString();
-        return String.format("¬E (%s),(%s)", p1, p2);
+        String p1 = rowRef1 == null ? "" : new Integer(rowRef1+1).toString();
+        String p2 = rowRef2 == null ? "" : new Integer(rowRef2+1).toString();
+        return String.format("¬e, %s, %s", p1, p2);
     }
 }
