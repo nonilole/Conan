@@ -192,7 +192,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		this.tab.setContent(anchorPane);
 		tabPane.getTabs().add(this.tab);
 		tabPane.getSelectionModel().select(this.tab); // Byt till den nya tabben
-		newRow();
+		if(proof.isLoaded == false) newRow();
         --curCommand;
 		commandList.clear();
 		initializeRuleMap();
@@ -554,6 +554,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		labelList.remove(labelList.size()-1);
 		updateLabelPaddings(rowNo-1);
 	}
+	
 	public void boxOpened(){
 		VBox vb = new VBox();
 		vb.getStyleClass().add("openBox");
@@ -561,6 +562,13 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		curBoxDepth.push(vb);
 		newRow();
 	}
+	public void openBoxInView(){
+		VBox vb = new VBox();
+		vb.getStyleClass().add("openBox");
+		checkAndAdd(vb);
+		curBoxDepth.push(vb);
+	}
+	
 	public void boxInserted(int rowNumber){
 		RowPane rp = rList.get(rowNumber-1);
 		VBox metabox = (VBox) rp.getParent();
@@ -611,6 +619,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
             applyStyleIf(expression, !wellFormed, "bad");
 	}
 	public void conclusionReached(boolean correct, int lineNo){
+		//when a proof is loaded, the view has an empty rList
+		if(rList.size() == 0) return;
 		TextField expression = (TextField) rList.get(lineNo-1).getExpression();
 		applyStyleIf(expression, correct, "conclusionReached");
 	}
@@ -759,10 +769,14 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	 * @param event
 	 */
 	public void addRule(javafx.event.ActionEvent event){
+		addRule(event.toString().split("'")[1]);
+	}
+	
+	public void addRule(String text){
 		if(lastFocusedTf.getId() == "rightTextfield"){
 			int tmpCaretPosition = caretPosition;
-			String[] parts = event.toString().split("'");
-			lastFocusedTf.setText(parts[1]);
+			//String[] parts = event.toString().split("'");
+			lastFocusedTf.setText(text);
 			lastFocusedTf.requestFocus();
 			lastFocusedTf.positionCaret(tmpCaretPosition+1);
 		}
@@ -772,8 +786,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			RulePane rulepane = (RulePane) borderpane.getRight();
 			TextField tf = (TextField) rulepane.getChildren().get(0);
 			int tmpCaretPosition = caretPosition;
-			String[] parts = event.toString().split("'");
-			tf.setText(parts[1]);
+			//String[] parts = event.toString().split("'");
+			tf.setText(text);
 			tmpLastFocusedTf.requestFocus();
 			tmpLastFocusedTf.positionCaret(tmpCaretPosition);
 		}
@@ -798,6 +812,35 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		newValue = newValue.replaceAll("ex|te|th", "∃");
 		newValue = newValue.replaceAll("co|bo", "⊥");
 		return newValue;
+	}
+	
+	/**
+	 * Display all the information in the loaded proof
+	 */
+	public void displayLoadedProof(){
+		List<RowInfo> proofInfo = proof.getProofInfo();
+		
+		for(int i = 1; i <= proofInfo.size() ; i++){
+			RowInfo rowInfo = proofInfo.get(i-1);
+			System.out.println("i="+i+" "+rowInfo);
+			if(  rowInfo.startBox && i != 1) { 
+				this.openBoxInView();
+			}
+			rowAdded();
+			RowPane rowPane = this.rList.get(i-1);
+			
+			
+			rowPane.setExpression(rowInfo.expression);
+			rowPane.setRule(rowInfo.rule);
+			rowPane.setRulePrompt(0, rowInfo.ref1);
+			rowPane.setRulePrompt(1, rowInfo.ref2);
+			rowPane.setRulePrompt(2, rowInfo.ref3);
+			
+			if(rowInfo.endBox){
+				this.boxClosed();
+			}
+		}
+		proof.verifyProof(0);
 	}
 
 }

@@ -1,11 +1,14 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.ProofListener.RowInfo;
 import model.rules.Interval;
+import model.rules.Rule;
 
-public class Box implements ProofEntry{
+public class Box implements ProofEntry, Serializable{
 	private boolean open;
 	private int size; // only alter this value through incSize and decSize methods, they will also update parent boxes
 	private Box parent;
@@ -341,6 +344,36 @@ public class Box implements ProofEntry{
 				}
 			}
 			System.out.println("");
+		}
+	}
+	
+	public void fillList(ArrayList<ProofListener.RowInfo> list){
+		boolean startOfBox = true;
+		for(ProofEntry entry : this.entries){
+			if(entry instanceof Box){
+				((Box)entry).fillList(list);
+			}
+			else{
+				ProofRow row = (ProofRow) entry;
+				String expression = row.isWellFormed() ? row.getFormula()+"" : row.getUserInput();
+				Rule rule = row.getRule();
+				String ruleStr;
+				String[] refs = {"","",""};
+				if(rule == null){
+					ruleStr = "";
+				}
+				else{
+					ruleStr = rule.getDisplayName();
+					String[] refsx = rule.getReferenceStrings();
+					for(int i = 0; i < refsx.length; i++){
+						refs[i] = refsx[i];
+					}
+				}
+				boolean endOfBox = entries.indexOf(entry) == entries.size()-1;
+				list.add(new RowInfo(expression, ruleStr, refs[0], refs[1], refs[2], 
+						startOfBox, endOfBox, row.isWellFormed(), row.isVerified()));
+			}
+			startOfBox = false;
 		}
 	}
 }

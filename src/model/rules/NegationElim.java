@@ -79,10 +79,23 @@ public class NegationElim extends Rule {
         return new Contradiction();
     }
 
+
     @Override
     public String toString() {
         String p1 = rowRef1 == null ? "" : new Integer(rowRef1+1).toString();
         String p2 = rowRef2 == null ? "" : new Integer(rowRef2+1).toString();
         return String.format("¬e, %s, %s", p1, p2);
     }
+	
+	@Override
+	public String[] getReferenceStrings() {
+		String ref1 = rowRef1 == null ? "" : (rowRef1+1)+"";
+		String ref2 = rowRef2 == null ? "" : (rowRef2+1)+"";
+		return new String[]{ref1, ref2};
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "¬E";
+	}
 }

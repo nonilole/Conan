@@ -40,8 +40,18 @@ public class Premise extends Rule {
         return true;
     }
 
-    @Override
-    public Formula generateFormula(Box data, int rowIndex) {
-        return null;
-    }
+	@Override
+	public Formula generateFormula(Box data, int rowIndex) {
+		return null;
+	}
+
+	@Override
+	public String[] getReferenceStrings() {
+		return new String[0];
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "Premise";
+	}
 }

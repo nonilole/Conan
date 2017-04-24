@@ -72,4 +72,15 @@ public class ImplicationIntro extends Rule {
     public String toString() {
         return String.format("→i, %s", premiseInterval);
     }
+	
+	@Override
+	public String[] getReferenceStrings() {
+		String ref1 = premiseInterval == null ? "" : (premiseInterval.startIndex+1)+"-"+(premiseInterval.endIndex+1);
+		return new String[]{ref1};
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "→I";
+	}
 }

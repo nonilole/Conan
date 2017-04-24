@@ -1,6 +1,8 @@
 package model.rules;
 
-public class Interval {
+import java.io.Serializable;
+
+public class Interval implements Serializable{
     public int startIndex;//inclusive
     public int endIndex;//inclusive
 

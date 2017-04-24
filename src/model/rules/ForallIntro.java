@@ -5,6 +5,7 @@ import model.formulas.Formula;
 import model.formulas.FreshVarFormula;
 import model.formulas.QuantifiedFormula;
 
+
 public class ForallIntro extends Rule {
     private Interval intervalRef;
 
@@ -58,5 +59,16 @@ public class ForallIntro extends Rule {
     public String toString() {
         return String.format("∀i, %s", intervalRef);
     }
+	
+	@Override
+	public String[] getReferenceStrings() {
+		String ref1 = intervalRef == null ? "" : (intervalRef.startIndex+1)+"_"+(intervalRef.endIndex+1);
+		return new String[]{ref1};
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "∀I";
+	}
 
 }

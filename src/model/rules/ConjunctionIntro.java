@@ -82,6 +82,18 @@ public class ConjunctionIntro extends Rule {
     public void setPremise2(int premise2) {
         this.premise2 = premise2;
     }
+	
+	@Override
+	public String[] getReferenceStrings() {
+		String ref1 = premise1 == null ? "" : (premise1+1)+"";
+		String ref2 = premise2 == null ? "" : (premise2+1)+"";
+		return new String[]{ref1, ref2};
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "∧I";
+	}
 
     @Override
     public String toString() {

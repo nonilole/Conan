@@ -5,6 +5,7 @@ import model.formulas.Contradiction;
 import model.formulas.Formula;
 import model.formulas.Negation;
 
+
 public class ProofByContradiction extends Rule {
 
     private Interval interval;
@@ -67,4 +68,15 @@ public class ProofByContradiction extends Rule {
     public String toString() {
         return String.format("PBC, %s", interval);
     }
+    
+    @Override
+	public String[] getReferenceStrings() {
+		String ref1 = interval == null ? "" : (interval.startIndex+1)+"-"+(interval.endIndex+1);
+		return new String[]{ref1};
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "PBC";
+	}
 }

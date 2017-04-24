@@ -74,4 +74,15 @@ public class DoubleNegationElim extends Rule {
         String p1 = premise1 == null ? "" : new Integer(premise1+1).toString();
         return String.format("¬¬e, %s", p1);
     }
+    
+    @Override
+	public String[] getReferenceStrings() {
+    	String ref1 = premise1 == null ? "" : (premise1+1)+"";
+		return new String[]{ref1};
+	}
+    
+	@Override
+	public String getDisplayName() {
+		return "¬¬E";
+	}
 }

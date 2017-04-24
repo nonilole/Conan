@@ -63,6 +63,28 @@ public class DisjunctionIntro extends Rule {
     public Formula generateRow(Box data) {
         return null;
     }
+	@Override
+	public Formula generateFormula(Box data, int rowIndex) {
+	    return null;
+//		if (!data.isInScopeOf(getPremise(), rowIndex)) return null;
+//		Formula premise = data.getRow(getPremise()).getFormula();
+//		if (type == 1)
+//            return new Disjunction(premise, null);// PLACEHOLDER
+//		return new Disjunction(null, premise); // WANT TO GENERATE EMPTY FORMULA
+//		return new Disjunction(premise, null);
+//		return new Disjunction(null, premise);
+	}
+	
+	@Override
+	public String[] getReferenceStrings() {
+		String ref1 = premise == null ? "" : (premise+1)+"";
+		return new String[]{ref1};
+	}
+	@Override
+	public String getDisplayName() {
+		// implemented in subclasses
+		return "∨I";
+	}
 
     @Override
     public boolean hasCompleteInfo() {

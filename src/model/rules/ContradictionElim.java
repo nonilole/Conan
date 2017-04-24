@@ -67,4 +67,15 @@ public class ContradictionElim extends Rule {
     public void setPremise(Integer premise) {
         this.premise = premise;
     }
+    
+	@Override
+	public String[] getReferenceStrings() {
+		return new String[]{ premise == null ? "" : (premise+1)+""};
+	}
+	@Override
+	public String getDisplayName() {
+		return "⊥E";
+	}
+    
+    
 }

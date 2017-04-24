@@ -39,4 +39,14 @@ public class Assumption extends Rule {
     public Formula generateRow(Box data) {
         return null;
     }
+    
+    @Override
+	public String[] getReferenceStrings() {
+		return new String[0];
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "Ass.";
+	}
 }

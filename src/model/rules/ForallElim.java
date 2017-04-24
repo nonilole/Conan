@@ -4,6 +4,7 @@ import model.Box;
 import model.formulas.Formula;
 import model.formulas.QuantifiedFormula;
 
+
 public class ForallElim extends Rule {
     private Integer rowRef;
 
@@ -55,4 +56,15 @@ public class ForallElim extends Rule {
     public String toString() {
         return String.format("∀e, %s", rowRef == null ? "" : new Integer(rowRef+1));
     }
+    
+    @Override
+	public String[] getReferenceStrings() {
+		String ref1 = rowRef == null ? "" : (rowRef+1)+"";
+		return new String[]{ref1};
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "∀E";
+	}
 }

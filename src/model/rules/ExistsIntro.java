@@ -50,4 +50,15 @@ public class ExistsIntro extends Rule {
     public String toString() {
         return String.format("∃e, %s", rowRef == null ? "" : new Integer(rowRef+1));
     }
+    
+    @Override
+	public String[] getReferenceStrings() {
+		String ref1 = rowRef == null ? "" : (rowRef+1)+"";
+		return new String[]{ref1};
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "∃I";
+	}
 }

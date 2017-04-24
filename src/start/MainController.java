@@ -244,15 +244,17 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    void openProof(ActionEvent event) {
-        ProofView openedProofView;
-        try {
-            openedProofView = IOHandler.openProof(tabPane);
-        } catch (Exception e) {
-            System.out.println(e);
-            return;
-        }
-        //open new tab to display openedProof
+    void openProof(ActionEvent event){
+    	ProofView openedProofView;
+    	try{
+    		openedProofView = IOHandler.openProof(tabPane);
+    		openedProofView.displayLoadedProof();
+    	}catch(Exception e){
+    		System.out.println("MainController.openProof exception:");
+    		System.out.println(e);
+    		e.printStackTrace();
+    		return;
+    	}
     }
 
     @FXML

@@ -62,5 +62,17 @@ public class EqualityElim extends Rule {
     public String toString() {
         return String.format("=e, %s, %s", rowRef1 == null ? "" : new Integer(rowRef1+1), rowRef2 == null ? "" : new Integer(rowRef2+1));
     }
+	
+	@Override
+	public String[] getReferenceStrings() {
+		String ref1 = rowRef1 == null ? "" : (rowRef1+1)+"";
+		String ref2 = rowRef2 == null ? "" : (rowRef2+1)+"";
+		return new String[]{ref1, ref2};
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "=E";
+	}
 
 }

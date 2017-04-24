@@ -121,5 +121,17 @@ public class DisjunctionElim extends Rule {
         Formula interval1EndFormula = data.getRow(interval1.endIndex).getFormula();
         return interval1EndFormula;
     }
+    
+    @Override
+	public String[] getReferenceStrings() {
+		String ref1 = rowRef == null ? "" :(rowRef+1)+"";
+		String ref2 = interval1 == null ? "" : (interval1.startIndex+1)+"-"+(interval1.endIndex+1);
+		String ref3 = interval2 == null ? "" : (interval2.startIndex+1)+"-"+(interval2.endIndex+1);
+		return new String[]{ref1,ref2,ref3};
+	}
 
+	@Override
+	public String getDisplayName() {
+		return "∨E";
+	}
 }

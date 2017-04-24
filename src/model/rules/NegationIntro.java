@@ -66,4 +66,14 @@ public class NegationIntro extends Rule {
     public String toString() {
         return String.format("¬i, %s", interval);
     }
+    @Override
+	public String[] getReferenceStrings() {
+		String ref1 = interval == null ? "" : (interval.startIndex+1)+"-"+(interval.endIndex+1);
+		return new String[]{ref1};
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "¬I";
+	}
 }

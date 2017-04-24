@@ -87,5 +87,16 @@ public class ConjunctionElim extends Rule {
 		if( reference instanceof Conjunction == false) return false;
 		return true;
 	}
+	
+	@Override
+	public String[] getReferenceStrings() {
+		String ref1 = reference == null ? "" : (reference+1)+"";
+		return new String[]{ref1};
+	}
 
+	@Override
+	public String getDisplayName() {
+		//Overridden in subclasses
+		return "∧E";
+	}
 }
