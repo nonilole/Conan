@@ -113,17 +113,24 @@ public class Box implements ProofEntry, Serializable{
 		return null;
 	}
 	
-	public boolean deleteRow(int index){
+	public int deleteRow(int index){
 		assert(index < size);
 		ProofRow referenceRow = getRow(index);
 		Box parent = referenceRow.getParent();
         int idxRefRow = parent.entries.indexOf(referenceRow);
         if (idxRefRow == 0 && idxRefRow+1 < parent.entries.size() && parent.entries.get(idxRefRow+1) instanceof Box) {
-            return false;
+            return -1;
 		}
+        int depth = 0;
+		if (entries.indexOf(referenceRow) != 0) {
+		    parent =
+            while (!(parent.isTopLevelBox())) {
+
+            }
+        }
 		parent.entries.remove(referenceRow);
         parent.decSize();
-        return true;
+        return depth;
 	}
 	
 	/*public boolean updateFormulaRow(int index, String userFormulaInput){

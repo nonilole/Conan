@@ -276,10 +276,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			executeCommand(new DeleteBox(proof, rowNo, rList));
 			return;
         }
-        if (rowNo >= 2 && parent.equals(rList.get(rowNo-2).getParent().getParent())) {
-			executeCommand(new DeleteRowAfterBox(proof, rowNo-1, rList));
-			return;
-		}
         executeCommand(new DeleteRow(proof, rowNo, rList));
 	}
 	public void undo() {

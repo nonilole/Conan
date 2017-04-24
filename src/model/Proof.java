@@ -43,20 +43,21 @@ public class Proof implements Serializable{
      * @param rowNumber
      */
 
-    public boolean deleteRow(int rowNumber) {
+    public int deleteRow(int rowNumber) {
         if (rowNumber < 1 || rowNumber > proofData.size() || proofData.size() == 1) {
             return false;
         }
         System.out.println(proofData.size());
-        if (!(proofData.deleteRow(rowNumber - 1)))
-            return false;
+        int delDepth = (proofData.deleteRow(rowNumber - 1));
+        if (delDepth == -1)
+            return -1;
         for (ProofListener listener : this.listeners) {
             listener.rowDeleted(rowNumber);
         }
         System.out.println("deleteRow(" + rowNumber + ")");
         proofData.printRows(1, 1);
         System.out.println("==========================================================");
-        return true;
+        return delDepth;
     }
 
     /**

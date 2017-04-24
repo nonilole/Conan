@@ -14,6 +14,8 @@ public class DeleteRow implements Command {
     String expression;
     String rule;
     List<String> prompt = new ArrayList<String>(3);
+    private int delDepth;
+
     public DeleteRow(Proof proof, int rowNo, List<RowPane> rList) {
         this.proof = proof;
         this.rowNo = rowNo;
@@ -32,7 +34,10 @@ public class DeleteRow implements Command {
                 this.prompt.set(i, rp.getRulePrompt(i).getText());
             }
         }
-        return proof.deleteRow(rowNo);
+        this.delDepth = proof.deleteRow(rowNo);
+        if (this.delDepth == -1)
+            return false;
+        return true;
     }
     // This is not a true inverse to deleteRow, because insertNewRow doesn't insert at arbitrary depth
     // Needs to be fixed or let other commands handle edge cases
