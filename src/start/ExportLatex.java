@@ -1,4 +1,4 @@
-package model.latex;
+package start;
 
 import model.Proof;
 
