@@ -18,6 +18,7 @@ import view.ProofView;
 public class IOHandler {
 
 	public static ProofView openProof(TabPane tabPane) throws FileNotFoundException, ClassNotFoundException, IOException {
+		System.out.println("opendProof");
 		Window window = tabPane.getScene().getWindow();
 		FileChooser fc = new FileChooser();
     	fc.getExtensionFilters().addAll(
@@ -36,6 +37,7 @@ public class IOHandler {
         proof = (Proof) in.readObject();
         in.close();
         fileIn.close();
+        proof.load();
         ProofView pv = new ProofView(tabPane, proof);
         pv.setPath(file.getPath());
         pv.setName(file.getName());
@@ -45,6 +47,7 @@ public class IOHandler {
 	}
 	
 	public static void saveProof(Proof proof, String path) throws FileNotFoundException, IOException{
+		System.out.println("saveProof");
     	FileOutputStream fos = new FileOutputStream(path);
     	ObjectOutputStream oout = new ObjectOutputStream(fos);
     	oout.writeObject(proof);

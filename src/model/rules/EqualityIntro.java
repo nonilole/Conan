@@ -37,4 +37,14 @@ public class EqualityIntro implements Rule {
     public String toString() {
         return "=-I";
     }
+    
+    @Override
+	public String[] getReferenceStrings() {
+		return new String[0];
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "=I";
+	}
 }

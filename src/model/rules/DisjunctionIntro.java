@@ -90,5 +90,15 @@ public class DisjunctionIntro implements Rule {
 //		return new Disjunction(premise, null);
 //		return new Disjunction(null, premise);
 	}
+	
+	@Override
+	public String[] getReferenceStrings() {
+		return new String[]{this.premise+""};
+	}
+	@Override
+	public String getDisplayName() {
+		// implemented in subclasses
+		return "∨I";
+	}
 
 }

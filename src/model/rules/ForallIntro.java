@@ -75,5 +75,15 @@ public class ForallIntro implements Rule{
 	public String toString(){
 		return "∀I ("+intervalRef+")";
 	}
+	
+	@Override
+	public String[] getReferenceStrings() {
+		return new String[]{intervalRef+""};
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "∀I";
+	}
 
 }

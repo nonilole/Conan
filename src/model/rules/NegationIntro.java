@@ -89,4 +89,14 @@ public class NegationIntro implements Rule{
 
 		return new Negation(intervalStartFormula);
 	}
+
+	@Override
+	public String[] getReferenceStrings() {
+		return new String[]{this.interval+""};
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "¬I";
+	}
 }

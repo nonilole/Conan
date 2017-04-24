@@ -226,11 +226,13 @@ public class MainController implements Initializable {
     	ProofView openedProofView;
     	try{
     		openedProofView = IOHandler.openProof(tabPane);
+    		openedProofView.displayLoadedProof();
     	}catch(Exception e){
+    		System.out.println("MainController.openProof exception:");
     		System.out.println(e);
+    		e.printStackTrace();
     		return;
     	}
-    	//open new tab to display openedProof
     }
 
     @FXML

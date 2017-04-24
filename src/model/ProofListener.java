@@ -14,5 +14,36 @@ public interface ProofListener {
     public void deletedRowAfterBox(int rowNo);
     public void rowAdded();
     
+    
+    static class RowInfo{
+    	public final String expression;
+    	public final String rule;
+    	public final String ref1;
+    	public final String ref2;
+    	public final String ref3;
+    	public final boolean startBox;
+    	public final boolean endBox;
+    	public final boolean wellformed;
+    	public final boolean verified;
+    	
+    	public RowInfo(String expression,String rule,String ref1,String ref2,String ref3,
+    			boolean startBox,boolean endBox, boolean wellformed, boolean verified){
+    		this.expression = expression;
+    		this.rule = rule;
+    		this.ref1 = ref1;
+    		this.ref2 = ref2;
+    		this.ref3 = ref3;
+    		this.startBox = startBox;
+    		this.endBox =  endBox;
+    		this.wellformed = wellformed;
+    		this.verified = verified;
+    	}
+    	
+    	@Override
+    	public String toString(){
+    		return String.format("%s :: %s (%s)(%s)(%s)||startBox: %b, endBox: %b, wellformed: %b, verified: %b " , 
+    				expression, rule, ref1,ref2,ref3, startBox,endBox,wellformed,verified);
+    	}
+    }
 }
 

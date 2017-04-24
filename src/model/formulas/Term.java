@@ -1,11 +1,12 @@
 
 package model.formulas;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 //needed for categorizing logical objects and functions as terms
-public interface Term{
+public interface Term extends Serializable{
 	public Term replace(String oldId, String newId);
 	public boolean containsObjectId(String id);
 	

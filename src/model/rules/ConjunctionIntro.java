@@ -99,5 +99,15 @@ public class ConjunctionIntro implements Rule{
 		Formula content2 = data.getRow( getPremise2() ).getFormula();
 		return new Conjunction(content1, content2);
 	}
+	
+	@Override
+	public String[] getReferenceStrings() {
+		return new String[]{premise1+"", premise2+""};
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "∧I";
+	}
 
 }

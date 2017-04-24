@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import model.ProofListener.RowInfo;
 import model.formulas.Equality;
 import model.formulas.Formula;
 import model.formulas.LogicObject;
@@ -29,9 +30,37 @@ public class Tests {
 		//replaceVarTest2();
 		//existElimTest();
 		//printRandomFormulas(20);
-		testEqualOrSub();
+		//testEqualOrSub();
 		//isInstantiationOfTest(10000);
+		getProofInfoTest();
 		System.out.println("Done.");
+	}
+	
+	public static void getProofInfoTest(){
+		Proof proof = new Proof();
+		proof.addRow();//1
+		proof.openBox();
+		proof.addRow();//2
+		proof.updateFormulaRow("∃xP(x)", 1);
+		proof.addRule(1, new Premise());
+		proof.updateFormulaRow("y", 2);
+		proof.addRule(2, new FreshVar());
+		proof.addRow();//3
+		proof.updateFormulaRow("P(y)", 3);
+		proof.addRule(3, new Premise());
+		proof.addRow();//4
+		proof.updateFormulaRow("Q", 4);
+		proof.addRule(4, new Premise());
+		proof.closeBox();
+		proof.addRow();
+		proof.updateFormulaRow("Q", 5);
+		proof.addRule(5, new ExistsElim());
+		proof.rulePromptUpdate(5, 1, "1");
+		proof.rulePromptUpdate(5, 2, "2-4");
+		System.out.println("\n==================================================================\n");
+		List<RowInfo> list = proof.getProofInfo();
+		for(RowInfo row : list){ System.out.println(row+"");}
+		
 	}
 	
 	public static void testEqualOrSub(){

@@ -154,5 +154,15 @@ public class DisjunctionElim implements Rule{
 			return null;
 		return interval1EndFormula;
 	}
+	
+	@Override
+	public String[] getReferenceStrings() {
+		return new String[]{rowRef+"", interval1+"",interval2+""};
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "∨E";
+	}
 
 }

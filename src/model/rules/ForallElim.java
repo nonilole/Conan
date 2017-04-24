@@ -53,4 +53,14 @@ public class ForallElim implements Rule{
 	public String toString(){
 		return "∀E ("+rowRef+")";
 	}
+	
+	@Override
+	public String[] getReferenceStrings() {
+		return new String[]{rowRef+""};
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "∀E";
+	}
 }

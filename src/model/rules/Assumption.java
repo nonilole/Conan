@@ -34,4 +34,14 @@ public class Assumption implements Rule {
     public Formula generateFormula(Box data, int rowIndex) {
         return null;
     }
+    
+    @Override
+	public String[] getReferenceStrings() {
+		return new String[0];
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "Ass.";
+	}
 }

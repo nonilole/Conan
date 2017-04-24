@@ -103,4 +103,15 @@ public class ConjunctionElim implements Rule {
 			return ref.rhs;
 		}
 	}
+	
+	@Override
+	public String[] getReferenceStrings() {
+		return new String[]{reference+""};
+	}
+
+	@Override
+	public String getDisplayName() {
+		//Overridden in subclasses
+		return "∧E";
+	}
 }

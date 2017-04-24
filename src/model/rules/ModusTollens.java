@@ -88,5 +88,15 @@ public class ModusTollens implements Rule {
 	public String toString(){
 		return "MT "+rowRef1+", "+rowRef2;
 	}
+	
+	@Override
+	public String[] getReferenceStrings() {
+		return new String[]{rowRef1+"", rowRef2+""};
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "MT";
+	}
 
 }

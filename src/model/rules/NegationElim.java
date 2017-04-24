@@ -112,4 +112,14 @@ public class NegationElim implements Rule{
 
 		return new Contradiction();
 	}
+	
+	@Override
+	public String[] getReferenceStrings() {
+		return new String[]{this.rowRef1+"", this.rowRef2+""};
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "¬E";
+	}
 }

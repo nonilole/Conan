@@ -5,15 +5,17 @@ import model.rules.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.prefs.Preferences;
 
 import static java.util.prefs.Preferences.*;
 
 public class Proof implements Serializable{
-    private ArrayList<ProofListener> listeners = new ArrayList<ProofListener>();
-    private Parser parser = new Parser(); //this won't be serialized
+    private transient ArrayList<ProofListener> listeners = new ArrayList<ProofListener>();
+    private transient Parser parser = new Parser(); //this won't be serialized
     private Formula conclusion;
     private Box proofData = new Box(null, true);
+    public boolean isLoaded = false;
 
     /***
      * Add a new row at the end of the proof.
@@ -255,6 +257,8 @@ public class Proof implements Serializable{
      */
     public void load(){
         parser = new Parser();
+        this.listeners = new ArrayList<ProofListener>();
+        isLoaded = true;
     }
 
     public void registerProofListener(ProofListener listener){
@@ -329,5 +333,13 @@ public class Proof implements Serializable{
     public void printIntervalScopes( boolean zeroBasedNumbering){
         proofData.printIntervalScopes(zeroBasedNumbering);
 
+    }
+    
+    public List<ProofListener.RowInfo> getProofInfo(){
+    	ArrayList<ProofListener.RowInfo> returnList = new ArrayList<ProofListener.RowInfo>();
+    	
+    	proofData.fillList(returnList);
+    	
+    	return returnList;
     }
 }

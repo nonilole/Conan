@@ -106,4 +106,14 @@ public class ExistsElim implements Rule{
 		if(refBox.getRow(refBox.size()-1).getFormula().containsObjectId(freshVar)) return null;
 		return refBox.getRow(refBox.size()-1).getFormula();
 	}
+	
+	@Override
+	public String[] getReferenceStrings() {
+		return new String[]{rowRef+"", intervalRef+""};
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "∃E";
+	}
 }

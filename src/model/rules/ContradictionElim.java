@@ -69,4 +69,15 @@ public class ContradictionElim implements Rule {
     public void setPremise(Integer premise) {
         this.premise = premise;
     }
+    
+	@Override
+	public String[] getReferenceStrings() {
+		return new String[]{premise+""};
+	}
+	@Override
+	public String getDisplayName() {
+		return "⊥E";
+	}
+    
+    
 }

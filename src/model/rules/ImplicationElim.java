@@ -82,5 +82,15 @@ public class ImplicationElim implements Rule{
 	public String toString(){
 		return "→E "+rowRef1+", "+rowRef2;
 	}
+	
+	@Override
+	public String[] getReferenceStrings() {
+		return new String[]{rowRef1+"", rowRef2+""};
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "→E";
+	}
 
 }

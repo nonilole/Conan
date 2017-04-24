@@ -38,4 +38,14 @@ public class FreshVar implements Rule{
 		return "Fresh var.";
 	}
 
+	@Override
+	public String[] getReferenceStrings() {
+		return new String[0];
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "Fresh";
+	}
+
 }

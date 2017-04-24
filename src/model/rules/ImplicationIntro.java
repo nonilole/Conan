@@ -85,4 +85,14 @@ public class ImplicationIntro implements Rule {
 		Formula conclusionOfBox = data.getRow( premiseInterval.endIndex ).getFormula();
 		return new Implication(assumption, conclusionOfBox);
 	}
+	
+	@Override
+	public String[] getReferenceStrings() {
+		return new String[]{this.premiseInterval+""};
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "→I";
+	}
 }

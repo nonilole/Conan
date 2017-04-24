@@ -83,4 +83,14 @@ public class ProofByContradiction implements Rule{
 		return start.formula;
 	}
 
+	@Override
+	public String[] getReferenceStrings() {
+		return new String[]{""+this.interval};
+	}
+
+	@Override
+	public String getDisplayName() {
+		return "PBC";
+	}
+
 }

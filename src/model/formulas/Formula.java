@@ -1,11 +1,12 @@
 
 package model.formulas;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 //Use interface instead?
-public abstract class Formula {
+public abstract class Formula implements Serializable{
 	protected int precedence;
 	public int getPrecedence(){
 		return precedence;
