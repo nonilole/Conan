@@ -4,7 +4,7 @@ import model.Proof;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 
 public class ExportLatex {
@@ -21,7 +21,7 @@ public class ExportLatex {
         unicodeToLaTeX.put('⊥', "\\bot ");
     }
 
-    public static void export(Proof proof, Path file) throws IOException {
+    public static void export(Proof proof, String file) throws IOException {
         String[] lines = proof.getProofString().split("\\r?\\n");
         String output = "";
         int maxDepth = -1;
@@ -53,7 +53,7 @@ public class ExportLatex {
             --curDepth;
         }
         output = "\\begin{logicproof}{" + maxDepth + "}\n" + output + "\\end{logicproof}";
-        Files.write(file, output.getBytes());
+        Files.write(Paths.get(file), output.getBytes());
     }
 
     private static String replaceAllUnicode(String s) {

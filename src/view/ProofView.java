@@ -1,7 +1,5 @@
 package view;
 
-import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.*;
 import javafx.application.Platform;
 import java.util.regex.Pattern;
@@ -19,7 +17,6 @@ import javafx.scene.layout.*;
 import javafx.scene.input.*;
 import model.BoxReference;
 import model.Proof;
-import model.latex.ExportLatex;
 import model.ProofListener;
 import view.Command.*;
 
@@ -106,7 +103,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
 	// Key combinations
 	final static KeyCombination shiftEnter = new KeyCodeCombination(KeyCode.ENTER, KeyCombination.SHIFT_DOWN);
-	final static KeyCombination ctrlB = new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN);
+    final static KeyCombination ctrlB = new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN);
 	final static KeyCombination ctrlD = new KeyCodeCombination(KeyCode.D, KeyCombination.CONTROL_DOWN);
 	// Pattern for prompt
 	// Match at least one digit perhaps one dash and then any number of digits. Or match nothing at all.
@@ -143,7 +140,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	/**
 	 * Adds content to the TabPane in the proof and adds listeners to the premise and conclusion.
 	 * Vad är det som metoden gör med proof? lägg gärna till extra beskrivning om detta!!
-	 *
 	 * @param tabPane
 	 * @param premisesAndConclusion
 	 */
@@ -182,7 +178,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			lastFocusedTf = this.conclusion;
 			caretPosition = this.conclusion.getCaretPosition();
 		});
-		AnchorPane cp = createProofPane();
+		AnchorPane cp=createProofPane();
 		SplitPane sp = new SplitPane(premisesAndConclusion, cp);
 		sp.setOrientation(Orientation.VERTICAL);
 		sp.setDividerPosition(0, 0.1);
@@ -197,7 +193,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		tabPane.getTabs().add(this.tab);
 		tabPane.getSelectionModel().select(this.tab); // Byt till den nya tabben
 		newRow();
-		--curCommand;
+        --curCommand;
 		commandList.clear();
 		initializeRuleMap();
 	}
@@ -237,67 +233,54 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	public ProofView(TabPane tabPane, Proof proof) {
 		this(tabPane, proof, new PremisesAndConclusion());
 	}
-
 	public ProofView(TabPane tabPane, Proof proof, String sPremises, String sConclusion) {
 		this(tabPane, proof, new PremisesAndConclusion(sPremises, sConclusion));
 	}
-
 	/* Controller begin */
 	public void openBox() {
 		proof.openBox();
 	}
-
 	public void closeBox() {
 		proof.closeBox();
 	}
-
 	private void executeCommand(Command c) {
-		if (c.execute()) {
-			++curCommand;
-			if (0 <= curCommand && curCommand < commandList.size())
-				commandList.subList(curCommand, commandList.size()).clear();
+	    if (c.execute()) {
+            ++curCommand;
+	        if (0 <= curCommand && curCommand < commandList.size())
+                commandList.subList(curCommand, commandList.size()).clear();
 			commandList.add(c);
 		}
-	}
-
-	public void newRow() {
-		executeCommand(new AddRow(proof, rList));
-	}
-
-	public void addRowAfterBox(int rowNo) {
+    }
+    public void newRow() {
+        executeCommand(new AddRow(proof, rList));
+    }
+	public void addRowAfterBox(int rowNo){
 		// Let's assume this is possible and check if it's the last row in a box or else we execute insertNewRow
-		RowPane rp = rList.get(rowNo - 1);
+		RowPane rp = rList.get(rowNo-1);
 		VBox parent = (VBox) rp.getParent();
 		int idxOfRp = parent.getChildren().indexOf(rp);
-		if (parent.getParent() instanceof VBox && idxOfRp == parent.getChildren().size() - 1)
-			executeCommand(new AddRowAfterBox(proof, rowNo, rList));
+		if (parent.getParent() instanceof VBox && idxOfRp == parent.getChildren().size()-1)
+            executeCommand(new AddRowAfterBox(proof, rowNo, rList));
 		else
-			executeCommand(new InsertRow(proof, rowNo, BoxReference.AFTER, rList));
+            executeCommand(new InsertRow(proof, rowNo, BoxReference.AFTER, rList));
 
 	}
-
-	public void insertNewRow(int rowNo, BoxReference br) {
+	public void insertNewRow(int rowNo, BoxReference br){
 		executeCommand(new InsertRow(proof, rowNo, br, rList));
 	}
-
-	public void insertNewBox(int rowNo) {
-		executeCommand(new InsertBox(proof, rowNo, rList));
-	}
-
-	public void deleteRow(int rowNo) {
+	public void insertNewBox(int rowNo){ executeCommand(new InsertBox(proof, rowNo, rList));}
+	public void deleteRow(int rowNo){
 		executeCommand(new DeleteRow(proof, rowNo, rList));
 	}
-
 	public void undo() {
-		if (0 <= curCommand && curCommand < commandList.size()) {
-			commandList.get(curCommand).undo();
-			--curCommand;
+	    if (0 <= curCommand && curCommand < commandList.size()) {
+	        commandList.get(curCommand).undo();
+	        --curCommand;
 		}
 	}
-
 	public void redo() {
-		if (0 <= curCommand + 1 && curCommand + 1 < commandList.size()) {
-			commandList.get(curCommand + 1).execute();
+		if (0 <= curCommand+1 && curCommand+1 < commandList.size()) {
+			commandList.get(curCommand+1).execute();
 			++curCommand;
 		}
 	}
@@ -315,14 +298,13 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	/**
 	 * Creates a new row with a textfield for the expression and a textfield
 	 * for the rules and adds listeners to both of them.
-	 *
 	 * @return bp, the BorderPane containing two textfields.
 	 */
 	private RowPane createRow(boolean isFirstRowInBox, int nrOfClosingBoxes) {
 		//borderpane which contains the textfield for the expression and the rule
-		RowPane bp = new RowPane(isFirstRowInBox, nrOfClosingBoxes);
+		RowPane bp = new RowPane(isFirstRowInBox,nrOfClosingBoxes);
 
-		//setting up a context menu for right-clicking a textfield
+        //setting up a context menu for right-clicking a textfield
 		ContextMenu contextMenu = new ContextMenu();
 		MenuItem delete = new MenuItem("Delete");
 		MenuItem insertAbove = new MenuItem("Insert Above");
@@ -335,38 +317,33 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		contextMenu.getItems().add(insertBelow);
 		contextMenu.getItems().add(insertBox);
 		bp.getRule().setContextMenu(contextMenu);
-		for (int i = 0; i < 3; i++) {
+		for(int i = 0;i<3; i++) {
 			bp.getRulePrompt(i).setContextMenu(contextMenu);
 		}
 		bp.getExpression().setContextMenu(contextMenu);
 		bp.getRule().setContextMenu(contextMenu);
 
-
+		
 		delete.setOnAction(event -> {
-			int rowOfPressedButton = rList.indexOf(bp) + 1;
+			int rowOfPressedButton=rList.indexOf(bp) + 1;
 			deleteRow(rowOfPressedButton);
-		});
-		;
+		});;
 		insertAbove.setOnAction(event -> {
-			int rowOfPressedButton = rList.indexOf(bp) + 1;
+			int rowOfPressedButton=rList.indexOf(bp) + 1;
 			insertNewRow(rowOfPressedButton, BoxReference.BEFORE);
-		});
-		;
+		});;
 		insertHere.setOnAction(event -> {
-			int rowOfPressedButton = rList.indexOf(bp) + 1;
+			int rowOfPressedButton=rList.indexOf(bp) + 1;
 			insertNewRow(rowOfPressedButton, BoxReference.AFTER);
-		});
-		;
+		});;
 		insertBelow.setOnAction(event -> {
-			int rowOfPressedButton = rList.indexOf(bp) + 1;
+			int rowOfPressedButton=rList.indexOf(bp) + 1;
 			addRowAfterBox(rowOfPressedButton);
-		});
-		;
+		});;
 		insertBox.setOnAction(event -> {
-			int rowOfPressedButton = rList.indexOf(bp) + 1;
+			int rowOfPressedButton=rList.indexOf(bp) + 1;
 			insertNewBox(rowOfPressedButton);
-		});
-		;
+		});;
 
 
 		//adding listeners to the expression- and rule textfield
@@ -377,10 +354,10 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			lastFocusedTf = tfExpression;
 			caretPosition = tfExpression.getCaretPosition();
 		});
-
+		
 		TextField tfRule = bp.getRule();
 		tfRule.setPromptText("Rule");
-
+		
 		tfRule.focusedProperty().addListener((observable, oldValue, newValue) -> {
 			lastFocusedTf = tfRule;
 			caretPosition = tfRule.getCaretPosition();
@@ -391,11 +368,11 @@ public class ProofView extends Symbolic implements ProofListener, View {
 				public void handle(KeyEvent ke) {
 					int index = rList.indexOf(bp); //Kanske vill flytta in den här för prestanda
 					if (ctrlD.match(ke)) {
-						deleteRow(index + 1);
+						deleteRow(index+1);
 					} else if (ctrlB.match(ke)) {
-						insertNewBox(index + 1);
-					} else if (shiftEnter.match(ke)) {
-						addRowAfterBox(index + 1);
+                        insertNewBox(index + 1);
+                    } else if (shiftEnter.match(ke)) {
+						addRowAfterBox(index+1);
 						rList.get(index).getClosestPromptFromLeft(finalI).requestFocus();
 					} else if (ke.getCode() == KeyCode.ENTER) {
 						insertNewRow(index + 1, BoxReference.AFTER);
@@ -404,7 +381,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 						if (index + 1 < rList.size()) {
 							rList.get(index + 1).getClosestPromptFromLeft(finalI).requestFocus();
 						} else {
-							addRowAfterBox(index + 1);
+						    addRowAfterBox(index+1);
 						}
 					} else if (ke.getCode() == KeyCode.UP) {
 						if (index - 1 >= 0) {
@@ -417,28 +394,28 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
 		tfExpression.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent ke) {
-				int index = rList.indexOf(bp); //Kanske vill flytta in den här för prestanda
+                int index = rList.indexOf(bp); //Kanske vill flytta in den här för prestanda
 				if (ctrlD.match(ke)) {
 					deleteRow(index + 1);
 				} else if (ctrlB.match(ke)) {
-					insertNewBox(index + 1);
-				} else if (shiftEnter.match(ke)) {
-					addRowAfterBox(index + 1);
-					rList.get(index + 1).getExpression().requestFocus();
+                    insertNewBox(index+1);
+                } else if (shiftEnter.match(ke)) {
+                    addRowAfterBox(index+1);
+                    rList.get(index+1).getExpression().requestFocus();
 				} else if (ke.getCode() == KeyCode.ENTER) {
-					insertNewRow(index + 1, BoxReference.AFTER);
-					rList.get(index + 1).getExpression().requestFocus();
+			        insertNewRow(index+1, BoxReference.AFTER);
+					rList.get(index+1).getExpression().requestFocus();
 				} else if (ke.getCode() == KeyCode.DOWN) {
-					if (index + 1 < rList.size()) {
-						rList.get(index + 1).getExpression().requestFocus();
+					if(index+1<rList.size()) {
+						rList.get(index+1).getExpression().requestFocus();
 					} else {
 						addRowAfterBox(index + 1);
 					}
-				} else if (ke.getCode() == KeyCode.UP) {
-					if (index - 1 >= 0) {
-						rList.get(index - 1).getExpression().requestFocus();
-					}
-				}
+				} else if(ke.getCode() == KeyCode.UP) {
+                    if (index - 1 >= 0) {
+                        rList.get(index - 1).getExpression().requestFocus();
+                    }
+                }
 			}
 		});
 		tfRule.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -446,24 +423,23 @@ public class ProofView extends Symbolic implements ProofListener, View {
 				int index = rList.indexOf(bp);
 				if (ctrlD.match(ke)) {
 					deleteRow(index + 1);
-				}
-				if (ctrlB.match(ke)) {
-					insertNewBox(index + 1);
-				} else if (shiftEnter.match(ke)) {
-					addRowAfterBox(index + 1);
+				} if (ctrlB.match(ke)) {
+                    insertNewBox(index + 1);
+                } else if (shiftEnter.match(ke)) {
+					addRowAfterBox(index+1);
 					rList.get(index).getRule().requestFocus();
 				} else if (ke.getCode() == KeyCode.ENTER) {
-					insertNewRow(index + 1, BoxReference.AFTER);
-					rList.get(index + 1).getRule().requestFocus();
+					insertNewRow(index+1, BoxReference.AFTER);
+					rList.get(index+1).getRule().requestFocus();
 				} else if (ke.getCode() == KeyCode.DOWN) {
-					if (index + 1 < rList.size()) {
-						rList.get(index + 1).getRule().requestFocus();
-					} else {
-						addRowAfterBox(index + 1);
-					}
-				} else if (ke.getCode() == KeyCode.UP) {
-					if (index - 1 >= 0) {
-						rList.get(index - 1).getRule().requestFocus();
+					if(index+1<rList.size()) {
+						rList.get(index+1).getRule().requestFocus();
+                    } else {
+                        addRowAfterBox(index + 1);
+                    }
+				} else if(ke.getCode() == KeyCode.UP) {
+					if(index-1>=0) {
+						rList.get(index-1).getRule().requestFocus();
 					}
 				}
 			}
@@ -486,9 +462,9 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
 	//should only be called AFTER a new row has been added to rList since it uses rList.size()
 	Label createLabel() {
-		Label lbl = new Label("" + rList.size());
+		Label lbl = new Label(""+rList.size());
 		lbl.getStyleClass().add("lineNo");
-		lbl.setPadding(new Insets(8, 2, 2, 2));
+		lbl.setPadding(new Insets(8,2,2,2));
 		//lbl.setCache(true);
 		//lbl.setCacheShape(true);
 		lbl.setCacheHint(CacheHint.SPEED);
@@ -498,9 +474,9 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
 	// PROOF LISTENER METHODS
 	//Adds a new row at the end of the proof
-	public void rowAdded() {
+	public void rowAdded(){
 		RowPane rp;
-		if (curBoxDepth.isEmpty()) {
+		if(curBoxDepth.isEmpty()){
 			rp = createRow(false, 0);
 			rList.add(rp);
 			rows.getChildren().add(rp);
@@ -516,7 +492,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		updateLabelPaddings(rList.size());
 		addListeners(rp);
 	}
-
 	//rowNo is which row the reference row is at, BoxReference tells you if you want to add the new row before or after
 	public void rowInserted(int rowNo, BoxReference br) {
 		RowPane referenceRow;//row we'll use to get a refence to the box where we add the new row
@@ -524,40 +499,40 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		int nrOfClosingBoxes; //the nr of boxes that closes at line rowNo
 		int indexToInsertInParent;
 		VBox parentBox; // which vbox to display the new row in
-		int rListInsertionIndex = (br == BoxReference.BEFORE) ? rowNo - 1 : rowNo;
+		int rListInsertionIndex = (br == BoxReference.BEFORE) ? rowNo-1 : rowNo;
 
-		if (br == BoxReference.BEFORE) {
-			referenceRow = rList.get(rowNo - 1);
+		if(br == BoxReference.BEFORE){
+			referenceRow = rList.get(rowNo-1);
 			isFirstRowInBox = referenceRow.getIsFirstRowInBox();
 			nrOfClosingBoxes = 0;
 			referenceRow.setIsFirstRowInBox(false);
-			parentBox = (VBox) referenceRow.getParent();
+			parentBox = (VBox)referenceRow.getParent();
 			indexToInsertInParent = parentBox.getChildren().indexOf(referenceRow);
 
-		} else { //br == BoxReference.AFTER
-			referenceRow = rList.get(rowNo - 1);
+		}
+		else{ //br == BoxReference.AFTER
+			referenceRow = rList.get(rowNo-1);
 			nrOfClosingBoxes = referenceRow.getNrOfClosingBoxes();
 			isFirstRowInBox = false;
 			referenceRow.setNrOfClosingBoxes(0);
-			parentBox = (VBox) referenceRow.getParent();
+			parentBox = (VBox)referenceRow.getParent();
 			indexToInsertInParent = parentBox.getChildren().indexOf(referenceRow) + 1;
 		}
 		RowPane rp = createRow(isFirstRowInBox, nrOfClosingBoxes);
 		// ((TextField)rp.getExpression()).setText("*");
-		parentBox.getChildren().add(indexToInsertInParent, rp);
+		parentBox.getChildren().add(indexToInsertInParent,rp);
 		rList.add(rListInsertionIndex, rp);
 		lineNo.getChildren().add(createLabel());
 		updateLabelPaddings(rowNo);
 		addListeners(rp);
 	}
-
 	public void addedRowAfterBox(int rowNo) {
 		RowPane referenceRow;
-		referenceRow = rList.get(rowNo - 1); //Assume this is the last row in box
+		referenceRow = rList.get(rowNo-1); //Assume this is the last row in box
 		VBox metaBox = (VBox) referenceRow.getParent().getParent();
 		int nrOfClosingBoxes = referenceRow.getNrOfClosingBoxes();
 		referenceRow.setNrOfClosingBoxes(1);
-		RowPane rp = createRow(false, nrOfClosingBoxes - 1);
+		RowPane rp = createRow(false, nrOfClosingBoxes-1);
 		int idx = metaBox.getChildren().indexOf(referenceRow.getParent()) + 1;
 		metaBox.getChildren().add(idx, rp);
 		rList.add(rowNo, rp);
@@ -565,32 +540,29 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		updateLabelPaddings(rowNo);
 		addListeners(rp);
 	}
-
 	public void deletedRowAfterBox(int rowNo) {
 		RowPane referenceRow;
-		referenceRow = rList.get(rowNo - 1); //Assume this is the last row in box
+		referenceRow = rList.get(rowNo-1); //Assume this is the last row in box
 		VBox metaBox = (VBox) referenceRow.getParent().getParent();
 		int nrOfClosingBoxes = referenceRow.getNrOfClosingBoxes();
 		int extraClosedBoxes = rList.get(rowNo).getNrOfClosingBoxes();
-		referenceRow.setNrOfClosingBoxes(nrOfClosingBoxes + extraClosedBoxes);
+		referenceRow.setNrOfClosingBoxes(nrOfClosingBoxes+extraClosedBoxes);
 		int idx = metaBox.getChildren().indexOf(referenceRow.getParent()) + 1;
 		metaBox.getChildren().remove(idx);
 		rList.remove(rowNo);
 		List<Node> labelList = lineNo.getChildren();
-		labelList.remove(labelList.size() - 1);
-		updateLabelPaddings(rowNo - 1);
+		labelList.remove(labelList.size()-1);
+		updateLabelPaddings(rowNo-1);
 	}
-
-	public void boxOpened() {
+	public void boxOpened(){
 		VBox vb = new VBox();
 		vb.getStyleClass().add("openBox");
 		checkAndAdd(vb);
 		curBoxDepth.push(vb);
 		newRow();
 	}
-
-	public void boxInserted(int rowNumber) {
-		RowPane rp = rList.get(rowNumber - 1);
+	public void boxInserted(int rowNumber){
+		RowPane rp = rList.get(rowNumber-1);
 		VBox metabox = (VBox) rp.getParent();
 		int indexOfRp = metabox.getChildren().indexOf(rp);
 		VBox newBox = new VBox();
@@ -602,9 +574,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		rp.incrementNrOfClosingBoxes();
 		updateLabelPaddings(rowNumber);
 	}
-
 	public void boxRemoved(int rowNumber) {
-		RowPane rp = rList.get(rowNumber - 1);
+		RowPane rp = rList.get(rowNumber-1);
 		rp.decrementNrOfClosingBoxes();
 		VBox metabox = (VBox) rp.getParent().getParent();
 
@@ -617,47 +588,42 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		}
 		updateLabelPaddings(rowNumber);
 	}
-
-	public void boxClosed() {
+	public void boxClosed(){
 		if (!curBoxDepth.isEmpty()) {
 			VBox vb = curBoxDepth.pop();
 
 			//Update last row and its padding
-			rList.get(rList.size() - 1).incrementNrOfClosingBoxes();
-			updateLabelPaddings(rList.size() - 1);
+			rList.get(rList.size()-1).incrementNrOfClosingBoxes();
+			updateLabelPaddings(rList.size()-1);
 
 			vb.getStyleClass().clear();
 			vb.getStyleClass().add("closedBox");
 
 		}
 	}
-
 	public void rowUpdated(String newText, boolean wellFormed, int lineNo) {
-		TextField expression = (TextField) rList.get(lineNo - 1).getExpression();
+		TextField expression = (TextField) rList.get(lineNo-1).getExpression();
 		if (expression.getText().equals(""))
 			wellFormed = true;
 		if (newText != null)
 			expression.setText(newText);
-		else
-			applyStyleIf(expression, !wellFormed, "bad");
+        else
+            applyStyleIf(expression, !wellFormed, "bad");
 	}
-
-	public void conclusionReached(boolean correct, int lineNo) {
-		TextField expression = (TextField) rList.get(lineNo - 1).getExpression();
+	public void conclusionReached(boolean correct, int lineNo){
+		TextField expression = (TextField) rList.get(lineNo-1).getExpression();
 		applyStyleIf(expression, correct, "conclusionReached");
 	}
-
 	public void rowVerified(boolean verified, int lineNo) {
-		TextField rule = (TextField) rList.get(lineNo - 1).getRule();
+		TextField rule = (TextField) rList.get(lineNo-1).getRule();
 		applyStyleIf(rule, !verified, "unVerified");
 	}
-
 	//update view to reflect that row with nr rowNr has been deleted
-	public void rowDeleted(int rowNr) {
-		RowPane rp = rList.get(rowNr - 1);
-		VBox box = (VBox) rp.getParent();
+	public void rowDeleted(int rowNr){
+		RowPane rp = rList.get(rowNr-1);
+		VBox box = (VBox)rp.getParent();
 		List<Node> parentComponentList = box.getChildren();
-		if (parentComponentList.remove(rp) == false) {
+		if(parentComponentList.remove(rp) == false){
 			System.out.println("ProofView.rowDeleted: something went wrong!");
 			return;
 		}
@@ -666,31 +632,34 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		boolean updatePreviousRowLabel = false;
 
 		//deleted row was last row in this box, remove the box
-		if (wasOnlyRowInBox) {
+		if(wasOnlyRowInBox){
 			removeRecursivelyIfEmpty(box);
-		} else {
-			if (rp.getIsFirstRowInBox()) { // next row is now first in this box
-				RowPane nextRow = rList.get(rowNr - 1);
+		}
+		else{
+			if(rp.getIsFirstRowInBox()){ // next row is now first in this box
+				RowPane nextRow = rList.get(rowNr-1);
 				nextRow.setIsFirstRowInBox(rp.getIsFirstRowInBox());
 			}
-			if (rp.getNrOfClosingBoxes() > 0) { // previous row now closes the boxes
-				rList.get(rowNr - 2).setNrOfClosingBoxes(rp.getNrOfClosingBoxes());
+			if(rp.getNrOfClosingBoxes() > 0){ // previous row now closes the boxes
+				rList.get(rowNr-2).setNrOfClosingBoxes(rp.getNrOfClosingBoxes());
 				updatePreviousRowLabel = true;
 			}
 		}
 
 		//remove a Label and update paddings in relevant labels
 		List<Node> labelList = lineNo.getChildren();
-		labelList.remove(labelList.size() - 1);
-		updateLabelPaddings(updatePreviousRowLabel ? rowNr - 1 : rowNr);
-		int idxToFocus = rowNr - 1;
+		labelList.remove(labelList.size()-1);
+		updateLabelPaddings( updatePreviousRowLabel ? rowNr-1 : rowNr  );
+		int idxToFocus = rowNr-1;
 		if (idxToFocus >= rList.size()) {
-			idxToFocus = rList.size() - 1;
+			idxToFocus = rList.size()-1;
 		}
 		RowPane focusThisPane = rList.get(idxToFocus);
 		focusThisPane.getExpression().requestFocus();
 	}
 	// END OF PROOF LISTENER METHODS
+
+
 
 
 	// public void focus() { // Save the last focused textfield here for quick resuming?
@@ -702,48 +671,30 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			expression.getStyleClass().add(style);
 		}
 	}
-
-	public ViewTab getTab() {
-		return tab;
-	}
-
-	public Proof getProof() {
-		return proof;
-	}
-
-	public String getPath() {
-		return path;
-	}
-
-	public void setPath(String path) {
-		this.path = path;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+	public ViewTab getTab(){ return tab;}
+	public Proof getProof(){ return proof;}
+	public String getPath(){ return path;}
+	public void setPath(String path){ this.path = path; }
+	public String getName(){ return name;}
+	public void setName(String name){ this.name = name; }
 
 	//updates the padding for the labels starting from lineNr all the way down
 	//TODO: get rid of magic numbers
-	private void updateLabelPaddings(int lineNr) {
+	private void updateLabelPaddings(int lineNr){
 		List<Node> labelList = this.lineNo.getChildren();
-		assert (rList.size() == labelList.size());
+		assert(rList.size() == labelList.size());
 		//update the padding for each label by checking the corresponding rowPane
-		for (int i = lineNr - 1; i < labelList.size(); i++) {
+		for(int i = lineNr-1; i < labelList.size() ; i++){
 			RowPane rp = rList.get(i);
 			int topPadding = rp.getIsFirstRowInBox() ? 11 : 8;
 			int bottomPadding = 2 + 5 * rp.getNrOfClosingBoxes();
 			Label label = (Label) labelList.get(i);
-			label.setPadding(new Insets(topPadding, 2, bottomPadding, 2));
+			label.setPadding(new Insets(topPadding,2,bottomPadding,2));
 		}
 	}
 
 	//add listeners for the formula and rule textfields in the RowPane at the given rowNr
-	private void addListeners(RowPane rp) {
+	private void addListeners(RowPane rp){
 
 		// Updates the Proof object if the textField is updated
 		TextField formulaField = rp.getExpression();
@@ -751,32 +702,32 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
 
 		formulaField.textProperty().addListener((ov, oldValue, newValue) -> {
-			int rpIndex = rList.indexOf(rp);
-			proof.updateFormulaRow(newValue, rpIndex + 1);
+            int rpIndex = rList.indexOf(rp);
+			proof.updateFormulaRow(newValue, rpIndex+1);
 		});
 		// Updates the Proof object if the textField is updated
 		ruleField.textProperty().addListener((ov, oldValue, newValue) -> {
-			int rpIndex = rList.indexOf(rp);
+            int rpIndex = rList.indexOf(rp);
 			if (newValue.equals("Ass.") || newValue.equals("Fresh")) {
-				insertNewBox(rpIndex + 1);
+				insertNewBox(rpIndex+1);
 			}
-			try {
-				proof.updateRuleRow(newValue, rpIndex + 1);
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			}
-			rp.setPrompts(ruleMap.getOrDefault(newValue, -1));
+            try {
+                proof.updateRuleRow(newValue, rpIndex+1);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            }
+			rp.setPrompts(ruleMap.getOrDefault(newValue,-1));
 		});
-		for (int i = 0; i < 3; i++) {
-			TextField prompt = rp.getRulePrompt(i);
-			int finalI = i + 1;
+		for (int i = 0 ; i < 3; i++) {
+		    TextField prompt = rp.getRulePrompt(i);
+			int finalI = i+1;
 			prompt.textProperty().addListener((observable, oldValue, newValue) -> {
 				Matcher m = p.matcher(newValue);
 				if (m.matches()) {
-					int rpNr = rList.indexOf(rp) + 1;
-					proof.rulePromptUpdate(rpNr, finalI, newValue);
+					int rpNr = rList.indexOf(rp)+1;
+                    proof.rulePromptUpdate(rpNr, finalI, newValue);
 				} else {
 					prompt.setText(oldValue);
 
@@ -786,17 +737,17 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	}
 
 	//
-	private void removeRecursivelyIfEmpty(VBox box) {
+	private void removeRecursivelyIfEmpty(VBox box){
 		Node parentNode = box.getParent();
-		assert (box.getChildren().isEmpty());
-		if (parentNode instanceof VBox) {
+		assert( box.getChildren().isEmpty() );
+		if(parentNode instanceof VBox ){
 			VBox parentBox = (VBox) parentNode;
 			parentBox.getChildren().remove(box);
-			if (box.getStyleClass().toString().equals("openBox")) {
+			if(box.getStyleClass().toString().equals("openBox")){
 				VBox box2 = curBoxDepth.pop();
-				assert (box == box2);
+				assert(box == box2);
 			}
-			if (parentBox.getChildren().isEmpty()) {
+			if( parentBox.getChildren().isEmpty() ) {
 				removeRecursivelyIfEmpty(parentBox);
 			}
 		}
@@ -805,17 +756,17 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	/**
 	 * Adds the rule symbol that has been pressed to the text field for the rule when either "expression" or "righTextfield"
 	 * is focused.
-	 *
 	 * @param event
 	 */
-	public void addRule(javafx.event.ActionEvent event) {
-		if (lastFocusedTf.getId() == "rightTextfield") {
+	public void addRule(javafx.event.ActionEvent event){
+		if(lastFocusedTf.getId() == "rightTextfield"){
 			int tmpCaretPosition = caretPosition;
 			String[] parts = event.toString().split("'");
 			lastFocusedTf.setText(parts[1]);
 			lastFocusedTf.requestFocus();
-			lastFocusedTf.positionCaret(tmpCaretPosition + 1);
-		} else if (lastFocusedTf.getId() == "expression") {
+			lastFocusedTf.positionCaret(tmpCaretPosition+1);
+		}
+		else if(lastFocusedTf.getId() == "expression"){
 			TextField tmpLastFocusedTf = lastFocusedTf;
 			BorderPane borderpane = (BorderPane) lastFocusedTf.getParent();
 			RulePane rulepane = (RulePane) borderpane.getRight();
@@ -828,24 +779,16 @@ public class ProofView extends Symbolic implements ProofListener, View {
 		}
 	}
 
-	/**
-	 * Returns the row index of the last focused textfield in the proof.
-	 *
-	 * @return row index of the last focused textfield in the proof, otherwise it returns -1
-	 */
-	public int getRowIndexLastFocusedTF() {
-		if (lastFocusedTf != null && rList.indexOf(lastFocusedTf.getParent()) != -1) {
-			return rList.indexOf(lastFocusedTf.getParent()) + 1;
-		}
-		return -1;
+	/**Returns the row index of the last focused textfield in the proof.
+	 *@return row index of the last focused textfield in the proof, otherwise it returns -1
+	 * */
+	public int getRowIndexLastFocusedTF(){
+		    if(lastFocusedTf!=null&&rList.indexOf(lastFocusedTf.getParent())!=-1){
+		    	return rList.indexOf(lastFocusedTf.getParent())+1;
+		    }
+		        return -1;
 	}
-
-	public void exportToLatex() throws IOException {
-		ExportLatex.export(proof, Paths.get("/home/jan/mex.tex"));
-		return;
-	}
-
-
+	
 	public String checkShortcut(String newValue){
 		newValue = newValue.replaceAll("!|ne|no", "¬");
 		newValue = newValue.replaceAll("&|an", "∧");
