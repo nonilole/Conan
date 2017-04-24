@@ -836,13 +836,11 @@ public class ProofView extends Symbolic implements ProofListener, View {
 			rowPane.setRulePrompt(1, rowInfo.ref2);
 			rowPane.setRulePrompt(2, rowInfo.ref3);
 			
-			//TODO: wellformed...
-			//TODO: verified...
-			
 			if(rowInfo.endBox){
 				this.boxClosed();
 			}
 		}
+		proof.verifyProof(0);
 	}
 
 }

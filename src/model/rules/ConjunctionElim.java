@@ -106,7 +106,8 @@ public class ConjunctionElim implements Rule {
 	
 	@Override
 	public String[] getReferenceStrings() {
-		return new String[]{(reference+1) + ""};
+		String ref1 = reference == null ? "" : (reference+1)+"";
+		return new String[]{ref1};
 	}
 
 	@Override

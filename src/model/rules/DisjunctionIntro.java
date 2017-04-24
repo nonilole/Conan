@@ -93,7 +93,8 @@ public class DisjunctionIntro implements Rule {
 	
 	@Override
 	public String[] getReferenceStrings() {
-		return new String[]{(this.premise+1)+""};
+		String ref1 = premise == null ? "" : (premise+1)+"";
+		return new String[]{ref1};
 	}
 	@Override
 	public String getDisplayName() {

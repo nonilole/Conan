@@ -85,7 +85,8 @@ public class ProofByContradiction implements Rule{
 
 	@Override
 	public String[] getReferenceStrings() {
-		return new String[]{(this.interval.startIndex+1)+"-"+(this.interval.endIndex+1)};
+		String ref1 = interval == null ? "" : (interval.startIndex+1)+"-"+(interval.endIndex+1);
+		return new String[]{ref1};
 	}
 
 	@Override

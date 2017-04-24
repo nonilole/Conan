@@ -88,7 +88,8 @@ public class ImplicationIntro implements Rule {
 	
 	@Override
 	public String[] getReferenceStrings() {
-		return new String[]{(this.premiseInterval.startIndex+1)+"-"+(this.premiseInterval.endIndex+1)};
+		String ref1 = premiseInterval == null ? "" : (premiseInterval.startIndex+1)+"-"+(premiseInterval.endIndex+1);
+		return new String[]{ref1};
 	}
 
 	@Override

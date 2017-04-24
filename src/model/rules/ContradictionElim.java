@@ -72,7 +72,7 @@ public class ContradictionElim implements Rule {
     
 	@Override
 	public String[] getReferenceStrings() {
-		return new String[]{(premise+1)+""};
+		return new String[]{ premise == null ? "" : (premise+1)+""};
 	}
 	@Override
 	public String getDisplayName() {

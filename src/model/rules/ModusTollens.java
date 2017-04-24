@@ -91,7 +91,9 @@ public class ModusTollens implements Rule {
 	
 	@Override
 	public String[] getReferenceStrings() {
-		return new String[]{(rowRef1+1)+"", (rowRef2+1)+""};
+		String ref1 = rowRef1 == null ? "" : (rowRef1+1)+"";
+		String ref2 = rowRef2 == null ? "" : (rowRef2+1)+"";
+		return new String[]{ref1, ref2};
 	}
 
 	@Override

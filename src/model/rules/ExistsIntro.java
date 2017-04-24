@@ -59,7 +59,8 @@ public class ExistsIntro implements Rule{
 	
 	@Override
 	public String[] getReferenceStrings() {
-		return new String[]{(rowRef+1)+""};
+		String ref1 = rowRef == null ? "" : (rowRef+1)+"";
+		return new String[]{ref1};
 	}
 
 	@Override
