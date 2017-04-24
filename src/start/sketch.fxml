@@ -38,7 +38,7 @@
             <MenuItem mnemonicParsing="false" text="Close" />
             <MenuItem accelerator="Shortcut+S" mnemonicParsing="false" onAction="#saveProof" text="Save" />
             <MenuItem accelerator="Shortcut+S+SHIFT" mnemonicParsing="false" onAction="#saveProofAs" text="Save As…" />
-                  <MenuItem accelerator="Shortcut+S+SHIFT" mnemonicParsing="false" onAction="#exportProofToLatex" text="Export to LaTeX" />
+            <MenuItem accelerator="Shortcut+E+SHIFT" mnemonicParsing="false" onAction="#exportProofToLatex" text="Export to LaTeX" />
             <MenuItem mnemonicParsing="false" text="Revert" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" text="Preferences…" />
