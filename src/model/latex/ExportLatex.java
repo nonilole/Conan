@@ -8,7 +8,18 @@ import java.nio.file.Path;
 import java.util.HashMap;
 
 public class ExportLatex {
-    private HashMap<Character, String> unicodeToLaTex;
+    private static final HashMap<Character, String> unicodeToLaTeX;
+
+    static {
+        unicodeToLaTeX = new HashMap<Character, String>();
+        unicodeToLaTeX.put('∧',"\\land ");
+        unicodeToLaTeX.put('∨',"\\lor ");
+        unicodeToLaTeX.put('¬',"\\neg ");
+        unicodeToLaTeX.put('→',"\\to ");
+        unicodeToLaTeX.put('∃',"\\exists ");
+        unicodeToLaTeX.put('∀',"\\forall ");
+        unicodeToLaTeX.put('⊥',"\\bot ");
+    };
     public static void export (Proof proof, Path file) throws IOException {
         String[] lines = proof.getProofString().split("\\r?\\n");
         String output = "";
@@ -26,13 +37,16 @@ public class ExportLatex {
                 ++curDepth;
             }
             while (curDepth > depth) {
+                if (output.substring(output.length()-3,output.length()-1).equals("\\\n")) {
+                    output = output.substring(0, output.length()-3) + '\n';
+                }
                 output += "\\end{subproof}\n";
                 --curDepth;
             }
             output += replaceAllUnicode(info[1]);
             output += "&";
             output += replaceAllUnicode(info[2]);
-            output += "\n";
+            output += "\\\\\n";
 
         }
         while (curDepth > 1) {
@@ -44,6 +58,14 @@ public class ExportLatex {
     }
 
     private static String replaceAllUnicode(String s) {
-        return s;
+        String ret = "";
+        for (int i = 0; i < s.length(); i++) {
+            String next = unicodeToLaTeX.getOrDefault(s.charAt(i), null);
+            if (next == null)
+                ret += s.charAt(i);
+            else
+                ret += next;
+        }
+        return ret;
     }
 }
