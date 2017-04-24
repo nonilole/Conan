@@ -37,7 +37,6 @@
             <MenuItem accelerator="Shortcut+S" mnemonicParsing="false" onAction="#saveProof" text="Save" />
             <MenuItem accelerator="Shortcut+S+SHIFT" mnemonicParsing="false" onAction="#saveProofAs" text="Save As…" />
             <MenuItem accelerator="Shortcut+E+SHIFT" mnemonicParsing="false" onAction="#exportProofToLatex" text="Export to LaTeX" />
-            <SeparatorMenuItem mnemonicParsing="false" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
@@ -68,7 +67,7 @@
                <graphic>
                   <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../resources/icons/ic_save_black_24dp_2x.png" />
+                        <Image url="file:/home/jan/SD/Conan/resources/icons/ic_save_black_24dp_2x.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
@@ -76,7 +75,7 @@
                <graphic>
                   <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../resources/icons/ic_folder_open_black_24dp_2x.png" />
+                        <Image url="file:/home/jan/SD/Conan/resources/icons/ic_folder_open_black_24dp_2x.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
@@ -87,7 +86,7 @@
                <graphic>
                   <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../resources/icons/ic_space_bar_black_upside_down_24dp_2x.png" />
+                        <Image url="file:/home/jan/SD/Conan/resources/icons/ic_space_bar_black_upside_down_24dp_2x.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
@@ -98,7 +97,7 @@
                <graphic>
                   <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../resources/icons/ic_space_bar_black_24dp_2x.png" />
+                        <Image url="file:/home/jan/SD/Conan/resources/icons/ic_space_bar_black_24dp_2x.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
@@ -109,7 +108,7 @@
                <graphic>
                   <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../resources/icons/ic_playlist_add_black_24dp_2x.png" />
+                        <Image url="file:/home/jan/SD/Conan/resources/icons/ic_playlist_add_black_24dp_2x.png" />
                      </image>
                   </ImageView>
                </graphic>
