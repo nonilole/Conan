@@ -11,7 +11,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import model.BoxReference;
 import model.Proof;
-import model.latex.ExportLatex;
 import view.*;
 
 import java.io.File;
