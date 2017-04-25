@@ -4,7 +4,7 @@ import model.Box;
 import model.formulas.Formula;
 import model.formulas.Negation;
 
-public class DoubleNegationElim extends Rule {
+public class DoubleNegationIntro extends Rule {
     private Integer premise1;
 
     public DoubleNegationElim() {
@@ -38,32 +38,28 @@ public class DoubleNegationElim extends Rule {
     @Override
     public boolean verifyReferences(Box data, int rowIndex) {
         if (data.isInScopeOf(getPremise1(), rowIndex) == false) return false;
-        Formula premise = data.getRow(getPremise1()).getFormula();
-        if (premise instanceof Negation == false) {
-            return false;
-        }
-        Negation negation = (Negation) premise;
-        premise = negation.formula;
-        if (premise instanceof Negation == false) {
-            return false;
-        }
         return true;
     }
 
     @Override
     public boolean verifyRow(Box data, int rowIndex) {
-        Formula premise = data.getRow(getPremise1()).getFormula();
-        Negation negation = (Negation) premise;
-        negation = (Negation) negation.formula;
-        return negation.formula.equals(data.getRow(rowIndex).getFormula());
+        Formula rowToVerify = data.getRow(rowIndex).getFormula();
+        if (!(rowToVerify instanceof Negation))
+            return false;
+        Negation neg = (Negation) rowToVerify;
+        rowToVerify = neg.formula;
+        if (!(rowToVerify instanceof Negation))
+            return false;
+        neg = (Negation) rowToVerify;
+        return neg.equals(data.getRow(getPremise1()));
     }
 
     @Override
     public Formula generateRow(Box data) {
         Formula premise = data.getRow(getPremise1()).getFormula();
-        Negation negation = (Negation) premise;
-        negation = (Negation) negation.formula;
-        return negation.formula;
+        Negation negation = new Negation(premise);
+        negation = new Negation(negation);
+        return negation;
     }
 
     @Override
@@ -74,17 +70,17 @@ public class DoubleNegationElim extends Rule {
     @Override
     public String toString() {
         String p1 = premise1 == null ? "" : new Integer(premise1+1).toString();
-        return String.format("¬¬e, %s", p1);
+        return String.format("¬¬i, %s", p1);
     }
-    
+
     @Override
-	public String[] getReferenceStrings() {
-    	String ref1 = premise1 == null ? "" : (premise1+1)+"";
-		return new String[]{ref1};
-	}
-    
-	@Override
-	public String getDisplayName() {
-		return "¬¬E";
-	}
+    public String[] getReferenceStrings() {
+        String ref1 = premise1 == null ? "" : (premise1+1)+"";
+        return new String[]{ref1};
+    }
+
+    @Override
+    public String getDisplayName() {
+        return "¬¬I";
+    }
 }
