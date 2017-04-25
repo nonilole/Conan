@@ -88,7 +88,7 @@ public class MainController implements Initializable {
         ProofView pv = convertProofView(getCurrentView());
         if (pv == null)
             return;
-        int rowNumber = pv.getRowIndexLastFocusedTF();
+        int rowNumber = pv.getRowNumberLastFocusedTF();
         if (rowNumber != -1)
             pv.addRowAfterBox(rowNumber);
     }
@@ -98,7 +98,7 @@ public class MainController implements Initializable {
         ProofView pv = convertProofView(getCurrentView());
         if (pv == null)
             return;
-        int rowNumber = pv.getRowIndexLastFocusedTF();
+        int rowNumber = pv.getRowNumberLastFocusedTF();
         if (rowNumber != -1)
             pv.insertNewBox(rowNumber);
     }
@@ -151,7 +151,7 @@ public class MainController implements Initializable {
         ProofView pv = convertProofView(getCurrentView());
         if (pv == null)
             return;
-        int rowNumber = pv.getRowIndexLastFocusedTF();
+        int rowNumber = pv.getRowNumberLastFocusedTF();
         if (rowNumber != -1) {
             pv.deleteRow(rowNumber);
         }
@@ -162,7 +162,7 @@ public class MainController implements Initializable {
         ProofView pv = convertProofView(getCurrentView());
         if (pv == null)
             return;
-        int rowNumber = pv.getRowIndexLastFocusedTF();
+        int rowNumber = pv.getRowNumberLastFocusedTF();
         if (rowNumber != -1)
             pv.insertNewRow(rowNumber, BoxReference.BEFORE);
     }
@@ -172,7 +172,7 @@ public class MainController implements Initializable {
         ProofView pv = convertProofView(getCurrentView());
         if (pv == null)
             return;
-        int rowNumber = pv.getRowIndexLastFocusedTF();
+        int rowNumber = pv.getRowNumberLastFocusedTF();
         if (rowNumber != -1)
             pv.insertNewRow(rowNumber, BoxReference.AFTER);
     }
