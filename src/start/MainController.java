@@ -76,11 +76,9 @@ public class MainController implements Initializable {
     }
 
     private ProofView convertProofView(View view) {
-        if (view instanceof ProofView) {
-            return (ProofView) view;
-        } else {
+        if (view == null || !(view instanceof ProofView))
             return null;
-        }
+        return (ProofView) view;
     }
 
     @FXML
@@ -280,7 +278,9 @@ public class MainController implements Initializable {
 
     //Get the view corresponding to the currently active tab
     private View getCurrentView() {
-        return currentTab.getView();
+        if (currentTab != null)
+            return currentTab.getView();
+        return null;
     }
 }
 
