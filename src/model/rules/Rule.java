@@ -6,7 +6,7 @@ import model.Box;
 import model.formulas.Formula;
 
 
-public abstract class Rule {
+public abstract class Rule implements Serializable{
 
     //if this is false there is no reason to continue the verification
     //since info is missing
