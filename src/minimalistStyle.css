@@ -1,4 +1,9 @@
 
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('FontAwesome.otf');
+}
+
 .myText {
     -fx-font-family: Monospace;
     -fx-font-size: 14px;
