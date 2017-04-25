@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.Preferences;
 
+import static view.ViewUtil.checkShortcut;
+
 public class WelcomeView extends Symbolic implements View {
     ViewTab tab;
     TextField premises;
@@ -184,19 +186,7 @@ public class WelcomeView extends Symbolic implements View {
     public ViewTab getTab() {
         return this.tab;
     }
-    
-    public String checkShortcut(String newValue){
-		newValue = newValue.replaceAll("!|ne|no", "¬");
-		newValue = newValue.replaceAll("&|an", "∧");
-		newValue = newValue.replaceAll("->", "→");
-		newValue = newValue.replaceAll("im", "→");
-		newValue = newValue.replaceAll("fa", "∀");
-		newValue = newValue.replaceAll("(?<!f)or", "∨");
-		newValue = newValue.replaceAll("ex", "∃");
-		newValue = newValue.replaceAll("te", "∃");
-		return newValue;
-	}
-    
+
     /**
      * 
      * @param A string containing a comma separated list of formulas
