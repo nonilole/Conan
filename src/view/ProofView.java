@@ -101,6 +101,13 @@ public class ProofView extends Symbolic implements ProofListener, View {
     //hashmap for all the rules and number of arguments for all rules
     private HashMap<String, Integer> ruleMap = new HashMap<String, Integer>();
 
+    //used for turning the verification on and off
+    private boolean verificationSettings;
+
+    public void setVerificationSettings(boolean verificationSettings) {
+        this.verificationSettings = verificationSettings;
+    }
+
     /**
      * Adds content to the TabPane in the proof and adds listeners to the premise and conclusion.
      * Vad är det som metoden gör med proof? lägg gärna till extra beskrivning om detta!!
@@ -649,7 +656,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
             wellFormed = true;
         if (newText != null)
             expression.setText(newText);
-        else
+        //do not update the color of the label when the setting is turned off
+        if(verificationSettings)
             applyStyleIf(expression, !wellFormed, "bad");
     }
 
@@ -662,7 +670,10 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
     public void rowVerified(boolean verified, int lineNo) {
         TextField rule = (TextField) rList.get(lineNo - 1).getRule();
-        applyStyleIf(rule, !verified, "unVerified");
+
+        //do not update the color of the label when the setting is turned off
+        if(verificationSettings)
+            applyStyleIf(rule, !verified, "unVerified");
     }
 
     //update view to reflect that row with nr rowNr has been deleted
@@ -896,5 +907,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
         }
         proof.verifyProof(0);
     }
+
 
 }
