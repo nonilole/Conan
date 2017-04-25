@@ -38,9 +38,21 @@ public class ProofView extends Symbolic implements ProofListener, View {
     private String name;
 
     /**
-     * Takes a premisesAndConclusion object and adds it to its content, also switches the tab selection to this ViewTab.
+     * Takes a premisesAndConclusion object and adds it to its content,
+     * also switches the tab selection to this ViewTab.
      * Adds one row if it's not a loaded proof.
      *
+     * AnchorPanes omitted for clarity
+     * One row, one box with a row.
+     *  Tab
+     *   └──SplitPane
+     *         └──PremisesAndConclusion
+     *         └──Hbox
+     *             ├──RowPane
+     *             │  └──Rulepane
+     *             └──VBox
+     *                 └──RowPane
+     *                      └──Rulepane
      * @param tabPane
      * @param premisesAndConclusion
      */
@@ -181,14 +193,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
     }
     /* End of controller */
 
-    private void checkAndAdd(Region item) {
-        if (curBoxDepth.isEmpty()) {
-            rows.getChildren().add(item);
-        } else {
-            VBox temp = curBoxDepth.peek();
-            temp.getChildren().add(item);
-        }
-    }
 
     /**
      * Creates a new row with a textfield for the expression and a textfield
@@ -310,7 +314,12 @@ public class ProofView extends Symbolic implements ProofListener, View {
     public void openBoxInView() {
         VBox vb = new VBox();
         vb.getStyleClass().add("openBox");
-        checkAndAdd(vb);
+        if (curBoxDepth.isEmpty()) {
+            rows.getChildren().add(vb);
+        } else {
+            VBox temp = curBoxDepth.peek();
+            temp.getChildren().add(vb);
+        }
         curBoxDepth.push(vb);
     }
 
@@ -419,9 +428,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
     // END OF PROOF LISTENER METHODS
 
 
-    // public void focus() { // Save the last focused textfield here for quick resuming?
-    //     Platform.runLater(() -> lastTf.requestFocus());
-    // }
     private void applyStyleIf(TextField expression, boolean bool, String style) {
         expression.getStyleClass().removeIf((s) -> s.equals(style));
         if (bool) {
