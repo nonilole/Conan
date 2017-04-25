@@ -43,9 +43,12 @@ public class DeleteRow implements Command {
     // Needs to be fixed or let other commands handle edge cases
     @Override
     public void undo() {
-        if (rowNo == -1) {
-            proof.addRow();
-        } else if (rowNo == 1) {
+//        if (rowNo == -1) {
+//            proof.addRow();
+//        } else if (rowNo == 1) {
+//            proof.insertNewRow(rowNo, BoxReference.BEFORE,0);
+//        } else {
+        if (rowNo == 1) {
             proof.insertNewRow(rowNo, BoxReference.BEFORE,0);
         } else {
             proof.insertNewRow(rowNo-1, BoxReference.AFTER, delDepth);

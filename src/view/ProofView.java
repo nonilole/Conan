@@ -536,6 +536,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
                 VBox childBox = parentBox;
                 parentBox = (VBox) parentBox.getParent();
                 for (int i = 1; i < depth; i++) {
+                    childBox = parentBox;
                     parentBox = (VBox) parentBox.getParent();
                 }
                 isFirstRowInBox = false;

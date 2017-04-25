@@ -29,7 +29,7 @@ public class AddRowAfterBox implements Command{
     };
     @Override
     public boolean execute() {
-        boolean result = proof.addRowAfterBox(rowNo);
+        boolean result = proof.insertNewRow(rowNo, BoxReference.AFTER, 1);
         if (result) {
             RowPane rp = rList.get(rowNo);
             rp.setExpression(expression);

@@ -86,18 +86,6 @@ public class Proof implements Serializable{
         return true;
     }
 
-    public boolean addRowAfterBox(int rowNumber) {
-        if (rowNumber < 1 || rowNumber > proofData.size() + 1) {
-            return false;
-        }
-        proofData.addRowAfterBox(rowNumber - 1);
-        for (ProofListener pl : listeners) {
-            pl.addedRowAfterBox(rowNumber);
-        }
-        verifyProof(rowNumber);
-        return true;
-    }
-
     public boolean deleteRowAfterBox(int rowNumber) {
         if (rowNumber < 1 || rowNumber > proofData.size() + 1) {
             return false;

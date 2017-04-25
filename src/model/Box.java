@@ -38,16 +38,7 @@ public class Box implements ProofEntry, Serializable{
         parent.entries.add(parent.entries.indexOf(child)+1, new ProofRow(parent));
         parent.incSize();
 	}
-	public void addRowAfterBox(int index) {
-		ProofRow referenceRow = getRow(index);
-		Box parentBox = referenceRow.getParent();
-		Box metaBox = parentBox.getParent();
-		List<ProofEntry> metaBoxList = metaBox.entries;
-		int insertionIndex = metaBoxList.indexOf(parentBox) + 1;
-		metaBoxList.add(insertionIndex, new ProofRow(metaBox));
-		metaBox.incSize();
-	}
-	public void deleteRowAfterBox(int index) {
+	public void deleteRowAfterBox(int index) { // Only allowed as an inverse!
 		ProofRow referenceRow = getRow(index);
 		Box parentBox = referenceRow.getParent();
 		Box metaBox = parentBox.getParent();
@@ -144,7 +135,6 @@ public class Box implements ProofEntry, Serializable{
         }
 		parent.entries.remove(referenceRow);
         parent.decSize();
-        System.out.println(depth);
         return depth;
 	}
 	
