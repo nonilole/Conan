@@ -909,4 +909,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
     }
 
 
+    public List<RowPane> getrList() {
+        return rList;
+    }
 }

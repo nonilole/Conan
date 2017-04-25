@@ -18,6 +18,7 @@ import view.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
 
@@ -39,7 +40,28 @@ public class MainController implements Initializable {
 
     @FXML
     void verificationToggle(ActionEvent event) {
+        ProofView pv = convertProofView(getCurrentView());
+        if(pv==null)
+            return;
+        if(pv.getProof()!=null) {
+            Proof p = pv.getProof();
+            List<RowPane> r=pv.getrList();
+            //Updates every row when the box is checked
+            if (this.verification.selectedProperty().getValue()) {
+                pv.setVerificationSettings(true);
 
+                for(int i=0;i<r.size();i++)
+                {
+                    p.updateFormulaRow(r.get(i).getExpression().getText(),i+1);
+                }
+            } else {
+                pv.setVerificationSettings(false);
+                for(int i=0;i<r.size();i++) {
+                    r.get(i).getExpression().getStyleClass().remove("bad");
+                    r.get(i).getRule().getStyleClass().remove("unVerified");
+                }
+            }
+        }
     }
     @FXML
     void setTheme(ActionEvent event) {
