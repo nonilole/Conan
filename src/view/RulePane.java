@@ -16,7 +16,7 @@ public class RulePane extends FlowPane {
         tfRulePrompt1.setVisible(false);
         tfRulePrompt2.setVisible(false);
         tfRulePrompt3.setVisible(false);
-        tfRule.setId("rightTextfield");
+        tfRule.setId("expression");
         tfRulePrompt1.setId("rulePromt1tf");
         tfRulePrompt2.setId("rulePromt2tf");
         tfRulePrompt3.setId("rulePromt3tf");
