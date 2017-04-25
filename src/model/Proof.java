@@ -43,20 +43,21 @@ public class Proof implements Serializable{
      * @param rowNumber
      */
 
-    public boolean deleteRow(int rowNumber) {
+    public int deleteRow(int rowNumber) {
         if (rowNumber < 1 || rowNumber > proofData.size() || proofData.size() == 1) {
-            return false;
+            return -1;
         }
         System.out.println(proofData.size());
-        if (!(proofData.deleteRow(rowNumber - 1)))
-            return false;
+        int delDepth = (proofData.deleteRow(rowNumber - 1));
+        if (delDepth == -1)
+            return -1;
         for (ProofListener listener : this.listeners) {
             listener.rowDeleted(rowNumber);
         }
         System.out.println("deleteRow(" + rowNumber + ")");
         proofData.printRows(1, 1);
         System.out.println("==========================================================");
-        return true;
+        return delDepth;
     }
 
     /**
@@ -68,32 +69,20 @@ public class Proof implements Serializable{
      * @param br:        Indicates whether the new row should be added before or after the reference row
      */
 
-    public boolean insertNewRow(int rowNumber, BoxReference br) {
+    public boolean insertNewRow(int rowNumber, BoxReference br, int depth) {
         if (rowNumber < 1 || rowNumber > proofData.size() + 1) {
             System.out.println("Proof.insertNewRow: incorrect rowNumber");
             System.out.println("rows.size(): " + proofData.size() + ", rowNumber: " + rowNumber);
             return false;
         }
-        proofData.insertRow(rowNumber - 1, br);
+        proofData.insertRow(rowNumber - 1, br, depth);
         for (ProofListener pl : listeners) {
-            pl.rowInserted(rowNumber, br);
+            pl.rowInserted(rowNumber, br, depth);
         }
         verifyProof(rowNumber-1 + (br == BoxReference.BEFORE ? 0 : 1));
         System.out.println("insertNewRow(" + rowNumber + ", " + br + ")");
         proofData.printRows(1, 1);
         System.out.println("==========================================================");
-        return true;
-    }
-
-    public boolean addRowAfterBox(int rowNumber) {
-        if (rowNumber < 1 || rowNumber > proofData.size() + 1) {
-            return false;
-        }
-        proofData.addRowAfterBox(rowNumber - 1);
-        for (ProofListener pl : listeners) {
-            pl.addedRowAfterBox(rowNumber);
-        }
-        verifyProof(rowNumber);
         return true;
     }
 

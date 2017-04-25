@@ -26,7 +26,7 @@ public class InsertRow implements Command {
     };
     @Override
     public boolean execute() {
-        boolean result = proof.insertNewRow(rowNo, br);
+        boolean result = proof.insertNewRow(rowNo, br, 0);
         if (result) {
             int offset = br == BoxReference.BEFORE ? 0 : 1;
             RowPane rp = rList.get(rowNo-1+offset);

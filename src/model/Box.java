@@ -19,26 +19,26 @@ public class Box implements ProofEntry, Serializable{
 		this.open = open;
 	}
 	
-	public void insertRow(int index, BoxReference br){
+	public void insertRow(int index, BoxReference br, int depth){
 		assert(index < size);
 		ProofRow referenceRow = getRow(index);
-		Box boxToInsertInto = referenceRow.getParent();
-		int internalReferenceIndex = boxToInsertInto.entries.indexOf(referenceRow);
-		int insertionIndex = br == BoxReference.BEFORE ? internalReferenceIndex : internalReferenceIndex+1;
-		boxToInsertInto.entries.add(insertionIndex, new ProofRow(boxToInsertInto));
-		boxToInsertInto.incSize();
-
+		Box parent = referenceRow.getParent();
+		if (br.equals(BoxReference.BEFORE)) {
+            int internalReferenceIndex = parent.entries.indexOf(referenceRow);
+            int insertionIndex = br == BoxReference.BEFORE ? internalReferenceIndex : internalReferenceIndex+1;
+            parent.entries.add(insertionIndex, new ProofRow(parent));
+            parent.incSize();
+            return;
+        }
+        ProofEntry child = referenceRow;
+		for (int i = 0; i < depth; i++) {
+		    child = parent;
+		    parent = parent.getParent();
+        }
+        parent.entries.add(parent.entries.indexOf(child)+1, new ProofRow(parent));
+        parent.incSize();
 	}
-	public void addRowAfterBox(int index) {
-		ProofRow referenceRow = getRow(index);
-		Box parentBox = referenceRow.getParent();
-		Box metaBox = parentBox.getParent();
-		List<ProofEntry> metaBoxList = metaBox.entries;
-		int insertionIndex = metaBoxList.indexOf(parentBox) + 1;
-		metaBoxList.add(insertionIndex, new ProofRow(metaBox));
-		metaBox.incSize();
-	}
-	public void deleteRowAfterBox(int index) {
+	public void deleteRowAfterBox(int index) { // Only allowed as an inverse!
 		ProofRow referenceRow = getRow(index);
 		Box parentBox = referenceRow.getParent();
 		Box metaBox = parentBox.getParent();
@@ -113,17 +113,29 @@ public class Box implements ProofEntry, Serializable{
 		return null;
 	}
 	
-	public boolean deleteRow(int index){
+	public int deleteRow(int index){
 		assert(index < size);
 		ProofRow referenceRow = getRow(index);
 		Box parent = referenceRow.getParent();
         int idxRefRow = parent.entries.indexOf(referenceRow);
         if (idxRefRow == 0 && idxRefRow+1 < parent.entries.size() && parent.entries.get(idxRefRow+1) instanceof Box) {
-            return false;
+            return -1;
 		}
+        int depth = 0;
+		if (index != 0) {
+		    Box cur = getRow(index-1).getParent();
+		    while (!cur.equals(parent)) {
+		        depth++;
+		        if (cur.isTopLevelBox()) {
+		            depth = 0;
+                    break;
+                }
+                cur = cur.getParent();
+            }
+        }
 		parent.entries.remove(referenceRow);
         parent.decSize();
-        return true;
+        return depth;
 	}
 	
 	/*public boolean updateFormulaRow(int index, String userFormulaInput){
