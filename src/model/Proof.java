@@ -179,17 +179,6 @@ public class Proof implements Serializable{
         return isVerified;
     }
 
-    //This shouldn't be used when a proper UI for opening boxes has been implemented
-    //since at that point, you open a box in a specific row rather than at the end of a proof
-    //Instead, at that point, use openBox(int rowNr)
-    public void openBox() {
-        proofData.openNewBox();
-        //TODO: should probbly add a new row immediatly to avoid issues with empty boxes
-        for (ProofListener listener : this.listeners) {
-            listener.boxOpened();
-        }
-    }
-
     public boolean insertBox(int rowIndex) {
         ProofRow pr = proofData.getRow(rowIndex);
         if (pr.getParent() != null && pr.getParent().getRow(0) == pr) {
@@ -209,13 +198,6 @@ public class Proof implements Serializable{
             listener.boxRemoved(rowIndex + 1);
         }
         return true;
-    }
-
-    public void closeBox() {
-        proofData.closeBox();
-        for (ProofListener listener : this.listeners) {
-            listener.boxClosed();
-        }
     }
 
     /**

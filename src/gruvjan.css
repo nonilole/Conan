@@ -1,3 +1,9 @@
+
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('FontAwesome.otf');
+}
+
 .myText {
     -fx-font-size: 14px;
     -fx-background-insets: 2, 4;
@@ -43,6 +49,10 @@
 }
 .root .button {
     -fx-text-fill: #ebdbb2;
+}
+.menuButtons {
+    -fx-font-family: FontAwesome;
+    -fx-font-size: 18px;
 }
 .root .tool-bar, .root .scroll-pane, {
     -fx-background: #282828;

@@ -1,4 +1,9 @@
 
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('FontAwesome.otf');
+}
+
 .myText {
     -fx-font-family: Monospace;
     -fx-font-size: 14px;
@@ -70,6 +75,7 @@
 }
 
 .button {
+    -fx-font-family: FontAwesome;
     -fx-background-color: transparent;
 }
 
@@ -116,4 +122,9 @@
 
 .root .tab-header-background , .root .line {
     -fx-background-color: #c6c8c9;
+}
+
+.menuButtons {
+    -fx-font-family: FontAwesome;
+    -fx-font-size: 18px;
 }

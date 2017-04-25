@@ -39,8 +39,6 @@ public class DeleteRow implements Command {
             return false;
         return true;
     }
-    // This is not a true inverse to deleteRow, because insertNewRow doesn't insert at arbitrary depth
-    // Needs to be fixed or let other commands handle edge cases
     @Override
     public void undo() {
         if (rowNo == 1 || delDepth == -2) { // If it's a first row in a box

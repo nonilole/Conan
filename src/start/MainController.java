@@ -85,11 +85,12 @@ public class MainController implements Initializable {
 
     @FXML
     void newRow(ActionEvent event) {
-        //System.out.println("mainc newRow");
         ProofView pv = convertProofView(getCurrentView());
         if (pv == null)
             return;
-        pv.newRow();
+        int rowNumber = pv.getRowIndexLastFocusedTF();
+        if (rowNumber != -1)
+            pv.addRowAfterBox(rowNumber);
     }
 
     @FXML
@@ -97,15 +98,9 @@ public class MainController implements Initializable {
         ProofView pv = convertProofView(getCurrentView());
         if (pv == null)
             return;
-        pv.openBox();
-    }
-
-    @FXML
-    void closeBox(ActionEvent event) { // Remove this later
-        ProofView pv = convertProofView(getCurrentView());
-        if (pv == null)
-            return;
-        pv.closeBox();
+        int rowNumber = pv.getRowIndexLastFocusedTF();
+        if (rowNumber != -1)
+            pv.getProof().insertBox(rowNumber-1);
     }
 
     @FXML
@@ -177,7 +172,8 @@ public class MainController implements Initializable {
         if (pv == null)
             return;
         int rowNumber = pv.getRowIndexLastFocusedTF();
-        pv.getProof().insertNewRow(rowNumber, BoxReference.AFTER, 0);
+        if (rowNumber != -1)
+            pv.getProof().insertNewRow(rowNumber, BoxReference.AFTER, 0);
     }
 
     @FXML
