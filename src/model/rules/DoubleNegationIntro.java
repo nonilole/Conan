@@ -7,10 +7,10 @@ import model.formulas.Negation;
 public class DoubleNegationIntro extends Rule {
     private Integer premise1;
 
-    public DoubleNegationElim() {
+    public DoubleNegationIntro() {
     }
 
-    public DoubleNegationElim(int premise1Index) {
+    public DoubleNegationIntro(int premise1Index) {
         this.premise1 = premise1Index;
     }
 
