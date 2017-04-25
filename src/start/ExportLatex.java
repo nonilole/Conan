@@ -41,10 +41,10 @@ public class ExportLatex {
                 output += "\\end{subproof}\n";
                 --curDepth;
             }
-            output += replaceAllUnicode(info[1]);
+            output += replaceAllUnicode(info[1]).replaceAll("null","");
             output += "&";
             output += replaceAllUnicode(info[2]).replaceAll(
-                    "(i|e)_(\\{\\d\\})","\\$\\\\mathrm\\{$1\\}_$2\\$");
+                    "(i|e)_(\\{\\d\\})","\\$\\\\mathrm\\{$1\\}_$2\\$").replaceAll("null", "");
             output += "\\\\\n";
 
         }

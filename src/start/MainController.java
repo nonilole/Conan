@@ -46,6 +46,17 @@ public class MainController implements Initializable {
     @FXML
     private Button newProofButton;
 
+    @FXML
+    private Button undoButton;
+
+    @FXML
+    private Button redoButton;
+
+    @FXML
+    private Button openBoxButton;
+
+    @FXML
+    private Button newRowButton;
     //Inference Rules Buttons
     @FXML
     private Button andIntroButton;
@@ -188,20 +199,19 @@ public class MainController implements Initializable {
     }
 
     private ProofView convertProofView(View view) {
-        if (view instanceof ProofView) {
-            return (ProofView) view;
-        } else {
+        if (view == null || !(view instanceof ProofView))
             return null;
-        }
+        return (ProofView) view;
     }
 
     @FXML
     void newRow(ActionEvent event) {
-        //System.out.println("mainc newRow");
         ProofView pv = convertProofView(getCurrentView());
         if (pv == null)
             return;
-        pv.newRow();
+        int rowNumber = pv.getRowNumberLastFocusedTF();
+        if (rowNumber != -1)
+            pv.addRowAfterBox(rowNumber);
     }
 
     @FXML
@@ -209,15 +219,9 @@ public class MainController implements Initializable {
         ProofView pv = convertProofView(getCurrentView());
         if (pv == null)
             return;
-        pv.openBox();
-    }
-
-    @FXML
-    void closeBox(ActionEvent event) { // Remove this later
-        ProofView pv = convertProofView(getCurrentView());
-        if (pv == null)
-            return;
-        pv.closeBox();
+        int rowNumber = pv.getRowNumberLastFocusedTF();
+        if (rowNumber != -1)
+            pv.insertNewBox(rowNumber);
     }
 
     @FXML
@@ -268,9 +272,9 @@ public class MainController implements Initializable {
         ProofView pv = convertProofView(getCurrentView());
         if (pv == null)
             return;
-        int rowNumber = pv.getRowIndexLastFocusedTF();
+        int rowNumber = pv.getRowNumberLastFocusedTF();
         if (rowNumber != -1) {
-            pv.getProof().deleteRow(rowNumber);
+            pv.deleteRow(rowNumber);
         }
     }
 
@@ -279,8 +283,9 @@ public class MainController implements Initializable {
         ProofView pv = convertProofView(getCurrentView());
         if (pv == null)
             return;
-        int rowNumber = pv.getRowIndexLastFocusedTF();
-        pv.getProof().insertNewRow(rowNumber, BoxReference.BEFORE,0);
+        int rowNumber = pv.getRowNumberLastFocusedTF();
+        if (rowNumber != -1)
+            pv.insertNewRow(rowNumber, BoxReference.BEFORE);
     }
 
     @FXML
@@ -288,8 +293,9 @@ public class MainController implements Initializable {
         ProofView pv = convertProofView(getCurrentView());
         if (pv == null)
             return;
-        int rowNumber = pv.getRowIndexLastFocusedTF();
-        pv.getProof().insertNewRow(rowNumber, BoxReference.AFTER, 0);
+        int rowNumber = pv.getRowNumberLastFocusedTF();
+        if (rowNumber != -1)
+            pv.insertNewRow(rowNumber, BoxReference.AFTER);
     }
 
     @FXML
@@ -348,6 +354,8 @@ public class MainController implements Initializable {
                 new ExtensionFilter("All Files", "*.*"));
         File file = fc.showSaveDialog(tabPane.getScene().getWindow());
         ProofView pView = convertProofView(getCurrentView());
+        if (pView == null)
+                return;
         try {
             ExportLatex.export(pView.getProof(), file.getPath());
         } catch (IOException e) {
@@ -379,7 +387,10 @@ public class MainController implements Initializable {
         saveButton.setTooltip(new Tooltip("Save Proof (CTRL+S)"));
         loadButton.setTooltip(new Tooltip("Open Proof (CTRL+O)"));
         newProofButton.setTooltip(new Tooltip("New Proof (CTRL+N)"));
-
+        undoButton.setTooltip(new Tooltip("Undo (CTRL+U)"));
+        redoButton.setTooltip(new Tooltip("Redo (CTRL+Y)"));
+        openBoxButton.setTooltip(new Tooltip("Open Box Button"));
+        newRowButton.setTooltip(new Tooltip("New Row (CTRL+R)"));
         //Inference Rules
         andIntroButton.setTooltip(new Tooltip("And-Introduction"));
         andElim1Button.setTooltip(new Tooltip("And-Elimination 1"));
@@ -394,6 +405,8 @@ public class MainController implements Initializable {
         negElimButton.setTooltip(new Tooltip("Negation-Elimination"));
         doubleNegElimButton.setTooltip(new Tooltip("Double Negation-Elimination"));
         eqIntroButton.setTooltip(new Tooltip("Equality-Introduction"));
+        forallIntroButton.setTooltip(new Tooltip("For All-Introduction"));
+        forallElimButton.setTooltip(new Tooltip("For All-Elimination"));
         eqElimButton.setTooltip(new Tooltip("Equality-Elimination"));
         existsIntroButton.setTooltip(new Tooltip("There Exists-Introduction"));
         existsElimButton.setTooltip(new Tooltip("There Exists-Elimination"));
@@ -439,7 +452,9 @@ public class MainController implements Initializable {
 
     //Get the view corresponding to the currently active tab
     private View getCurrentView() {
-        return currentTab.getView();
+        if (currentTab != null)
+            return currentTab.getView();
+        return null;
     }
 }
 
