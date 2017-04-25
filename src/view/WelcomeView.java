@@ -15,6 +15,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import model.Proof;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.prefs.Preferences;
 
 public class WelcomeView extends Symbolic implements View {
@@ -85,7 +89,40 @@ public class WelcomeView extends Symbolic implements View {
                 prefs.putBoolean("showWelcome", false); // Om knappen är checked, visa inte välkomsttabben.
             }
             tabPane1.getTabs().remove(tab);
-            new ProofView(tabPane1, new Proof(), premises.getText(), conclusion.getText());
+            String premisesStr = premises.getText();
+            String conclusionStr = conclusion.getText();
+            String[] splitPremises;
+            try{
+            	splitPremises = splitFormulas(premisesStr);
+            }
+            catch(IOException e){
+            	System.err.println("IOException when parsing premise string");
+            	new ProofView(tabPane1, new Proof(), "", conclusionStr);
+            	return;
+            }
+            Proof proof = new Proof();
+            ProofView pv = new ProofView(tabPane1, proof, premises.getText(), conclusion.getText());
+            
+            //===============
+            System.out.println("splitPremise.length: "+splitPremises.length);
+            for(int i = 0; i < splitPremises.length; i++) proof.addRow();
+            
+            List<RowPane> rowList = pv.getRowList();
+            for(int i = 0; i < splitPremises.length; i++){
+            	System.out.println(i+" premiseAdd");
+            	RowPane rowPane = rowList.get(i);
+        		proof.updateFormulaRow(splitPremises[i],i+1);
+        		rowPane.setExpression(splitPremises[i]);
+        		
+        		try{
+        			proof.updateRuleRow("Premise", i+1);
+        			rowPane.setRule("Premise");
+        		}
+        		catch(IllegalAccessException e){ System.err.println(e);}
+        		catch(InstantiationException e){ System.err.println(e);}
+        		
+        	}
+            proof.updateConclusion(conclusionStr);
         });
         gridPane.add(title, 0, 0);
         gridPane.add(help, 0, 1);
@@ -132,5 +169,44 @@ public class WelcomeView extends Symbolic implements View {
 		newValue = newValue.replaceAll("te", "∃");
 		return newValue;
 	}
+    
+    /**
+     * 
+     * @param A string containing a comma separated list of formulas
+     * @return an array with the input formulas split up
+     * @throws IOException
+     */
+    public String[] splitFormulas(String str) throws IOException{
+    	StringReader strR = new StringReader(str);
+    	ArrayList<String> formulaList = new ArrayList<String>();
+    	
+    	int next;
+    	StringBuilder strB = new StringBuilder();
+    	int unmatchedLeftPar = 0;
+    	while( (next = strR.read()) != -1){
+    		char ch = (char)next;
+    		
+    		switch(ch){
+	    		case ',': if( unmatchedLeftPar == 0){
+	    					  formulaList.add(strB+"");
+	    					  strB = new StringBuilder();
+	    					  continue;
+	    				  }
+	    				  break;
+	    			
+    			case '(': unmatchedLeftPar++;
+    					  break;
+    				
+    			case ')': unmatchedLeftPar = (unmatchedLeftPar == 0) ? 0 : --unmatchedLeftPar;
+    					  break;
+    				
+    			default:  break;
+    		}
+    		strB.append(ch);
+    		
+    	}
+    	formulaList.add(strB+"");
+    	return formulaList.toArray(new String[formulaList.size()]);
+    }
 }
 

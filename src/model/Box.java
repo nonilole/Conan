@@ -93,7 +93,7 @@ public class Box implements ProofEntry, Serializable{
 	
 	public ProofRow getRow(int steps){
 		//System.out.println("Box.getRow("+steps+")");
-		assert(steps < size) : "getRow: index="+steps+" size="+size;
+		//assert(steps < size) : "getRow: index="+steps+" size="+size;
 		
 		for(int i = 0; i < size ; i++ ){
 			ProofEntry entry = entries.get(i);

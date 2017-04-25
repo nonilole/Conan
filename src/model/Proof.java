@@ -16,7 +16,10 @@ public class Proof implements Serializable{
     private Formula conclusion;
     private Box proofData = new Box(null, true);
     public boolean isLoaded = false;
-
+    
+    
+    public Proof(){}
+    
     public String getProofString() {
         return proofData.rowsToString(1);
     }
@@ -357,7 +360,6 @@ public class Proof implements Serializable{
     	ArrayList<ProofListener.RowInfo> returnList = new ArrayList<ProofListener.RowInfo>();
     	
     	proofData.fillList(returnList);
-    	
     	return returnList;
     }
 }

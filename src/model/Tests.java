@@ -1,7 +1,8 @@
 package model;
 
 import java.io.File;
-
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -32,9 +33,54 @@ public class Tests {
 		//printRandomFormulas(20);
 		//testEqualOrSub();
 		//isInstantiationOfTest(10000);
-		getProofInfoTest();
+		//getProofInfoTest();
+		printSplitFormula("A,Q,b=z,A(x,y,z),Q,P");
 		System.out.println("Done.");
 	}
+	
+	public static void printSplitFormula(String str){
+		String[] formulas;
+		try{
+			formulas = splitFormula(str);
+		}
+		catch(Exception e){ System.err.println(e); return; }
+		for(String formula : formulas){
+			System.out.println(formula);
+		}
+	}
+	
+	public static String[] splitFormula(String str) throws IOException{
+    	StringReader strR = new StringReader(str);
+    	ArrayList<String> formulaList = new ArrayList<String>();
+    	
+    	int next;
+    	StringBuilder strB = new StringBuilder();
+    	int unmatchedLeftPar = 0;
+    	while( (next = strR.read()) != -1){
+    		char ch = (char)next;
+    		
+    		switch(ch){
+	    		case ',': if( unmatchedLeftPar == 0){
+	    					  formulaList.add(strB+"");
+	    					  strB = new StringBuilder();
+	    					  continue;
+	    				  }
+	    				  break;
+	    			
+    			case '(': unmatchedLeftPar++;
+    					  break;
+    				
+    			case ')': unmatchedLeftPar = (unmatchedLeftPar == 0) ? 0 : --unmatchedLeftPar;
+    					  break;
+    				
+    			default:  break;
+    		}
+    		strB.append(ch);
+    		
+    	}
+    	formulaList.add(strB+"");
+    	return formulaList.toArray(new String[formulaList.size()]);
+    }
 	
 	public static void getProofInfoTest(){
 		Proof proof = new Proof();

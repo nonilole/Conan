@@ -825,6 +825,14 @@ public class ProofView extends Symbolic implements ProofListener, View {
 	}
 	
 	/**
+	 * Used in WelcomeView in order to update the rows with the premises
+	 * @return a copy of rList
+	 */
+	public List<RowPane> getRowList(){
+		return new ArrayList<RowPane>(rList);
+	}
+	
+	/**
 	 * Display all the information in the loaded proof
 	 */
 	public void displayLoadedProof(){
