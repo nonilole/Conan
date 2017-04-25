@@ -97,15 +97,8 @@ public class MainController implements Initializable {
         ProofView pv = convertProofView(getCurrentView());
         if (pv == null)
             return;
-        pv.openBox();
-    }
-
-    @FXML
-    void closeBox(ActionEvent event) { // Remove this later
-        ProofView pv = convertProofView(getCurrentView());
-        if (pv == null)
-            return;
-        pv.closeBox();
+        int rowNumber = pv.getRowIndexLastFocusedTF();
+        pv.getProof().insertBox(rowNumber-1);
     }
 
     @FXML

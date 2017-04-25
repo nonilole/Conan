@@ -230,14 +230,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
     }
 
     /* Controller begin */
-    public void openBox() {
-        proof.openBox();
-    }
-
-    public void closeBox() {
-        proof.closeBox();
-    }
-
     private void executeCommand(Command c) {
         if (c.execute()) {
             ++curCommand;
@@ -585,14 +577,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
         updateLabelPaddings(rowNo - 1);
     }
 
-    public void boxOpened() {
-        VBox vb = new VBox();
-        vb.getStyleClass().add("openBox");
-        checkAndAdd(vb);
-        curBoxDepth.push(vb);
-        newRow();
-    }
-
     public void openBoxInView() {
         VBox vb = new VBox();
         vb.getStyleClass().add("openBox");
@@ -679,9 +663,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
         boolean updatePreviousRowLabel = false;
 
         //deleted row was last row in this box, remove the box
-        if (wasOnlyRowInBox) {
-            removeRecursivelyIfEmpty(box);
-        } else {
+//
+
             if (rp.getIsFirstRowInBox()) { // next row is now first in this box
                 RowPane nextRow = rList.get(rowNr - 1);
                 nextRow.setIsFirstRowInBox(rp.getIsFirstRowInBox());
@@ -690,7 +673,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
                 rList.get(rowNr - 2).setNrOfClosingBoxes(rp.getNrOfClosingBoxes());
                 updatePreviousRowLabel = true;
             }
-        }
+//        }
 
         //remove a Label and update paddings in relevant labels
         List<Node> labelList = lineNo.getChildren();
