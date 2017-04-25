@@ -51,7 +51,7 @@ public class DoubleNegationIntro extends Rule {
         if (!(rowToVerify instanceof Negation))
             return false;
         neg = (Negation) rowToVerify;
-        return neg.formula.equals(data.getRow(getPremise1()));
+        return neg.formula.equals(data.getRow(getPremise1()).getFormula());
     }
 
     @Override
