@@ -9,10 +9,13 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
+import model.BoxReference;
 import model.Proof;
 
 import java.util.prefs.Preferences;
@@ -49,6 +52,13 @@ public class WelcomeView extends Symbolic implements View {
 				premises.setText(checkShortcut(newValue));
 			}
 		});
+        premises.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent ke) {
+               if(ke.getCode() == KeyCode.ENTER){
+            	   conpremfinished();
+               }
+			}
+		});
         this.conclusion.setId("expression");
         this.conclusion.setPromptText("Conclusion");
         this.premises.focusedProperty().addListener((observable, oldValue, newValue) -> {
@@ -65,6 +75,13 @@ public class WelcomeView extends Symbolic implements View {
 				conclusion.setText(checkShortcut(newValue));
 			}
 		});
+        conclusion.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent ke) {
+               if(ke.getCode() == KeyCode.ENTER){
+            	   conpremfinished();
+               }
+			}
+		});
 
         Hyperlink help = new Hyperlink("Help me!");
 
@@ -79,13 +96,7 @@ public class WelcomeView extends Symbolic implements View {
         this.notAgain = new CheckBox("Do not show again");
         Button butNext = new Button("Continue");
         butNext.setOnAction(event -> {
-            Preferences prefs = Preferences.userRoot().node("General");
-            TabPane tabPane1 = tab.getTabPane();
-            if (!this.notAgain.isIndeterminate() && this.notAgain.selectedProperty().getValue()) {
-                prefs.putBoolean("showWelcome", false); // Om knappen är checked, visa inte välkomsttabben.
-            }
-            tabPane1.getTabs().remove(tab);
-            new ProofView(tabPane1, new Proof(), premises.getText(), conclusion.getText());
+            conpremfinished();
         });
         gridPane.add(title, 0, 0);
         gridPane.add(help, 0, 1);
@@ -116,7 +127,17 @@ public class WelcomeView extends Symbolic implements View {
         tabPane.getSelectionModel().select(this.tab);
     }
 
-    @Override
+    private void conpremfinished() {
+    	Preferences prefs = Preferences.userRoot().node("General");
+        TabPane tabPane1 = tab.getTabPane();
+        if (!this.notAgain.isIndeterminate() && this.notAgain.selectedProperty().getValue()) {
+            prefs.putBoolean("showWelcome", false); // Om knappen är checked, visa inte välkomsttabben.
+        }
+        tabPane1.getTabs().remove(tab);
+        new ProofView(tabPane1, new Proof(), premises.getText(), conclusion.getText());
+	}
+
+	@Override
     public ViewTab getTab() {
         return this.tab;
     }
