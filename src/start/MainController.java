@@ -100,7 +100,7 @@ public class MainController implements Initializable {
             return;
         int rowNumber = pv.getRowIndexLastFocusedTF();
         if (rowNumber != -1)
-            pv.getProof().insertBox(rowNumber-1);
+            pv.insertNewBox(rowNumber);
     }
 
     @FXML
@@ -153,7 +153,7 @@ public class MainController implements Initializable {
             return;
         int rowNumber = pv.getRowIndexLastFocusedTF();
         if (rowNumber != -1) {
-            pv.getProof().deleteRow(rowNumber);
+            pv.deleteRow(rowNumber);
         }
     }
 
@@ -163,7 +163,8 @@ public class MainController implements Initializable {
         if (pv == null)
             return;
         int rowNumber = pv.getRowIndexLastFocusedTF();
-        pv.getProof().insertNewRow(rowNumber, BoxReference.BEFORE,0);
+        if (rowNumber != -1)
+            pv.insertNewRow(rowNumber, BoxReference.BEFORE);
     }
 
     @FXML
@@ -173,7 +174,7 @@ public class MainController implements Initializable {
             return;
         int rowNumber = pv.getRowIndexLastFocusedTF();
         if (rowNumber != -1)
-            pv.getProof().insertNewRow(rowNumber, BoxReference.AFTER, 0);
+            pv.insertNewRow(rowNumber, BoxReference.AFTER);
     }
 
     @FXML
