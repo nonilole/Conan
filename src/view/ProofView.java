@@ -39,15 +39,15 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
     /**
      * Takes a premisesAndConclusion object and adds it to its content,
-     * also switches the tab selection to this ViewTab.
-     * Adds one row if it's not a loaded proof.
+         * also switches the tab selection to this ViewTab.
+         * Adds one row if it's not a loaded proof.
      *
      * AnchorPanes omitted for clarity
      * One row, one box with a row.
      *  Tab
      *   └──SplitPane
      *         └──PremisesAndConclusion
-     *         └──Hbox
+     *         └──Vbox
      *             ├──RowPane
      *             │  └──Rulepane
      *             └──VBox
