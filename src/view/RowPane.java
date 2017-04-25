@@ -17,7 +17,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static view.ViewUtil.addFocusListener;
 import static view.ViewUtil.checkShortcut;
+
 
 public class RowPane extends BorderPane {
     final static KeyCombination shiftEnter = new KeyCodeCombination(KeyCode.ENTER, KeyCombination.SHIFT_DOWN);
@@ -57,9 +59,9 @@ public class RowPane extends BorderPane {
 
     private int numberOfPrompts;
     private boolean isFirstRowInBox;
-    //nrOfClosingBoxes tracks how many boxes that this row is the last line of
     private int nrOfClosingBoxes;
 
+    // Always call init after adding RowPane to rList
     public RowPane(boolean isFirstRowInBox, int nrOfClosingBoxes) {
         super();
         this.isFirstRowInBox = isFirstRowInBox;
@@ -257,10 +259,7 @@ public class RowPane extends BorderPane {
 
     private abstract class HotkeyMapper {
         private HotkeyMapper(TextField trigger, ProofView pv, List<RowPane> rList) {
-            trigger.focusedProperty().addListener((observable, oldValue, newValue) -> {
-                pv.lastFocusedTf = trigger;
-                pv.caretPosition = trigger.getCaretPosition();
-            });
+            addFocusListener(trigger, pv);
             trigger.setOnKeyPressed(new EventHandler<KeyEvent>() {
                 public void handle(KeyEvent ke) {
                     int index = rList.indexOf(RowPane.this);

@@ -19,33 +19,27 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
+import static view.ViewUtil.addFocusListener;
 import static view.ViewUtil.checkShortcut;
 
 public class ProofView extends Symbolic implements ProofListener, View {
     ScrollPane sp;
-    // TextFields of the premises and conclusion for quick access
     private TextField premises;
     private TextField conclusion;
     private Stack<VBox> curBoxDepth = new Stack<>();
-    // This is a list of RowPanes, which are the "lines" of the proof.
     private List<RowPane> rList = new ArrayList<>();
     private List<Command> commandList = new LinkedList<Command>();
     private int curCommand = -1;
     private VBox lineNo;
     private VBox rows;
-    //The tab object of this view
     private ViewTab tab;
-    //The proof displayed in this view
     private Proof proof;
-    //The patth where this proof was loaded/should be saved
     private String path;
-    //Name of the proof/file of this view
     private String name;
-    //hashmap for all the rules and number of arguments for all rules
 
     /**
-     * Adds content to the TabPane in the proof and adds listeners to the premise and conclusion.
-     * Vad är det som metoden gör med proof? lägg gärna till extra beskrivning om detta!!
+     * Takes a premisesAndConclusion object and adds it to its content, also switches the tab selection to this ViewTab.
+     * Adds one row if it's not a loaded proof.
      *
      * @param tabPane
      * @param premisesAndConclusion
@@ -56,7 +50,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
         this.proof.registerProofListener(this);
         this.premises = premisesAndConclusion.getPremises();
         this.premises.setId("expression");
-        this.premises.setPromptText("Premise");
+        this.premises.setPromptText("Premises");
         premises.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -72,15 +66,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
             proof.updateConclusion(newValue);
         });
         proof.updateConclusion(this.conclusion.getText());
-
-        this.premises.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            lastFocusedTf = this.premises;
-            caretPosition = this.premises.getCaretPosition();
-        });
-        this.conclusion.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            lastFocusedTf = this.conclusion;
-            caretPosition = this.conclusion.getCaretPosition();
-        });
+        addFocusListener(premises, this);
+        addFocusListener(conclusion, this);
         AnchorPane cp = createProofPane();
         SplitPane sp = new SplitPane(premisesAndConclusion, cp);
         sp.setOrientation(Orientation.VERTICAL);
@@ -90,18 +77,16 @@ public class ProofView extends Symbolic implements ProofListener, View {
         anchorPane.setRightAnchor(sp, 0.0);
         anchorPane.setLeftAnchor(sp, 0.0);
         anchorPane.setBottomAnchor(sp, 0.0);
-
         this.tab = new ViewTab("Proof", this);
         this.tab.setContent(anchorPane);
         tabPane.getTabs().add(this.tab);
-        tabPane.getSelectionModel().select(this.tab); // Byt till den nya tabben
+        tabPane.getSelectionModel().select(this.tab);
         if (proof.isLoaded == false) {
             newRow();
             --curCommand;
             commandList.clear();
         }
     }
-
 
     public ProofView(TabPane tabPane, Proof proof) {
         this(tabPane, proof, new PremisesAndConclusion());
