@@ -436,7 +436,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
                     insertNewBox(index + 1);
                 } else if (shiftEnter.match(ke)) {
                     addRowAfterBox(index + 1);
-                    rList.get(index).getRule().requestFocus();
+                    rList.get(index + 1).getRule().requestFocus();
                 } else if (ke.getCode() == KeyCode.ENTER) {
                     insertNewRow(index + 1, BoxReference.AFTER);
                     rList.get(index + 1).getRule().requestFocus();
