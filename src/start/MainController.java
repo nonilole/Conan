@@ -232,6 +232,8 @@ public class MainController implements Initializable {
                 new ExtensionFilter("All Files", "*.*"));
         File file = fc.showSaveDialog(tabPane.getScene().getWindow());
         ProofView pView = convertProofView(getCurrentView());
+        if (pView == null)
+                return;
         try {
             ExportLatex.export(pView.getProof(), file.getPath());
         } catch (IOException e) {
