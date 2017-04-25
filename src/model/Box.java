@@ -127,7 +127,7 @@ public class Box implements ProofEntry, Serializable{
 		    while (!cur.equals(parent)) {
 		        depth++;
 		        if (cur.isTopLevelBox()) {
-		            depth = 0;
+		            depth = -2;
                     break;
                 }
                 cur = cur.getParent();
