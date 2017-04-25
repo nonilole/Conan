@@ -31,6 +31,7 @@
           <items>
             <MenuItem accelerator="Shortcut+N" mnemonicParsing="false" onAction="#newProof" text="New" />
             <MenuItem accelerator="Shortcut+O" mnemonicParsing="false" onAction="#openProof" text="Open…" />
+              <MenuItem accelerator="Shortcut+W" mnemonicParsing="false" onAction="#closeTab" text="Close tab" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem accelerator="Shortcut+S" mnemonicParsing="false" onAction="#saveProof" text="Save" />
             <MenuItem accelerator="Shortcut+S+SHIFT" mnemonicParsing="false" onAction="#saveProofAs" text="Save As…" />

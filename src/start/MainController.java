@@ -82,6 +82,12 @@ public class MainController implements Initializable {
     }
 
     @FXML
+    void closeTab(ActionEvent event) {
+        if (currentTab != null)
+            tabPane.getTabs().remove(currentTab);
+    }
+
+    @FXML
     void newRow(ActionEvent event) {
         ProofView pv = convertProofView(getCurrentView());
         if (pv == null)
