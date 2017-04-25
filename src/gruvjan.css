@@ -45,8 +45,8 @@
   -fx-text-fill: #ebdbb2;
 }
 .menuButtons {
-  -fx-font-family: FontAwesome;
-  -fx-font-size: 18px;
+  -fx-font-family: System;
+  -fx-font-size: 12px;
 }
 .root .tab {
   -fx-background-color: #3A3A3A;
