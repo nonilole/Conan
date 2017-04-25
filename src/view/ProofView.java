@@ -101,8 +101,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
     //hashmap for all the rules and number of arguments for all rules
     private HashMap<String, Integer> ruleMap = new HashMap<String, Integer>();
 
-    //used for turning the verification on and off
-    private boolean verificationSettings;
+    //used for turning the verification on and off, initially it is on
+    private boolean verificationSettings=true;
 
     public void setVerificationSettings(boolean verificationSettings) {
         this.verificationSettings = verificationSettings;
