@@ -92,6 +92,13 @@ public class MainController implements Initializable {
         ProofView pv = convertProofView(getCurrentView());
         if (pv == null)
             return;
+        pv.newRow();
+    }
+    @FXML
+    void insertBelowAfterMenu(ActionEvent event) {
+        ProofView pv = convertProofView(getCurrentView());
+        if (pv == null)
+            return;
         int rowNumber = pv.getRowNumberLastFocusedTF();
         if (rowNumber != -1)
             pv.addRowAfterBox(rowNumber);
