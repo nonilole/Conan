@@ -39,9 +39,14 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
           <items>
-            <MenuItem accelerator="Shortcut+R" mnemonicParsing="false" onAction="#newRow" text="New Row" />
             <MenuItem accelerator="Shortcut+U" mnemonicParsing="false" onAction="#undo" text="Undo" />
             <MenuItem accelerator="Shortcut+Y" mnemonicParsing="false" onAction="#redo" text="Redo" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem accelerator="Shortcut+R" mnemonicParsing="false" onAction="#insertAboveMenu" text="Row above" />
+            <MenuItem accelerator="Shortcut+R" mnemonicParsing="false" onAction="#newRow" text="Row after/below" />
+                  <MenuItem accelerator="Shortcut+R" mnemonicParsing="false" onAction="#insertBelowMenu" text="Row below" />
+                  <MenuItem accelerator="Shortcut+R" mnemonicParsing="false" onAction="#deleteRowMenu" text="Delete row" />
+                  <MenuItem accelerator="Shortcut+R" mnemonicParsing="false" onAction="#newRow" text="Insert box" />
           </items>
         </Menu>
             <Menu mnemonicParsing="false" text="Preferences">
@@ -62,9 +67,9 @@
             <Button contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#newProof" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
             <Button contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openProof" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
           <Button contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveProof" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
-            <Button layoutX="204.0" layoutY="11.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openBox" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
             <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#undo" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
             <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#redo" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
+            <Button layoutX="204.0" layoutY="11.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openBox" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
             <Button layoutX="270.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#newRow" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
             <CheckBox fx:id="verification" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#verificationToggle" prefHeight="38.0" prefWidth="80.0" text="Verify">
                <padding>
