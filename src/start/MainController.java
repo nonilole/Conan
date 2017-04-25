@@ -4,15 +4,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import model.BoxReference;
 import model.Proof;
+import model.rules.Premise;
 import view.*;
 
 import java.io.File;
@@ -36,6 +35,119 @@ public class MainController implements Initializable {
 
     @FXML
     private Color x4;
+
+    //Toolbar buttons
+    @FXML
+    private Button loadButton;
+
+    @FXML
+    private Button saveButton;
+
+    @FXML
+    private Button newProofButton;
+
+    //Inference Rules Buttons
+    @FXML
+    private Button andIntroButton;
+
+    @FXML
+    private Button andElim1Button;
+
+    @FXML
+    private Button andElim2Button;
+
+    @FXML
+    private Button orIntro1Button;
+
+    @FXML
+    private Button orIntro2Button;
+
+    @FXML
+    private Button orElimButton;
+
+    @FXML
+    private Button impIntroButton;
+
+    @FXML
+    private Button impElimButton;
+
+    @FXML
+    private Button contraElimButton;
+
+    @FXML
+    private Button negIntroButton;
+
+    @FXML
+    private Button negElimButton;
+
+    @FXML
+    private Button doubleNegElimButton;
+    @FXML
+    private Button eqIntroButton;
+    @FXML
+    private Button forallIntroButton;
+    @FXML
+    private Button forallElimButton;
+    @FXML
+    private Button eqElimButton;
+    @FXML
+    private Button existsIntroButton;
+    @FXML
+    private Button existsElimButton;
+    @FXML
+    private Button copyButton;
+    @FXML
+    private Button assButton;
+    @FXML
+    private Button freshButton;
+    @FXML
+    private Button premiseButton;
+
+
+
+
+
+
+
+
+
+    //Derived Rules Buttons
+    @FXML
+    private Button mtButton;
+
+    @FXML
+    private Button doubleNegButton;
+
+    @FXML
+    private Button pbcButton;
+
+    @FXML
+    private Button lemButton;
+
+    //Symbol Buttons
+    @FXML
+    private Button impButton;
+
+    @FXML
+    private Button andButton;
+
+    @FXML
+    private Button orButton;
+
+    @FXML
+    private Button negButton;
+
+    @FXML
+    private Button forallButton;
+
+    @FXML
+    private Button existsButton;
+
+    @FXML
+    private Button contraButton;
+
+
+
 
     @FXML
     void verificationToggle(ActionEvent event) {
@@ -262,6 +374,51 @@ public class MainController implements Initializable {
         new InstructionsView(tabPane);
     }
 
+    public void createTooltip(){
+        //Toolbar
+        saveButton.setTooltip(new Tooltip("Save Proof (CTRL+S)"));
+        loadButton.setTooltip(new Tooltip("Open Proof (CTRL+O)"));
+        newProofButton.setTooltip(new Tooltip("New Proof (CTRL+N)"));
+
+        //Inference Rules
+        andIntroButton.setTooltip(new Tooltip("And-Introduction"));
+        andElim1Button.setTooltip(new Tooltip("And-Elimination 1"));
+        andElim2Button.setTooltip(new Tooltip("And-Elimination 2"));
+        orIntro1Button.setTooltip(new Tooltip("Or-Introduction 1"));
+        orIntro2Button.setTooltip(new Tooltip("Or-Introduction 2"));
+        orElimButton.setTooltip(new Tooltip("Or-Elimination"));
+        impIntroButton.setTooltip(new Tooltip("Implication-Introduction"));
+        impElimButton.setTooltip(new Tooltip("Implication-Elimination"));
+        contraElimButton.setTooltip(new Tooltip("Contradiction-Elimination"));
+        negIntroButton.setTooltip(new Tooltip("Negation-Introduction"));
+        negElimButton.setTooltip(new Tooltip("Negation-Elimination"));
+        doubleNegElimButton.setTooltip(new Tooltip("Double Negation-Elimination"));
+        eqIntroButton.setTooltip(new Tooltip("Equality-Introduction"));
+        eqElimButton.setTooltip(new Tooltip("Equality-Elimination"));
+        existsIntroButton.setTooltip(new Tooltip("There Exists-Introduction"));
+        existsElimButton.setTooltip(new Tooltip("There Exists-Elimination"));
+        copyButton.setTooltip(new Tooltip("Copy"));
+        assButton.setTooltip(new Tooltip("Assumption"));
+        freshButton.setTooltip(new Tooltip("Fresh Variable"));
+        premiseButton.setTooltip(new Tooltip("Premise"));
+
+        //Derived Rules
+        mtButton.setTooltip(new Tooltip("Modus Tollens"));
+        doubleNegButton.setTooltip(new Tooltip("Double Negation"));
+        pbcButton.setTooltip(new Tooltip("Proof by Contradiction"));
+        lemButton.setTooltip(new Tooltip("Law of Exluded Middle"));
+
+        //Symbols
+        impButton.setTooltip(new Tooltip("Implication (type im to insert)"));
+        andButton.setTooltip(new Tooltip("And (type an to insert)"));
+        orButton.setTooltip(new Tooltip("Or (type or to insert)"));
+        negButton.setTooltip(new Tooltip("Negation (type ne to insert)"));
+        forallButton.setTooltip(new Tooltip("For All (type fa to insert)"));
+        existsButton.setTooltip(new Tooltip("There Exists (type te to insert)"));
+        contraButton.setTooltip(new Tooltip("Contradiction (type co to insert)"));
+
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Preferences prefs = Preferences.userRoot().node("General"); // Inställningar i noden "General"
@@ -277,6 +434,7 @@ public class MainController implements Initializable {
         if (prefs.getBoolean("showWelcome", true)) { // Om showWelcome-paret ej existerar, returnera true
             new WelcomeView(tabPane);
         }
+        createTooltip();
     }
 
     //Get the view corresponding to the currently active tab
