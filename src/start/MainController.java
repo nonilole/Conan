@@ -85,11 +85,11 @@ public class MainController implements Initializable {
 
     @FXML
     void newRow(ActionEvent event) {
-        //System.out.println("mainc newRow");
         ProofView pv = convertProofView(getCurrentView());
         if (pv == null)
             return;
-        pv.newRow();
+        int rowNumber = pv.getRowIndexLastFocusedTF();
+        pv.addRowAfterBox(rowNumber);
     }
 
     @FXML
