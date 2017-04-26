@@ -27,7 +27,7 @@ public class WelcomeView extends Symbolic implements View {
         gridPane.setVgap(20.0);
         gridPane.setPadding(new Insets(20.0, 20.0, 20.0, 20.0));
         String sTitle = "Welcome to Conan";
-        String sWelcomeText = "Conan is tool developed for providing assistance when constructing proofs in natural deduction for first-order logic.\n\n"
+        String sWelcomeText = "Conan is a tool developed for providing assistance when constructing proofs in natural deduction for first-order logic.\n\n"
         		+ "Feel free to enter premises and conclusions for something you want to prove and then click continue to proceed.\n\n"
         		+ "If you want to learn more about how to use the interface, please follow the link below.";
         String sTab = "Welcome";
