@@ -58,11 +58,12 @@
 }
 
 .unVerified {
-  	-fx-background-color: pink, white, white;
+   -fx-background-color: pink, white, white;
    -fx-background-insets: 0, 2;
 }
 .conclusionReached {
-    -fx-control-inner-background: #90EE90;
+	-fx-background-color: #90EE90;
+/*    -fx-control-inner-background: #90EE90;*/
 }
 
 .root {
