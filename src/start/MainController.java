@@ -215,6 +215,10 @@ public class MainController implements Initializable {
                 new ExtensionFilter("Proofs", "*.proof"),
                 new ExtensionFilter("All Files", "*.*"));
         File file = fc.showSaveDialog(tabPane.getScene().getWindow());
+        if(file == null){
+        	System.out.println("Path not set, file not saved");
+        	return;
+        }
         if(file.getAbsolutePath().endsWith(".proof") == false){
         	file = new File(file.getAbsolutePath()+".proof");
         }
