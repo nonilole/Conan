@@ -28,6 +28,7 @@ public class InferenceRuleView implements View {
 
         //putting the image on a scrollpane
         ScrollPane sp=new ScrollPane();
+        sp.getStyleClass().add("rulesView");
         tab = new ViewTab("Inference Rules",this);
         sp.setContent(iv1);
         tabPane.getTabs().add(tab);

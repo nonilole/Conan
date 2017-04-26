@@ -16,7 +16,10 @@ public class Proof implements Serializable{
     private Formula conclusion;
     private Box proofData = new Box(null, true);
     public boolean isLoaded = false;
-
+    
+    
+    public Proof(){}
+    
     public String getProofString() {
         return proofData.rowsToString(1);
     }
@@ -43,20 +46,21 @@ public class Proof implements Serializable{
      * @param rowNumber
      */
 
-    public boolean deleteRow(int rowNumber) {
+    public int deleteRow(int rowNumber) {
         if (rowNumber < 1 || rowNumber > proofData.size() || proofData.size() == 1) {
-            return false;
+            return -1;
         }
         System.out.println(proofData.size());
-        if (!(proofData.deleteRow(rowNumber - 1)))
-            return false;
+        int delDepth = (proofData.deleteRow(rowNumber - 1));
+        if (delDepth == -1)
+            return -1;
         for (ProofListener listener : this.listeners) {
             listener.rowDeleted(rowNumber);
         }
         System.out.println("deleteRow(" + rowNumber + ")");
         proofData.printRows(1, 1);
         System.out.println("==========================================================");
-        return true;
+        return delDepth;
     }
 
     /**
@@ -68,32 +72,20 @@ public class Proof implements Serializable{
      * @param br:        Indicates whether the new row should be added before or after the reference row
      */
 
-    public boolean insertNewRow(int rowNumber, BoxReference br) {
+    public boolean insertNewRow(int rowNumber, BoxReference br, int depth) {
         if (rowNumber < 1 || rowNumber > proofData.size() + 1) {
             System.out.println("Proof.insertNewRow: incorrect rowNumber");
             System.out.println("rows.size(): " + proofData.size() + ", rowNumber: " + rowNumber);
             return false;
         }
-        proofData.insertRow(rowNumber - 1, br);
+        proofData.insertRow(rowNumber - 1, br, depth);
         for (ProofListener pl : listeners) {
-            pl.rowInserted(rowNumber, br);
+            pl.rowInserted(rowNumber, br, depth);
         }
         verifyProof(rowNumber-1 + (br == BoxReference.BEFORE ? 0 : 1));
         System.out.println("insertNewRow(" + rowNumber + ", " + br + ")");
         proofData.printRows(1, 1);
         System.out.println("==========================================================");
-        return true;
-    }
-
-    public boolean addRowAfterBox(int rowNumber) {
-        if (rowNumber < 1 || rowNumber > proofData.size() + 1) {
-            return false;
-        }
-        proofData.addRowAfterBox(rowNumber - 1);
-        for (ProofListener pl : listeners) {
-            pl.addedRowAfterBox(rowNumber);
-        }
-        verifyProof(rowNumber);
         return true;
     }
 
@@ -190,17 +182,6 @@ public class Proof implements Serializable{
         return isVerified;
     }
 
-    //This shouldn't be used when a proper UI for opening boxes has been implemented
-    //since at that point, you open a box in a specific row rather than at the end of a proof
-    //Instead, at that point, use openBox(int rowNr)
-    public void openBox() {
-        proofData.openNewBox();
-        //TODO: should probbly add a new row immediatly to avoid issues with empty boxes
-        for (ProofListener listener : this.listeners) {
-            listener.boxOpened();
-        }
-    }
-
     public boolean insertBox(int rowIndex) {
         ProofRow pr = proofData.getRow(rowIndex);
         if (pr.getParent() != null && pr.getParent().getRow(0) == pr) {
@@ -220,13 +201,6 @@ public class Proof implements Serializable{
             listener.boxRemoved(rowIndex + 1);
         }
         return true;
-    }
-
-    public void closeBox() {
-        proofData.closeBox();
-        for (ProofListener listener : this.listeners) {
-            listener.boxClosed();
-        }
     }
 
     /**
@@ -357,7 +331,6 @@ public class Proof implements Serializable{
     	ArrayList<ProofListener.RowInfo> returnList = new ArrayList<ProofListener.RowInfo>();
     	
     	proofData.fillList(returnList);
-    	
     	return returnList;
     }
 }

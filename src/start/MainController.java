@@ -76,20 +76,32 @@ public class MainController implements Initializable {
     }
 
     private ProofView convertProofView(View view) {
-        if (view instanceof ProofView) {
-            return (ProofView) view;
-        } else {
+        if (view == null || !(view instanceof ProofView))
             return null;
-        }
+        return (ProofView) view;
+    }
+
+    @FXML
+    void closeTab(ActionEvent event) {
+        if (currentTab != null)
+            tabPane.getTabs().remove(currentTab);
     }
 
     @FXML
     void newRow(ActionEvent event) {
-        //System.out.println("mainc newRow");
         ProofView pv = convertProofView(getCurrentView());
         if (pv == null)
             return;
         pv.newRow();
+    }
+    @FXML
+    void insertBelowAfterMenu(ActionEvent event) {
+        ProofView pv = convertProofView(getCurrentView());
+        if (pv == null)
+            return;
+        int rowNumber = pv.getRowNumberLastFocusedTF();
+        if (rowNumber != -1)
+            pv.addRowAfterBox(rowNumber);
     }
 
     @FXML
@@ -97,15 +109,9 @@ public class MainController implements Initializable {
         ProofView pv = convertProofView(getCurrentView());
         if (pv == null)
             return;
-        pv.openBox();
-    }
-
-    @FXML
-    void closeBox(ActionEvent event) { // Remove this later
-        ProofView pv = convertProofView(getCurrentView());
-        if (pv == null)
-            return;
-        pv.closeBox();
+        int rowNumber = pv.getRowNumberLastFocusedTF();
+        if (rowNumber != -1)
+            pv.insertNewBox(rowNumber);
     }
 
     @FXML
@@ -156,9 +162,9 @@ public class MainController implements Initializable {
         ProofView pv = convertProofView(getCurrentView());
         if (pv == null)
             return;
-        int rowNumber = pv.getRowIndexLastFocusedTF();
+        int rowNumber = pv.getRowNumberLastFocusedTF();
         if (rowNumber != -1) {
-            pv.getProof().deleteRow(rowNumber);
+            pv.deleteRow(rowNumber);
         }
     }
 
@@ -167,8 +173,9 @@ public class MainController implements Initializable {
         ProofView pv = convertProofView(getCurrentView());
         if (pv == null)
             return;
-        int rowNumber = pv.getRowIndexLastFocusedTF();
-        pv.getProof().insertNewRow(rowNumber, BoxReference.BEFORE);
+        int rowNumber = pv.getRowNumberLastFocusedTF();
+        if (rowNumber != -1)
+            pv.insertNewRow(rowNumber, BoxReference.BEFORE);
     }
 
     @FXML
@@ -176,8 +183,9 @@ public class MainController implements Initializable {
         ProofView pv = convertProofView(getCurrentView());
         if (pv == null)
             return;
-        int rowNumber = pv.getRowIndexLastFocusedTF();
-        pv.getProof().insertNewRow(rowNumber, BoxReference.AFTER);
+        int rowNumber = pv.getRowNumberLastFocusedTF();
+        if (rowNumber != -1)
+            pv.insertNewRow(rowNumber, BoxReference.AFTER);
     }
 
     @FXML
@@ -230,12 +238,16 @@ public class MainController implements Initializable {
 
     @FXML
     void exportProofToLatex(ActionEvent event) {
+        ProofView pView = convertProofView(getCurrentView());
+        if (pView == null)
+            return;
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().addAll(
                 new ExtensionFilter("LaTeX", "*.tex"),
                 new ExtensionFilter("All Files", "*.*"));
         File file = fc.showSaveDialog(tabPane.getScene().getWindow());
-        ProofView pView = convertProofView(getCurrentView());
+        if (file == null || !file.exists())
+            return;
         try {
             ExportLatex.export(pView.getProof(), file.getPath());
         } catch (IOException e) {
@@ -262,6 +274,11 @@ public class MainController implements Initializable {
         new InstructionsView(tabPane);
     }
 
+    @FXML
+    void showWelcome(ActionEvent event) {
+        new WelcomeView(tabPane);
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Preferences prefs = Preferences.userRoot().node("General"); // Inställningar i noden "General"
@@ -281,7 +298,9 @@ public class MainController implements Initializable {
 
     //Get the view corresponding to the currently active tab
     private View getCurrentView() {
-        return currentTab.getView();
+        if (currentTab != null)
+            return currentTab.getView();
+        return null;
     }
 }
 

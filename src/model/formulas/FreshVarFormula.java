@@ -14,13 +14,17 @@ public class FreshVarFormula extends Formula {
 
 	@Override
 	public boolean containsObjectId(String id) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new RuntimeException("This shouldn't be called");
 	}
 	
 	@Override
 	public String toString(){
 		return var;
+	}
+
+	@Override
+	public Formula replace(Term newId, Term oldId) {
+		throw new RuntimeException("This shouldn't be called");
 	}
 
 }

@@ -24,6 +24,7 @@ public class ExportLatex {
     public static void export(Proof proof, String file) throws IOException {
         String[] lines = proof.getProofString().split("\\r?\\n");
         String output = "% For use with https://www.ctan.org/pkg/logicproof\n";
+        output += "% Note that ending a box in a box is not valid and will not give the desired results.\n";
         int maxDepth = -1;
         int curDepth = 1;
         for (String line : lines) {
@@ -32,19 +33,24 @@ public class ExportLatex {
             if (maxDepth < depth) {
                 maxDepth = depth;
             }
-            while (curDepth < depth) {
+            if (curDepth == depth && Integer.parseInt(info[4])==1) { // Edge case same depth box after box
+                // Need to remove backslashes and both end and start a new environment
+                output = trimEnd(output);
+                output += "\\end{subproof}\n";
+                output += "\\begin{subproof}\n";
+
+            } else if (curDepth < depth) { // Regular depth increase
                 output += "\\begin{subproof}\n";
                 ++curDepth;
-            }
-            while (curDepth > depth) {
+            } else while (curDepth > depth) {
                 output = trimEnd(output);
                 output += "\\end{subproof}\n";
                 --curDepth;
             }
-            output += replaceAllUnicode(info[1]);
+            output += replaceAllUnicode(info[1]).replaceAll("null","");
             output += "&";
             output += replaceAllUnicode(info[2]).replaceAll(
-                    "(i|e)_(\\{\\d\\})","\\$\\\\mathrm\\{$1\\}_$2\\$");
+                    "(i|e)_(\\{\\d\\})","\\$\\\\mathrm\\{$1\\}_$2\\$").replaceAll("null", "");
             output += "\\\\\n";
 
         }
@@ -71,7 +77,7 @@ public class ExportLatex {
     }
 
     private static String trimEnd(String s) {
-        if (s.substring(s.length() - 3, s.length()).equals("\\\\\n")) // Might need \r for cross platform
+        if (s.endsWith("\\\\\n")) // Might need \r for cross platform
             return s.substring(0, s.length() - 3) + '\n';
         return s;
 

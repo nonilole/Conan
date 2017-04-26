@@ -22,6 +22,17 @@ public class Predicate extends Formula{
     	}
     	return new Predicate(id, newArgs);
     }
+    
+    @Override
+	public Formula replace(Term newTerm, Term oldTerm) {
+    	List<Term> newArgs = new ArrayList<Term>();
+    	for(Term t : args){
+    		//newArgs.add(t.replace(newId, oldId));
+    		Term term = t.equals(oldTerm) ? newTerm : oldTerm;
+    		newArgs.add(term);
+    	}
+    	return new Predicate(id, newArgs);
+	}
 
     public List<Term> getArgs(){
         return new ArrayList<Term>(args);

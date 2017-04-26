@@ -68,6 +68,7 @@ public class ProofRow implements ProofEntry{
     	}
     	strB.append(" :: "+rule); // ✓
     	strB.append(" :: Verified: " + (isVerified ? "✓" : "x"));
+        strB.append(" ::" + (!getParent().isTopLevelBox() && getParent().entries.get(0).equals(this) ? "1" : "0")); //For latex to indicate start of a box
     	return strB+"";
     }
 
