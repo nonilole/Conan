@@ -6,6 +6,11 @@ public class Contradiction extends Formula {
 	public Formula replace(String newId, String oldId) {
 		return new Contradiction();
 	}
+	
+	@Override
+	public Formula replace(Term newT, Term oldT) {
+		return new Contradiction();
+	}
 
 	@Override
 	public boolean containsObjectId(String id) {

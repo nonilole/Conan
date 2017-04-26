@@ -38,4 +38,9 @@ public class Disjunction extends Formula {
 	public boolean containsObjectId(String id) {
 		return lhs.containsObjectId(id) ||  rhs.containsObjectId(id);
 	}
+
+	@Override
+	public Formula replace(Term newTerm, Term oldTerm) {
+		return new Disjunction(lhs.replace(newTerm, oldTerm), rhs.replace(newTerm, oldTerm));
+	}
 }
