@@ -39,20 +39,25 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
     /**
      * Takes a premisesAndConclusion object and adds it to its content,
-         * also switches the tab selection to this ViewTab.
-         * Adds one row if it's not a loaded proof.
+     * also switches the tab selection to this ViewTab.
+     * Adds one row if it's not a loaded proof.
      *
      * AnchorPanes omitted for clarity
      * One row, one box with a row.
      *  Tab
      *   └──SplitPane
      *         └──PremisesAndConclusion
-     *         └──Vbox
-     *             ├──RowPane
-     *             │  └──Rulepane
-     *             └──VBox
-     *                 └──RowPane
-     *                      └──Rulepane
+     *         └──ScrollPane
+     *              └──HBox
+     *              `   ├──labels(VBox)
+     *                  │     ├──Label
+     *                  │     └──Label
+     *                  └──rows(VBox)
+     *                      ├──RowPane
+     *                      │    └──Rulepane
+     *                     └──VBox
+     *                         └──RowPane
+     *                              └──Rulepane
      * @param tabPane
      * @param premisesAndConclusion
      */
@@ -534,6 +539,11 @@ public class ProofView extends Symbolic implements ProofListener, View {
         return -1;
     }
 
+
+    public void scrollIntoView() {
+
+        sp.setVvalue(0.5);
+    }
 
     /**
      * Display all the information in the loaded proof
