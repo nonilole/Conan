@@ -260,6 +260,9 @@ public class MainController implements Initializable {
     	ProofView openedProofView;
     	try{
     		openedProofView = IOHandler.openProof(tabPane);
+    		if(openedProofView == null){
+    			return;
+    		}
     		openedProofView.displayLoadedProof();
     	}catch(Exception e){
     		System.out.println("MainController.openProof exception:");
