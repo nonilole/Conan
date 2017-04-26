@@ -238,14 +238,16 @@ public class MainController implements Initializable {
 
     @FXML
     void exportProofToLatex(ActionEvent event) {
+        ProofView pView = convertProofView(getCurrentView());
+        if (pView == null)
+            return;
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().addAll(
                 new ExtensionFilter("LaTeX", "*.tex"),
                 new ExtensionFilter("All Files", "*.*"));
         File file = fc.showSaveDialog(tabPane.getScene().getWindow());
-        ProofView pView = convertProofView(getCurrentView());
-        if (pView == null)
-                return;
+        if (file == null || !file.exists())
+            return;
         try {
             ExportLatex.export(pView.getProof(), file.getPath());
         } catch (IOException e) {
