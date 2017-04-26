@@ -57,6 +57,7 @@ public class RowPane extends BorderPane {
         ruleMap.put("LEM", 0);
         ruleMap.put("PBC", 1);
         ruleMap.put("¬¬I", 1);
+        ruleMap.put("Copy", 1);
     }
 
     private int numberOfPrompts;
