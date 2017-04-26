@@ -2,6 +2,7 @@ package model.rules;
 
 import model.Box;
 import model.formulas.Formula;
+import model.formulas.FreshVarFormula;
 
 public class Premise extends Rule {
 
@@ -17,6 +18,7 @@ public class Premise extends Rule {
 
     @Override
     public boolean verifyRow(Box data, int rowIndex) {
+    	if( data.getRow(rowIndex).getFormula() instanceof FreshVarFormula ) return false;
         return true;
     }
 
@@ -33,11 +35,6 @@ public class Premise extends Rule {
     @Override
     public String toString() {
         return "premise";
-    }
-
-    @Override
-    public boolean verify(Box data, int rowIndex) {
-        return true;
     }
 
 	@Override
