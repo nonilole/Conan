@@ -34,9 +34,10 @@ public class WelcomeView extends Symbolic implements View {
         GridPane gridPane = new GridPane();
         gridPane.setVgap(20.0);
         gridPane.setPadding(new Insets(20.0, 20.0, 20.0, 20.0));
-        String sTitle = "Conan";
-        String sWelcomeText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ante est, placerat quis ultricies sed, varius nec ante. Nullam interdum eu tortor quis faucibus. Duis accumsan purus ac diam porta, eget semper arcu pulvinar. Sed et ornare ligula. Morbi sollicitudin pretium eros, vitae feugiat ante tincidunt vel. Cras aliquam lobortis neque, non rutrum orci volutpat et. Nam at tincidunt mauris. Phasellus lobortis lorem dolor, sit amet tempus nulla pellentesque nec. Aenean a venenatis lectus.";
-        sWelcomeText += " " + sWelcomeText;
+        String sTitle = "Welcome to Conan";
+        String sWelcomeText = "Conan is a tool developed for providing assistance when constructing proofs in natural deduction for first-order logic.\n\n"
+        		+ "Feel free to enter premises and conclusions for something you want to prove and then click continue to proceed.\n\n"
+        		+ "If you want to learn more about how to use the interface, please follow the link below.";
         String sTab = "Welcome";
         Label title = new Label(sTitle);
         title.getStyleClass().add("myTitle");
@@ -85,7 +86,8 @@ public class WelcomeView extends Symbolic implements View {
             }
         });
 
-        Hyperlink help = new Hyperlink("Help me!");
+        Hyperlink help = new Hyperlink("Tell me more about the interface");
+        help.getStyleClass().add("infoText");
 
         help.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -141,28 +143,28 @@ public class WelcomeView extends Symbolic implements View {
             proof.updateConclusion(conclusionStr);
         });
         gridPane.add(title, 0, 0);
-        gridPane.add(help, 0, 1);
-
-        gridPane.add(welcomeText, 0, 2);
+        gridPane.add(welcomeText, 0, 1);
+        gridPane.add(help, 0, 2);
         gridPane.add(premisesAndConclusion, 0, 3);
         gridPane.add(this.notAgain, 0, 4);
         gridPane.add(butNext, 0, 4);
-        gridPane.setHalignment(title, HPos.CENTER);
-        gridPane.setValignment(title, VPos.CENTER);
-        gridPane.setHalignment(help, HPos.CENTER);
+        
+        GridPane.setHalignment(title, HPos.CENTER);
+        GridPane.setValignment(title, VPos.CENTER);
+        GridPane.setHalignment(help, HPos.CENTER);
 
-        gridPane.setHalignment(premisesAndConclusion, HPos.CENTER);
-        gridPane.setValignment(premisesAndConclusion, VPos.CENTER);
-        gridPane.setHalignment(notAgain, HPos.LEFT);
-        gridPane.setHalignment(butNext, HPos.RIGHT);
+        GridPane.setHalignment(premisesAndConclusion, HPos.CENTER);
+        GridPane.setValignment(premisesAndConclusion, VPos.CENTER);
+        GridPane.setHalignment(notAgain, HPos.LEFT);
+        GridPane.setHalignment(butNext, HPos.RIGHT);
         ScrollPane scrollPane = new ScrollPane(gridPane);
         scrollPane.setFitToWidth(true);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         AnchorPane ap = new AnchorPane(scrollPane);
-        ap.setTopAnchor(scrollPane, 0.0);
-        ap.setRightAnchor(scrollPane, 0.0);
-        ap.setBottomAnchor(scrollPane, 0.0);
-        ap.setLeftAnchor(scrollPane, 0.0);
+        AnchorPane.setTopAnchor(scrollPane, 0.0);
+        AnchorPane.setRightAnchor(scrollPane, 0.0);
+        AnchorPane.setBottomAnchor(scrollPane, 0.0);
+        AnchorPane.setLeftAnchor(scrollPane, 0.0);
         this.tab = new ViewTab(sTab, this);
         this.tab.setContent(ap);
         tabPane.getTabs().add(this.tab);
