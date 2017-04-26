@@ -502,7 +502,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
     }
 
     public void addRule(String text) {
-        if (lastFocusedTf.getId() == "rightTextfield") {
+        if (lastFocusedTf.getId() == "rightTextField") {
             int tmpCaretPosition = caretPosition;
             //String[] parts = event.toString().split("'");
             lastFocusedTf.setText(text);
