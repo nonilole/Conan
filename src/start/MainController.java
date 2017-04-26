@@ -249,7 +249,7 @@ public class MainController implements Initializable {
                 new ExtensionFilter("LaTeX", "*.tex"),
                 new ExtensionFilter("All Files", "*.*"));
         File file = fc.showSaveDialog(tabPane.getScene().getWindow());
-        if (file == null || !file.exists())
+        if (file == null)
             return;
         try {
             ExportLatex.export(pView.getProof(), file.getPath());
