@@ -542,7 +542,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
         for (int i = 1; i <= proofInfo.size(); i++) {
             RowInfo rowInfo = proofInfo.get(i - 1);
-            System.out.println("i=" + i + " " + rowInfo);
+            //System.out.println("i=" + i + " " + rowInfo);
             if (rowInfo.startBox && i != 1) {
                 this.openBoxInView();
             }

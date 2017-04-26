@@ -215,6 +215,9 @@ public class MainController implements Initializable {
                 new ExtensionFilter("Proofs", "*.proof"),
                 new ExtensionFilter("All Files", "*.*"));
         File file = fc.showSaveDialog(tabPane.getScene().getWindow());
+        if(file.getAbsolutePath().endsWith(".proof") == false){
+        	file = new File(file.getAbsolutePath()+".proof");
+        }
 
         View view = getCurrentView();
         if (view instanceof ProofView == false) {
