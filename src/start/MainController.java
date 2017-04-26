@@ -272,6 +272,11 @@ public class MainController implements Initializable {
         new InstructionsView(tabPane);
     }
 
+    @FXML
+    void showWelcome(ActionEvent event) {
+        new WelcomeView(tabPane);
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Preferences prefs = Preferences.userRoot().node("General"); // Inställningar i noden "General"
