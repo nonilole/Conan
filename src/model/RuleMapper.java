@@ -35,6 +35,7 @@ public class RuleMapper {
         ruleToClass.put("PBC", ProofByContradiction.class);
         ruleToClass.put("LEM", LawOfExcludedMiddle.class);
         ruleToClass.put("¬¬I", DoubleNegationIntro.class);
+        ruleToClass.put("Copy", Copy.class);
     }
 
     public static Rule getRule(String rule) {
