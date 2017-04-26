@@ -26,7 +26,7 @@ public class RowPane extends BorderPane {
     final static KeyCombination ctrlB = new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN);
     final static KeyCombination ctrlD = new KeyCodeCombination(KeyCode.D, KeyCombination.CONTROL_DOWN);
     private static final HashMap<String, Integer> ruleMap;
-    static Pattern p = Pattern.compile("^(\\d+-?\\d*)?$");
+    static Pattern p = Pattern.compile("^([1-9]\\d*-?([1-9]\\d*)?)?$");
 
     static {
         ruleMap = new HashMap<String, Integer>();

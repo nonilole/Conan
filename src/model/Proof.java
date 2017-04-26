@@ -273,8 +273,6 @@ public class Proof implements Serializable{
 
     public void rulePromptUpdate(int rowNr, int promptNumber, String newValue) {
         System.out.println("rulePromptUpdate rowNr:" + rowNr + " promptNumber:" + promptNumber + " newValue:" + newValue);
-        if (newValue.equals("0")) // Catches newValue = "0" bug
-            return;
         int rowIndex = rowNr - 1;
         ProofRow row = proofData.getRow(rowNr - 1);
 
