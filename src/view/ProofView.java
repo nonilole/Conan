@@ -510,12 +510,13 @@ public class ProofView extends Symbolic implements ProofListener, View {
             lastFocusedTf.positionCaret(tmpCaretPosition + 1);
         } else if (lastFocusedTf.getId() == "expression") {
             TextField tmpLastFocusedTf = lastFocusedTf;
-            BorderPane borderpane = (BorderPane) lastFocusedTf.getParent();
-            RulePane rulepane = (RulePane) borderpane.getRight();
-            TextField tf = (TextField) rulepane.getChildren().get(0);
+            RowPane rp = (RowPane) lastFocusedTf.getParent(); // Valid assumption
+            //BorderPane borderpane = (BorderPane) lastFocusedTf.getParent();
+//            rulepane = (RulePane) borderpane.getRight();
+//            TextField tf = (TextField) rulepane.getChildren().get(0);
             int tmpCaretPosition = caretPosition;
             //String[] parts = event.toString().split("'");
-            tf.setText(text);
+            rp.getRule().setText(text);
             tmpLastFocusedTf.requestFocus();
             tmpLastFocusedTf.positionCaret(tmpCaretPosition);
         }
