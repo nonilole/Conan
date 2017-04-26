@@ -81,7 +81,7 @@ public class RowPane extends BorderPane {
         this.setRight(rulePane);
         this.setCache(true);
         this.setCacheShape(true);
-        this.setCacheHint(CacheHint.SPEED);
+        this.setCacheHint(CacheHint.DEFAULT);
     }
 
     public void init(ProofView pv, List<RowPane> rList) {
