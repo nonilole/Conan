@@ -215,6 +215,9 @@ public class MainController implements Initializable {
                 new ExtensionFilter("Proofs", "*.proof"),
                 new ExtensionFilter("All Files", "*.*"));
         File file = fc.showSaveDialog(tabPane.getScene().getWindow());
+        if(file.getAbsolutePath().endsWith(".proof") == false){
+        	file = new File(file.getAbsolutePath()+".proof");
+        }
 
         View view = getCurrentView();
         if (view instanceof ProofView == false) {
@@ -260,6 +263,9 @@ public class MainController implements Initializable {
     	ProofView openedProofView;
     	try{
     		openedProofView = IOHandler.openProof(tabPane);
+    		if(openedProofView == null){
+    			return;
+    		}
     		openedProofView.displayLoadedProof();
     	}catch(Exception e){
     		System.out.println("MainController.openProof exception:");
