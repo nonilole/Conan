@@ -20,4 +20,9 @@ public class Contradiction extends Formula {
 	public String toString() {
 		return "⊥";
 	}
+	
+	@Override
+	public boolean equals(Object o){
+		return o instanceof Contradiction;
+	}
 }
