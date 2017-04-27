@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static view.ProofView.verificationSettings;
 import static view.ViewUtil.applyStyleIf;
 
 // Kanske vill skriva om ProofListener och låta denna lyssna på ett bevis istället.
@@ -23,7 +24,7 @@ public class PremisesAndConclusion extends HBox {
     private Label turnstile;
     private TextField conclusion;
     Pattern regex = Pattern.compile("\\(.*?\\)|(,)");
-    private void parseAndStyle(TextField tf, String s) {
+    public void parseAndStyle(TextField tf, String s) {
         Matcher matcher = regex.matcher(s);
         StringBuffer newString = new StringBuffer();
         while (matcher.find()) { // Two sets of matches, replace the second set of matches with !, because they can't be written
@@ -41,9 +42,13 @@ public class PremisesAndConclusion extends HBox {
             try {
                 if (!split.equals(""))
                     parser.parse(split);
-                applyStyleIf(tf, false, "bad");
+                if(verificationSettings){
+                    applyStyleIf(tf, false, "bad");
+                }
             } catch (ParseException e) {
-                applyStyleIf(tf, true, "bad");
+                if(verificationSettings) {
+                    applyStyleIf(tf, true, "bad");
+                }
                 return;
             }
         }

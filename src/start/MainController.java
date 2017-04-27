@@ -168,21 +168,26 @@ public class MainController implements Initializable {
             return;
         if(pv.getProof()!=null) {
             Proof p = pv.getProof();
+            PremisesAndConclusion pc=pv.getPremisesAndConclusion();
             List<RowPane> r=pv.getrList();
+
             //Updates every row when the box is checked
             if (this.verification.selectedProperty().getValue()) {
                 pv.setVerificationSettings(true);
+                pc.parseAndStyle(pc.getPremises(),pc.getPremises().getText());
+                pc.parseAndStyle(pc.getConclusion(),pc.getConclusion().getText());
 
-                for(int i=0;i<r.size();i++)
-                {
+                for(int i=0;i<r.size();i++) {
                     p.updateFormulaRow(r.get(i).getExpression().getText(),i+1);
                 }
-            } else {
+            }else {
                 pv.setVerificationSettings(false);
                 for(int i=0;i<r.size();i++) {
                     r.get(i).getExpression().getStyleClass().remove("bad");
                     r.get(i).getRule().getStyleClass().remove("unVerified");
                 }
+                pc.getConclusion().getStyleClass().remove("bad");
+                pc.getPremises().getStyleClass().remove("bad");
             }
         }
     }

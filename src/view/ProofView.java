@@ -25,6 +25,8 @@ import static view.ViewUtil.checkShortcut;
 
 public class ProofView extends Symbolic implements ProofListener, View {
     ScrollPane sp;
+
+    private PremisesAndConclusion premisesAndConclusion;
     private TextField premises;
     private TextField conclusion;
     private Stack<VBox> curBoxDepth = new Stack<>();
@@ -39,11 +41,13 @@ public class ProofView extends Symbolic implements ProofListener, View {
     private String name;
 
     //used for turning the verification on and off, initially it is on
-    private boolean verificationSettings=true;
+    public static boolean verificationSettings=true;
 
     public void setVerificationSettings(boolean verificationSettings) {
         this.verificationSettings = verificationSettings;
     }
+
+
 
     /**
      * Takes a premisesAndConclusion object and adds it to its content,
@@ -71,6 +75,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
      */
 
     public ProofView(TabPane tabPane, Proof proof, PremisesAndConclusion premisesAndConclusion) {
+        this.premisesAndConclusion=premisesAndConclusion;
         this.proof = proof;
         this.proof.registerProofListener(this);
         this.premises = premisesAndConclusion.getPremises();
@@ -593,5 +598,9 @@ public class ProofView extends Symbolic implements ProofListener, View {
      */
     public List<RowPane> getRowList() {
         return new ArrayList<RowPane>(rList);
+    }
+
+    public PremisesAndConclusion getPremisesAndConclusion() {
+        return premisesAndConclusion;
     }
 }
