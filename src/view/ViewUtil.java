@@ -9,6 +9,12 @@ public class ViewUtil {
             pv.caretPosition = tf.getCaretPosition();
         });
     }
+    public static void applyStyleIf(TextField expression, boolean bool, String style) {
+        expression.getStyleClass().removeIf((s) -> s.equals(style));
+        if (bool) {
+            expression.getStyleClass().add(style);
+        }
+    }
     public static String checkShortcut(String newValue) {
         newValue = newValue.replaceAll("!|ne|no", "¬");
         newValue = newValue.replaceAll("&|an", "∧");

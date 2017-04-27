@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Stack;
 
 import static view.ViewUtil.addFocusListener;
+import static view.ViewUtil.applyStyleIf;
 import static view.ViewUtil.checkShortcut;
 
 public class ProofView extends Symbolic implements ProofListener, View {
@@ -432,13 +433,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
     }
     // END OF PROOF LISTENER METHODS
 
-
-    private void applyStyleIf(TextField expression, boolean bool, String style) {
-        expression.getStyleClass().removeIf((s) -> s.equals(style));
-        if (bool) {
-            expression.getStyleClass().add(style);
-        }
-    }
 
     public ViewTab getTab() {
         return tab;
