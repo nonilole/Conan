@@ -37,29 +37,15 @@ public class RowPane extends BorderPane {
         List<Boolean> ft = Arrays.asList(false,true,true);
         List<Boolean> tf = Arrays.asList(true,false,true);
         ruleBox = new HashMap<String, List<Boolean>>();
-        ruleBox.put("∧I", ff);
-        ruleBox.put("∧E", ff);
         ruleBox.put("∨E", ft);
         ruleBox.put("→I", tf);
-        ruleBox.put("→E", ff);
-        ruleBox.put("⊥E", ff);
         ruleBox.put("¬I", tf);
-        ruleBox.put("¬E", ff);
-        ruleBox.put("¬¬E", ff);
-        ruleBox.put("Premise", ff);
         ruleBox.put("∀I", tf);
-        ruleBox.put("∀E", ff);
-        ruleBox.put("∃I", ff);
         ruleBox.put("∃E", ft);
-        ruleBox.put("=E", ff);
         ruleBox.put("=I", ft);
-        ruleBox.put("Ass.", ff);
-        ruleBox.put("Fresh", ff);
         ruleBox.put("MT", tf);
-        ruleBox.put("LEM", ff);
         ruleBox.put("PBC", tf);
         ruleBox.put("¬¬I", ff);
-        ruleBox.put("Copy", ff);
     }
     private static final HashMap<String, Integer> ruleMap;
     static {
@@ -186,7 +172,7 @@ public class RowPane extends BorderPane {
                 e.printStackTrace();
             }
             setPrompts(ruleMap.getOrDefault(newValue, 0));
-            setPromptsPromptText(ruleBox.getOrDefault(newValue, Arrays.asList(false, false, false)));
+            setPromptsPromptText(ruleBox.getOrDefault(newValue, Arrays.asList(false, false, true)));
         });
         for (int i = 0; i < 3; i++) {
             new PromptFocus(getRulePrompt(i), pv, rList, i);
