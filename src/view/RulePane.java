@@ -1,40 +1,35 @@
 package view;
 
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.control.TextFormatter.Change;
-import java.util.function.UnaryOperator;
 
-public class RulePane extends FlowPane{
-	public RulePane() {
-		this.setMaxWidth(340);
-		TextField tfRule = new TextField();
-		TextField tfRulePrompt1 = new TextField();
-		TextField tfRulePrompt2 = new TextField();
-		TextField tfRulePrompt3 = new TextField();
+import java.util.ArrayList;
 
-		//set the rule prompts to invisible
-		tfRulePrompt1.setVisible(false);
-		tfRulePrompt2.setVisible(false);
-		tfRulePrompt3.setVisible(false);
-
-		tfRule.setId("rightTextfield");
-		tfRulePrompt1.setId("rulePromt1tf");
-		tfRulePrompt2.setId("rulePromt2tf");
-		tfRulePrompt3.setId("rulePromt3tf");
-
-		tfRule.getStyleClass().add("myText");
-		tfRulePrompt1.getStyleClass().add("myText");
-		tfRulePrompt2.getStyleClass().add("myText");
-		tfRulePrompt3.getStyleClass().add("myText");
-
-		tfRule.setMaxWidth(100);
-		tfRulePrompt1.setMaxWidth(80);
-		tfRulePrompt2.setMaxWidth(80);
-		tfRulePrompt3.setMaxWidth(80);
-
-		//adding the textfield for the rule and the rulepromts
-		this.getChildren().addAll(tfRule, tfRulePrompt1, tfRulePrompt2, tfRulePrompt3);
-	}
+// Only GUI no logic"
+public class RulePane extends FlowPane {
+    private TextField rule;
+    private ArrayList<TextField> rulePrompts;
+    public TextField getRulePrompt(int i) {
+        return rulePrompts.get(i);
+    }
+    public TextField getRule() {
+        return rule;
+    }
+    public RulePane() {
+        rulePrompts = new ArrayList<TextField>(3);
+        this.setMaxWidth(340);
+        rule = new TextField();
+        rule.getStyleClass().add("myText");
+        rule.setPromptText("Rule");
+        rule.setId("rightTextField");
+        rule.setMaxWidth(100);
+        for (int i = 0; i < 3; i++) {
+            TextField temp = new TextField();
+            temp.setVisible(false);
+            temp.getStyleClass().add("myText");
+            temp.setMaxWidth(80);
+            rulePrompts.add(temp);
+        }
+        this.getChildren().addAll(rule, rulePrompts.get(0), rulePrompts.get(1), rulePrompts.get(2));
+    }
 }

@@ -15,10 +15,12 @@ public abstract class Formula implements Serializable{
 	//return new formula that has replaced, for all free LogicObjects with id=oldId, with newId, 
 	public abstract Formula replace(String newId,String oldId);
 	
+	public abstract Formula replace(Term newTerm,Term oldTerm);
+	
 	public abstract boolean containsObjectId(String id);
 	
 	public static boolean isInstantiationOf(Formula instantiation, QuantifiedFormula quant){ 
-		String[] diff = findObjectIdDifference(instantiation, quant.formula);
+		Term[] diff = findTermDifference(instantiation, quant.formula);
 		if(diff == null) {
 			return instantiation.equals(quant.formula);
 		}
@@ -88,51 +90,55 @@ public abstract class Formula implements Serializable{
 	 * @param formula2
 	 * @return
 	 */
-	public static String[] findObjectIdDifference(Formula formula1, Formula formula2){
+	public static Term[] findTermDifference(Formula formula1, Formula formula2){
 		if(formula1.getClass() != formula2.getClass()) {
 			//System.err.println(formula1.getClass()+" != "+formula2.getClass());
 			return null;
 		}
 		else if(formula1 instanceof Conjunction){
-			String[] leftResult = findObjectIdDifference(((Conjunction)formula1).lhs, ((Conjunction)formula2).lhs );
+			Term[] leftResult = findTermDifference(((Conjunction)formula1).lhs, ((Conjunction)formula2).lhs );
 			if(leftResult != null) return leftResult;
-			return findObjectIdDifference(((Conjunction)formula1).rhs, ((Conjunction)formula2).rhs );
+			return findTermDifference(((Conjunction)formula1).rhs, ((Conjunction)formula2).rhs );
 		}
 		else if(formula1 instanceof Disjunction){
-			String[] leftResult = findObjectIdDifference(((Disjunction)formula1).lhs, ((Disjunction)formula2).lhs );
+			Term[] leftResult = findTermDifference(((Disjunction)formula1).lhs, ((Disjunction)formula2).lhs );
 			if(leftResult != null) return leftResult;
-			return findObjectIdDifference(((Disjunction)formula1).rhs, ((Disjunction)formula2).rhs );
+			return findTermDifference(((Disjunction)formula1).rhs, ((Disjunction)formula2).rhs );
 		}
 		else if(formula1 instanceof Implication){
-			String[] leftResult = findObjectIdDifference(((Implication)formula1).lhs, ((Implication)formula2).lhs );
+			Term[] leftResult = findTermDifference(((Implication)formula1).lhs, ((Implication)formula2).lhs );
 			if(leftResult != null) return leftResult;
-			return findObjectIdDifference(((Implication)formula1).rhs, ((Implication)formula2).rhs );
+			return findTermDifference(((Implication)formula1).rhs, ((Implication)formula2).rhs );
 		}
 		else if(formula1 instanceof Equality){
-			Equality f1 = (Equality) formula1;
-			Equality f2 = (Equality) formula2;
-			String [] lhs = Term.getIdDifference(f1.lhs, f2.lhs);
-			if(lhs != null) return lhs;
-			else return Term.getIdDifference(f1.rhs, f2.rhs);
+			Equality eq1 = (Equality) formula1;
+			Equality eq2 = (Equality) formula2;
+			
+			if      (eq1.lhs.equals(eq2.lhs) == false) return new Term[]{eq1.lhs, eq2.lhs};
+			else if (eq1.rhs.equals(eq2.rhs) == false) return new Term[]{eq1.rhs, eq2.rhs};
+			else return null;
 		}
 		else if(formula1 instanceof Negation){
 			Negation f1 = (Negation) formula1;
 			Negation f2 = (Negation) formula2;
-			return findObjectIdDifference(f1.formula, f2.formula);
+			return findTermDifference(f1.formula, f2.formula);
 		}
 		else if(formula1 instanceof QuantifiedFormula){
 			QuantifiedFormula f1 = (QuantifiedFormula) formula1;
 			QuantifiedFormula f2 = (QuantifiedFormula) formula2;
 			if(f1.type != f2.type) return null;
-			else return findObjectIdDifference(f1.formula, f2.formula);
+			else return findTermDifference(f1.formula, f2.formula);
 		}
 		else if(formula1 instanceof Predicate){
 			Predicate f1 = (Predicate) formula1;
 			Predicate f2 = (Predicate) formula2;
 			if(f1.getArgs().size() != f2.getArgs().size() ) return null;
 			for(int i = 0; i < f1.getArgs().size(); i++){
-				String[] res = Term.getIdDifference(f1.getArgs().get(i), f2.getArgs().get(i));
-				if(res != null) return res;
+				Term t1 = f1.getArgs().get(i);
+				Term t2 = f2.getArgs().get(i);
+				if( t1.equals(t2) == false){
+					return new Term[]{t1,t2};
+				}
 			}
 			return null;
 		}

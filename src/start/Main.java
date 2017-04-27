@@ -16,7 +16,7 @@ public class Main extends Application {
 //        scene.getStylesheets().add("minimalistStyle.css");
         scene.getStylesheets().add("gruvjan.css");
         stage.setTitle("Conan");
-        stage.getIcons().add(new Image("./icon.png"));
+        stage.getIcons().add(new Image("icon.png"));
         stage.setScene(scene);
         stage.show();
     }

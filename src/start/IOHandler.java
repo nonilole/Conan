@@ -23,7 +23,7 @@ public class IOHandler {
 		FileChooser fc = new FileChooser();
     	fc.getExtensionFilters().addAll(
     	         new ExtensionFilter("Proofs", "*.proof"),
-    	         new ExtensionFilter("All Files", "*.*"));
+    	         new ExtensionFilter("All Files", "*"));
     	
     	File file = fc.showOpenDialog(window);
     	if(file == null){

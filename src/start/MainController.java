@@ -205,7 +205,20 @@ public class MainController implements Initializable {
     }
 
     @FXML
+    void closeTab(ActionEvent event) {
+        if (currentTab != null)
+            tabPane.getTabs().remove(currentTab);
+    }
+
+    @FXML
     void newRow(ActionEvent event) {
+        ProofView pv = convertProofView(getCurrentView());
+        if (pv == null)
+            return;
+        pv.newRow();
+    }
+    @FXML
+    void insertBelowAfterMenu(ActionEvent event) {
         ProofView pv = convertProofView(getCurrentView());
         if (pv == null)
             return;
@@ -325,6 +338,13 @@ public class MainController implements Initializable {
                 new ExtensionFilter("Proofs", "*.proof"),
                 new ExtensionFilter("All Files", "*.*"));
         File file = fc.showSaveDialog(tabPane.getScene().getWindow());
+        if(file == null){
+        	System.out.println("Path not set, file not saved");
+        	return;
+        }
+        if(file.getAbsolutePath().endsWith(".proof") == false){
+        	file = new File(file.getAbsolutePath()+".proof");
+        }
 
         View view = getCurrentView();
         if (view instanceof ProofView == false) {
@@ -348,14 +368,16 @@ public class MainController implements Initializable {
 
     @FXML
     void exportProofToLatex(ActionEvent event) {
+        ProofView pView = convertProofView(getCurrentView());
+        if (pView == null)
+            return;
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().addAll(
                 new ExtensionFilter("LaTeX", "*.tex"),
                 new ExtensionFilter("All Files", "*.*"));
         File file = fc.showSaveDialog(tabPane.getScene().getWindow());
-        ProofView pView = convertProofView(getCurrentView());
-        if (pView == null)
-                return;
+        if (file == null)
+            return;
         try {
             ExportLatex.export(pView.getProof(), file.getPath());
         } catch (IOException e) {
@@ -368,6 +390,9 @@ public class MainController implements Initializable {
     	ProofView openedProofView;
     	try{
     		openedProofView = IOHandler.openProof(tabPane);
+    		if(openedProofView == null){
+    			return;
+    		}
     		openedProofView.displayLoadedProof();
     	}catch(Exception e){
     		System.out.println("MainController.openProof exception:");
@@ -382,7 +407,7 @@ public class MainController implements Initializable {
         new InstructionsView(tabPane);
     }
 
-    public void createTooltip(){
+    public void createTooltip() {
         //Toolbar
         saveButton.setTooltip(new Tooltip("Save Proof (CTRL+S)"));
         loadButton.setTooltip(new Tooltip("Open Proof (CTRL+O)"));
@@ -429,7 +454,11 @@ public class MainController implements Initializable {
         forallButton.setTooltip(new Tooltip("For All (type fa to insert)"));
         existsButton.setTooltip(new Tooltip("There Exists (type te to insert)"));
         contraButton.setTooltip(new Tooltip("Contradiction (type co to insert)"));
+    }
 
+    @FXML
+    void showWelcome(ActionEvent event) {
+        new WelcomeView(tabPane);
     }
 
     @Override

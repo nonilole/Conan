@@ -57,7 +57,7 @@ public class ProofRow implements ProofEntry{
         return this.rule;
     }
     
-    @Override //TODO: also represent the rule...
+    @Override 
     public String toString(){
     	StringBuilder strB = new StringBuilder();
     	if(formula == null){
@@ -66,8 +66,9 @@ public class ProofRow implements ProofEntry{
     	else{
     		strB.append(formula.toString());
     	}
-    	strB.append(" :: "+rule); // ✓
+    	strB.append(" :: "+(rule == null ? "no rule" : rule)); // ✓
     	strB.append(" :: Verified: " + (isVerified ? "✓" : "x"));
+        strB.append(" ::" + (!getParent().isTopLevelBox() && getParent().entries.get(0).equals(this) ? "1" : "0")); //For latex to indicate start of a box
     	return strB+"";
     }
 

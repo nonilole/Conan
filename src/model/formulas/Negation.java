@@ -13,6 +13,11 @@ public class Negation extends Formula{
     public Formula replace(String newId,String oldId){
     	return new Negation(formula.replace(newId, oldId));
     }
+    
+    @Override
+	public Formula replace(Term newTerm, Term oldTerm) {
+    	return new Negation(formula.replace(newTerm, oldTerm));
+	}
 
     @Override
     public boolean equals(Object o){
@@ -32,4 +37,5 @@ public class Negation extends Formula{
 	public boolean containsObjectId(String id) {
 		return formula.containsObjectId(id);
 	}
+
 }

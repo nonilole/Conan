@@ -9,26 +9,43 @@ import javafx.scene.layout.Priority;
 import model.Parser;
 import model.ParseException;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static view.ViewUtil.applyStyleIf;
+
 // Kanske vill skriva om ProofListener och låta denna lyssna på ett bevis istället.
 public class PremisesAndConclusion extends HBox {
     Parser parser = new Parser();
     private TextField premises;
     private Label turnstile;
     private TextField conclusion;
-    private void applyStyleIf(TextField expression, boolean bool, String style) {
-        expression.getStyleClass().removeIf((s) -> s.equals(style));
-        if (bool) {
-            expression.getStyleClass().add(style);
-        }
-    }
+    Pattern regex = Pattern.compile("\\(.*?\\)|(,)");
     private void parseAndStyle(TextField tf, String s) {
-        try {
-            if (!s.equals(""))
-                parser.parse(s);
-            applyStyleIf(tf,false,"bad");
+        Matcher matcher = regex.matcher(s);
+        StringBuffer newString = new StringBuffer();
+        while (matcher.find()) { // Two sets of matches, replace the second set of matches with !, because they can't be written
+            if (matcher.group(1) != null) {
+                matcher.appendReplacement(newString, "!");
+            } else {
+                matcher.appendReplacement(newString, matcher.group(0));
+            }
         }
-        catch (ParseException e) {
-            applyStyleIf(tf,true,"bad");
+        matcher.appendTail(newString);
+        // Split at the !, which are not inputtable
+        String[] formulas = newString.toString().split("!");
+
+        for (String split : formulas) {
+            try {
+                if (!split.equals(""))
+                    parser.parse(split);
+                applyStyleIf(tf, false, "bad");
+            } catch (ParseException e) {
+                applyStyleIf(tf, true, "bad");
+                return;
+            }
         }
     }
 

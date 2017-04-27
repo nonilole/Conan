@@ -35,7 +35,9 @@ public class ExistsIntro extends Rule {
         Formula toVerify = data.getRow(rowIndex).getFormula();
         Formula ref = data.getRow(this.rowRef).getFormula();
         if (toVerify instanceof QuantifiedFormula) {
-            return Formula.isInstantiationOf(ref, (QuantifiedFormula) toVerify);
+        	QuantifiedFormula quantToVerify = (QuantifiedFormula) toVerify;
+        	if( quantToVerify.type != '∃') return false;
+            return Formula.isInstantiationOf(ref, quantToVerify);
         }
         return false;
     }
