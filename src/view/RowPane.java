@@ -186,7 +186,7 @@ public class RowPane extends BorderPane {
                 e.printStackTrace();
             }
             setPrompts(ruleMap.getOrDefault(newValue, 0));
-            setPromptsPromptText(ruleBox.getOrDefault(newValue, Arrays.asList(false, false)));
+            setPromptsPromptText(ruleBox.getOrDefault(newValue, Arrays.asList(false, false, false)));
         });
         for (int i = 0; i < 3; i++) {
             new PromptFocus(getRulePrompt(i), pv, rList, i);
@@ -272,8 +272,6 @@ public class RowPane extends BorderPane {
     }
 
     private void setPromptsPromptText(List<Boolean> isBoxRef) {
-        if (isBoxRef == null)
-                return;
         for (int i = 0; i < 3; i++) {
             if (isBoxRef.get(i).equals(true))
                 getRulePrompt(i).setPromptText("123-123");
