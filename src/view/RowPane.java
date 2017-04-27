@@ -45,7 +45,6 @@ public class RowPane extends BorderPane {
         ruleBox.put("=I", ft);
         ruleBox.put("MT", tf);
         ruleBox.put("PBC", tf);
-        ruleBox.put("¬¬I", ff);
     }
     private static final HashMap<String, Integer> ruleMap;
     static {
