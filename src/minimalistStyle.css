@@ -61,7 +61,10 @@
   	-fx-background-color: black, pink, pink;
   	    
 }
-
+.tooltip{
+-fx-font-family: System;
+-fx-font-size: 11px;
+}
 .unVerified {
    -fx-background-color: pink, white, white;
    -fx-background-insets: 0, 2;

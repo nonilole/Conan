@@ -2,6 +2,7 @@
   font-family: 'FontAwesome';
   src: url('FontAwesome.otf');
 }
+
 .myText {
   -fx-font-size: 14px;
   -fx-background-insets: 2, 4;
