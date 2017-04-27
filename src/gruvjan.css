@@ -12,6 +12,10 @@
   -fx-control-inner-background: #282828;
   -fx-font-smoothing-type: gray;
 }
+.infoText {
+  -fx-font-size: 16px;
+  -fx-line-height: 1.4;
+}
 .myTitle {
   -fx-font-size: 25px;
 }
