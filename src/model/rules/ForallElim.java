@@ -35,21 +35,16 @@ public class ForallElim extends Rule {
 
     @Override
     public boolean verifyRow(Box data, int rowIndex) {
-        return false;
+    	QuantifiedFormula ref = (QuantifiedFormula) data.getRow(rowRef).getFormula();
+    	if(ref.type != '∀') return false;
+        Formula toVerify = data.getRow(rowIndex).getFormula();
+        return Formula.isInstantiationOf(toVerify, ref);
     }
 
     @Override
     public Formula generateRow(Box data) {
         QuantifiedFormula ref = (QuantifiedFormula) data.getRow(rowRef).getFormula();
         return ref.formula;
-    }
-
-    @Override
-    public boolean verify(Box data, int rowIndex) {
-        QuantifiedFormula ref = (QuantifiedFormula) data.getRow(rowRef).getFormula();
-        Formula toVerify = data.getRow(rowIndex).getFormula();
-        return Formula.isInstantiationOf(toVerify, ref);
-
     }
 
     @Override
