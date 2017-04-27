@@ -12,6 +12,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import model.BoxReference;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -27,9 +29,39 @@ public class RowPane extends BorderPane {
     final static KeyCombination ctrlRight = new KeyCodeCombination(KeyCode.RIGHT, KeyCombination.CONTROL_DOWN);
     final static KeyCombination ctrlB = new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN);
     final static KeyCombination ctrlD = new KeyCodeCombination(KeyCode.D, KeyCombination.CONTROL_DOWN);
-    private static final HashMap<String, Integer> ruleMap;
     static Pattern p = Pattern.compile("^([1-9]\\d*-?([1-9]\\d*)?)?$");
 
+    private static final HashMap<String, List<Boolean>> ruleBox;
+    static {
+        List<Boolean> ff = Arrays.asList(false,false,true);
+        List<Boolean> ft = Arrays.asList(false,true,true);
+        List<Boolean> tf = Arrays.asList(true,false,true);
+        ruleBox = new HashMap<String, List<Boolean>>();
+        ruleBox.put("∧I", ff);
+        ruleBox.put("∧E", ff);
+        ruleBox.put("∨E", ft);
+        ruleBox.put("→I", tf);
+        ruleBox.put("→E", ff);
+        ruleBox.put("⊥E", ff);
+        ruleBox.put("¬I", tf);
+        ruleBox.put("¬E", ff);
+        ruleBox.put("¬¬E", ff);
+        ruleBox.put("Premise", ff);
+        ruleBox.put("∀I", tf);
+        ruleBox.put("∀E", ff);
+        ruleBox.put("∃I", ff);
+        ruleBox.put("∃E", ft);
+        ruleBox.put("=E", ff);
+        ruleBox.put("=I", ft);
+        ruleBox.put("Ass.", ff);
+        ruleBox.put("Fresh", ff);
+        ruleBox.put("MT", tf);
+        ruleBox.put("LEM", ff);
+        ruleBox.put("PBC", tf);
+        ruleBox.put("¬¬I", ff);
+        ruleBox.put("Copy", ff);
+    }
+    private static final HashMap<String, Integer> ruleMap;
     static {
         ruleMap = new HashMap<String, Integer>();
         ruleMap.put("∧I", 2);
@@ -154,6 +186,7 @@ public class RowPane extends BorderPane {
                 e.printStackTrace();
             }
             setPrompts(ruleMap.getOrDefault(newValue, 0));
+            setPromptsPromptText(ruleBox.getOrDefault(newValue, Arrays.asList(false, false)));
         });
         for (int i = 0; i < 3; i++) {
             new PromptFocus(getRulePrompt(i), pv, rList, i);
@@ -238,19 +271,26 @@ public class RowPane extends BorderPane {
         }
     }
 
+    private void setPromptsPromptText(List<Boolean> isBoxRef) {
+        if (isBoxRef == null)
+                return;
+        for (int i = 0; i < 3; i++) {
+            if (isBoxRef.get(i).equals(true))
+                getRulePrompt(i).setPromptText("123-123");
+            else
+                getRulePrompt(i).setPromptText("Row");
+        }
+    }
     private void setPrompts(int n) {
         hideAndClearPrompts();
         this.numberOfPrompts = n;
         switch (n) {
             case 3:
                 getRulePrompt(2).setVisible(true);
-                getRulePrompt(2).setPromptText("x-x");
             case 2:
                 getRulePrompt(1).setVisible(true);
-                getRulePrompt(1).setPromptText("x-x");
             case 1:
                 getRulePrompt(0).setVisible(true);
-                getRulePrompt(0).setPromptText("x-x");
                 break;
             default:
                 break;
