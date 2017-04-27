@@ -118,7 +118,7 @@ public class Proof implements Serializable{
             wellFormed = false;
         }
         toBeUpdated.setFormula(parsedFormula);
-        toBeUpdated.setUserInput(strFormula);
+        toBeUpdated.setUserInput((strFormula == null ? "" : strFormula));
         toBeUpdated.setWellformed(wellFormed);
 
         for (ProofListener listener : this.listeners) {

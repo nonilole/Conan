@@ -44,6 +44,7 @@ public class ForallIntro extends Rule {
         QuantifiedFormula toVerify;
         if (data.getRow(rowIndex).getFormula() instanceof QuantifiedFormula == false) return false;
         toVerify = (QuantifiedFormula) data.getRow(rowIndex).getFormula();
+        if(toVerify.type != '∀') return false;
         return toVerify.instantiate(freshVarId).equals(lastRowInRefBox);
     }
 

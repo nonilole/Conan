@@ -343,7 +343,7 @@ public class Box implements ProofEntry, Serializable{
 			}
 			else{
 				ProofRow row = (ProofRow) entry;
-				String expression = row.isWellFormed() ? row.getFormula()+"" : row.getUserInput();
+				String expression = row.getFormula() == null ? row.getUserInput() : row.getFormula()+"";
 				Rule rule = row.getRule();
 				String ruleStr;
 				String[] refs = {"","",""};
