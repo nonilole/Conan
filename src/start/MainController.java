@@ -444,7 +444,7 @@ public class MainController implements Initializable {
         mtButton.setTooltip(new Tooltip("Modus Tollens"));
         doubleNegButton.setTooltip(new Tooltip("Double Negation-Introduction"));
         pbcButton.setTooltip(new Tooltip("Proof by Contradiction"));
-        lemButton.setTooltip(new Tooltip("Law of Exluded Middle"));
+        lemButton.setTooltip(new Tooltip("Law of Excluded Middle"));
 
         //Symbols
         impButton.setTooltip(new Tooltip("Implication (type im to insert)"));
