@@ -17,6 +17,13 @@ public class Equality extends Formula {
     }
     
     @Override
+    public Formula replace(Term newTerm,Term oldTerm){
+    	Term lhsRet = this.lhs.equals(oldTerm) ? newTerm : oldTerm;
+    	Term rhsRet = this.rhs.equals(oldTerm) ? newTerm : oldTerm;
+    	return new Equality(lhsRet, rhsRet);
+    }
+    
+    @Override
     public boolean equals(Object o){
     	if(o instanceof Equality){
     		Equality e = (Equality)o;

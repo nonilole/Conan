@@ -24,9 +24,20 @@ public class QuantifiedFormula extends Formula{
     	return formula.replace(id, var);
     }
     
-    @Override //TODO: can't replaceif var.equals(newId)?
+  //return the subformula of this quantifiedformula with the quantified variable instantiated to id
+    public Formula instantiate(Term term){
+    	return formula.replace(term, new LogicObject(var));
+    }
+    
+    @Override 
     public Formula replace(String newId,String oldId){
     	return var.equals(oldId) ? this : new QuantifiedFormula(formula.replace(newId, oldId), var, type);
+    }
+    
+    @Override 
+    public Formula replace(Term newTerm,Term oldTerm){
+    	return new LogicObject(var).equals(oldTerm) ? 
+    			this : new QuantifiedFormula(formula.replace(newTerm, oldTerm), var, type);
     }
 
     @Override

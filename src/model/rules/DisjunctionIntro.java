@@ -101,7 +101,7 @@ public class DisjunctionIntro extends Rule {
 
     @Override
     public String toString() {
-        String p1 = premise == null ? "" : premise.toString();
+        String p1 = premise == null ? "" : new Integer(premise+1).toString();
         return String.format("∧i_{%s}, %s", type, p1);
     }
 }

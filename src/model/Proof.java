@@ -16,7 +16,10 @@ public class Proof implements Serializable{
     private Formula conclusion;
     private Box proofData = new Box(null, true);
     public boolean isLoaded = false;
-
+    
+    
+    public Proof(){}
+    
     public String getProofString() {
         return proofData.rowsToString(1);
     }
@@ -30,9 +33,7 @@ public class Proof implements Serializable{
             listener.rowAdded();
         }
         verifyRow(proofData.size() - 1);
-        System.out.println("addRow()");
-        proofData.printRows(1, 1);
-        System.out.println("==========================================================");
+        printProof("Row added");
     }
 
     /**
@@ -54,9 +55,7 @@ public class Proof implements Serializable{
         for (ProofListener listener : this.listeners) {
             listener.rowDeleted(rowNumber);
         }
-        System.out.println("deleteRow(" + rowNumber + ")");
-        proofData.printRows(1, 1);
-        System.out.println("==========================================================");
+        printProof("Row deleted");
         return delDepth;
     }
 
@@ -80,9 +79,7 @@ public class Proof implements Serializable{
             pl.rowInserted(rowNumber, br, depth);
         }
         verifyProof(rowNumber-1 + (br == BoxReference.BEFORE ? 0 : 1));
-        System.out.println("insertNewRow(" + rowNumber + ", " + br + ")");
-        proofData.printRows(1, 1);
-        System.out.println("==========================================================");
+        printProof("Inserted new row");
         return true;
     }
 
@@ -94,6 +91,7 @@ public class Proof implements Serializable{
         for (ProofListener pl : listeners) {
             pl.deletedRowAfterBox(rowNumber);
         }
+        printProof("Deleted row");
         return true;
     }
 
@@ -120,25 +118,24 @@ public class Proof implements Serializable{
             wellFormed = false;
         }
         toBeUpdated.setFormula(parsedFormula);
-        toBeUpdated.setUserInput(strFormula);
+        toBeUpdated.setUserInput((strFormula == null ? "" : strFormula));
         toBeUpdated.setWellformed(wellFormed);
 
         for (ProofListener listener : this.listeners) {
             listener.rowUpdated(null, wellFormed, rowNumber);
         }
         verifyProof(rowIndex); //should use verifyProof later probably, to verify rows lower in the proof aswell
-        proofData.printRows(1, 1);
-        System.out.println("==========================================================");
+        printProof("Updated formula in row");
     }
 
     public void updateRuleRow(String ruleString, int rowNumber) throws IllegalAccessException, InstantiationException {
-        System.out.println("updateRuleRow: rule=" + ruleString + ", rowNr=" + rowNumber);
+        //System.out.println("updateRuleRow: rule=" + ruleString + ", rowNr=" + rowNumber);
         int rowIndex = rowNumber - 1;
         ProofRow pr = proofData.getRow(rowIndex);
         Rule rule = RuleMapper.getRule(ruleString);
         pr.setRule(rule);
         verifyProof(rowIndex);
-        proofData.printRows(1, 1);
+        printProof("Updated rule in row");
     }
 
     //Adds a rule object to the given row
@@ -179,17 +176,6 @@ public class Proof implements Serializable{
         return isVerified;
     }
 
-    //This shouldn't be used when a proper UI for opening boxes has been implemented
-    //since at that point, you open a box in a specific row rather than at the end of a proof
-    //Instead, at that point, use openBox(int rowNr)
-    public void openBox() {
-        proofData.openNewBox();
-        //TODO: should probbly add a new row immediatly to avoid issues with empty boxes
-        for (ProofListener listener : this.listeners) {
-            listener.boxOpened();
-        }
-    }
-
     public boolean insertBox(int rowIndex) {
         ProofRow pr = proofData.getRow(rowIndex);
         if (pr.getParent() != null && pr.getParent().getRow(0) == pr) {
@@ -199,6 +185,7 @@ public class Proof implements Serializable{
         for (ProofListener listener : this.listeners) {
             listener.boxInserted(rowIndex + 1);
         }
+        printProof("inserted box");
         return true;
     }
 
@@ -209,13 +196,6 @@ public class Proof implements Serializable{
             listener.boxRemoved(rowIndex + 1);
         }
         return true;
-    }
-
-    public void closeBox() {
-        proofData.closeBox();
-        for (ProofListener listener : this.listeners) {
-            listener.boxClosed();
-        }
     }
 
     /**
@@ -287,7 +267,7 @@ public class Proof implements Serializable{
     }
 
     public void rulePromptUpdate(int rowNr, int promptNumber, String newValue) {
-        System.out.println("rulePromptUpdate rowNr:" + rowNr + " promptNumber:" + promptNumber + " newValue:" + newValue);
+        //System.out.println("rulePromptUpdate rowNr:" + rowNr + " promptNumber:" + promptNumber + " newValue:" + newValue);
         int rowIndex = rowNr - 1;
         ProofRow row = proofData.getRow(rowNr - 1);
 
@@ -310,7 +290,7 @@ public class Proof implements Serializable{
         }
         generateRow(rowIndex);
         verifyProof(rowIndex);
-        proofData.printRows(1, 1);
+        printProof("rulePromptUpdate");
     }
 
     private void generateRow(int rowIndex) {
@@ -346,7 +326,14 @@ public class Proof implements Serializable{
     	ArrayList<ProofListener.RowInfo> returnList = new ArrayList<ProofListener.RowInfo>();
     	
     	proofData.fillList(returnList);
-    	
     	return returnList;
+    }
+    
+    public void printProof(String updateAction){
+    	System.out.println(updateAction);
+    	boolean zeroBasedNumbering = false;
+    	int x = zeroBasedNumbering ? 0 : 1;
+        proofData.printRows(1, x);
+        System.out.println("===========================================================");
     }
 }

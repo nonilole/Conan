@@ -26,6 +26,11 @@ public class Conjunction extends Formula {
     }
     
     @Override
+    public Formula replace(Term newTerm,Term oldTerm){
+    	return new Conjunction(lhs.replace(newTerm, oldTerm), rhs.replace(newTerm, oldTerm));
+    }
+    
+    @Override
     public String toString(){	
     	StringBuilder strB = new StringBuilder();
     	strB.append( lhs.getPrecedence() < 2 ? "("+lhs+")" : lhs+"" );

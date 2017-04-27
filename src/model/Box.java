@@ -93,7 +93,7 @@ public class Box implements ProofEntry, Serializable{
 	
 	public ProofRow getRow(int steps){
 		//System.out.println("Box.getRow("+steps+")");
-		assert(steps < size) : "getRow: index="+steps+" size="+size;
+		//assert(steps < size) : "getRow: index="+steps+" size="+size;
 		
 		for(int i = 0; i < size ; i++ ){
 			ProofEntry entry = entries.get(i);
@@ -136,35 +136,6 @@ public class Box implements ProofEntry, Serializable{
 		parent.entries.remove(referenceRow);
         parent.decSize();
         return depth;
-	}
-	
-	/*public boolean updateFormulaRow(int index, String userFormulaInput){
-		System.out.println("Box.updateRow("+index+", "+userFormulaInput+")");
-		ProofRow row = getRow(index);
-		row.setUserInput(userFormulaInput);
-		return false;
-	}*/
-	
-	public void openNewBox(){
-		ProofEntry lastEntry = entries.get(entries.size()-1);
-		if(lastEntry instanceof Box){
-			Box box = (Box)lastEntry;
-			if(box.isOpen()) {
-				box.openNewBox();
-				return;
-			}
-		}
-		entries.add(new Box(this,true));
-	}
-	
-	public void closeBox(){
-		ProofEntry lastEntry = entries.get(entries.size()-1);
-		if(lastEntry instanceof Box && ((Box)lastEntry).isOpen()){
-			((Box)lastEntry).closeBox();	
-		}
-		else{
-			if( this.isTopLevelBox() == false) open = false;
-		}
 	}
 	
 	//check if referenceRowIndex is in scope of referencingRowIndex
@@ -372,7 +343,7 @@ public class Box implements ProofEntry, Serializable{
 			}
 			else{
 				ProofRow row = (ProofRow) entry;
-				String expression = row.isWellFormed() ? row.getFormula()+"" : row.getUserInput();
+				String expression = row.getFormula() == null ? row.getUserInput() : row.getFormula()+"";
 				Rule rule = row.getRule();
 				String ruleStr;
 				String[] refs = {"","",""};
