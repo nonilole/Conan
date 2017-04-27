@@ -442,7 +442,7 @@ public class MainController implements Initializable {
 
         //Derived Rules
         mtButton.setTooltip(new Tooltip("Modus Tollens"));
-        doubleNegButton.setTooltip(new Tooltip("Double Negation"));
+        doubleNegButton.setTooltip(new Tooltip("Double Negation-Introduction"));
         pbcButton.setTooltip(new Tooltip("Proof by Contradiction"));
         lemButton.setTooltip(new Tooltip("Law of Exluded Middle"));
 
