@@ -14,14 +14,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
-public class InstructionsView extends Tab {
+public class InstructionsView extends ViewTab {
     
     private TabPane tabPane;
 	
 	private final static String tabName = "Instructions";
     
     public InstructionsView(TabPane tabPane) {
-    	super(tabName);
+    	super(tabName, null);
     	this.tabPane = tabPane;
     	this.setContent(constructContent());     
         addAsTab();
