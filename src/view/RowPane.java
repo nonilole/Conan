@@ -244,10 +244,13 @@ public class RowPane extends BorderPane {
         switch (n) {
             case 3:
                 getRulePrompt(2).setVisible(true);
+                getRulePrompt(2).setPromptText("x-x");
             case 2:
                 getRulePrompt(1).setVisible(true);
+                getRulePrompt(1).setPromptText("x-x");
             case 1:
                 getRulePrompt(0).setVisible(true);
+                getRulePrompt(0).setPromptText("x-x");
                 break;
             default:
                 break;
