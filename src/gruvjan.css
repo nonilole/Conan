@@ -20,6 +20,12 @@
 .myTitle {
   -fx-font-size: 25px;
 }
+
+.tooltip{
+-fx-font-family: System;
+-fx-font-size: 11px;
+}
+
 .fit {
   -fx-fit-to-height: true;
   -fx-fit-to-width: true;
