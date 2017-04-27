@@ -59,9 +59,12 @@
 
 .bad {
   	-fx-background-color: black, pink, pink;
-  	    
-}
 
+}
+.tooltip{
+-fx-font-family: System;
+-fx-font-size: 10px;
+}
 .unVerified {
    -fx-background-color: pink, white, white;
    -fx-background-insets: 0, 2;
@@ -88,7 +91,7 @@
 }*/
 .button:hover {
 	-fx-background-color: black , white;
-   	-fx-background-insets: -1 -1 -1 -1, 0 0 0 0;    
+   	-fx-background-insets: -1 -1 -1 -1, 0 0 0 0;
    	-fx-background-radius: 3px, 3px, 2px, 1px;
     -fx-cursor: hand;
 }
@@ -105,7 +108,7 @@
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
     -fx-background-radius: 3px, 3px, 2px, 1px;
     -fx-text-fill: -fx-text-base-color;
-} 
+}
 
 .root .tool-bar, .root .scroll-pane {
     -fx-background: white;
