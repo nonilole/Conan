@@ -399,7 +399,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
         //when a proof is loaded, the view has an empty rList
         if (rList.size() == 0) return;
         TextField expression = (TextField) rList.get(lineNo - 1).getExpression();
-        applyStyleIf(expression, correct, "conclusionReached");
+        if(verificationSettings)
+           applyStyleIf(expression, correct, "conclusionReached");
     }
 
     public void rowVerified(boolean verified, int lineNo) {
@@ -588,9 +589,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
     }
 
 
-    public List<RowPane> getrList() {
-        return rList;
-    }
     /**
      * Used in WelcomeView in order to update the rows with the premises
      *
