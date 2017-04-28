@@ -40,6 +40,7 @@ public class FreshVar extends Rule {
         	boolean isInSameBox = false;
         	
         	while(prowAncestorBox.isTopLevelBox() == false){
+        		//have to update prowAncestor box... duh
         		if( prowAncestorBox == row.getParent()){
         			isInSameBox = true;
         			break;
