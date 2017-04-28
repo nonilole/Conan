@@ -410,7 +410,10 @@ public class MainController implements Initializable {
         undoButton.setTooltip(new Tooltip("Undo (CTRL+U)"));
         redoButton.setTooltip(new Tooltip("Redo (CTRL+SHIFT+U)"));
         openBoxButton.setTooltip(new Tooltip("Open Box Button (CTRL+B)"));
-        newRowButton.setTooltip(new Tooltip("New Row (CTRL+R)"));
+        newRowButton.setTooltip(new Tooltip("New Row (Shift+Enter)"));
+        verification.setTooltip(new Tooltip("Verify"));
+        generation.setTooltip(new Tooltip("Generate"));
+
         //Inference Rules
         andIntroButton.setTooltip(new Tooltip("And-Introduction"));
         andElim1Button.setTooltip(new Tooltip("And-Elimination 1"));
