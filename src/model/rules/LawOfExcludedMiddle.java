@@ -22,7 +22,7 @@ public class LawOfExcludedMiddle extends Rule {
 		return true;
 	}
 
-	private boolean verifyFirstArgNeg(Formula lhs, Formula rhs) {
+	private boolean verifySecondArgNeg(Formula lhs, Formula rhs) {
 		if(!(rhs instanceof Negation)) {
 			return false;
 		}
@@ -43,7 +43,7 @@ public class LawOfExcludedMiddle extends Rule {
 		Disjunction disj = (Disjunction) rowToVerify;
 		Formula lhs = disj.lhs; 
 		Formula rhs = disj.rhs;
-		return (verifyFirstArgNeg(lhs,rhs) || verifyFirstArgNeg(rhs,lhs));
+		return (verifySecondArgNeg(lhs,rhs) || verifySecondArgNeg(rhs,lhs));
 	}
 
 	@Override
