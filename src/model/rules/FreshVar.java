@@ -45,6 +45,7 @@ public class FreshVar extends Rule {
         			isInSameBox = true;
         			break;
         		}
+        		prowAncestorBox = row.getParent();
         	}
         	if(isInSameBox) continue; //if the formula is in the same box as the fresh var it's allowed to contain the var
         	else{
