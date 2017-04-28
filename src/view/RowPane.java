@@ -12,56 +12,47 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import model.BoxReference;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static javafx.scene.input.KeyCode.*;
+import static javafx.scene.input.KeyCombination.*;
+import static javafx.scene.input.KeyCombination.ModifierValue.*;
+import static javafx.scene.input.KeyCombination.ModifierValue.DOWN;
 import static view.ViewUtil.addFocusListener;
 import static view.ViewUtil.checkShortcut;
 
 
 public class RowPane extends BorderPane {
-    final static KeyCombination shiftEnter = new KeyCodeCombination(KeyCode.ENTER, KeyCombination.SHIFT_DOWN);
-    final static KeyCombination ctrlLeft = new KeyCodeCombination(KeyCode.LEFT, KeyCombination.CONTROL_DOWN);
-    final static KeyCombination ctrlRight = new KeyCodeCombination(KeyCode.RIGHT, KeyCombination.CONTROL_DOWN);
-    final static KeyCombination ctrlB = new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN);
-    final static KeyCombination ctrlD = new KeyCodeCombination(KeyCode.D, KeyCombination.CONTROL_DOWN);
+    final static KeyCombination shiftEnter = new KeyCodeCombination(ENTER, SHIFT_DOWN);
+    final static KeyCombination ctrlLeft = new KeyCodeCombination(LEFT, SHORTCUT_DOWN);
+    final static KeyCombination ctrlRight = new KeyCodeCombination(RIGHT, SHORTCUT_DOWN);
+    final static KeyCombination ctrlB = new KeyCodeCombination(B, SHORTCUT_DOWN);
+    final static KeyCombination ctrlD = new KeyCodeCombination(D, SHORTCUT_DOWN);
+    final static KeyCombination ctrlZ = new KeyCodeCombination(Z, SHORTCUT_DOWN);
+    final static KeyCombination ctrlShiftZ = new KeyCodeCombination(Z, SHORTCUT_DOWN, SHIFT_DOWN);
+    final static KeyCombination ctrlY = new KeyCodeCombination(Y, SHORTCUT_DOWN);
+    private static final HashMap<String, List<Boolean>> ruleBox;
+    private static final HashMap<String, Integer> ruleMap;
     static Pattern p = Pattern.compile("^([1-9]\\d*-?([1-9]\\d*)?)?$");
 
-    private static final HashMap<String, List<Boolean>> ruleBox;
     static {
-        List<Boolean> ff = Arrays.asList(false,false,true);
-        List<Boolean> ft = Arrays.asList(false,true,true);
-        List<Boolean> tf = Arrays.asList(true,false,true);
+        List<Boolean> ft = Arrays.asList(false, true, true);
+        List<Boolean> tf = Arrays.asList(true, false, true);
         ruleBox = new HashMap<String, List<Boolean>>();
-        ruleBox.put("∧I", ff);
-        ruleBox.put("∧E", ff);
         ruleBox.put("∨E", ft);
         ruleBox.put("→I", tf);
-        ruleBox.put("→E", ff);
-        ruleBox.put("⊥E", ff);
         ruleBox.put("¬I", tf);
-        ruleBox.put("¬E", ff);
-        ruleBox.put("¬¬E", ff);
-        ruleBox.put("Premise", ff);
         ruleBox.put("∀I", tf);
-        ruleBox.put("∀E", ff);
-        ruleBox.put("∃I", ff);
         ruleBox.put("∃E", ft);
-        ruleBox.put("=E", ff);
         ruleBox.put("=I", ft);
-        ruleBox.put("Ass.", ff);
-        ruleBox.put("Fresh", ff);
         ruleBox.put("MT", tf);
-        ruleBox.put("LEM", ff);
         ruleBox.put("PBC", tf);
-        ruleBox.put("¬¬I", ff);
-        ruleBox.put("Copy", ff);
     }
-    private static final HashMap<String, Integer> ruleMap;
+
     static {
         ruleMap = new HashMap<String, Integer>();
         ruleMap.put("∧I", 2);
@@ -186,7 +177,7 @@ public class RowPane extends BorderPane {
                 e.printStackTrace();
             }
             setPrompts(ruleMap.getOrDefault(newValue, 0));
-            setPromptsPromptText(ruleBox.getOrDefault(newValue, Arrays.asList(false, false, false)));
+            setPromptsPromptText(ruleBox.getOrDefault(newValue, Arrays.asList(false, false, true)));
         });
         for (int i = 0; i < 3; i++) {
             new PromptFocus(getRulePrompt(i), pv, rList, i);
@@ -274,11 +265,12 @@ public class RowPane extends BorderPane {
     private void setPromptsPromptText(List<Boolean> isBoxRef) {
         for (int i = 0; i < 3; i++) {
             if (isBoxRef.get(i).equals(true))
-                getRulePrompt(i).setPromptText("123-123");
+                getRulePrompt(i).setPromptText("123-456");
             else
                 getRulePrompt(i).setPromptText("Row");
         }
     }
+
     private void setPrompts(int n) {
         hideAndClearPrompts();
         this.numberOfPrompts = n;
@@ -299,12 +291,18 @@ public class RowPane extends BorderPane {
         private HotkeyMapper(TextField trigger, ProofView pv, List<RowPane> rList) {
             addFocusListener(trigger, pv);
             trigger.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                @Override
                 public void handle(KeyEvent key) {
                     int index = rList.indexOf(RowPane.this);
-                    if (ctrlD.match(key)) {
+                     if (ctrlY.match(key) || ctrlShiftZ.match(key)) {
+                         pv.redo();
+                         key.consume();
+                     } else if (ctrlZ.match(key)) {
+                        pv.undo();
+                        key.consume();
+                    } else if (ctrlD.match(key)) {
                         pv.deleteRow(index + 1);
-                    }
-                    if (ctrlB.match(key)) {
+                    } else if (ctrlB.match(key)) {
                         pv.insertNewBox(index + 1);
                     } else if (ctrlLeft.match(key)) {
                         focusLeft();
@@ -313,7 +311,7 @@ public class RowPane extends BorderPane {
                     } else if (shiftEnter.match(key)) {
                         pv.addRowAfterBox(index + 1);
                         focus(pv, rList, index + 1);
-                    } else if (key.getCode() == KeyCode.ENTER) {
+                    } else if (key.getCode() == ENTER) {
                         pv.insertNewRow(index + 1, BoxReference.AFTER);
                         focus(pv, rList, index + 1);
                     } else if (key.getCode() == KeyCode.DOWN) {
@@ -330,7 +328,9 @@ public class RowPane extends BorderPane {
         }
 
         public abstract void focus(ProofView pv, List<RowPane> rList, int index);
+
         public abstract void focusLeft();
+
         public abstract void focusRight();
     }
 

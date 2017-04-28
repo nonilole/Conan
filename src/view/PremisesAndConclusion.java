@@ -1,9 +1,11 @@
 package view;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import model.Parser;
@@ -16,6 +18,7 @@ import java.util.regex.Pattern;
 
 import static view.ProofView.verificationSettings;
 import static view.ViewUtil.applyStyleIf;
+import static view.ViewUtil.consumeKeys;
 
 // Kanske vill skriva om ProofListener och låta denna lyssna på ett bevis istället.
 public class PremisesAndConclusion extends HBox {
@@ -42,9 +45,7 @@ public class PremisesAndConclusion extends HBox {
             try {
                 if (!split.equals(""))
                     parser.parse(split);
-                if(verificationSettings){
-                    applyStyleIf(tf, false, "bad");
-                }
+
             } catch (ParseException e) {
                 if(verificationSettings) {
                     applyStyleIf(tf, true, "bad");
@@ -52,6 +53,7 @@ public class PremisesAndConclusion extends HBox {
                 return;
             }
         }
+        applyStyleIf(tf, false, "bad");
     }
 
     private void setPrefs() {
@@ -91,6 +93,8 @@ public class PremisesAndConclusion extends HBox {
         });
         parseAndStyle(conclusion, sConclusion);
         conclusion.getStyleClass().add("myText");
+        consumeKeys(premises);
+        consumeKeys(conclusion);
         this.getChildren().addAll(premises, turnstile, conclusion);
         setPrefs();
     }

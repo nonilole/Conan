@@ -30,13 +30,13 @@ public class ForallElim extends Rule {
         if (!(data.isInScopeOf(rowRef, rowIndex)))
             return false;
         if (data.getRow(rowRef).getFormula() instanceof QuantifiedFormula == false) return false;
+        if(((QuantifiedFormula)data.getRow(rowRef).getFormula()).type != '∀') return false;
         return true;
     }
 
     @Override
     public boolean verifyRow(Box data, int rowIndex) {
     	QuantifiedFormula ref = (QuantifiedFormula) data.getRow(rowRef).getFormula();
-    	if(ref.type != '∀') return false;
         Formula toVerify = data.getRow(rowIndex).getFormula();
         return Formula.isInstantiationOf(toVerify, ref);
     }

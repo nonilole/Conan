@@ -14,7 +14,7 @@
 }
 
 .myText:focused {
-	-fx-background-color: black , white;
+	/*-fx-background-color: black , white;*/
 	-fx-background-insets: 0 5 -1 5, 0 -1 0 0;
 }
 

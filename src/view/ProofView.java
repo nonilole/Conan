@@ -39,6 +39,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
     private Proof proof;
     private String path;
     private String name;
+    private boolean scroll = false;
 
     //used for turning the verification on and off, initially it is on
     public static boolean verificationSettings=true;
@@ -135,13 +136,14 @@ public class ProofView extends Symbolic implements ProofListener, View {
         hb.setHgrow(rows, Priority.ALWAYS);
         hb.getChildren().addAll(lineNo, rows);
         hb.setPadding(new Insets(5, 5, 5, 5));
-        ScrollPane sp = new ScrollPane(hb);
+        this.sp = new ScrollPane(hb);
         sp.getStyleClass().add("fit");
-//		hb.heightProperty().addListener((ov, oldValue, newValue) -> {
-//			if (newValue.doubleValue() > oldValue.doubleValue()) { // Change this to only trigger on new row!!
-//				sp.setVvalue(1.0);                                 // Otherwise it will scroll down when you insert a row in the middle
-//			}
-//		});
+		hb.heightProperty().addListener((ov, oldValue, newValue) -> {
+			if (scroll && newValue.doubleValue() > oldValue.doubleValue()) {
+				sp.setVvalue(1.0);
+				scroll = false;
+			}
+		});
         AnchorPane proofPane = new AnchorPane(sp);
         proofPane.setTopAnchor(sp, 0.0);
         proofPane.setRightAnchor(sp, 0.0);
@@ -252,6 +254,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
         }
         lineNo.getChildren().add(createLabel());
         updateLabelPaddings(rList.size());
+        scroll = true;
     }
 
     public void rowInserted(int rowNo, BoxReference br, int depth) {
@@ -297,6 +300,11 @@ public class ProofView extends Symbolic implements ProofListener, View {
         rp.init(this, rList);
         lineNo.getChildren().add(createLabel());
         updateLabelPaddings(rowNo);
+        if (rListInsertionIndex == rList.size()-1)
+            scroll = true;
+    }
+
+    private void incrementReferences() {
     }
 
     public void addedRowAfterBox(int rowNo) {
@@ -483,8 +491,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
         //update the padding for each label by checking the corresponding rowPane
         for (int i = lineNr - 1; i < labelList.size(); i++) {
             RowPane rp = rList.get(i);
-            int topPadding = rp.getIsFirstRowInBox() ? 11 : 8;
-            int bottomPadding = 2 + 5 * rp.getNrOfClosingBoxes();
+            int topPadding = rp.getIsFirstRowInBox() ? 8 : 5;
+            int bottomPadding = 5 + 5 * rp.getNrOfClosingBoxes();
             Label label = (Label) labelList.get(i);
             label.setPadding(new Insets(topPadding, 2, bottomPadding, 2));
         }
@@ -518,13 +526,15 @@ public class ProofView extends Symbolic implements ProofListener, View {
     }
 
     public void addRule(String text) {
-        if (lastFocusedTf.getId() == "rightTextField") {
+        if (lastFocusedTf == null)
+            return;
+        if (lastFocusedTf.getId().equals("rightTextField")) {
             int tmpCaretPosition = caretPosition;
             //String[] parts = event.toString().split("'");
             lastFocusedTf.setText(text);
             lastFocusedTf.requestFocus();
             lastFocusedTf.positionCaret(tmpCaretPosition + 1);
-        } else if (lastFocusedTf.getId() == "expression") {
+        } else if (lastFocusedTf.getId().equals("expression")) {
             TextField tmpLastFocusedTf = lastFocusedTf;
             RowPane rp = (RowPane) lastFocusedTf.getParent(); // Valid assumption
             //BorderPane borderpane = (BorderPane) lastFocusedTf.getParent();
@@ -544,8 +554,11 @@ public class ProofView extends Symbolic implements ProofListener, View {
      * @return row index of the last focused textfield in the proof, otherwise it returns -1
      */
     public int getRowNumberLastFocusedTF() {
-        if (lastFocusedTf != null && rList.indexOf(lastFocusedTf.getParent()) != -1) {
-            return rList.indexOf(lastFocusedTf.getParent()) + 1;
+        if (lastFocusedTf != null) {
+            Node check  = lastFocusedTf.getParent();
+            if (!(check instanceof RowPane))
+                check = check.getParent();
+            return rList.indexOf(check) + 1;
         }
         return -1;
     }
@@ -562,9 +575,9 @@ public class ProofView extends Symbolic implements ProofListener, View {
     public void displayLoadedProof() {
         List<RowInfo> proofInfo = proof.getProofInfo();
         
-        for(RowInfo _ : proofInfo){
+        /*for(RowInfo _ : proofInfo){
         	rowAdded();
-        }
+        }*/
         
         for (int i = 1; i <= proofInfo.size(); i++) {
             RowInfo rowInfo = proofInfo.get(i - 1);
@@ -572,6 +585,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
             if (rowInfo.startBox && i != 1) {
                 this.openBoxInView();
             }
+            rowAdded();
             RowPane rowPane = this.rList.get(i - 1);
 
 

@@ -11,7 +11,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import model.BoxReference;
 import model.Proof;
-import model.rules.Premise;
 import view.*;
 
 import java.io.File;
@@ -116,13 +115,6 @@ public class MainController implements Initializable {
     private Button premiseButton;
 
 
-
-
-
-
-
-
-
     //Derived Rules Buttons
     @FXML
     private Button mtButton;
@@ -159,10 +151,6 @@ public class MainController implements Initializable {
     private Button contraButton;
 
 
-/*
-*
-*
-* */
 
     @FXML
     void verificationToggle(ActionEvent event) {
@@ -202,12 +190,13 @@ public class MainController implements Initializable {
 
 
     }
+
     @FXML
     void setTheme(ActionEvent event) {
         Scene scene = tabPane.getScene();
         scene.getStylesheets().clear();
         MenuItem caller = (MenuItem) event.getSource();
-        switch(caller.getText()) {
+        switch (caller.getText()) {
             case "Dark theme":
                 scene.getStylesheets().add("gruvjan.css");
                 break;
@@ -233,7 +222,7 @@ public class MainController implements Initializable {
 
     @FXML
     void newProof(ActionEvent event) {
-        new ProofView(tabPane, new Proof());
+        ProofView  pv = new ProofView(tabPane, new Proof());
     }
 
     private ProofView convertProofView(View view) {
@@ -255,6 +244,7 @@ public class MainController implements Initializable {
             return;
         pv.newRow();
     }
+
     @FXML
     void insertBelowAfterMenu(ActionEvent event) {
         ProofView pv = convertProofView(getCurrentView());
@@ -376,12 +366,12 @@ public class MainController implements Initializable {
                 new ExtensionFilter("Proofs", "*.proof"),
                 new ExtensionFilter("All Files", "*.*"));
         File file = fc.showSaveDialog(tabPane.getScene().getWindow());
-        if(file == null){
-        	System.out.println("Path not set, file not saved");
-        	return;
+        if (file == null) {
+            System.out.println("Path not set, file not saved");
+            return;
         }
-        if(file.getAbsolutePath().endsWith(".proof") == false){
-        	file = new File(file.getAbsolutePath()+".proof");
+        if (file.getAbsolutePath().endsWith(".proof") == false) {
+            file = new File(file.getAbsolutePath() + ".proof");
         }
 
         View view = getCurrentView();
@@ -416,6 +406,9 @@ public class MainController implements Initializable {
         File file = fc.showSaveDialog(tabPane.getScene().getWindow());
         if (file == null)
             return;
+        if (file.getAbsolutePath().endsWith(".tex") == false) {
+            file = new File(file.getAbsolutePath() + ".tex");
+        }
         try {
             ExportLatex.export(pView.getProof(), file.getPath());
         } catch (IOException e) {
@@ -424,25 +417,30 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    void openProof(ActionEvent event){
-    	ProofView openedProofView;
-    	try{
-    		openedProofView = IOHandler.openProof(tabPane);
-    		if(openedProofView == null){
-    			return;
-    		}
-    		openedProofView.displayLoadedProof();
-    	}catch(Exception e){
-    		System.out.println("MainController.openProof exception:");
-    		System.out.println(e);
-    		e.printStackTrace();
-    		return;
-    	}
+    void openProof(ActionEvent event) {
+        ProofView openedProofView;
+        try {
+            openedProofView = IOHandler.openProof(tabPane);
+            if (openedProofView == null) {
+                return;
+            }
+            openedProofView.displayLoadedProof();
+        } catch (Exception e) {
+            System.out.println("MainController.openProof exception:");
+            System.out.println(e);
+            e.printStackTrace();
+            return;
+        }
     }
 
     @FXML
     void showUserInstructions(ActionEvent event) {
         new InstructionsView(tabPane);
+    }
+    
+    @FXML
+    void showShortcuts(ActionEvent event) {
+        new ShortcutsView(tabPane);
     }
 
     public void createTooltip() {
@@ -450,10 +448,13 @@ public class MainController implements Initializable {
         saveButton.setTooltip(new Tooltip("Save Proof (CTRL+S)"));
         loadButton.setTooltip(new Tooltip("Open Proof (CTRL+O)"));
         newProofButton.setTooltip(new Tooltip("New Proof (CTRL+N)"));
-        undoButton.setTooltip(new Tooltip("Undo (CTRL+U)"));
-        redoButton.setTooltip(new Tooltip("Redo (CTRL+SHIFT+U)"));
+        undoButton.setTooltip(new Tooltip("Undo (CTRL+Z)"));
+        redoButton.setTooltip(new Tooltip("Redo (CTRL+Y/CTRL+SHIFT+Z)"));
         openBoxButton.setTooltip(new Tooltip("Open Box Button (CTRL+B)"));
-        newRowButton.setTooltip(new Tooltip("New Row (CTRL+R)"));
+        newRowButton.setTooltip(new Tooltip("New Row (Shift+Enter)"));
+        verification.setTooltip(new Tooltip("Verify"));
+        generation.setTooltip(new Tooltip("Generate"));
+
         //Inference Rules
         andIntroButton.setTooltip(new Tooltip("And-Introduction"));
         andElim1Button.setTooltip(new Tooltip("And-Elimination 1"));
@@ -509,6 +510,8 @@ public class MainController implements Initializable {
         tabPane.getSelectionModel().selectedItemProperty().addListener((ov, oldTab, newTab) -> {
             if (newTab instanceof ViewTab) {
                 currentTab = (ViewTab) newTab;
+            } else {
+                currentTab = null;
             }
         });
         if (prefs.getBoolean("showWelcome", true)) { // Om showWelcome-paret ej existerar, returnera true

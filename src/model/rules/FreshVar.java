@@ -40,10 +40,12 @@ public class FreshVar extends Rule {
         	boolean isInSameBox = false;
         	
         	while(prowAncestorBox.isTopLevelBox() == false){
+        		//have to update prowAncestor box... duh
         		if( prowAncestorBox == row.getParent()){
         			isInSameBox = true;
         			break;
         		}
+        		prowAncestorBox = prowAncestorBox.getParent();
         	}
         	if(isInSameBox) continue; //if the formula is in the same box as the fresh var it's allowed to contain the var
         	else{
