@@ -537,8 +537,11 @@ public class ProofView extends Symbolic implements ProofListener, View {
      * @return row index of the last focused textfield in the proof, otherwise it returns -1
      */
     public int getRowNumberLastFocusedTF() {
-        if (lastFocusedTf != null && rList.indexOf(lastFocusedTf.getParent()) != -1) {
-            return rList.indexOf(lastFocusedTf.getParent()) + 1;
+        if (lastFocusedTf != null) {
+            Node check  = lastFocusedTf.getParent();
+            if (!(check instanceof RowPane))
+                check = check.getParent();
+            return rList.indexOf(check) + 1;
         }
         return -1;
     }
