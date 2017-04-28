@@ -259,7 +259,7 @@ public class RowPane extends BorderPane {
     private void setPromptsPromptText(List<Boolean> isBoxRef) {
         for (int i = 0; i < 3; i++) {
             if (isBoxRef.get(i).equals(true))
-                getRulePrompt(i).setPromptText("123-123");
+                getRulePrompt(i).setPromptText("123-456");
             else
                 getRulePrompt(i).setPromptText("Row");
         }
