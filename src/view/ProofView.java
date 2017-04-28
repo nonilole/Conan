@@ -509,6 +509,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
     }
 
     public void addRule(String text) {
+        if (lastFocusedTf == null)
+            return;
         if (lastFocusedTf.getId().equals("rightTextField")) {
             int tmpCaretPosition = caretPosition;
             //String[] parts = event.toString().split("'");

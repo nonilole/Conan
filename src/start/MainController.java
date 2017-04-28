@@ -466,6 +466,8 @@ public class MainController implements Initializable {
         tabPane.getSelectionModel().selectedItemProperty().addListener((ov, oldTab, newTab) -> {
             if (newTab instanceof ViewTab) {
                 currentTab = (ViewTab) newTab;
+            } else {
+                currentTab = null;
             }
         });
         if (prefs.getBoolean("showWelcome", true)) { // Om showWelcome-paret ej existerar, returnera true
