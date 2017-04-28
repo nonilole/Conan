@@ -107,7 +107,6 @@ public class WelcomeView extends Symbolic implements View {
             }
             tabPane1.getTabs().remove(tab);
             String premisesStr = premises.getText();
-            if( premisesStr.equals("") ) return;
             String conclusionStr = conclusion.getText();
             String[] splitPremises;
             try {
