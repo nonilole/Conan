@@ -154,8 +154,9 @@ public class MainController implements Initializable {
 
     @FXML
     void verificationToggle(ActionEvent event) {
+            //For storing the verification settings
             Preferences prefs = Preferences.userRoot().node("General");
-            prefs.putBoolean("Verify",true);
+            prefs.putBoolean("Verify",true); //Default value for Verify
             List<Tab>tabs=tabPane.getTabs();
             for(Tab tab:tabs){
                 ViewTab vt=(ViewTab)tab;
@@ -163,32 +164,22 @@ public class MainController implements Initializable {
                 if(pv==null)
                     return;
 
-                System.out.println(pv instanceof ProofView);
-
+                //Gets the proof from every Proofview tab
                 if(pv instanceof ProofView){
                     Proof p = pv.getProof();
-//                    PremisesAndConclusion pc=pv.getPremisesAndConclusion();
                     List<RowPane> proofViewList=pv.getRowList();
 
-                    System.out.println(pv.getClass());
-
-                    //Updates every row when the box is checked
-                    if (this.verification.selectedProperty().getValue()) {
-                        System.out.println("Prefs:"+prefs.getBoolean("Verify",true));
+                    //Updates every row when the box is checked/unchecked
+                    if (this.verification.selectedProperty().getValue()){
                         prefs.putBoolean("Verify",true);
-      //                  pv.setVerificationSettings(true);
                         p.verifyProof(0);
-                    }else {
-                        System.out.println("Prefs: "+prefs.getBoolean("Verify",true));
+                    }
+                    else{
                         prefs.putBoolean("Verify",false);
-     //                   pv.setVerificationSettings(false);
                         for(RowPane r:proofViewList) {
-                       //        r.getExpression().getStyleClass().remove("bad");
                             r.getExpression().getStyleClass().remove("conclusionReached");
                             r.getRule().getStyleClass().remove("unVerified");
                         }
-  //                      pc.getConclusion().getStyleClass().remove("bad");
-  //                      pc.getPremises().getStyleClass().remove("bad");
                     }
                 }
             }
