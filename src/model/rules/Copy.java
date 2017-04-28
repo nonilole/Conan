@@ -49,7 +49,7 @@ public class Copy extends Rule{
 	
 	@Override
 	public String toString(){
-		return "Copy "+rowRef;
+		return String.format("copy, %s", rowRef == null ? "" : new Integer(rowRef+1));
 	}
 
 }
