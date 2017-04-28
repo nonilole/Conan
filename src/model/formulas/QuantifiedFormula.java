@@ -45,7 +45,7 @@ public class QuantifiedFormula extends Formula{
     	if(o instanceof QuantifiedFormula){
     		QuantifiedFormula other = (QuantifiedFormula) o;
     		if(this.type != other.type) return false;
-    		if(this.var != other.var) return false;
+    		if(this.var.equals(other.var) == false) return false;
     		return this.formula.equals(other.formula);
     	}
     	return false;
