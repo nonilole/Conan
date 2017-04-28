@@ -49,7 +49,7 @@ public class WelcomeView extends Symbolic implements View {
         this.premises = premisesAndConclusion.getPremises();
         this.conclusion = premisesAndConclusion.getConclusion();
         this.premises.setId("expression");
-        this.premises.setPromptText("Premise");
+        this.premises.setPromptText("Premises");
         Platform.runLater(new Runnable(){
         	@Override
         	public void run()
@@ -108,47 +108,7 @@ public class WelcomeView extends Symbolic implements View {
         this.notAgain = new CheckBox("Do not show again");
         Button butNext = new Button("Continue");
         butNext.setOnAction(event -> {
-            Preferences prefs = Preferences.userRoot().node("General");
-            TabPane tabPane1 = tab.getTabPane();
-            if (!this.notAgain.isIndeterminate() && this.notAgain.selectedProperty().getValue()) {
-                prefs.putBoolean("showWelcome", false); // Om knappen är checked, visa inte välkomsttabben.
-            }
-            tabPane1.getTabs().remove(tab);
-            String premisesStr = premises.getText();
-            String conclusionStr = conclusion.getText();
-            String[] splitPremises;
-            try {
-                splitPremises = splitFormulas(premisesStr);
-            } catch (IOException e) {
-                System.err.println("IOException when parsing premise string");
-                new ProofView(tabPane1, new Proof(), "", conclusionStr);
-                return;
-            }
-            Proof proof = new Proof();
-            ProofView pv = new ProofView(tabPane1, proof, premises.getText(), conclusion.getText());
-
-            //===============
-            System.out.println("splitPremise.length: " + splitPremises.length);
-            for (int i = 0; i < splitPremises.length; i++) proof.addRow();
-
-            List<RowPane> rowList = pv.getRowList();
-            for (int i = 0; i < splitPremises.length; i++) {
-                System.out.println(i + " premiseAdd");
-                RowPane rowPane = rowList.get(i);
-                proof.updateFormulaRow(splitPremises[i], i + 1);
-                rowPane.setExpression(splitPremises[i]);
-
-                try {
-                    proof.updateRuleRow("Premise", i + 1);
-                    rowPane.setRule("Premise");
-                } catch (IllegalAccessException e) {
-                    System.err.println(e);
-                } catch (InstantiationException e) {
-                    System.err.println(e);
-                }
-
-            }
-            proof.updateConclusion(conclusionStr);
+            conpremfinished();
         });
         gridPane.add(title, 0, 0);
         gridPane.add(welcomeText, 0, 1);
@@ -180,13 +140,47 @@ public class WelcomeView extends Symbolic implements View {
     }
 
     private void conpremfinished() {
-        Preferences prefs = Preferences.userRoot().node("General");
+    	Preferences prefs = Preferences.userRoot().node("General");
         TabPane tabPane1 = tab.getTabPane();
         if (!this.notAgain.isIndeterminate() && this.notAgain.selectedProperty().getValue()) {
             prefs.putBoolean("showWelcome", false); // Om knappen är checked, visa inte välkomsttabben.
         }
         tabPane1.getTabs().remove(tab);
-        new ProofView(tabPane1, new Proof(), premises.getText(), conclusion.getText());
+        String premisesStr = premises.getText();
+        String conclusionStr = conclusion.getText();
+        String[] splitPremises;
+        try {
+            splitPremises = splitFormulas(premisesStr);
+        } catch (IOException e) {
+            System.err.println("IOException when parsing premise string");
+            new ProofView(tabPane1, new Proof(), "", conclusionStr);
+            return;
+        }
+        Proof proof = new Proof();
+        ProofView pv = new ProofView(tabPane1, proof, premises.getText(), conclusion.getText());
+
+        //===============
+        System.out.println("splitPremise.length: " + splitPremises.length);
+        for (int i = 0; i < splitPremises.length; i++) proof.addRow();
+
+        List<RowPane> rowList = pv.getRowList();
+        for (int i = 0; i < splitPremises.length; i++) {
+            System.out.println(i + " premiseAdd");
+            RowPane rowPane = rowList.get(i);
+            proof.updateFormulaRow(splitPremises[i], i + 1);
+            rowPane.setExpression(splitPremises[i]);
+
+            try {
+                proof.updateRuleRow("Premise", i + 1);
+                rowPane.setRule("Premise");
+            } catch (IllegalAccessException e) {
+                System.err.println(e);
+            } catch (InstantiationException e) {
+                System.err.println(e);
+            }
+
+        }
+        proof.updateConclusion(conclusionStr);
     }
 
     @Override
