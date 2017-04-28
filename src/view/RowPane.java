@@ -12,7 +12,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import model.BoxReference;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -25,17 +24,19 @@ import static view.ViewUtil.checkShortcut;
 
 public class RowPane extends BorderPane {
     final static KeyCombination shiftEnter = new KeyCodeCombination(KeyCode.ENTER, KeyCombination.SHIFT_DOWN);
-    final static KeyCombination ctrlLeft = new KeyCodeCombination(KeyCode.LEFT, KeyCombination.CONTROL_DOWN);
-    final static KeyCombination ctrlRight = new KeyCodeCombination(KeyCode.RIGHT, KeyCombination.CONTROL_DOWN);
-    final static KeyCombination ctrlB = new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN);
-    final static KeyCombination ctrlD = new KeyCodeCombination(KeyCode.D, KeyCombination.CONTROL_DOWN);
+    final static KeyCombination ctrlLeft = new KeyCodeCombination(KeyCode.LEFT, KeyCombination.SHORTCUT_DOWN);
+    final static KeyCombination ctrlRight = new KeyCodeCombination(KeyCode.RIGHT, KeyCombination.SHORTCUT_DOWN);
+    final static KeyCombination ctrlB = new KeyCodeCombination(KeyCode.B, KeyCombination.SHORTCUT_DOWN);
+    final static KeyCombination ctrlD = new KeyCodeCombination(KeyCode.D, KeyCombination.SHORTCUT_DOWN);
+    final static KeyCombination ctrlZ = new KeyCodeCombination(KeyCode.Z, KeyCombination.SHORTCUT_DOWN);
+    final static KeyCombination ctrlY = new KeyCodeCombination(KeyCode.Y, KeyCombination.SHORTCUT_DOWN);
+    private static final HashMap<String, List<Boolean>> ruleBox;
+    private static final HashMap<String, Integer> ruleMap;
     static Pattern p = Pattern.compile("^([1-9]\\d*-?([1-9]\\d*)?)?$");
 
-    private static final HashMap<String, List<Boolean>> ruleBox;
     static {
-        List<Boolean> ff = Arrays.asList(false,false,true);
-        List<Boolean> ft = Arrays.asList(false,true,true);
-        List<Boolean> tf = Arrays.asList(true,false,true);
+        List<Boolean> ft = Arrays.asList(false, true, true);
+        List<Boolean> tf = Arrays.asList(true, false, true);
         ruleBox = new HashMap<String, List<Boolean>>();
         ruleBox.put("∨E", ft);
         ruleBox.put("→I", tf);
@@ -46,7 +47,7 @@ public class RowPane extends BorderPane {
         ruleBox.put("MT", tf);
         ruleBox.put("PBC", tf);
     }
-    private static final HashMap<String, Integer> ruleMap;
+
     static {
         ruleMap = new HashMap<String, Integer>();
         ruleMap.put("∧I", 2);
@@ -264,6 +265,7 @@ public class RowPane extends BorderPane {
                 getRulePrompt(i).setPromptText("Row");
         }
     }
+
     private void setPrompts(int n) {
         hideAndClearPrompts();
         this.numberOfPrompts = n;
@@ -284,12 +286,18 @@ public class RowPane extends BorderPane {
         private HotkeyMapper(TextField trigger, ProofView pv, List<RowPane> rList) {
             addFocusListener(trigger, pv);
             trigger.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                @Override
                 public void handle(KeyEvent key) {
                     int index = rList.indexOf(RowPane.this);
-                    if (ctrlD.match(key)) {
+                    if (ctrlZ.match(key)) {
+                        pv.undo();
+                        key.consume();
+                    } else if (ctrlY.match(key)) {
+                        pv.redo();
+                        key.consume();
+                    } else if (ctrlD.match(key)) {
                         pv.deleteRow(index + 1);
-                    }
-                    if (ctrlB.match(key)) {
+                    } else if (ctrlB.match(key)) {
                         pv.insertNewBox(index + 1);
                     } else if (ctrlLeft.match(key)) {
                         focusLeft();
@@ -315,7 +323,9 @@ public class RowPane extends BorderPane {
         }
 
         public abstract void focus(ProofView pv, List<RowPane> rList, int index);
+
         public abstract void focusLeft();
+
         public abstract void focusRight();
     }
 
