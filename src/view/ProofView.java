@@ -123,7 +123,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
         hb.setHgrow(rows, Priority.ALWAYS);
         hb.getChildren().addAll(lineNo, rows);
         hb.setPadding(new Insets(5, 5, 5, 5));
-        ScrollPane sp = new ScrollPane(hb);
+        this.sp = new ScrollPane(hb);
         sp.getStyleClass().add("fit");
 //		hb.heightProperty().addListener((ov, oldValue, newValue) -> {
 //			if (newValue.doubleValue() > oldValue.doubleValue()) { // Change this to only trigger on new row!!
