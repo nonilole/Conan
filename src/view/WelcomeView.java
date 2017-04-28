@@ -1,5 +1,6 @@
 package view;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -49,6 +50,13 @@ public class WelcomeView extends Symbolic implements View {
         this.conclusion = premisesAndConclusion.getConclusion();
         this.premises.setId("expression");
         this.premises.setPromptText("Premise");
+        Platform.runLater(new Runnable(){
+        	@Override
+        	public void run()
+        	{
+        		premises.requestFocus();
+        	}
+        });
         premises.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
