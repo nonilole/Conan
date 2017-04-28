@@ -186,7 +186,7 @@ public class MainController implements Initializable {
 
     @FXML
     void newProof(ActionEvent event) {
-        new ProofView(tabPane, new Proof());
+        ProofView  pv = new ProofView(tabPane, new Proof());
     }
 
     private ProofView convertProofView(View view) {
@@ -407,8 +407,8 @@ public class MainController implements Initializable {
         saveButton.setTooltip(new Tooltip("Save Proof (CTRL+S)"));
         loadButton.setTooltip(new Tooltip("Open Proof (CTRL+O)"));
         newProofButton.setTooltip(new Tooltip("New Proof (CTRL+N)"));
-        undoButton.setTooltip(new Tooltip("Undo (CTRL+U)"));
-        redoButton.setTooltip(new Tooltip("Redo (CTRL+SHIFT+U)"));
+        undoButton.setTooltip(new Tooltip("Undo (CTRL+Z)"));
+        redoButton.setTooltip(new Tooltip("Redo (CTRL+Y/CTRL+SHIFT+Z)"));
         openBoxButton.setTooltip(new Tooltip("Open Box Button (CTRL+B)"));
         newRowButton.setTooltip(new Tooltip("New Row (Shift+Enter)"));
         verification.setTooltip(new Tooltip("Verify"));

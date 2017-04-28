@@ -40,8 +40,8 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
           <items>
-            <MenuItem accelerator="Shortcut+U" mnemonicParsing="false" onAction="#undo" text="Undo" />
-            <MenuItem accelerator="Shortcut+U+SHIFT" mnemonicParsing="false" onAction="#redo" text="Redo" />
+            <MenuItem accelerator="Shortcut+Z" mnemonicParsing="false" onAction="#undo" text="Undo" />
+            <MenuItem accelerator="Shortcut+Y" mnemonicParsing="false" onAction="#redo" text="Redo" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem accelerator="Shortcut+R" mnemonicParsing="false" onAction="#newRow" text="Add row to end" />
                   <MenuItem mnemonicParsing="false" onAction="#insertAboveMenu" text="Insert row above" />
