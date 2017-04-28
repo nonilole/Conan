@@ -41,12 +41,12 @@ public class PremisesAndConclusion extends HBox {
             try {
                 if (!split.equals(""))
                     parser.parse(split);
-                applyStyleIf(tf, false, "bad");
             } catch (ParseException e) {
                 applyStyleIf(tf, true, "bad");
                 return;
             }
         }
+        applyStyleIf(tf, false, "bad");
     }
 
     private void setPrefs() {

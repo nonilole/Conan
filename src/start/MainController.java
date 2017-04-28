@@ -11,7 +11,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import model.BoxReference;
 import model.Proof;
-import model.rules.Premise;
 import view.*;
 
 import java.io.File;
@@ -115,13 +114,6 @@ public class MainController implements Initializable {
     private Button premiseButton;
 
 
-
-
-
-
-
-
-
     //Derived Rules Buttons
     @FXML
     private Button mtButton;
@@ -158,18 +150,17 @@ public class MainController implements Initializable {
     private Button contraButton;
 
 
-
-
     @FXML
     void verificationToggle(ActionEvent event) {
 
     }
+
     @FXML
     void setTheme(ActionEvent event) {
         Scene scene = tabPane.getScene();
         scene.getStylesheets().clear();
         MenuItem caller = (MenuItem) event.getSource();
-        switch(caller.getText()) {
+        switch (caller.getText()) {
             case "Dark theme":
                 scene.getStylesheets().add("gruvjan.css");
                 break;
@@ -217,6 +208,7 @@ public class MainController implements Initializable {
             return;
         pv.newRow();
     }
+
     @FXML
     void insertBelowAfterMenu(ActionEvent event) {
         ProofView pv = convertProofView(getCurrentView());
@@ -338,12 +330,12 @@ public class MainController implements Initializable {
                 new ExtensionFilter("Proofs", "*.proof"),
                 new ExtensionFilter("All Files", "*.*"));
         File file = fc.showSaveDialog(tabPane.getScene().getWindow());
-        if(file == null){
-        	System.out.println("Path not set, file not saved");
-        	return;
+        if (file == null) {
+            System.out.println("Path not set, file not saved");
+            return;
         }
-        if(file.getAbsolutePath().endsWith(".proof") == false){
-        	file = new File(file.getAbsolutePath()+".proof");
+        if (file.getAbsolutePath().endsWith(".proof") == false) {
+            file = new File(file.getAbsolutePath() + ".proof");
         }
 
         View view = getCurrentView();
@@ -378,6 +370,9 @@ public class MainController implements Initializable {
         File file = fc.showSaveDialog(tabPane.getScene().getWindow());
         if (file == null)
             return;
+        if (file.getAbsolutePath().endsWith(".tex") == false) {
+            file = new File(file.getAbsolutePath() + ".tex");
+        }
         try {
             ExportLatex.export(pView.getProof(), file.getPath());
         } catch (IOException e) {
@@ -386,20 +381,20 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    void openProof(ActionEvent event){
-    	ProofView openedProofView;
-    	try{
-    		openedProofView = IOHandler.openProof(tabPane);
-    		if(openedProofView == null){
-    			return;
-    		}
-    		openedProofView.displayLoadedProof();
-    	}catch(Exception e){
-    		System.out.println("MainController.openProof exception:");
-    		System.out.println(e);
-    		e.printStackTrace();
-    		return;
-    	}
+    void openProof(ActionEvent event) {
+        ProofView openedProofView;
+        try {
+            openedProofView = IOHandler.openProof(tabPane);
+            if (openedProofView == null) {
+                return;
+            }
+            openedProofView.displayLoadedProof();
+        } catch (Exception e) {
+            System.out.println("MainController.openProof exception:");
+            System.out.println(e);
+            e.printStackTrace();
+            return;
+        }
     }
 
     @FXML

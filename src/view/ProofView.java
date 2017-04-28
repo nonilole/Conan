@@ -37,6 +37,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
     private Proof proof;
     private String path;
     private String name;
+    private boolean scroll = false;
 
     /**
      * Takes a premisesAndConclusion object and adds it to its content,
@@ -123,13 +124,14 @@ public class ProofView extends Symbolic implements ProofListener, View {
         hb.setHgrow(rows, Priority.ALWAYS);
         hb.getChildren().addAll(lineNo, rows);
         hb.setPadding(new Insets(5, 5, 5, 5));
-        ScrollPane sp = new ScrollPane(hb);
+        this.sp = new ScrollPane(hb);
         sp.getStyleClass().add("fit");
-//		hb.heightProperty().addListener((ov, oldValue, newValue) -> {
-//			if (newValue.doubleValue() > oldValue.doubleValue()) { // Change this to only trigger on new row!!
-//				sp.setVvalue(1.0);                                 // Otherwise it will scroll down when you insert a row in the middle
-//			}
-//		});
+		hb.heightProperty().addListener((ov, oldValue, newValue) -> {
+			if (scroll && newValue.doubleValue() > oldValue.doubleValue()) {
+				sp.setVvalue(1.0);
+				scroll = false;
+			}
+		});
         AnchorPane proofPane = new AnchorPane(sp);
         proofPane.setTopAnchor(sp, 0.0);
         proofPane.setRightAnchor(sp, 0.0);
@@ -240,6 +242,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
         }
         lineNo.getChildren().add(createLabel());
         updateLabelPaddings(rList.size());
+        scroll = true;
     }
 
     public void rowInserted(int rowNo, BoxReference br, int depth) {
@@ -285,6 +288,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
         rp.init(this, rList);
         lineNo.getChildren().add(createLabel());
         updateLabelPaddings(rowNo);
+        if (rListInsertionIndex == rList.size()-1)
+            scroll = true;
     }
 
     public void addedRowAfterBox(int rowNo) {
