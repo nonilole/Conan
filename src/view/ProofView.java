@@ -558,9 +558,9 @@ public class ProofView extends Symbolic implements ProofListener, View {
     public void displayLoadedProof() {
         List<RowInfo> proofInfo = proof.getProofInfo();
         
-        for(RowInfo _ : proofInfo){
+        /*for(RowInfo _ : proofInfo){
         	rowAdded();
-        }
+        }*/
         
         for (int i = 1; i <= proofInfo.size(); i++) {
             RowInfo rowInfo = proofInfo.get(i - 1);
@@ -568,6 +568,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
             if (rowInfo.startBox && i != 1) {
                 this.openBoxInView();
             }
+            rowAdded();
             RowPane rowPane = this.rList.get(i - 1);
 
 
