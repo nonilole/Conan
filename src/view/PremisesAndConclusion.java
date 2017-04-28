@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static view.ProofView.verificationSettings;
 import static view.ViewUtil.applyStyleIf;
 import static view.ViewUtil.consumeKeys;
 
@@ -47,9 +46,7 @@ public class PremisesAndConclusion extends HBox {
                     parser.parse(split);
 
             } catch (ParseException e) {
-                if(verificationSettings) {
-                    applyStyleIf(tf, true, "bad");
-                }
+                applyStyleIf(tf, true, "bad");
                 return;
             }
         }

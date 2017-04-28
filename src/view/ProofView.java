@@ -26,7 +26,6 @@ import static view.ViewUtil.checkShortcut;
 public class ProofView extends Symbolic implements ProofListener, View {
     ScrollPane sp;
 
-    private PremisesAndConclusion premisesAndConclusion;
     private TextField premises;
     private TextField conclusion;
     private Stack<VBox> curBoxDepth = new Stack<>();
@@ -41,12 +40,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
     private String name;
     private boolean scroll = false;
 
-    //used for turning the verification on and off, initially it is on
-    public static boolean verificationSettings=true;
-
-    public void setVerificationSettings(boolean verificationSettings) {
-        this.verificationSettings = verificationSettings;
-    }
 
 
 
@@ -76,7 +69,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
      */
 
     public ProofView(TabPane tabPane, Proof proof, PremisesAndConclusion premisesAndConclusion) {
-        this.premisesAndConclusion=premisesAndConclusion;
         this.proof = proof;
         this.proof.registerProofListener(this);
         this.premises = premisesAndConclusion.getPremises();
@@ -398,8 +390,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
             wellFormed = true;
         if (newText != null)
             expression.setText(newText);
-        //do not update the color of the label when the setting is turned off
-        if(verificationSettings)
             applyStyleIf(expression, !wellFormed, "bad");
     }
 
@@ -407,16 +397,12 @@ public class ProofView extends Symbolic implements ProofListener, View {
         //when a proof is loaded, the view has an empty rList
         if (rList.size() == 0) return;
         TextField expression = (TextField) rList.get(lineNo - 1).getExpression();
-        if(verificationSettings)
-           applyStyleIf(expression, correct, "conclusionReached");
+        applyStyleIf(expression, correct, "conclusionReached");
     }
 
     public void rowVerified(boolean verified, int lineNo) {
         TextField rule = (TextField) rList.get(lineNo - 1).getRule();
-
-        //do not update the color of the label when the setting is turned off
-        if(verificationSettings)
-            applyStyleIf(rule, !verified, "unVerified");
+        applyStyleIf(rule, !verified, "unVerified");
     }
 
     //update view to reflect that row with nr rowNr has been deleted
@@ -612,7 +598,5 @@ public class ProofView extends Symbolic implements ProofListener, View {
         return new ArrayList<RowPane>(rList);
     }
 
-    public PremisesAndConclusion getPremisesAndConclusion() {
-        return premisesAndConclusion;
-    }
+
 }
