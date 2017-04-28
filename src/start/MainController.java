@@ -154,19 +154,21 @@ public class MainController implements Initializable {
 
     @FXML
     void verificationToggle(ActionEvent event) {
-            //For storing the verification settings
             Preferences prefs = Preferences.userRoot().node("General");
-            prefs.putBoolean("Verify",true); //Default value for Verify
+            prefs.putBoolean("Verify",true);
             List<Tab>tabs=tabPane.getTabs();
+
             for(Tab tab:tabs){
-                ViewTab vt=(ViewTab)tab;
+
+                ViewTab vt=(ViewTab) tab;
+
                 ProofView pv=convertProofView(vt.getView());
-                if(pv==null)
-                    return;
 
                 //Gets the proof from every Proofview tab
-                if(pv instanceof ProofView){
+                if(pv!=null&&pv.getProof()!=null){
                     Proof p = pv.getProof();
+
+                    List<RowPane> proofViewList=pv.getRowList();
 
                     //Updates every row when the box is checked/unchecked
                     if (this.verification.selectedProperty().getValue()){
@@ -175,16 +177,14 @@ public class MainController implements Initializable {
                     }
                     else{
                         prefs.putBoolean("Verify",false);
-
-                        //gets every row in list for disabling the verification marker
-                        List<RowPane> proofViewList=pv.getRowList();
                         for(RowPane r:proofViewList) {
-                      //      r.getExpression().getStyleClass().remove("conclusionReached");
+                            r.getExpression().getStyleClass().remove("conclusionReached");
                             r.getRule().getStyleClass().remove("unVerified");
                         }
                     }
                 }
             }
+
 
     }
 
