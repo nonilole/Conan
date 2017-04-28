@@ -221,7 +221,9 @@ public class WelcomeView extends Symbolic implements View {
                 default:
                     break;
             }
-            strB.append(ch);
+            if(ch != ' '){
+            	strB.append(ch);
+            }
 
         }
         formulaList.add(strB + "");
