@@ -159,37 +159,48 @@ public class MainController implements Initializable {
     private Button contraButton;
 
 
-
+/*
+*
+*
+* */
 
     @FXML
     void verificationToggle(ActionEvent event) {
-        ProofView pv = convertProofView(getCurrentView());
-        if(pv==null)
-            return;
-        if(pv.getProof()!=null) {
-            Proof p = pv.getProof();
-            PremisesAndConclusion pc=pv.getPremisesAndConclusion();
-            List<RowPane> r=pv.getrList();
+            List<Tab>tabs=tabPane.getTabs();
+            for(Tab tab:tabs){
+                ViewTab vt=(ViewTab)tab;
+                ProofView pv=convertProofView(vt.getView());
+                if(pv==null)
+                    return;
 
-            //Updates every row when the box is checked
-            if (this.verification.selectedProperty().getValue()) {
-                pv.setVerificationSettings(true);
-                pc.parseAndStyle(pc.getPremises(),pc.getPremises().getText());
-                pc.parseAndStyle(pc.getConclusion(),pc.getConclusion().getText());
+                System.out.println(pv instanceof ProofView);
 
-                for(int i=0;i<r.size();i++) {
-                    p.updateFormulaRow(r.get(i).getExpression().getText(),i+1);
+                if(pv instanceof ProofView){
+                    Proof p = pv.getProof();
+
+//                    PremisesAndConclusion pc=pv.getPremisesAndConclusion();
+                    List<RowPane> proofViewList=pv.getRowList();
+
+                    System.out.println(pv.getClass());
+
+                    //Updates every row when the box is checked
+                    if (this.verification.selectedProperty().getValue()) {
+                        pv.setVerificationSettings(true);
+                        p.verifyProof(0);
+                    }else {
+                        pv.setVerificationSettings(false);
+                        for(RowPane r:proofViewList) {
+                       //        r.getExpression().getStyleClass().remove("bad");
+                            r.getExpression().getStyleClass().remove("conclusionReached");
+                            r.getRule().getStyleClass().remove("unVerified");
+                        }
+  //                      pc.getConclusion().getStyleClass().remove("bad");
+  //                      pc.getPremises().getStyleClass().remove("bad");
+                    }
                 }
-            }else {
-                pv.setVerificationSettings(false);
-                for(int i=0;i<r.size();i++) {
-                    r.get(i).getExpression().getStyleClass().remove("bad");
-                    r.get(i).getRule().getStyleClass().remove("unVerified");
-                }
-                pc.getConclusion().getStyleClass().remove("bad");
-                pc.getPremises().getStyleClass().remove("bad");
             }
-        }
+
+
     }
     @FXML
     void setTheme(ActionEvent event) {
