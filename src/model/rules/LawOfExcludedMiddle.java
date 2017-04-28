@@ -22,15 +22,7 @@ public class LawOfExcludedMiddle extends Rule {
 		return true;
 	}
 
-	@Override
-	public boolean verifyRow(Box data, int rowIndex) {
-		Formula rowToVerify = data.getRow(rowIndex).getFormula();
-		if (!(rowToVerify instanceof Disjunction)) {
-            return false;
-        }
-		Disjunction disj = (Disjunction) rowToVerify;
-		Formula lhs = disj.lhs; 
-		Formula rhs = disj.rhs;
+	private boolean verifyFirstArgNeg(Formula lhs, Formula rhs) {
 		if(!(rhs instanceof Negation)) {
 			return false;
 		}
@@ -40,6 +32,18 @@ public class LawOfExcludedMiddle extends Rule {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public boolean verifyRow(Box data, int rowIndex) {
+		Formula rowToVerify = data.getRow(rowIndex).getFormula();
+		if (!(rowToVerify instanceof Disjunction)) {
+            return false;
+        }
+		Disjunction disj = (Disjunction) rowToVerify;
+		Formula lhs = disj.lhs; 
+		Formula rhs = disj.rhs;
+		return (verifyFirstArgNeg(lhs,rhs) || verifyFirstArgNeg(rhs,lhs));
 	}
 
 	@Override
