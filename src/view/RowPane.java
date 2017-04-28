@@ -18,18 +18,23 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static javafx.scene.input.KeyCode.*;
+import static javafx.scene.input.KeyCombination.*;
+import static javafx.scene.input.KeyCombination.ModifierValue.*;
+import static javafx.scene.input.KeyCombination.ModifierValue.DOWN;
 import static view.ViewUtil.addFocusListener;
 import static view.ViewUtil.checkShortcut;
 
 
 public class RowPane extends BorderPane {
-    final static KeyCombination shiftEnter = new KeyCodeCombination(KeyCode.ENTER, KeyCombination.SHIFT_DOWN);
-    final static KeyCombination ctrlLeft = new KeyCodeCombination(KeyCode.LEFT, KeyCombination.SHORTCUT_DOWN);
-    final static KeyCombination ctrlRight = new KeyCodeCombination(KeyCode.RIGHT, KeyCombination.SHORTCUT_DOWN);
-    final static KeyCombination ctrlB = new KeyCodeCombination(KeyCode.B, KeyCombination.SHORTCUT_DOWN);
-    final static KeyCombination ctrlD = new KeyCodeCombination(KeyCode.D, KeyCombination.SHORTCUT_DOWN);
-    final static KeyCombination ctrlZ = new KeyCodeCombination(KeyCode.Z, KeyCombination.SHORTCUT_DOWN);
-    final static KeyCombination ctrlY = new KeyCodeCombination(KeyCode.Y, KeyCombination.SHORTCUT_DOWN);
+    final static KeyCombination shiftEnter = new KeyCodeCombination(ENTER, SHIFT_DOWN);
+    final static KeyCombination ctrlLeft = new KeyCodeCombination(LEFT, SHORTCUT_DOWN);
+    final static KeyCombination ctrlRight = new KeyCodeCombination(RIGHT, SHORTCUT_DOWN);
+    final static KeyCombination ctrlB = new KeyCodeCombination(B, SHORTCUT_DOWN);
+    final static KeyCombination ctrlD = new KeyCodeCombination(D, SHORTCUT_DOWN);
+    final static KeyCombination ctrlZ = new KeyCodeCombination(Z, SHORTCUT_DOWN);
+    final static KeyCombination ctrlShiftZ = new KeyCodeCombination(Z, SHORTCUT_DOWN, SHIFT_DOWN);
+    final static KeyCombination ctrlY = new KeyCodeCombination(Y, SHORTCUT_DOWN);
     private static final HashMap<String, List<Boolean>> ruleBox;
     private static final HashMap<String, Integer> ruleMap;
     static Pattern p = Pattern.compile("^([1-9]\\d*-?([1-9]\\d*)?)?$");
@@ -289,11 +294,11 @@ public class RowPane extends BorderPane {
                 @Override
                 public void handle(KeyEvent key) {
                     int index = rList.indexOf(RowPane.this);
-                    if (ctrlZ.match(key)) {
+                     if (ctrlY.match(key) || ctrlShiftZ.match(key)) {
+                         pv.redo();
+                         key.consume();
+                     } else if (ctrlZ.match(key)) {
                         pv.undo();
-                        key.consume();
-                    } else if (ctrlY.match(key)) {
-                        pv.redo();
                         key.consume();
                     } else if (ctrlD.match(key)) {
                         pv.deleteRow(index + 1);
@@ -306,7 +311,7 @@ public class RowPane extends BorderPane {
                     } else if (shiftEnter.match(key)) {
                         pv.addRowAfterBox(index + 1);
                         focus(pv, rList, index + 1);
-                    } else if (key.getCode() == KeyCode.ENTER) {
+                    } else if (key.getCode() == ENTER) {
                         pv.insertNewRow(index + 1, BoxReference.AFTER);
                         focus(pv, rList, index + 1);
                     } else if (key.getCode() == KeyCode.DOWN) {
