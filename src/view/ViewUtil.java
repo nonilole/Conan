@@ -7,12 +7,15 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 
+import java.util.prefs.Preferences;
+
 import static javafx.scene.input.KeyCode.*;
 import static javafx.scene.input.KeyCombination.SHORTCUT_DOWN;
 
 public class ViewUtil {
     final static KeyCombination ctrlZ = new KeyCodeCombination(Z, SHORTCUT_DOWN);
     final static KeyCombination ctrlY = new KeyCodeCombination(Y, SHORTCUT_DOWN);
+    static Preferences prefs = Preferences.userRoot().node("General");
 
     public static void addFocusListener(TextField tf, ProofView pv) {
         tf.focusedProperty().addListener((observable, oldValue, newValue) -> {
@@ -21,9 +24,12 @@ public class ViewUtil {
         });
     }
     public static void applyStyleIf(TextField expression, boolean bool, String style) {
-        expression.getStyleClass().removeIf((s) -> s.equals(style));
-        if (bool) {
-            expression.getStyleClass().add(style);
+        if(prefs.getBoolean("Verify",true)) {
+
+            expression.getStyleClass().removeIf((s) -> s.equals(style));
+            if (bool) {
+                expression.getStyleClass().add(style);
+            }
         }
     }
     public static String checkShortcut(String newValue) {

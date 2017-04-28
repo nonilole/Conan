@@ -154,6 +154,8 @@ public class MainController implements Initializable {
 
     @FXML
     void verificationToggle(ActionEvent event) {
+            Preferences prefs = Preferences.userRoot().node("General");
+            prefs.putBoolean("Verify",true);
             List<Tab>tabs=tabPane.getTabs();
             for(Tab tab:tabs){
                 ViewTab vt=(ViewTab)tab;
@@ -165,7 +167,6 @@ public class MainController implements Initializable {
 
                 if(pv instanceof ProofView){
                     Proof p = pv.getProof();
-
 //                    PremisesAndConclusion pc=pv.getPremisesAndConclusion();
                     List<RowPane> proofViewList=pv.getRowList();
 
@@ -173,10 +174,14 @@ public class MainController implements Initializable {
 
                     //Updates every row when the box is checked
                     if (this.verification.selectedProperty().getValue()) {
-                        pv.setVerificationSettings(true);
+                        System.out.println("Prefs:"+prefs.getBoolean("Verify",true));
+                        prefs.putBoolean("Verify",true);
+      //                  pv.setVerificationSettings(true);
                         p.verifyProof(0);
                     }else {
-                        pv.setVerificationSettings(false);
+                        System.out.println("Prefs: "+prefs.getBoolean("Verify",true));
+                        prefs.putBoolean("Verify",false);
+     //                   pv.setVerificationSettings(false);
                         for(RowPane r:proofViewList) {
                        //        r.getExpression().getStyleClass().remove("bad");
                             r.getExpression().getStyleClass().remove("conclusionReached");
@@ -187,7 +192,6 @@ public class MainController implements Initializable {
                     }
                 }
             }
-
 
     }
 
