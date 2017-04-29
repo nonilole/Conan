@@ -1,5 +1,6 @@
 package view;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -14,6 +15,7 @@ import model.Proof;
 import model.ProofListener;
 import view.Command.*;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,8 +36,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
     private int curCommand = -1;
     private VBox lineNo;
     private VBox rows;
-    private ViewTab tab;
     private Proof proof;
+    private ViewTab tab;
     private String path;
     private String name;
     private boolean scroll = false;
@@ -102,13 +104,16 @@ public class ProofView extends Symbolic implements ProofListener, View {
         anchorPane.setBottomAnchor(sp, 0.0);
         this.tab = new ViewTab("Proof", this);
         this.tab.setContent(anchorPane);
-        tabPane.getTabs().add(this.tab);
-        tabPane.getSelectionModel().select(this.tab);
         if (proof.isLoaded == false) {
             newRow();
             --curCommand;
             commandList.clear();
         }
+        tabPane.getTabs().add(this.tab);
+        tabPane.getSelectionModel().select(this.tab);
+    }
+    public void focusFirst() {
+        rList.get(0).getExpression().requestFocus();
     }
 
     public ProofView(TabPane tabPane, Proof proof) {
@@ -141,7 +146,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
         proofPane.setRightAnchor(sp, 0.0);
         proofPane.setLeftAnchor(sp, 0.0);
         proofPane.setBottomAnchor(sp, 0.0);
-
         return proofPane;
     }
 
@@ -516,18 +520,13 @@ public class ProofView extends Symbolic implements ProofListener, View {
             return;
         if (lastFocusedTf.getId().equals("rightTextField")) {
             int tmpCaretPosition = caretPosition;
-            //String[] parts = event.toString().split("'");
             lastFocusedTf.setText(text);
             lastFocusedTf.requestFocus();
             lastFocusedTf.positionCaret(tmpCaretPosition + 1);
         } else if (lastFocusedTf.getId().equals("expression")) {
             TextField tmpLastFocusedTf = lastFocusedTf;
             RowPane rp = (RowPane) lastFocusedTf.getParent(); // Valid assumption
-            //BorderPane borderpane = (BorderPane) lastFocusedTf.getParent();
-//            rulepane = (RulePane) borderpane.getRight();
-//            TextField tf = (TextField) rulepane.getChildren().get(0);
             int tmpCaretPosition = caretPosition;
-            //String[] parts = event.toString().split("'");
             rp.getRule().setText(text);
             tmpLastFocusedTf.requestFocus();
             tmpLastFocusedTf.positionCaret(tmpCaretPosition);

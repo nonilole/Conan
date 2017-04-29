@@ -9,8 +9,6 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import model.Proof;
@@ -63,13 +61,7 @@ public class WelcomeView extends Symbolic implements View {
                 premises.setText(checkShortcut(newValue));
             }
         });
-        premises.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent ke) {
-                if (ke.getCode() == KeyCode.ENTER) {
-                    conpremfinished();
-                }
-            }
-        });
+        premises.setOnAction(ke->conclusion.requestFocus());
         this.conclusion.setId("expression");
         this.conclusion.setPromptText("Conclusion");
         this.premises.focusedProperty().addListener((observable, oldValue, newValue) -> {
@@ -86,13 +78,7 @@ public class WelcomeView extends Symbolic implements View {
                 conclusion.setText(checkShortcut(newValue));
             }
         });
-        conclusion.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent ke) {
-                if (ke.getCode() == KeyCode.ENTER) {
-                    conpremfinished();
-                }
-            }
-        });
+        conclusion.setOnAction(key -> conpremfinished());
 
         Hyperlink help = new Hyperlink("Tell me more about the interface");
         help.getStyleClass().add("infoText");
@@ -144,6 +130,8 @@ public class WelcomeView extends Symbolic implements View {
         TabPane tabPane1 = tab.getTabPane();
         if (!this.notAgain.isIndeterminate() && this.notAgain.selectedProperty().getValue()) {
             prefs.putBoolean("showWelcome", false); // Om knappen är checked, visa inte välkomsttabben.
+        } else {
+            prefs.putBoolean("showWelcome", true);
         }
         tabPane1.getTabs().remove(tab);
         String premisesStr = premises.getText();
@@ -186,6 +174,11 @@ public class WelcomeView extends Symbolic implements View {
     @Override
     public ViewTab getTab() {
         return this.tab;
+    }
+
+    @Override
+    public void focusFirst() {
+        premises.requestFocus();
     }
 
     /**

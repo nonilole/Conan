@@ -46,4 +46,9 @@ public class InferenceRuleView implements View {
     public ViewTab getTab() {
         return tab;
     }
+
+    @Override
+    public void focusFirst() {
+
+    }
 }

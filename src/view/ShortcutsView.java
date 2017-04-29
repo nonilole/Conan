@@ -65,5 +65,10 @@ public class ShortcutsView implements View {
     public ViewTab getTab() {
         return tab;
     }
+
+    @Override
+    public void focusFirst() {
+
+    }
 }
 

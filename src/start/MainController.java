@@ -1,5 +1,7 @@
 package start;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -190,12 +192,15 @@ public class MainController implements Initializable {
         Scene scene = tabPane.getScene();
         scene.getStylesheets().clear();
         MenuItem caller = (MenuItem) event.getSource();
+        Preferences prefs = Preferences.userRoot().node("General");
         switch (caller.getText()) {
-            case "Dark theme":
-                scene.getStylesheets().add("gruvjan.css");
-                break;
             case "Light theme":
                 scene.getStylesheets().add("minimalistStyle.css");
+                prefs.putInt("theme", 0);
+                break;
+            case "Dark theme":
+                scene.getStylesheets().add("gruvjan.css");
+                prefs.putInt("theme", 1);
                 break;
         }
     }
@@ -216,7 +221,7 @@ public class MainController implements Initializable {
 
     @FXML
     void newProof(ActionEvent event) {
-        ProofView  pv = new ProofView(tabPane, new Proof());
+        ProofView pv = new ProofView(tabPane, new Proof());
     }
 
     private ProofView convertProofView(View view) {
@@ -273,11 +278,6 @@ public class MainController implements Initializable {
         if (pv == null)
             return;
         pv.redo();
-    }
-
-    @FXML
-    void newProofButton(ActionEvent event) { // Remove this later
-        new WelcomeView(tabPane);
     }
 
     @FXML
@@ -431,7 +431,7 @@ public class MainController implements Initializable {
     void showUserInstructions(ActionEvent event) {
         new InstructionsView(tabPane);
     }
-    
+
     @FXML
     void showShortcuts(ActionEvent event) {
         new ShortcutsView(tabPane);
@@ -444,10 +444,10 @@ public class MainController implements Initializable {
         newProofButton.setTooltip(new Tooltip("New Proof (CTRL+N)"));
         undoButton.setTooltip(new Tooltip("Undo (CTRL+Z)"));
         redoButton.setTooltip(new Tooltip("Redo (CTRL+Y/CTRL+SHIFT+Z)"));
-        openBoxButton.setTooltip(new Tooltip("Open Box Button (CTRL+B)"));
-        newRowButton.setTooltip(new Tooltip("New Row (Shift+Enter)"));
-        verification.setTooltip(new Tooltip("Verify"));
-        generation.setTooltip(new Tooltip("Generate"));
+        openBoxButton.setTooltip(new Tooltip("Open Box (CTRL+B)"));
+        newRowButton.setTooltip(new Tooltip("Add row after box (Shift+Enter)"));
+        verification.setTooltip(new Tooltip("Turn on/off verification"));
+        generation.setTooltip(new Tooltip("Turn on/off automatic rule application"));
 
         //Inference Rules
         andIntroButton.setTooltip(new Tooltip("And-Introduction"));
@@ -504,12 +504,29 @@ public class MainController implements Initializable {
         tabPane.getSelectionModel().selectedItemProperty().addListener((ov, oldTab, newTab) -> {
             if (newTab instanceof ViewTab) {
                 currentTab = (ViewTab) newTab;
+                if (newTab != null) {
+                    new Thread(new Task<Void>() {
+                        @Override
+                        public Void call() throws Exception {
+                            Thread.sleep(100); // Only reliable way is to wait for all nodes to be created
+                            return null;
+                        }
+
+                        @Override
+                        public void succeeded() {
+                            currentTab.getView().focusFirst();
+                        }
+
+                    }).start();
+                }
             } else {
                 currentTab = null;
             }
         });
         if (prefs.getBoolean("showWelcome", true)) { // Om showWelcome-paret ej existerar, returnera true
-            new WelcomeView(tabPane);
+            showWelcome(null);
+        } else {
+            newProof(null);
         }
         createTooltip();
     }

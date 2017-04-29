@@ -28,7 +28,7 @@ public class Predicate extends Formula{
     	List<Term> newArgs = new ArrayList<Term>();
     	for(Term t : args){
     		//newArgs.add(t.replace(newId, oldId));
-    		Term term = t.equals(oldTerm) ? newTerm : oldTerm;
+    		Term term = t.equals(oldTerm) ? newTerm : t;
     		newArgs.add(term);
     	}
     	return new Predicate(id, newArgs);
