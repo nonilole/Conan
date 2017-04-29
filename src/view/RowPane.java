@@ -314,7 +314,7 @@ public class RowPane extends BorderPane {
                     } else if (key.getCode() == ENTER) {
                         pv.insertNewRow(index + 1, BoxReference.AFTER);
                         focus(pv, rList, index + 1);
-                    } else if (key.getCode() == KeyCode.DOWN) {
+                    }  else if (key.getCode() == KeyCode.DOWN) {
                         if (index + 1 >= rList.size())
                             pv.addRowAfterBox(index + 1);
                         focus(pv, rList, index + 1);
