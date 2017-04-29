@@ -3,6 +3,7 @@ package model.rules;
 import model.Box;
 import model.formulas.Equality;
 import model.formulas.Formula;
+import model.formulas.LogicObject;
 
 import java.util.ArrayList;
 
@@ -50,7 +51,7 @@ public class EqualityElim extends Rule {
         Equality eq = (Equality) data.getRow(rowRef1).getFormula();
         Formula ref = data.getRow(rowRef2).getFormula();
         Formula toVerify = data.getRow(rowIndex).getFormula();
-        return Formula.almostEqual(ref, toVerify, eq, new ArrayList<String>());
+        return Formula.almostEqual(ref, toVerify, eq, new ArrayList<LogicObject>());
     }
 
     @Override

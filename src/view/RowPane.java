@@ -300,20 +300,10 @@ public class RowPane extends BorderPane {
                      } else if (ctrlZ.match(key)) {
                         pv.undo();
                         key.consume();
-                    } else if (ctrlD.match(key)) {
-                        pv.deleteRow(index + 1);
-                    } else if (ctrlB.match(key)) {
-                        pv.insertNewBox(index + 1);
                     } else if (ctrlLeft.match(key)) {
                         focusLeft();
                     } else if (ctrlRight.match(key)) {
                         focusRight();
-                    } else if (shiftEnter.match(key)) {
-                        pv.addRowAfterBox(index + 1);
-                        focus(pv, rList, index + 1);
-                    } else if (key.getCode() == ENTER) {
-                        pv.insertNewRow(index + 1, BoxReference.AFTER);
-                        focus(pv, rList, index + 1);
                     } else if (key.getCode() == KeyCode.DOWN) {
                         if (index + 1 >= rList.size())
                             pv.addRowAfterBox(index + 1);
