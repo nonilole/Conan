@@ -59,6 +59,9 @@ public class MainController implements Initializable {
 
     @FXML
     private Button newRowButton;
+
+    @FXML
+    private Button deleteRowButton;
     //Inference Rules Buttons
     @FXML
     private Button andIntroButton;
@@ -445,7 +448,8 @@ public class MainController implements Initializable {
         undoButton.setTooltip(new Tooltip("Undo (CTRL+Z)"));
         redoButton.setTooltip(new Tooltip("Redo (CTRL+Y/CTRL+SHIFT+Z)"));
         openBoxButton.setTooltip(new Tooltip("Open Box (CTRL+B)"));
-        newRowButton.setTooltip(new Tooltip("Add row after box (Shift+Enter)"));
+        newRowButton.setTooltip(new Tooltip("Add row after current row (Shift+Enter)"));
+        deleteRowButton.setTooltip(new Tooltip("Delete current row (CTRL+D)"));
         verification.setTooltip(new Tooltip("Turn on/off verification"));
         generation.setTooltip(new Tooltip("Turn on/off automatic rule application"));
 

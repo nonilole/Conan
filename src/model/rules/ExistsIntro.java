@@ -2,7 +2,9 @@ package model.rules;
 
 import model.Box;
 import model.formulas.Formula;
+import model.formulas.Predicate;
 import model.formulas.QuantifiedFormula;
+import model.formulas.Term;
 
 public class ExistsIntro extends Rule {
     private Integer rowRef;
@@ -44,8 +46,7 @@ public class ExistsIntro extends Rule {
 
     @Override
     public Formula generateRow(Box data) {
-        Formula ref = data.getRow(this.rowRef).getFormula();
-        return new QuantifiedFormula(ref, "x", '∃'); // Maybe not x?
+        return null;
     }
 
     @Override

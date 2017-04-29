@@ -76,28 +76,7 @@ public class ExistsElim extends Rule {
     public String toString() {
         return String.format("∃e, %s, %s", rowRef == null ? "" : new Integer(rowRef+1), intervalRef);
     }
-    
-	@Override
-	public Formula generateFormula(Box data, int rowIndex) {
-		if( data.isInScopeOf(rowRef, rowIndex) == false )      return null;
-		if( data.isInScopeOf(intervalRef, rowIndex) == false ) return null;
-		ProofRow referencedRow = data.getRow(rowRef);
-		Formula referencedRowFormula = referencedRow.getFormula();
-		if( referencedRowFormula instanceof QuantifiedFormula ){
-			QuantifiedFormula quant = (QuantifiedFormula )referencedRowFormula;
-			if(quant.type != '∃') return null;
-		}
-		else return null;
-		QuantifiedFormula refdQuant = (QuantifiedFormula) referencedRowFormula;
-		Box refBox = data.getBox(intervalRef);
-		if(refBox.size() < 3) return null;//needs at least fresh var, instantiation of quantifiedFormula and conclusion not containing fresh var
-		if(refBox.getRow(0).getRule() instanceof FreshVar == false) return null;
-		String freshVar = ((FreshVarFormula)refBox.getRow(0).getFormula()).var;
-		if( refBox.getRow(1).getFormula().equals(refdQuant.instantiate(freshVar)) == false) return null;
-		if(refBox.getRow(refBox.size()-1).getFormula().containsObjectId(freshVar)) return null;
-		return refBox.getRow(refBox.size()-1).getFormula();
-	}
-	
+
 	@Override
 	public String[] getReferenceStrings() {
 		String ref1 = rowRef == null ? "" : (rowRef+1)+"";
