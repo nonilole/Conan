@@ -474,19 +474,21 @@ public class MainController implements Initializable {
         tabPane.getSelectionModel().selectedItemProperty().addListener((ov, oldTab, newTab) -> {
             if (newTab instanceof ViewTab) {
                 currentTab = (ViewTab) newTab;
-                new Thread( new Task<Void>()
-                {
-                    @Override
-                    public Void call() throws Exception {
-                        Thread.sleep(100); // Only reliable way is to wait for all nodes to be created
-                        return null;
-                    }
-                    @Override
-                    public void succeeded() {
-                        currentTab.getView().focusFirst();
-                    }
+                if (newTab != null) {
+                    new Thread(new Task<Void>() {
+                        @Override
+                        public Void call() throws Exception {
+                            Thread.sleep(100); // Only reliable way is to wait for all nodes to be created
+                            return null;
+                        }
 
-                }).start();
+                        @Override
+                        public void succeeded() {
+                            currentTab.getView().focusFirst();
+                        }
+
+                    }).start();
+                }
             } else {
                 currentTab = null;
             }
