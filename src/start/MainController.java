@@ -155,19 +155,16 @@ public class MainController implements Initializable {
     @FXML
     void verificationToggle(ActionEvent event) {
             Preferences prefs = Preferences.userRoot().node("General");
-            prefs.putBoolean("Verify",true);
+            prefs.putBoolean("Verify",true); //verify set to true by default
             List<Tab>tabs=tabPane.getTabs();
 
             for(Tab tab:tabs){
-
                 ViewTab vt=(ViewTab) tab;
-
                 ProofView pv=convertProofView(vt.getView());
 
                 //Gets the proof from every Proofview tab
                 if(pv!=null&&pv.getProof()!=null){
                     Proof p = pv.getProof();
-
                     List<RowPane> proofViewList=pv.getRowList();
 
                     //Updates every row when the box is checked/unchecked
