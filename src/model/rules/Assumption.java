@@ -32,7 +32,9 @@ public class Assumption extends Rule {
         Box parent = rowToVerify.getParent();
         if (parent.isTopLevelBox())
             return false;
-        return parent.getRow(0).equals(rowToVerify);
+        return parent.getRow(0).equals(rowToVerify) ||
+        		parent.getRow(0).getRule() instanceof FreshVar && 
+        		parent.getRow(1).equals(rowToVerify);
     }
 
     @Override
