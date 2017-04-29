@@ -300,10 +300,6 @@ public class RowPane extends BorderPane {
                      } else if (ctrlZ.match(key)) {
                         pv.undo();
                         key.consume();
-                    } else if (ctrlD.match(key)) {
-                        pv.deleteRow(index + 1);
-                    } else if (ctrlB.match(key)) {
-                        pv.insertNewBox(index + 1);
                     } else if (ctrlLeft.match(key)) {
                         focusLeft();
                     } else if (ctrlRight.match(key)) {
