@@ -162,12 +162,15 @@ public class MainController implements Initializable {
         Scene scene = tabPane.getScene();
         scene.getStylesheets().clear();
         MenuItem caller = (MenuItem) event.getSource();
+        Preferences prefs = Preferences.userRoot().node("General");
         switch (caller.getText()) {
-            case "Dark theme":
-                scene.getStylesheets().add("gruvjan.css");
-                break;
             case "Light theme":
                 scene.getStylesheets().add("minimalistStyle.css");
+                prefs.putInt("theme", 0);
+                break;
+            case "Dark theme":
+                scene.getStylesheets().add("gruvjan.css");
+                prefs.putInt("theme", 1);
                 break;
         }
     }
@@ -469,7 +472,6 @@ public class MainController implements Initializable {
             generationToggle(new ActionEvent());
         }
         tabPane.getSelectionModel().selectedItemProperty().addListener((ov, oldTab, newTab) -> {
-            System.out.println(newTab);
             if (newTab instanceof ViewTab) {
                 currentTab = (ViewTab) newTab;
                 new Thread( new Task<Void>()

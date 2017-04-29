@@ -130,6 +130,8 @@ public class WelcomeView extends Symbolic implements View {
         TabPane tabPane1 = tab.getTabPane();
         if (!this.notAgain.isIndeterminate() && this.notAgain.selectedProperty().getValue()) {
             prefs.putBoolean("showWelcome", false); // Om knappen är checked, visa inte välkomsttabben.
+        } else {
+            prefs.putBoolean("showWelcome", true);
         }
         tabPane1.getTabs().remove(tab);
         String premisesStr = premises.getText();
