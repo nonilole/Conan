@@ -1,5 +1,7 @@
 package start;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -186,7 +188,7 @@ public class MainController implements Initializable {
 
     @FXML
     void newProof(ActionEvent event) {
-        ProofView  pv = new ProofView(tabPane, new Proof());
+        ProofView pv = new ProofView(tabPane, new Proof());
     }
 
     private ProofView convertProofView(View view) {
@@ -243,11 +245,6 @@ public class MainController implements Initializable {
         if (pv == null)
             return;
         pv.redo();
-    }
-
-    @FXML
-    void newProofButton(ActionEvent event) { // Remove this later
-        new WelcomeView(tabPane);
     }
 
     @FXML
@@ -401,7 +398,7 @@ public class MainController implements Initializable {
     void showUserInstructions(ActionEvent event) {
         new InstructionsView(tabPane);
     }
-    
+
     @FXML
     void showShortcuts(ActionEvent event) {
         new ShortcutsView(tabPane);
@@ -472,14 +469,30 @@ public class MainController implements Initializable {
             generationToggle(new ActionEvent());
         }
         tabPane.getSelectionModel().selectedItemProperty().addListener((ov, oldTab, newTab) -> {
+            System.out.println(newTab);
             if (newTab instanceof ViewTab) {
                 currentTab = (ViewTab) newTab;
+                new Thread( new Task<Void>()
+                {
+                    @Override
+                    public Void call() throws Exception {
+                        Thread.sleep(100); // Only reliable way is to wait for all nodes to be created
+                        return null;
+                    }
+                    @Override
+                    public void succeeded() {
+                        currentTab.getView().focusFirst();
+                    }
+
+                }).start();
             } else {
                 currentTab = null;
             }
         });
         if (prefs.getBoolean("showWelcome", true)) { // Om showWelcome-paret ej existerar, returnera true
-            new WelcomeView(tabPane);
+            showWelcome(null);
+        } else {
+            newProof(null);
         }
         createTooltip();
     }

@@ -9,8 +9,6 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import model.Proof;
@@ -174,6 +172,11 @@ public class WelcomeView extends Symbolic implements View {
     @Override
     public ViewTab getTab() {
         return this.tab;
+    }
+
+    @Override
+    public void focusFirst() {
+        premises.requestFocus();
     }
 
     /**
