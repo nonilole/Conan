@@ -160,8 +160,13 @@ public class MainController implements Initializable {
     @FXML
     void verificationToggle(ActionEvent event) {
             Preferences prefs = Preferences.userRoot().node("General");
-            prefs.putBoolean("Verify",true); //verify set to true by default
             List<Tab>tabs=tabPane.getTabs();
+
+            if (this.verification.selectedProperty().getValue()) {
+                prefs.putBoolean("Verify", true);
+            }else{
+                prefs.putBoolean("Verify", false);
+            }
 
             for(Tab tab:tabs){
                 ViewTab vt=(ViewTab) tab;
@@ -172,13 +177,11 @@ public class MainController implements Initializable {
                     Proof p = pv.getProof();
                     List<RowPane> proofViewList=pv.getRowList();
 
-                    //Updates every row when the box is checked/unchecked
+                    //Updates every row in a proof when the box is checked/unchecked
                     if (this.verification.selectedProperty().getValue()){
-                        prefs.putBoolean("Verify",true);
                         p.verifyProof(0);
                     }
                     else{
-                        prefs.putBoolean("Verify",false);
                         for(RowPane r:proofViewList) {
                             r.getExpression().getStyleClass().remove("conclusionReached");
                             r.getRule().getStyleClass().remove("unVerified");
@@ -501,6 +504,12 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Preferences prefs = Preferences.userRoot().node("General"); // Inställningar i noden "General"
+
+        if (prefs.getBoolean("Verify", true)) {
+            verification.setSelected(true);
+        }else{
+            verification.setSelected(false);
+        }
         if (prefs.getBoolean("generate", true)) {
             generation.setSelected(true);
             generationToggle(new ActionEvent());
