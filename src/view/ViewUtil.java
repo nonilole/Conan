@@ -24,7 +24,7 @@ public class ViewUtil {
         });
     }
     public static void applyStyleIf(TextField expression, boolean bool, String style) {
-        if(prefs.getBoolean("Verify",true)) {
+        if(prefs.getBoolean("verify",true)) {
 
             expression.getStyleClass().removeIf((s) -> s.equals(style));
             if (bool) {

@@ -163,9 +163,9 @@ public class MainController implements Initializable {
             List<Tab>tabs=tabPane.getTabs();
 
             if (this.verification.selectedProperty().getValue()) {
-                prefs.putBoolean("Verify", true);
+                prefs.putBoolean("verify", true);
             }else{
-                prefs.putBoolean("Verify", false);
+                prefs.putBoolean("verify", false);
             }
 
             for(Tab tab:tabs){
@@ -505,7 +505,7 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         Preferences prefs = Preferences.userRoot().node("General"); // Inställningar i noden "General"
 
-        if (prefs.getBoolean("Verify", true)) {
+        if (prefs.getBoolean("verify", true)) {
             verification.setSelected(true);
         }else{
             verification.setSelected(false);
