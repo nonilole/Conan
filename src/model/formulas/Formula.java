@@ -31,37 +31,39 @@ public abstract class Formula implements Serializable{
 	}
 	
 	//check that two formulas are equal except for substitutions permitted by the eq argmunet
-	public static boolean almostEqual(Formula f1, Formula f2, Equality eq, List<String> boundObjectIds){
+	public static boolean almostEqual(Formula f1, Formula f2, Equality eq, List<LogicObject> boundObjects){
 		if(f1.getClass() != f2.getClass()) {
 			//System.err.println(formula1.getClass()+" != "+formula2.getClass());
 			return false;
 		}
 		else if(f1 instanceof Conjunction){
-			return almostEqual(((Conjunction)f1).lhs,((Conjunction)f2).lhs, eq, boundObjectIds) 
-				&& almostEqual(((Conjunction)f1).rhs,((Conjunction)f2).rhs, eq, boundObjectIds) ;
+			return almostEqual(((Conjunction)f1).lhs,((Conjunction)f2).lhs, eq, boundObjects) 
+				&& almostEqual(((Conjunction)f1).rhs,((Conjunction)f2).rhs, eq, boundObjects) ;
 		}
 		else if(f1 instanceof Disjunction){
-			return almostEqual(((Disjunction)f1).lhs,((Disjunction)f2).lhs, eq, boundObjectIds) 
-				&& almostEqual(((Disjunction)f1).rhs,((Disjunction)f2).rhs, eq, boundObjectIds) ;
+			return almostEqual(((Disjunction)f1).lhs,((Disjunction)f2).lhs, eq, boundObjects) 
+				&& almostEqual(((Disjunction)f1).rhs,((Disjunction)f2).rhs, eq, boundObjects) ;
 		}
 		else if(f1 instanceof Implication){
-			return almostEqual(((Implication)f1).lhs, ((Implication)f2).lhs, eq, boundObjectIds) 
-				&& almostEqual(((Implication)f1).rhs, ((Implication)f2).rhs, eq, boundObjectIds) ;
+			return almostEqual(((Implication)f1).lhs, ((Implication)f2).lhs, eq, boundObjects) 
+				&& almostEqual(((Implication)f1).rhs, ((Implication)f2).rhs, eq, boundObjects) ;
 		}
 		else if(f1 instanceof Equality){
 			Equality eql = (Equality)f1;
 			Equality eqr = (Equality)f2;
-			boolean lhs = Term.equalOrSub(eql.lhs, eqr.lhs, eq, boundObjectIds);
-			boolean rhs = Term.equalOrSub(eql.rhs, eqr.rhs, eq, boundObjectIds);
+			boolean lhs = Term.equalOrSub(eql.lhs, eqr.lhs, eq, boundObjects);
+			boolean rhs = Term.equalOrSub(eql.rhs, eqr.rhs, eq, boundObjects);
 			return lhs && rhs;
 		}
 		else if(f1 instanceof Negation){
-			return almostEqual( ((Negation)f1).formula, ((Negation)f2).formula, eq, boundObjectIds);
+			return almostEqual( ((Negation)f1).formula, ((Negation)f2).formula, eq, boundObjects);
 		}
 		else if(f1 instanceof QuantifiedFormula){
-			ArrayList<String> newBoundObjectIds = new ArrayList<String>(boundObjectIds);
-			newBoundObjectIds.add( ((QuantifiedFormula)f1).var );
-			return almostEqual( ((QuantifiedFormula)f1).formula, ((QuantifiedFormula)f2).formula, eq, newBoundObjectIds);
+			QuantifiedFormula quant1 = (QuantifiedFormula) f1;
+			QuantifiedFormula quant2 = (QuantifiedFormula) f2;
+			ArrayList<LogicObject> newBoundObjectIds = new ArrayList<LogicObject>(boundObjects);
+			newBoundObjectIds.add( new LogicObject(quant1.var) );
+			return almostEqual( quant1.formula, quant2.formula, eq, newBoundObjectIds);
 		}
 		else if(f1 instanceof Predicate){
 			Predicate p1 = (Predicate) f1;
@@ -71,7 +73,7 @@ public abstract class Formula implements Serializable{
 			
 			if(p1args.size() != p2args.size() ) return false;
 			for(int i = 0; i < p1args.size(); i++){
-				boolean logEq = Term.equalOrSub(p1args.get(i), p2args.get(i), eq, boundObjectIds);
+				boolean logEq = Term.equalOrSub(p1args.get(i), p2args.get(i), eq, boundObjects);
 				if( !logEq ) return false;
 			}
 			return true;

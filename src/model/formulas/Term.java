@@ -11,38 +11,17 @@ public interface Term extends Serializable{
 	public boolean containsObjectId(String id);
 	
 	//return true if...rename?
-	public static boolean equalOrSub(Term t1, Term t2, Equality eq, List<String> boundObjectIds){
+	public static boolean equalOrSub(Term t1, Term t2, Equality eq, List<LogicObject> boundObjects){
 		
-		if(t1.getClass() != t2.getClass()) return false;
+		//if(t1.getClass() != t2.getClass()) return false;
+		if(t1.equals(t2)) return true;
 		
-		else if(t1 instanceof LogicObject ){
-			LogicObject o1 = (LogicObject) t1;
-			LogicObject o2 = (LogicObject) t2;
+		if( t1.equals(eq.lhs) && t2.equals(eq.rhs)){
 			
-			if(o1.equals(o2)) return true;
-			
-			else if(o1.equals( eq.lhs ) && 
-					o2.equals( eq.rhs ) &&
-					!boundObjectIds.contains(o1.id) &&
-					!boundObjectIds.contains(o2.id) )
-				return true;
-			
-			return false;
-			
-		}
-		else if(t1 instanceof Function){
-			Function f1 = (Function) t1;
-			Function f2 = (Function) t2;
-			List<Term> argsf1 = f1.getArgs();
-			List<Term> argsf2 = f2.getArgs();
-			
-			
-			if(argsf1.size() != argsf2.size() ) return false;
-			for(int i = 0; i < argsf1.size(); i++){
-				if( equalOrSub(argsf1.get(i), argsf2.get(i), eq, boundObjectIds) == false) return false;
-			}
+			if(boundObjects.contains(t1) || boundObjects.contains(t2)) return false;
 			return true;
 		}
+		
 		return false;
 	}
 	
