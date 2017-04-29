@@ -63,13 +63,7 @@ public class WelcomeView extends Symbolic implements View {
                 premises.setText(checkShortcut(newValue));
             }
         });
-        premises.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent ke) {
-                if (ke.getCode() == KeyCode.ENTER) {
-                    conpremfinished();
-                }
-            }
-        });
+        premises.setOnAction(ke->conclusion.requestFocus());
         this.conclusion.setId("expression");
         this.conclusion.setPromptText("Conclusion");
         this.premises.focusedProperty().addListener((observable, oldValue, newValue) -> {
@@ -86,13 +80,7 @@ public class WelcomeView extends Symbolic implements View {
                 conclusion.setText(checkShortcut(newValue));
             }
         });
-        conclusion.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent ke) {
-                if (ke.getCode() == KeyCode.ENTER) {
-                    conpremfinished();
-                }
-            }
-        });
+        conclusion.setOnAction(key -> conpremfinished());
 
         Hyperlink help = new Hyperlink("Tell me more about the interface");
         help.getStyleClass().add("infoText");
