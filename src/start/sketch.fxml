@@ -47,7 +47,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#insertAboveMenu" text="Insert row above" />
                   <MenuItem accelerator="Enter" mnemonicParsing="false" onAction="#insertBelowMenu" text="Insert row here" />
                   <MenuItem accelerator="Shift+Enter" mnemonicParsing="false" onAction="#insertBelowAfterMenu" text="Insert row below box" />
-                  <MenuItem accelerator="Shorcut+B" mnemonicParsing="false" onAction="#openBox" text="Insert box" />
+                  <MenuItem accelerator="Shortcut+B" mnemonicParsing="false" onAction="#openBox" text="Insert box" />
                   <MenuItem accelerator="Shortcut+D" mnemonicParsing="false" onAction="#deleteRowMenu" text="Delete row/box" />
           </items>
         </Menu>
