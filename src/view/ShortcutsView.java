@@ -16,18 +16,17 @@ public class ShortcutsView implements View {
     private ViewTab tab;
 
     /**
-     * Adds the content for showing the inference rules to the TabPane in the proof
+     * Adds the content for showing the shortcuts to the TabPane in the proof
      * @param tabPane
      *
      */
     public ShortcutsView(TabPane tabPane) {
 
-
     	Label label = new Label(loadInstructions());
     	label.getStyleClass().add("infoText");
 
         //putting the image on a scrollpane
-        ScrollPane sp=new ScrollPane();
+        ScrollPane sp = new ScrollPane();
         sp.getStyleClass().add("rulesView");
         tab = new ViewTab("Shortcuts",this);
         sp.setContent(label);
@@ -49,7 +48,7 @@ public class ShortcutsView implements View {
     private String loadInstructions() {
     	StringBuilder filedata = new StringBuilder();
     	try{
-	        Scanner scr = new Scanner(new File("resources/userInstructions.txt"));
+	        Scanner scr = new Scanner(new File("resources/shortcuts.txt"));
 	        while(scr.hasNext()){
 	        	filedata.append(scr.nextLine() + System.lineSeparator());
 	        }

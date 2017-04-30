@@ -39,7 +39,7 @@ public class Copy extends Rule{
 
 	@Override
 	public String[] getReferenceStrings() {
-		return new String[]{rowRef+""};
+		return new String[]{(rowRef+1)+""};
 	}
 
 	@Override
