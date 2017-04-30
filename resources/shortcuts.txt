@@ -1,0 +1,35 @@
+﻿
+Below is a list of all shortcuts in the program. 
+
+Edit
+Ctrl+Z 		Undo
+Ctrl+Y 		Redo
+Enter         	New row inside a box/New row
+Shift+Enter   	New row after box/New row
+Ctrl+R        	New row at end of proof
+Down          	New row after box/new row or move down to textfield below
+Up            	Move up to textfield above
+Ctrl+Left     	Move to left textfield
+Ctrl+Right    	Move to right textfield
+Ctrl+D        	Delete row
+Ctrl+B      	Open box on row
+Tab			Move to right textfield or move down
+
+Symbols
+->|im    		Implication
+an|&     		And
+or       		Or
+ne|no|!  		Negation
+fo|fa    		For all
+ex|te|th 		There exists
+bo|co    		Contradiction/Bottom
+
+File/Help
+F1     		Instructions
+Ctrl+N 		New Proof
+Ctrl+W 		Close Tab
+Ctrl+O 		Open proof
+Ctrl+S 		Save proof
+Ctrl+I 		Show inference rules
+Ctrl+Shift+S 	Save as
+Ctrl+Shift+E 	Export to latex file
