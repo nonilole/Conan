@@ -557,31 +557,28 @@ public class ProofView extends Symbolic implements ProofListener, View {
     public void displayLoadedProof() {
         List<RowInfo> proofInfo = proof.getProofInfo();
         
-        /*for(RowInfo _ : proofInfo){
-        	rowAdded();
-        }*/
-        
+        //Add boxes and rows
         for (int i = 1; i <= proofInfo.size(); i++) {
             RowInfo rowInfo = proofInfo.get(i - 1);
-            //System.out.println("i=" + i + " " + rowInfo);
             if (rowInfo.startBox && i != 1) {
                 this.openBoxInView();
             }
             rowAdded();
-            RowPane rowPane = this.rList.get(i - 1);
-
-
+            if (rowInfo.endBox) {
+                this.boxClosed();
+            }
+        }
+        //Add content to rows
+        for (int i = 1; i <= proofInfo.size(); i++) {
+        	RowInfo rowInfo = proofInfo.get(i - 1);
+        	RowPane rowPane = this.rList.get(i - 1);
             rowPane.setExpression(rowInfo.expression);
             rowPane.setRule(rowInfo.rule);
             rowPane.setRulePrompt(0, rowInfo.ref1);
             rowPane.setRulePrompt(1, rowInfo.ref2);
             rowPane.setRulePrompt(2, rowInfo.ref3);
-
-            if (rowInfo.endBox) {
-                this.boxClosed();
-            }
         }
-        proof.verifyProof(0);
+        //proof.verifyProof(0);
     }
 
     /**
