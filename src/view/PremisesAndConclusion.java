@@ -58,8 +58,8 @@ public class PremisesAndConclusion extends HBox {
         this.setHgrow(turnstile, Priority.NEVER);
         this.setHgrow(conclusion, Priority.ALWAYS);
         this.setMinWidth(0.0);
-        this.setPrefWidth(500.0);
-        this.setMaxWidth(500.0);
+        this.setPrefWidth(800.0);
+        this.setMaxWidth(800.0);
         this.setMinHeight(30.0);
         this.setPrefHeight(30.0);
         this.setMaxHeight(30.0);

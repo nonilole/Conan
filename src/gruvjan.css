@@ -5,6 +5,7 @@
 .myText {
   -fx-background-color: linear-gradient(to bottom, derive(-fx-text-box-border, -10%), -fx-text-box-border),
    linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
+  -fx-font-family: Monospace;
   -fx-font-size: 16px;
   -fx-background-insets: 0 4 0 4, 0 4 1 4;
   -fx-background-radius: 0, 0;
@@ -17,6 +18,7 @@
 .infoText {
   -fx-font-size: 16px;
   -fx-line-height: 1.4;
+  -fx-padding: 0 100px 0 100px;
 }
 .myTitle {
   -fx-font-size: 25px;
@@ -35,6 +37,7 @@
   -fx-border-width: 2px;
 }
 .lineNo {
+  -fx-font-family: Monospace;
   -fx-font-size: 16px;
   -fx-text-box-border: transparent;
 }
