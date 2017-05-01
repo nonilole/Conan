@@ -266,6 +266,10 @@ public class Box implements ProofEntry, Serializable{
 		return parent == null;
 	}
 	
+	public int indexOf(ProofRow row){
+		return this.entries.indexOf(row);
+	}
+	
 	public void printBoxes(){
 		List<Interval> foundBoxes = new ArrayList<Interval>();
 		for(int i = 0; i < size(); i++){

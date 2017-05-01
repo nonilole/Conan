@@ -32,7 +32,10 @@ public class ForallIntro extends Rule {
         Box refBox = data.getBox(intervalRef);
         if (refBox.size() < 2) return false;
         if (!(refBox.getRow(0).getRule() instanceof FreshVar)) return false;
-        if (!(refBox.getRow(0).getFormula() instanceof FreshVarFormula)) return false;
+        
+        //check that the second row in box isn't an assumption
+        if(refBox.size() < 2 ) return false;
+        if ((refBox.getRow(1).getRule() instanceof Assumption)) return false;
         return true;
     }
 
