@@ -14,7 +14,7 @@ public class FreshVarFormula extends Formula {
 
 	@Override
 	public boolean containsObjectId(String id) {
-		throw new RuntimeException("This shouldn't be called");
+		return id.equals(var);
 	}
 	
 	@Override
