@@ -52,12 +52,7 @@ public class NegationElim extends Rule {
         }
     }
 
-    @Override
-    public boolean verifyReferences(Box data, int rowIndex) {
-        if (data.isInScopeOf(rowRef1, rowIndex) == false) return false;
-        if (data.isInScopeOf(rowRef2, rowIndex) == false) return false;
-        Formula rowRef1Formula = data.getRow(rowRef1).getFormula();
-        Formula rowRef2Formula = data.getRow(rowRef2).getFormula();
+    private boolean secondArgNegation(Formula rowRef1Formula, Formula rowRef2Formula) {
         if (!(rowRef2Formula instanceof Negation)) {
             return false;
         }
@@ -67,6 +62,16 @@ public class NegationElim extends Rule {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public boolean verifyReferences(Box data, int rowIndex) {
+        if (data.isInScopeOf(rowRef1, rowIndex) == false) return false;
+        if (data.isInScopeOf(rowRef2, rowIndex) == false) return false;
+        Formula rowRef1Formula = data.getRow(rowRef1).getFormula();
+        Formula rowRef2Formula = data.getRow(rowRef2).getFormula();
+        return secondArgNegation(rowRef1Formula, rowRef2Formula) ||
+                secondArgNegation(rowRef2Formula, rowRef1Formula);
     }
 
     @Override
