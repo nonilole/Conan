@@ -527,7 +527,8 @@ public class MainController implements Initializable {
 
                         @Override
                         public void succeeded() {
-                            currentTab.getView().focusFirst();
+                            if (currentTab.getView() != null)
+                                currentTab.getView().focusFirst();
                         }
 
                     }).start();
