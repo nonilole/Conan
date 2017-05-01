@@ -48,9 +48,11 @@ public class ExportLatex {
                 --curDepth;
             }
             output += replaceAllUnicode(info[1]).replaceAll("null","");
+            // Everything before the &, is in a math environment.
             output += "&";
+            // We surround the crucial part in $ in the rule and references.
             output += replaceAllUnicode(info[2]).replaceAll(
-                    "(i|e)_(\\{\\d\\})","\\$\\\\mathrm\\{$1\\}_$2\\$").replaceAll("null", "");
+                    "(\\\\land |\\\\lor |\\\\to |\\\\forall |\\\\exists |\\\\bot |\\\\neg )(i|e)(_\\{(\\d)\\})?","\\$$1\\\\mathrm\\{$2\\}$3\\$").replaceAll("null", "");
             output += "\\\\\n";
 
         }
