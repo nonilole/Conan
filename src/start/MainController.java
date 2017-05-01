@@ -424,7 +424,7 @@ public class MainController implements Initializable {
             if (openedProofView == null) {
                 return;
             }
-            openedProofView.displayLoadedProof();
+            //openedProofView.displayLoadedProof();
         } catch (Exception e) {
             System.out.println("MainController.openProof exception:");
             System.out.println(e);
