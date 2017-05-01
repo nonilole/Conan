@@ -9,6 +9,7 @@ public class ImplicationElim extends Rule {
 
     private Integer rowRef1;
     private Integer rowRef2;
+    private Implication implication;
 
     @Override
     public boolean hasCompleteInfo() {
@@ -36,21 +37,24 @@ public class ImplicationElim extends Rule {
         }
     }
 
+    private boolean verifySecondArgImpl(Formula referencedRow1, Formula referencedRow2) {
+        if (referencedRow2 instanceof Implication == false) return false;
+        Implication implRef = (Implication) referencedRow2;
+        if (implRef.lhs.equals(referencedRow1) == false)
+            return false;
+        implication = implRef;
+        return true;
+    }
+
     @Override
     public boolean verifyReferences(Box data, int rowIndex) {
+        implication = null;
         if (data.isInScopeOf(rowRef1, rowIndex) == false) return false;
         if (data.isInScopeOf(rowRef2, rowIndex) == false) return false;
 
         Formula referencedRow1 = data.getRow(rowRef1).getFormula();
         Formula referencedRow2 = data.getRow(rowRef2).getFormula();
-
-        //make sure second reference is to an Implication formula and cast it
-        if (referencedRow2 instanceof Implication == false) return false;
-        Implication implRef = (Implication) referencedRow2;
-
-        //check that the content of referenced rows and row to be verified are in line with the rule
-        if (implRef.lhs.equals(referencedRow1) == false) return false;
-        return true;
+        return verifySecondArgImpl(referencedRow1, referencedRow2) || verifySecondArgImpl(referencedRow2, referencedRow1);
     }
 
     @Override
@@ -62,9 +66,7 @@ public class ImplicationElim extends Rule {
 
     @Override
     public Formula generateRow(Box data) {
-        Formula referencedRow2 = data.getRow(rowRef2).getFormula();
-        Implication implRef = (Implication) referencedRow2;
-        return implRef.rhs;
+        return implication.rhs;
     }
 
     @Override

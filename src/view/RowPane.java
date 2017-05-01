@@ -33,24 +33,20 @@ public class RowPane extends BorderPane {
     final static KeyCombination ctrlZ = new KeyCodeCombination(Z, SHORTCUT_DOWN);
     final static KeyCombination ctrlShiftZ = new KeyCodeCombination(Z, SHORTCUT_DOWN, SHIFT_DOWN);
     final static KeyCombination ctrlY = new KeyCodeCombination(Y, SHORTCUT_DOWN);
-    private static final HashMap<String, List<Integer>> ruleBox;
+    private static final HashMap<String, List<Boolean>> ruleBox;
     private static final HashMap<String, Integer> ruleMap;
     static Pattern p = Pattern.compile("^([1-9]\\d*-?([1-9]\\d*)?)?$");
 
     static {
-        List<Integer> ft = Arrays.asList(0, 1, 1);
-        List<Integer> tf = Arrays.asList(1, 0, 1);
-        List<Integer> imE = Arrays.asList(0, -1, 0);
-        List<Integer> mt = Arrays.asList(-1, 0, 0);
+        List<Boolean> ft = Arrays.asList(false, true, true);
+        List<Boolean> tf = Arrays.asList(true, false, true);
         ruleBox = new HashMap<>();
         ruleBox.put(Constants.disjunctionElim, ft);
         ruleBox.put(Constants.implicationIntro, tf);
-        ruleBox.put(Constants.implicationElim, imE);
         ruleBox.put(Constants.negationIntro, tf);
         ruleBox.put(Constants.forallIntro, tf);
         ruleBox.put(Constants.existsElim, ft);
         ruleBox.put(Constants.equalityIntro, ft);
-        ruleBox.put(Constants.modusTollens, mt);
         ruleBox.put(Constants.proofByContradiction, tf);
     }
 
@@ -176,7 +172,7 @@ public class RowPane extends BorderPane {
                 e.printStackTrace();
             }
             setPrompts(ruleMap.getOrDefault(newValue, 0));
-            setPromptsPromptText(ruleBox.getOrDefault(newValue, Arrays.asList(0, 0, 1)));
+            setPromptsPromptText(ruleBox.getOrDefault(newValue, Arrays.asList(false, false, true)));
         });
         for (int i = 0; i < 3; i++) {
             new PromptFocus(getRulePrompt(i), pv, rList, i);
@@ -261,12 +257,10 @@ public class RowPane extends BorderPane {
         }
     }
 
-    private void setPromptsPromptText(List<Integer> isBoxRef) {
+    private void setPromptsPromptText(List<Boolean> isBoxRef) {
         for (int i = 0; i < 3; i++) {
-            if (isBoxRef.get(i).equals(1))
+            if (isBoxRef.get(i))
                 getRulePrompt(i).setPromptText(Constants.intervalPromptText);
-            else if (isBoxRef.get(i).equals(-1))
-                getRulePrompt(i).setPromptText(Constants.implicationPromptText);
             else
                 getRulePrompt(i).setPromptText(Constants.rowPromptText);
         }
