@@ -5,6 +5,7 @@ import model.formulas.Formula;
 import model.formulas.Predicate;
 import model.formulas.QuantifiedFormula;
 import model.formulas.Term;
+import start.Constants;
 
 public class ExistsIntro extends Rule {
     private Integer rowRef;
@@ -62,6 +63,6 @@ public class ExistsIntro extends Rule {
 
 	@Override
 	public String getDisplayName() {
-		return "∃I";
+        return Constants.existsIntro;
 	}
 }

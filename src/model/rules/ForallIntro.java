@@ -4,6 +4,7 @@ import model.Box;
 import model.formulas.Formula;
 import model.formulas.FreshVarFormula;
 import model.formulas.QuantifiedFormula;
+import start.Constants;
 
 
 public class ForallIntro extends Rule {
@@ -74,7 +75,7 @@ public class ForallIntro extends Rule {
 
 	@Override
 	public String getDisplayName() {
-		return "∀I";
+        return Constants.forallIntro;
 	}
 
 }

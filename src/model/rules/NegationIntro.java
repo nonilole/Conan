@@ -4,6 +4,7 @@ import model.Box;
 import model.formulas.Contradiction;
 import model.formulas.Formula;
 import model.formulas.Negation;
+import start.Constants;
 
 public class NegationIntro extends Rule {
 
@@ -74,6 +75,6 @@ public class NegationIntro extends Rule {
 
 	@Override
 	public String getDisplayName() {
-		return "¬I";
+		return Constants.negationIntro;
 	}
 }

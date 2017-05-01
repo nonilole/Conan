@@ -3,6 +3,7 @@ package model.rules;
 import model.Box;
 import model.formulas.Disjunction;
 import model.formulas.Formula;
+import start.Constants;
 
 public class DisjunctionElim extends Rule {
 
@@ -132,6 +133,6 @@ public class DisjunctionElim extends Rule {
 
 	@Override
 	public String getDisplayName() {
-		return "∨E";
+        return Constants.disjunctionElim;
 	}
 }

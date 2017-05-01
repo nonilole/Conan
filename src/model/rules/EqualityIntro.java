@@ -3,6 +3,7 @@ package model.rules;
 import model.Box;
 import model.formulas.Equality;
 import model.formulas.Formula;
+import start.Constants;
 
 public class EqualityIntro extends Rule {
 
@@ -49,6 +50,6 @@ public class EqualityIntro extends Rule {
 
 	@Override
 	public String getDisplayName() {
-		return "=I";
+        return Constants.equalityIntro;
 	}
 }

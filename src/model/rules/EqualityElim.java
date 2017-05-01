@@ -4,6 +4,7 @@ import model.Box;
 import model.formulas.Equality;
 import model.formulas.Formula;
 import model.formulas.LogicObject;
+import start.Constants;
 
 import java.util.ArrayList;
 
@@ -73,7 +74,7 @@ public class EqualityElim extends Rule {
 
 	@Override
 	public String getDisplayName() {
-		return "=E";
+        return Constants.equalityElim;
 	}
 
 }

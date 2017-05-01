@@ -4,6 +4,7 @@ import model.Box;
 import model.ProofRow;
 import model.formulas.Formula;
 import model.formulas.FreshVarFormula;
+import start.Constants;
 
 public class FreshVar extends Rule {
 
@@ -83,7 +84,7 @@ public class FreshVar extends Rule {
 
 	@Override
 	public String getDisplayName() {
-		return "Fresh";
+        return Constants.freshVar;
 	}
 
 }

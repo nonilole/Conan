@@ -5,6 +5,7 @@ import model.ProofRow;
 import model.formulas.Formula;
 import model.formulas.FreshVarFormula;
 import model.formulas.QuantifiedFormula;
+import start.Constants;
 
 public class ExistsElim extends Rule {
     private Integer rowRef;
@@ -86,6 +87,6 @@ public class ExistsElim extends Rule {
 
 	@Override
 	public String getDisplayName() {
-		return "∃E";
+        return Constants.existsElim;
 	}
 }

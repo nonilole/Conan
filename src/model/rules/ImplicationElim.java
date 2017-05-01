@@ -3,6 +3,7 @@ package model.rules;
 import model.Box;
 import model.formulas.Formula;
 import model.formulas.Implication;
+import start.Constants;
 
 public class ImplicationElim extends Rule {
 
@@ -80,7 +81,7 @@ public class ImplicationElim extends Rule {
 
 	@Override
 	public String getDisplayName() {
-		return "→E";
+        return Constants.implicationElim;
 	}
 
 }

@@ -1,5 +1,7 @@
 package model.rules;
 
+import start.Constants;
+
 public class DisjunctionIntro2 extends DisjunctionIntro {
     public DisjunctionIntro2() {
         super(2);
@@ -7,6 +9,6 @@ public class DisjunctionIntro2 extends DisjunctionIntro {
     
     @Override
 	public String getDisplayName() {
-		return "∨I2";
+        return Constants.disjunctionIntro2;
 	}
 }

@@ -4,6 +4,7 @@ import model.Box;
 import model.ProofRow;
 import model.formulas.Formula;
 import model.formulas.Implication;
+import start.Constants;
 
 public class ImplicationIntro extends Rule {
 
@@ -81,6 +82,6 @@ public class ImplicationIntro extends Rule {
 
 	@Override
 	public String getDisplayName() {
-		return "→I";
+        return Constants.implicationIntro;
 	}
 }

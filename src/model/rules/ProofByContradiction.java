@@ -4,6 +4,7 @@ import model.Box;
 import model.formulas.Contradiction;
 import model.formulas.Formula;
 import model.formulas.Negation;
+import start.Constants;
 
 
 public class ProofByContradiction extends Rule {
@@ -77,6 +78,6 @@ public class ProofByContradiction extends Rule {
 
 	@Override
 	public String getDisplayName() {
-		return "PBC";
+        return Constants.proofByContradiction;
 	}
 }

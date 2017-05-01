@@ -4,6 +4,7 @@ import model.Box;
 import model.formulas.Disjunction;
 import model.formulas.Formula;
 import model.formulas.Negation;
+import start.Constants;
 
 public class LawOfExcludedMiddle extends Rule {
 
@@ -63,7 +64,7 @@ public class LawOfExcludedMiddle extends Rule {
 	
 	@Override
     public String toString() {
-        return "LEM";
-    }
+        return Constants.lawOfExcludedMiddle;
+	}
 
 }

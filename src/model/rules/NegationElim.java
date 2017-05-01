@@ -4,6 +4,7 @@ import model.Box;
 import model.formulas.Contradiction;
 import model.formulas.Formula;
 import model.formulas.Negation;
+import start.Constants;
 
 public class NegationElim extends Rule {
     private Integer rowRef1;
@@ -96,6 +97,6 @@ public class NegationElim extends Rule {
 
 	@Override
 	public String getDisplayName() {
-		return "¬E";
+        return Constants.negationElim;
 	}
 }

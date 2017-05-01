@@ -3,6 +3,7 @@ package model.rules;
 import model.Box;
 import model.formulas.Formula;
 import model.formulas.QuantifiedFormula;
+import start.Constants;
 
 
 public class ForallElim extends Rule {
@@ -60,6 +61,6 @@ public class ForallElim extends Rule {
 
 	@Override
 	public String getDisplayName() {
-		return "∀E";
+        return Constants.forallElim;
 	}
 }

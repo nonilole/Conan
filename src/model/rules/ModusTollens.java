@@ -4,6 +4,7 @@ import model.Box;
 import model.formulas.Formula;
 import model.formulas.Implication;
 import model.formulas.Negation;
+import start.Constants;
 
 public class ModusTollens extends Rule {
 
@@ -78,7 +79,7 @@ public class ModusTollens extends Rule {
 
 	@Override
 	public String getDisplayName() {
-		return "MT";
+        return Constants.modusTollens;
 	}
 
 }

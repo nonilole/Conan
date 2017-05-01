@@ -3,6 +3,7 @@ package model.rules;
 import model.Box;
 import model.formulas.Formula;
 import model.formulas.Negation;
+import start.Constants;
 
 public class DoubleNegationElim extends Rule {
     private Integer premise1;
@@ -85,6 +86,6 @@ public class DoubleNegationElim extends Rule {
     
 	@Override
 	public String getDisplayName() {
-		return "¬¬E";
+        return Constants.doubleNegationElim;
 	}
 }

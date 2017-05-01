@@ -3,6 +3,7 @@ package model.rules;
 import model.Box;
 import model.formulas.Formula;
 import model.formulas.FreshVarFormula;
+import start.Constants;
 
 public class Premise extends Rule {
 
@@ -49,6 +50,6 @@ public class Premise extends Rule {
 
 	@Override
 	public String getDisplayName() {
-		return "Premise";
+        return Constants.premise;
 	}
 }
