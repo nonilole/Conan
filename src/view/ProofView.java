@@ -290,7 +290,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
             }
         }
         RowPane rp = new RowPane(isFirstRowInBox, nrOfClosingBoxes);
-        ((TextField) rp.getExpression()).setText("*");
         parentBox.getChildren().add(indexToInsertInParent, rp);
         rList.add(rListInsertionIndex, rp);
         rp.init(this, rList);
@@ -298,9 +297,34 @@ public class ProofView extends Symbolic implements ProofListener, View {
         updateLabelPaddings(rowNo);
         if (rListInsertionIndex == rList.size()-1)
             scroll = true;
+        if (br == BoxReference.BEFORE)
+            incOrDecReferences(true, rowNo-1);
+        else
+            incOrDecReferences(true, rowNo);
     }
 
-    private void incrementReferences() {
+    private String incOrDecReferencesHelper(String toParse, int rowNo, int delta) {
+        Integer refNumber = new Integer(Integer.parseInt(toParse));
+        if (refNumber > rowNo) {
+            refNumber += delta;
+        }
+        return refNumber.toString();
+    }
+    private void incOrDecReferences(boolean inc, int rowNo) {
+        int delta = -1;
+        if (inc)
+            delta = 1;
+        for (int i = rowNo; i < rList.size(); i++) {
+            RowPane rp = rList.get(i);
+            for (int j = 0; j < rp.getNumberOfPrompts(); j++) {
+                String[] numbers = rp.getRulePrompt(j).getText().split("-");
+                String newString = incOrDecReferencesHelper(numbers[0], rowNo, delta);
+                if (numbers.length == 2 && !numbers[1].isEmpty()) {
+                    newString += "-" + incOrDecReferencesHelper(numbers[1], rowNo, delta);
+                }
+                rp.setRulePrompt(j, newString);
+            }
+        }
     }
 
     public void addedRowAfterBox(int rowNo) {
@@ -390,7 +414,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
     public void rowUpdated(String newText, boolean wellFormed, int lineNo) {
         TextField expression = (TextField) rList.get(lineNo - 1).getExpression();
-        if (expression.getText().equals(""))
+        if (expression.getText().isEmpty())
             wellFormed = true;
         if (newText != null)
             expression.setText(newText);
@@ -445,6 +469,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
         }
         RowPane focusThisPane = rList.get(idxToFocus);
         focusThisPane.getExpression().requestFocus();
+        incOrDecReferences(false, rowNr-1);
     }
     // END OF PROOF LISTENER METHODS
 

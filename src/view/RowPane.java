@@ -272,6 +272,9 @@ public class RowPane extends BorderPane {
         }
     }
 
+    public int getNumberOfPrompts() {
+        return this.numberOfPrompts;
+    }
     private void setPrompts(int n) {
         hideAndClearPrompts();
         this.numberOfPrompts = n;
