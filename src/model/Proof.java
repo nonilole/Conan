@@ -311,7 +311,7 @@ public class Proof implements Serializable{
             return;
         row.setFormula(generated);
         for (ProofListener listener : this.listeners) {
-            listener.rowUpdated(generated.toString(), false, rowIndex + 1);
+            listener.rowUpdated(generated.toString(), true, rowIndex + 1);
         }
     }
     
