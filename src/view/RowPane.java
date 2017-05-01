@@ -164,9 +164,9 @@ public class RowPane extends BorderPane {
             newValue = checkShortcut(newValue);
             setRule(newValue);
             int rpIndex = rList.indexOf(this);
-            if (newValue.equals("Ass.") || newValue.equals("Fresh")) {
-                pv.insertNewBox(rpIndex + 1);
-            }
+//            if (newValue.equals("Ass.") || newValue.equals("Fresh")) {
+//                pv.insertNewBox(rpIndex + 1);
+//            }
             try {
                 pv.getProof().updateRuleRow(newValue, rpIndex + 1);
             } catch (IllegalAccessException e) {
