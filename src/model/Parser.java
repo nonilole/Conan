@@ -35,7 +35,18 @@ public class Parser{
     
     //TODO: update to handle numbered var names for objects
     boolean isObjectId(String str){
-    	return str.length() == 1 && str.charAt(0) >= 'a' && str.charAt(0) <= 'z';
+    	if(str.length() == 0) return false;
+    	str = str.trim();
+    	String subDigits = "₀₁₂₃₄₅₆₇₈₉";
+    	if( str.charAt(0) < 'a' || str.charAt(0) > 'z' ) return false;
+    	for(int i = 1; i < str.length(); i++){
+    		if( subDigits.contains(str.charAt(i)+"") == false) {
+    			System.out.println("The char: "+str.charAt(i)+"");
+    			return false;
+    		}
+    	}
+    	return true;
+    	//return str.length() == 1 && str.charAt(0) >= 'a' && str.charAt(0) <= 'z';
     }
     
     boolean isContradiction(String str) {
@@ -241,14 +252,27 @@ public class Parser{
             throw new ParseException("parseArg, "+(char)next());
         }
         String id = String.valueOf((char)next());
-
+        
+        String subDigits = "₀₁₂₃₄₅₆₇₈₉";
+        
         if( (char)peek() == '('){
             List<Term> args = parseArgs();
             return new Function(id,args);
         }
-        else{
-            return new LogicObject(id);
+        else if(subDigits.contains( ((char)peek())+"" )){
+            id += parseSubDigits()+"";
         }
+        return new LogicObject(id);
+    }
+    
+    private String parseSubDigits() throws IOException{
+    	String subDigits = "₀₁₂₃₄₅₆₇₈₉";
+    	StringBuilder strB = new StringBuilder();
+    	while( subDigits.contains( (char)peek() +"")){
+    		strB.append( (char)next() );
+    	}
+    	return strB.toString();
+    	
     }
 
     boolean isValidStartOfTerm(char c) { return c >= 'a' && c <= 'z'; }
