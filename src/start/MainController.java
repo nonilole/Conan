@@ -164,8 +164,11 @@ public class MainController implements Initializable {
 
             if (this.verification.selectedProperty().getValue()) {
                 prefs.putBoolean("verify", true);
-            }else{
+            } else {
+                generation.setSelected(false);
                 prefs.putBoolean("verify", false);
+                prefs.putBoolean("generate", false);
+                generationToggle(null);
             }
 
             for(Tab tab:tabs){
