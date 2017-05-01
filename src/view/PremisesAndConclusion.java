@@ -42,7 +42,7 @@ public class PremisesAndConclusion extends HBox {
 
         for (String split : formulas) {
             try {
-                if (!split.equals(""))
+                if (!split.isEmpty())
                     parser.parse(split);
 
             } catch (ParseException e) {
