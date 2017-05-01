@@ -46,7 +46,6 @@ public class RowPane extends BorderPane {
         ruleBox.put("∀I", tf);
         ruleBox.put("∃E", ft);
         ruleBox.put("=I", ft);
-        ruleBox.put("MT", tf);
         ruleBox.put("PBC", tf);
     }
 
