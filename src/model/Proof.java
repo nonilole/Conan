@@ -188,6 +188,7 @@ public class Proof implements Serializable{
         for (ProofListener listener : this.listeners) {
             listener.boxInserted(rowIndex + 1);
         }
+        verifyProof(rowIndex);
         printProof("inserted box");
         return true;
     }

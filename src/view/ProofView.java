@@ -507,7 +507,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
         for (int i = lineNr - 1; i < labelList.size(); i++) {
             RowPane rp = rList.get(i);
             int topPadding = rp.getIsFirstRowInBox() ? 8 : 5;
-            int bottomPadding = 5 + 5 * rp.getNrOfClosingBoxes();
+            int bottomPadding = 7 + 5 * rp.getNrOfClosingBoxes();
             Label label = (Label) labelList.get(i);
             label.setPadding(new Insets(topPadding, 2, bottomPadding, 2));
         }

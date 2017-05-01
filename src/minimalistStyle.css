@@ -6,7 +6,7 @@
 
 .myText {
     -fx-font-family: Monospace;
-    -fx-font-size: 14px;
+    -fx-font-size: 16px;
     -fx-border-radius: 0;
     -fx-border-size: 0;
   	-fx-background-color: black , white;
@@ -52,7 +52,7 @@
     /* -fx-border-color: red; */
     /* -fx-border-width: 1px; */
     -fx-font-family: Monospace;
-    -fx-font-size: 14px;
+    -fx-font-size: 16px;
     -fx-text-box-border: transparent;
 }
 
