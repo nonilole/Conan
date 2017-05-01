@@ -58,7 +58,10 @@ public class MainController implements Initializable {
     private Button openBoxButton;
 
     @FXML
-    private Button newRowButton;
+    private Button appendRowButton;
+
+    @FXML
+    private Button insertRowButton;
 
     @FXML
     private Button deleteRowButton;
@@ -454,8 +457,9 @@ public class MainController implements Initializable {
         undoButton.setTooltip(new Tooltip("Undo (CTRL+Z)"));
         redoButton.setTooltip(new Tooltip("Redo (CTRL+Y/CTRL+SHIFT+Z)"));
         openBoxButton.setTooltip(new Tooltip("Open Box (CTRL+B)"));
-        newRowButton.setTooltip(new Tooltip("Add row after current row (Shift+Enter)"));
-        deleteRowButton.setTooltip(new Tooltip("Delete current row (CTRL+D)"));
+        appendRowButton.setTooltip(new Tooltip("Add row after current row (Shift+Enter)"));
+        insertRowButton.setTooltip(new Tooltip("Insert row (Enter)"));
+        deleteRowButton.setTooltip(new Tooltip("Delete current row/box (CTRL+D)"));
         verification.setTooltip(new Tooltip("Turn on/off verification"));
         generation.setTooltip(new Tooltip("Turn on/off automatic rule application"));
 
