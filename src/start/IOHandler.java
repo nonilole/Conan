@@ -38,10 +38,13 @@ public class IOHandler {
         in.close();
         fileIn.close();
         proof.load();
+        String premiseStr = proof.getPremisesStr();
+        String conclusionStr = proof.getConclusionStr();
         ProofView pv = new ProofView(tabPane, proof);
         pv.setPath(file.getPath());
         pv.setName(file.getName());
         pv.getTab().setText(pv.getName());
+        pv.displayLoadedProof(premiseStr, conclusionStr);
         System.out.println("Deserialized proof: "+pv.getName());
         return pv;
 	}

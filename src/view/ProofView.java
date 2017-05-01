@@ -554,12 +554,10 @@ public class ProofView extends Symbolic implements ProofListener, View {
     /**
      * Display all the information in the loaded proof
      */
-    public void displayLoadedProof() {
+    public void displayLoadedProof(String premiseStr, String conclusionStr) {
         List<RowInfo> proofInfo = proof.getProofInfo();
-        String premisesStr = proof.getPremisesStr();
-        String conclusionStr = proof.getConclusionStr();
         
-        premises.setText(premisesStr);
+        premises.setText(premiseStr);
         conclusion.setText(conclusionStr);
         
         //Add boxes and rows
