@@ -315,6 +315,8 @@ public class RowPane extends BorderPane {
                     } else if (key.getCode() == KeyCode.UP) {
                         if (index - 1 >= 0) {
                             focus(pv, rList, index - 1);
+                        } else {
+                            pv.insertNewRow(0, BoxReference.AFTER);
                         }
                     }
                 }

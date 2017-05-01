@@ -21,6 +21,11 @@ public class Box implements ProofEntry, Serializable{
 	
 	public void insertRow(int index, BoxReference br, int depth){
 		assert(index < size);
+		if (index == -1 ) { // Adding to beginning
+			this.entries.add(0, new ProofRow(this));
+			this.incSize();
+			return;
+		}
 		ProofRow referenceRow = getRow(index);
 		Box parent = referenceRow.getParent();
 		if (br.equals(BoxReference.BEFORE)) {
@@ -119,6 +124,11 @@ public class Box implements ProofEntry, Serializable{
 		Box parent = referenceRow.getParent();
         int idxRefRow = parent.entries.indexOf(referenceRow);
         if (idxRefRow == 0 && idxRefRow+1 < parent.entries.size() && parent.entries.get(idxRefRow+1) instanceof Box) {
+            if (parent.isTopLevelBox()) {
+				parent.entries.remove(referenceRow);
+				parent.decSize();
+				return -3;
+			}
             return -1;
 		}
         int depth = 0;

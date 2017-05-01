@@ -41,7 +41,9 @@ public class DeleteRow implements Command {
     }
     @Override
     public void undo() {
-        if (rowNo == 1 || delDepth == -2) { // If it's a first row in a box
+        if (delDepth == -3) {
+            proof.insertNewRow(rowNo-1, BoxReference.AFTER,0);
+        } else if (rowNo == 1 || delDepth == -2) { // If it's a first row in a box
             proof.insertNewRow(rowNo, BoxReference.BEFORE,0);
         } else {
             proof.insertNewRow(rowNo-1, BoxReference.AFTER, delDepth);
