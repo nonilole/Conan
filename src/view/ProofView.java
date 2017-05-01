@@ -259,6 +259,15 @@ public class ProofView extends Symbolic implements ProofListener, View {
         int nrOfClosingBoxes;
         int indexToInsertInParent;
         VBox parentBox;
+        if (rowNo == 0) {
+            RowPane rp = new RowPane(false, 0);
+            rList.add(0, rp);
+            rp.init(this, rList);
+            rows.getChildren().add(0, rp);
+            lineNo.getChildren().add(createLabel());
+            updateLabelPaddings(1);
+            return;
+        }
         int rListInsertionIndex = (br == BoxReference.BEFORE) ? rowNo - 1 : rowNo;
         if (br == BoxReference.BEFORE) {
             referenceRow = rList.get(rowNo - 1);

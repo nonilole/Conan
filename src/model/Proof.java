@@ -70,7 +70,7 @@ public class Proof implements Serializable{
      */
 
     public boolean insertNewRow(int rowNumber, BoxReference br, int depth) {
-        if (rowNumber < 1 || rowNumber > proofData.size() + 1) {
+        if (rowNumber > proofData.size() + 1) {
             System.out.println("Proof.insertNewRow: incorrect rowNumber");
             System.out.println("rows.size(): " + proofData.size() + ", rowNumber: " + rowNumber);
             return false;
