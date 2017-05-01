@@ -18,6 +18,7 @@ import view.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
 
@@ -155,8 +156,40 @@ public class MainController implements Initializable {
     private Button contraButton;
 
 
+
     @FXML
     void verificationToggle(ActionEvent event) {
+            Preferences prefs = Preferences.userRoot().node("General");
+            List<Tab>tabs=tabPane.getTabs();
+
+            if (this.verification.selectedProperty().getValue()) {
+                prefs.putBoolean("verify", true);
+            }else{
+                prefs.putBoolean("verify", false);
+            }
+
+            for(Tab tab:tabs){
+                ViewTab vt=(ViewTab) tab;
+                ProofView pv=convertProofView(vt.getView());
+
+                //Gets the proof from every Proofview tab
+                if(pv!=null&&pv.getProof()!=null){
+                    Proof p = pv.getProof();
+                    List<RowPane> proofViewList=pv.getRowList();
+
+                    //Updates every row in a proof when the box is checked/unchecked
+                    if (this.verification.selectedProperty().getValue()){
+                        p.verifyProof(0);
+                    }
+                    else{
+                        for(RowPane r:proofViewList) {
+                            r.getExpression().getStyleClass().remove("conclusionReached");
+                            r.getRule().getStyleClass().remove("unVerified");
+                        }
+                    }
+                }
+            }
+
 
     }
 
@@ -471,6 +504,12 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Preferences prefs = Preferences.userRoot().node("General"); // Inställningar i noden "General"
+
+        if (prefs.getBoolean("verify", true)) {
+            verification.setSelected(true);
+        }else{
+            verification.setSelected(false);
+        }
         if (prefs.getBoolean("generate", true)) {
             generation.setSelected(true);
             generationToggle(new ActionEvent());

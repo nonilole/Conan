@@ -26,7 +26,7 @@ public class PremisesAndConclusion extends HBox {
     private Label turnstile;
     private TextField conclusion;
     Pattern regex = Pattern.compile("\\(.*?\\)|(,)");
-    private void parseAndStyle(TextField tf, String s) {
+    public void parseAndStyle(TextField tf, String s) {
         Matcher matcher = regex.matcher(s);
         StringBuffer newString = new StringBuffer();
         while (matcher.find()) { // Two sets of matches, replace the second set of matches with !, because they can't be written
@@ -44,6 +44,7 @@ public class PremisesAndConclusion extends HBox {
             try {
                 if (!split.equals(""))
                     parser.parse(split);
+
             } catch (ParseException e) {
                 applyStyleIf(tf, true, "bad");
                 return;

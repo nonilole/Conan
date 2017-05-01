@@ -27,6 +27,7 @@ import static view.ViewUtil.checkShortcut;
 
 public class ProofView extends Symbolic implements ProofListener, View {
     ScrollPane sp;
+
     private TextField premises;
     private TextField conclusion;
     private Stack<VBox> curBoxDepth = new Stack<>();
@@ -40,6 +41,9 @@ public class ProofView extends Symbolic implements ProofListener, View {
     private String path;
     private String name;
     private boolean scroll = false;
+
+
+
 
     /**
      * Takes a premisesAndConclusion object and adds it to its content,
@@ -390,7 +394,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
             wellFormed = true;
         if (newText != null)
             expression.setText(newText);
-        else
             applyStyleIf(expression, !wellFormed, "bad");
     }
 
@@ -584,6 +587,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
         //proof.verifyProof(0);
     }
 
+
     /**
      * Used in WelcomeView in order to update the rows with the premises
      *
@@ -592,4 +596,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
     public List<RowPane> getRowList() {
         return new ArrayList<RowPane>(rList);
     }
+
+
 }
