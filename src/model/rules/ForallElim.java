@@ -37,7 +37,9 @@ public class ForallElim extends Rule {
         if (!(data.isInScopeOf(rowRef, rowIndex)))
             return false;
         if (data.getRow(rowRef).getFormula() instanceof QuantifiedFormula == false) return false;
-        if(((QuantifiedFormula)data.getRow(rowRef).getFormula()).type != '∀') return false;
+        if (((QuantifiedFormula) data.getRow(rowRef).getFormula()).type != '∀') return false;
+        // TODO: Check if any of the quantifiers match our variable and type.
+        if (var != null && ((QuantifiedFormula) data.getRow(rowRef).getFormula()).var != var) return false;
         return true;
     }
 

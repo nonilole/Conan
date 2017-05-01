@@ -44,6 +44,8 @@ public class ExistsIntro extends Rule {
         if (toVerify instanceof QuantifiedFormula) {
         	QuantifiedFormula quantToVerify = (QuantifiedFormula) toVerify;
         	if( quantToVerify.type != '∃') return false;
+            if (var != null && quantToVerify.var != var)
+                return false;
             return Formula.isInstantiationOf(ref, quantToVerify);
         }
         return false;
