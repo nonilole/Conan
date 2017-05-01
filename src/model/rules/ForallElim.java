@@ -8,6 +8,12 @@ import start.Constants;
 
 public class ForallElim extends Rule {
     private Integer rowRef;
+    private String var = null;
+
+    public ForallElim() {}
+    public ForallElim(char var) {
+        this.var = Character.toString(var);
+    }
 
     @Override
     public boolean hasCompleteInfo() {

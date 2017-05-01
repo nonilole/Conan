@@ -266,6 +266,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
             rows.getChildren().add(0, rp);
             lineNo.getChildren().add(createLabel());
             updateLabelPaddings(1);
+            incOrDecReferences(true, rowNo);
             return;
         }
         int rListInsertionIndex = (br == BoxReference.BEFORE) ? rowNo - 1 : rowNo;

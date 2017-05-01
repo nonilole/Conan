@@ -4,6 +4,7 @@ import model.Box;
 import model.ProofRow;
 import model.formulas.Conjunction;
 import model.formulas.Formula;
+import start.Constants;
 
 public class ConjunctionElim extends Rule {
 	private int type;
@@ -96,7 +97,9 @@ public class ConjunctionElim extends Rule {
 
 	@Override
 	public String getDisplayName() {
-		//Overridden in subclasses
-		return "∧E";
+		if (type == 1)
+            return Constants.conjunctionElim1;
+		else
+			return Constants.conjunctionElim2;
 	}
 }

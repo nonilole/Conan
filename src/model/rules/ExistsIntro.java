@@ -2,13 +2,17 @@ package model.rules;
 
 import model.Box;
 import model.formulas.Formula;
-import model.formulas.Predicate;
 import model.formulas.QuantifiedFormula;
-import model.formulas.Term;
 import start.Constants;
 
 public class ExistsIntro extends Rule {
     private Integer rowRef;
+    private String var = null;
+
+    public ExistsIntro() {}
+    public ExistsIntro(char var) {
+        this.var = Character.toString(var);
+    }
 
     @Override
     public boolean hasCompleteInfo() {
@@ -47,7 +51,9 @@ public class ExistsIntro extends Rule {
 
     @Override
     public Formula generateRow(Box data) {
-        return null;
+        if (var == null)
+            return null;
+        return new QuantifiedFormula(data.getRow(rowRef).getFormula(),var,'∃');
     }
 
     @Override
