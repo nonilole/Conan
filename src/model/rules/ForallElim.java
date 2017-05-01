@@ -45,6 +45,7 @@ public class ForallElim extends Rule {
     @Override
     public Formula generateRow(Box data) {
         QuantifiedFormula ref = (QuantifiedFormula) data.getRow(rowRef).getFormula();
+        ref.instantiate(ref.var + "");
         return ref.formula;
     }
 

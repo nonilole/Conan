@@ -19,6 +19,16 @@ public class ExportLatex {
         unicodeToLaTeX.put('∃', "\\exists ");
         unicodeToLaTeX.put('∀', "\\forall ");
         unicodeToLaTeX.put('⊥', "\\bot ");
+        unicodeToLaTeX.put('₀', "_0");
+        unicodeToLaTeX.put('₁', "_1");
+        unicodeToLaTeX.put('₂', "_2");
+        unicodeToLaTeX.put('₃', "_3");
+        unicodeToLaTeX.put('₄', "_4");
+        unicodeToLaTeX.put('₅', "_5");
+        unicodeToLaTeX.put('₆', "_6");
+        unicodeToLaTeX.put('₇', "_7");
+        unicodeToLaTeX.put('₈', "_8");
+        unicodeToLaTeX.put('₉', "_9");
     }
 
     public static void export(Proof proof, String file) throws IOException {
