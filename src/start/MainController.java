@@ -492,7 +492,7 @@ public class MainController implements Initializable {
                         }
 
                     }).start();
-                } else {
+            } else {
                 currentTab = null;
             }
         });
