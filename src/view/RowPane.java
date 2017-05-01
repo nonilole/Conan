@@ -32,20 +32,24 @@ public class RowPane extends BorderPane {
     final static KeyCombination ctrlZ = new KeyCodeCombination(Z, SHORTCUT_DOWN);
     final static KeyCombination ctrlShiftZ = new KeyCodeCombination(Z, SHORTCUT_DOWN, SHIFT_DOWN);
     final static KeyCombination ctrlY = new KeyCodeCombination(Y, SHORTCUT_DOWN);
-    private static final HashMap<String, List<Boolean>> ruleBox;
+    private static final HashMap<String, List<Integer>> ruleBox;
     private static final HashMap<String, Integer> ruleMap;
     static Pattern p = Pattern.compile("^([1-9]\\d*-?([1-9]\\d*)?)?$");
 
     static {
-        List<Boolean> ft = Arrays.asList(false, true, true);
-        List<Boolean> tf = Arrays.asList(true, false, true);
-        ruleBox = new HashMap<String, List<Boolean>>();
+        List<Integer> ft = Arrays.asList(0, 1, 1);
+        List<Integer> tf = Arrays.asList(1, 0, 1);
+        List<Integer> imE = Arrays.asList(0, -1, 0);
+        List<Integer> mt = Arrays.asList(-1, 0, 0);
+        ruleBox = new HashMap<>();
         ruleBox.put("∨E", ft);
         ruleBox.put("→I", tf);
+        ruleBox.put("→E", imE);
         ruleBox.put("¬I", tf);
         ruleBox.put("∀I", tf);
         ruleBox.put("∃E", ft);
         ruleBox.put("=I", ft);
+        ruleBox.put("MT", mt);
         ruleBox.put("PBC", tf);
     }
 
@@ -171,7 +175,7 @@ public class RowPane extends BorderPane {
                 e.printStackTrace();
             }
             setPrompts(ruleMap.getOrDefault(newValue, 0));
-            setPromptsPromptText(ruleBox.getOrDefault(newValue, Arrays.asList(false, false, true)));
+            setPromptsPromptText(ruleBox.getOrDefault(newValue, Arrays.asList(0, 0, 1)));
         });
         for (int i = 0; i < 3; i++) {
             new PromptFocus(getRulePrompt(i), pv, rList, i);
@@ -256,10 +260,12 @@ public class RowPane extends BorderPane {
         }
     }
 
-    private void setPromptsPromptText(List<Boolean> isBoxRef) {
+    private void setPromptsPromptText(List<Integer> isBoxRef) {
         for (int i = 0; i < 3; i++) {
-            if (isBoxRef.get(i).equals(true))
+            if (isBoxRef.get(i).equals(1))
                 getRulePrompt(i).setPromptText("123-456");
+            else if (isBoxRef.get(i).equals(-1))
+                getRulePrompt(i).setPromptText("φ→ψ");
             else
                 getRulePrompt(i).setPromptText("Row");
         }
