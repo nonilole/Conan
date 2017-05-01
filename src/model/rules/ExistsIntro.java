@@ -54,13 +54,9 @@ public class ExistsIntro extends Rule {
 
     @Override
     public Formula generateRow(Box data) {
-        if (var == null)
-            return null;
-        QuantifiedFormula trick = new QuantifiedFormula(data.getRow(rowRef).getFormula(),var,'∃');
-        for (Term t : Formula.findTermDifference(trick.instantiate("z"), data.getRow(rowRef).getFormula())) {
-            System.out.println(t);
-        }
         return null;
+//        if (var == null)
+//            return null;
 
 
 //         We can generate if we referenced row only has a function of one variable, which we assume is the one we want to replace.
