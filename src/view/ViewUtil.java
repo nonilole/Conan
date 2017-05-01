@@ -40,6 +40,16 @@ public class ViewUtil {
         newValue = newValue.replaceAll("or", "∨");
         newValue = newValue.replaceAll("ex|te|th", "∃");
         newValue = newValue.replaceAll("co|bo", "⊥");
+        newValue = newValue.replaceAll("0", "₀");
+        newValue = newValue.replaceAll("1", "₁");
+        newValue = newValue.replaceAll("2", "₂");
+        newValue = newValue.replaceAll("3", "₃");
+        newValue = newValue.replaceAll("4", "₄");
+        newValue = newValue.replaceAll("5", "₅");
+        newValue = newValue.replaceAll("6", "₆");
+        newValue = newValue.replaceAll("7", "₇");
+        newValue = newValue.replaceAll("8", "₈");
+        newValue = newValue.replaceAll("9", "₉");
         return newValue;
     }
     public static void consumeKeys(TextField tf) {
