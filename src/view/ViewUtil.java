@@ -42,7 +42,6 @@ public class ViewUtil {
         newValue = newValue.replaceAll("co|bo", "⊥");
         newValue = newValue.replaceAll("premise", "Premise");
         newValue = newValue.replaceAll("ass", "Ass");
-        newValue = newValue.replaceAll("copy", "Copy");
         newValue = newValue.replaceAll("fresh", "Fresh");
         newValue = newValue.replaceAll("0", "₀");
         newValue = newValue.replaceAll("1", "₁");
