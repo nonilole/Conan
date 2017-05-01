@@ -304,11 +304,15 @@ public class ProofView extends Symbolic implements ProofListener, View {
     }
 
     private String incOrDecReferencesHelper(String toParse, int rowNo, int delta) {
-        Integer refNumber = new Integer(Integer.parseInt(toParse));
-        if (refNumber > rowNo) {
-            refNumber += delta;
+        try {
+            Integer refNumber = new Integer(Integer.parseInt(toParse));
+            if (refNumber > rowNo) {
+                refNumber += delta;
+            }
+            return refNumber.toString();
+        } catch (NumberFormatException e){
+            return toParse;
         }
-        return refNumber.toString();
     }
     private void incOrDecReferences(boolean inc, int rowNo) {
         int delta = -1;
