@@ -478,7 +478,7 @@ public class MainController implements Initializable {
         tabPane.getSelectionModel().selectedItemProperty().addListener((ov, oldTab, newTab) -> {
             if (newTab instanceof ViewTab) {
                 currentTab = (ViewTab) newTab;
-                if (newTab != null) {
+                if (getCurrentView() != null)
                     new Thread(new Task<Void>() {
                         @Override
                         public Void call() throws Exception {
@@ -488,13 +488,11 @@ public class MainController implements Initializable {
 
                         @Override
                         public void succeeded() {
-                            if (currentTab.getView() != null)
-                                currentTab.getView().focusFirst();
+                            getCurrentView().focusFirst();
                         }
 
                     }).start();
-                }
-            } else {
+                } else {
                 currentTab = null;
             }
         });
