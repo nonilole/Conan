@@ -10,6 +10,7 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import model.BoxReference;
 
 import java.util.Arrays;
@@ -19,19 +20,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static javafx.scene.input.KeyCode.*;
-import static javafx.scene.input.KeyCombination.*;
-import static javafx.scene.input.KeyCombination.ModifierValue.*;
-import static javafx.scene.input.KeyCombination.ModifierValue.DOWN;
+import static javafx.scene.input.KeyCombination.SHIFT_DOWN;
+import static javafx.scene.input.KeyCombination.SHORTCUT_DOWN;
 import static view.ViewUtil.addFocusListener;
 import static view.ViewUtil.checkShortcut;
 
 
 public class RowPane extends BorderPane {
-    final static KeyCombination shiftEnter = new KeyCodeCombination(ENTER, SHIFT_DOWN);
     final static KeyCombination ctrlLeft = new KeyCodeCombination(LEFT, SHORTCUT_DOWN);
     final static KeyCombination ctrlRight = new KeyCodeCombination(RIGHT, SHORTCUT_DOWN);
-    final static KeyCombination ctrlB = new KeyCodeCombination(B, SHORTCUT_DOWN);
-    final static KeyCombination ctrlD = new KeyCodeCombination(D, SHORTCUT_DOWN);
     final static KeyCombination ctrlZ = new KeyCodeCombination(Z, SHORTCUT_DOWN);
     final static KeyCombination ctrlShiftZ = new KeyCodeCombination(Z, SHORTCUT_DOWN, SHIFT_DOWN);
     final static KeyCombination ctrlY = new KeyCodeCombination(Y, SHORTCUT_DOWN);
@@ -86,7 +83,6 @@ public class RowPane extends BorderPane {
     private int numberOfPrompts;
     private boolean isFirstRowInBox;
     private int nrOfClosingBoxes;
-    private RulePane rulePane;
 
     // Always call init after adding RowPane to rList
     public RowPane(boolean isFirstRowInBox, int nrOfClosingBoxes) {
@@ -100,8 +96,7 @@ public class RowPane extends BorderPane {
         tfExpression.getStyleClass().add("myText");
         tfExpression.setPrefWidth(580);
         this.setCenter(tfExpression);
-        rulePane = new RulePane();
-        this.setRight(rulePane);
+        this.setRight(new RulePane());
         this.setCache(true);
         this.setCacheShape(true);
         this.setCacheHint(CacheHint.DEFAULT);
@@ -231,7 +226,7 @@ public class RowPane extends BorderPane {
     }
 
     public TextField getRule() {
-        return rulePane.getRule();
+        return (TextField) ((FlowPane) this.getRight()).getChildren().get(0);
     }
 
     public void setRule(String s) {
@@ -252,7 +247,7 @@ public class RowPane extends BorderPane {
     }
 
     public TextField getRulePrompt(int index) {
-        return rulePane.getRulePrompt(index);
+        return (TextField) ((FlowPane) this.getRight()).getChildren().get(1+index);
     }
 
     private void hideAndClearPrompts() {
@@ -294,10 +289,10 @@ public class RowPane extends BorderPane {
                 @Override
                 public void handle(KeyEvent key) {
                     int index = rList.indexOf(RowPane.this);
-                     if (ctrlY.match(key) || ctrlShiftZ.match(key)) {
-                         pv.redo();
-                         key.consume();
-                     } else if (ctrlZ.match(key)) {
+                    if (ctrlY.match(key) || ctrlShiftZ.match(key)) {
+                        pv.redo();
+                        key.consume();
+                    } else if (ctrlZ.match(key)) {
                         pv.undo();
                         key.consume();
                     } else if (ctrlLeft.match(key)) {
