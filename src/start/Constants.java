@@ -15,7 +15,7 @@ public class Constants {
 
     public static final String conjunctionElim1 = conjunction + elimination + one;
     public static final String conjunctionElim2 = conjunction + elimination + two;
-    public static final String conjunctionIntro = disjunction + introduction;
+    public static final String conjunctionIntro = conjunction + introduction;
     public static final String disjunctionIntro1= disjunction + introduction + one;
     public static final String disjunctionIntro2 = disjunction + introduction + two;
     public static final String disjunctionElim = disjunction + elimination;
