@@ -2,6 +2,7 @@ package model.rules;
 
 import model.Box;
 import model.formulas.Formula;
+import start.Constants;
 
 public class Copy extends Rule{
 	private Integer rowRef;
@@ -44,7 +45,7 @@ public class Copy extends Rule{
 
 	@Override
 	public String getDisplayName() {
-		return "Copy";
+		return Constants.copy;
 	}
 	
 	@Override

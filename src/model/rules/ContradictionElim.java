@@ -3,6 +3,7 @@ package model.rules;
 import model.Box;
 import model.formulas.Contradiction;
 import model.formulas.Formula;
+import start.Constants;
 
 public class ContradictionElim extends Rule {
 
@@ -74,7 +75,7 @@ public class ContradictionElim extends Rule {
 	}
 	@Override
 	public String getDisplayName() {
-		return "⊥E";
+		return Constants.contradictionElim;
 	}
     
     

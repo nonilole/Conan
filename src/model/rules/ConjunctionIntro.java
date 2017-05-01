@@ -4,6 +4,7 @@ import model.Box;
 import model.ProofRow;
 import model.formulas.Conjunction;
 import model.formulas.Formula;
+import start.Constants;
 
 public class ConjunctionIntro extends Rule {
 
@@ -92,7 +93,7 @@ public class ConjunctionIntro extends Rule {
 
 	@Override
 	public String getDisplayName() {
-		return "∧I";
+		return Constants.conjunctionIntro;
 	}
 
     @Override

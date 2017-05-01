@@ -1,5 +1,7 @@
 package model.rules;
 
+import start.Constants;
+
 public class ConjunctionElim1 extends ConjunctionElim {
     public ConjunctionElim1() {
         super(1);
@@ -7,6 +9,6 @@ public class ConjunctionElim1 extends ConjunctionElim {
     
     @Override
 	public String getDisplayName() {
-		return "∧E1";
+		return Constants.conjunctionElim1;
 	}
 }
