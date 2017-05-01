@@ -3,7 +3,6 @@ package model.rules;
 import model.Box;
 import model.formulas.Formula;
 import model.formulas.QuantifiedFormula;
-import model.formulas.Term;
 import start.Constants;
 
 public class ExistsIntro extends Rule {
@@ -76,6 +75,8 @@ public class ExistsIntro extends Rule {
 
 	@Override
 	public String getDisplayName() {
+        if (var != null)
+            return Constants.exists + var + Constants.introduction;
         return Constants.existsIntro;
 	}
 }

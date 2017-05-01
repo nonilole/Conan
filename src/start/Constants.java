@@ -1,17 +1,17 @@
 package start;
 public class Constants {
-    private static final String conjunction = "∧";
-    private static final String disjunction = "∨";
-    private static final String negation = "¬";
-    private static final String equality = "=";
-    private static final String implication = "→";
-    private static final String contradiction = "⊥";
-    private static final String elimination = "e";
-    private static final String introduction = "i";
-    private static final String exists = "∃";
-    private static final String forall = "∀";
-    private static final String one = "₁";
-    private static final String two = "₂";
+    public static final String conjunction = "∧";
+    public static final String disjunction = "∨";
+    public static final String negation = "¬";
+    public static final String equality = "=";
+    public static final String implication = "→";
+    public static final String contradiction = "⊥";
+    public static final String elimination = "e";
+    public static final String introduction = "i";
+    public static final String exists = "∃";
+    public static final String forall = "∀";
+    public static final String one = "₁";
+    public static final String two = "₂";
 
     public static final String conjunctionElim1 = conjunction + elimination + one;
     public static final String conjunctionElim2 = conjunction + elimination + two;

@@ -69,6 +69,8 @@ public class ForallElim extends Rule {
 
 	@Override
 	public String getDisplayName() {
+        if (var != null)
+            return Constants.forall + var + Constants.elimination;
         return Constants.forallElim;
 	}
 }
