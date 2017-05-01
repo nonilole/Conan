@@ -10,6 +10,8 @@ public class RuleMapper {
                 return new ConjunctionElim(1);
             case Constants.conjunctionElim2:
                 return new ConjunctionElim(2);
+            case Constants.conjunctionIntro:
+            	return new ConjunctionIntro();
             case Constants.disjunctionIntro1:
                 return new DisjunctionIntro(1);
             case Constants.disjunctionIntro2:
