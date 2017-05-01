@@ -64,8 +64,9 @@ public class ForallIntro extends Rule {
         if (var == null)
             return null;
         Box refBox = data.getBox(intervalRef);
+        String freshVarId = ((FreshVarFormula) refBox.getRow(0).getFormula()).var;
         Formula lastRowInRefBox = refBox.getRow(refBox.size() - 1).getFormula();
-        return new QuantifiedFormula(lastRowInRefBox, var, '∀');
+        return new QuantifiedFormula(lastRowInRefBox.replace(var, freshVarId), var, '∀');
     }
 
     @Override

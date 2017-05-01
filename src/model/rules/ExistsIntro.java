@@ -43,9 +43,7 @@ public class ExistsIntro extends Rule {
         Formula ref = data.getRow(this.rowRef).getFormula();
         if (toVerify instanceof QuantifiedFormula) {
         	QuantifiedFormula quantToVerify = (QuantifiedFormula) toVerify;
-        	if( quantToVerify.type != '∃') return false;
-        	System.out.println(quantToVerify.var);
-            System.out.println(var);
+        	if (quantToVerify.type != '∃') return false;
             if (var != null && !quantToVerify.var.equals(var))
                 return false;
             return Formula.isInstantiationOf(ref, quantToVerify);
@@ -55,9 +53,11 @@ public class ExistsIntro extends Rule {
 
     @Override
     public Formula generateRow(Box data) {
-        if (var == null)
+//        if (var == null)
             return null;
-        return new QuantifiedFormula(data.getRow(rowRef).getFormula(),var,'∃');
+//        return new QuantifiedFormula(data.getRow(rowRef).getFormula(),var,'∃');
+//         We can generate if we referenced row only has a function of one variable, which we assume is the one we want to replace.
+//        How to check for this case?
     }
 
     @Override
