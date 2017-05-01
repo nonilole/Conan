@@ -53,10 +53,12 @@ public class ForallIntro extends Rule {
 
     @Override
     public Formula generateRow(Box data) {
-        Box refBox = data.getBox(intervalRef);
-        String freshVarId = ((FreshVarFormula) refBox.getRow(0).getFormula()).var;
-        Formula lastRowInRefBox = refBox.getRow(refBox.size() - 1).getFormula();
-        return new QuantifiedFormula(lastRowInRefBox, freshVarId, '∀'); // Maybe wrong string?
+//        Box refBox = data.getBox(intervalRef);
+//        String freshVarId = ((FreshVarFormula) refBox.getRow(0).getFormula()).var;
+//        Formula lastRowInRefBox = refBox.getRow(refBox.size() - 1).getFormula();
+//        // We can't know which variable to generate
+//        return new QuantifiedFormula(lastRowInRefBox, freshVarId, '∀');
+        return null;
     }
 
     @Override
