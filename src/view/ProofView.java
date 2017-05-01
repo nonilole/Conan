@@ -556,6 +556,11 @@ public class ProofView extends Symbolic implements ProofListener, View {
      */
     public void displayLoadedProof() {
         List<RowInfo> proofInfo = proof.getProofInfo();
+        String premisesStr = proof.getPremisesStr();
+        String conclusionStr = proof.getConclusionStr();
+        
+        premises.setText(premisesStr);
+        conclusion.setText(conclusionStr);
         
         //Add boxes and rows
         for (int i = 1; i <= proofInfo.size(); i++) {

@@ -1,6 +1,7 @@
 package model;
 
 import model.formulas.Formula;
+import model.rules.Premise;
 import model.rules.Rule;
 
 import java.io.Serializable;
@@ -313,6 +314,25 @@ public class Proof implements Serializable{
             listener.rowUpdated(generated.toString(), false, rowIndex + 1);
         }
     }
+    
+    public String getPremisesStr(){
+    	StringBuilder strB = new StringBuilder();
+    	String prefix = "";
+    	for(int i = 0; i < proofData.size(); i++){
+    		ProofRow row = proofData.getRow(i);
+    		if(row.getRule() == null) 
+    			continue;
+    		else if(row.getRule() instanceof Premise){
+    			strB.append( prefix +(row.getFormula() == null ? row.getUserInput() : row.getFormula()+"") );
+    			prefix = ", ";
+    		}
+    	}
+    	return strB.toString();
+    }
+    
+    public String getConclusionStr(){
+    	return conclusion == null ? "" : conclusion+"";
+    }
 
     public void printRowScopes(boolean zeroBasedNumbering) {
         proofData.printRowScopes(zeroBasedNumbering);
@@ -333,6 +353,7 @@ public class Proof implements Serializable{
     
     public void printProof(String updateAction){
     	System.out.println(updateAction);
+    	System.out.println("Premises: "+getPremisesStr()+", Conclusion: "+conclusion);
     	boolean zeroBasedNumbering = false;
     	int x = zeroBasedNumbering ? 0 : 1;
         proofData.printRows(1, x);
