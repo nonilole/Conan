@@ -4,6 +4,7 @@ import model.Box;
 import model.ProofRow;
 import model.formulas.Disjunction;
 import model.formulas.Formula;
+import start.Constants;
 
 public class DisjunctionIntro extends Rule {
 
@@ -82,8 +83,10 @@ public class DisjunctionIntro extends Rule {
 	}
 	@Override
 	public String getDisplayName() {
-		// implemented in subclasses
-		return "∨I";
+        if (type == 1)
+            return Constants.disjunctionIntro1;
+        else
+            return Constants.disjunctionIntro2;
 	}
 
     @Override

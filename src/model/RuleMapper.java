@@ -3,67 +3,74 @@ package model;
 import model.rules.*;
 import start.Constants;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class RuleMapper {
-    private static final Map<String, Class<?>> ruleToClass;
-
-    static {
-        ruleToClass = new HashMap<String, Class<?>>();
-        ruleToClass.put(Constants.conjunctionElim1, ConjunctionElim1.class);
-        ruleToClass.put(Constants.conjunctionElim2, ConjunctionElim2.class);
-        ruleToClass.put(Constants.conjunctionIntro, ConjunctionIntro.class);
-        ruleToClass.put(Constants.disjunctionIntro1, DisjunctionIntro1.class);
-        ruleToClass.put(Constants.disjunctionIntro2, DisjunctionIntro2.class);
-        ruleToClass.put(Constants.disjunctionElim, DisjunctionElim.class);
-        ruleToClass.put(Constants.doubleNegationElim, DoubleNegationElim.class);
-        ruleToClass.put(Constants.equalityIntro, EqualityIntro.class);
-        ruleToClass.put(Constants.equalityElim, EqualityElim.class);
-        ruleToClass.put(Constants.implicationIntro, ImplicationIntro.class);
-        ruleToClass.put(Constants.implicationElim, ImplicationElim.class);
-        ruleToClass.put(Constants.contradictionElim, ContradictionElim.class);
-        ruleToClass.put(Constants.existsElim, ExistsElim.class);
-        ruleToClass.put(Constants.existsIntro, ExistsIntro.class);
-        ruleToClass.put(Constants.forallElim, ForallElim.class);
-        ruleToClass.put(Constants.forallIntro, ForallIntro.class);
-        ruleToClass.put(Constants.negationElim, NegationElim.class);
-        ruleToClass.put(Constants.negationIntro, NegationIntro.class);
-        ruleToClass.put(Constants.premise, Premise.class);
-        ruleToClass.put(Constants.assumption, Assumption.class);
-        ruleToClass.put(Constants.freshVar, FreshVar.class);
-        ruleToClass.put(Constants.modusTollens, ModusTollens.class);
-        ruleToClass.put(Constants.proofByContradiction, ProofByContradiction.class);
-        ruleToClass.put(Constants.lawOfExcludedMiddle, LawOfExcludedMiddle.class);
-        ruleToClass.put(Constants.doubleNegationIntro, DoubleNegationIntro.class);
-        ruleToClass.put(Constants.copy, Copy.class);
-    }
-
     public static Rule getRule(String rule) {
-        Class<?> c = ruleToClass.getOrDefault(rule, null);
-        if (c != null) {
-            try {
-                return (Rule) c.newInstance();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
+        switch (rule) {
+            case Constants.conjunctionElim1:
+                return new ConjunctionElim(1);
+            case Constants.conjunctionElim2:
+                return new ConjunctionElim(2);
+            case Constants.disjunctionIntro1:
+                return new DisjunctionIntro(1);
+            case Constants.disjunctionIntro2:
+                return new DisjunctionIntro(2);
+            case Constants.disjunctionElim:
+                return new DisjunctionElim();
+            case Constants.doubleNegationElim:
+                return new DoubleNegationElim();
+            case Constants.equalityIntro:
+                return new EqualityIntro();
+            case Constants.equalityElim:
+                return new EqualityElim();
+            case Constants.implicationIntro:
+                return new ImplicationIntro();
+            case Constants.implicationElim:
+                return new ImplicationElim();
+            case Constants.contradictionElim:
+                return new ContradictionElim();
+            case Constants.existsElim:
+                return new ExistsElim();
+            case Constants.existsIntro:
+                return new ExistsIntro();
+            case Constants.forallElim:
+                return new ForallElim();
+            case Constants.forallIntro:
+                return new ForallIntro();
+            case Constants.negationElim:
+                return new NegationElim();
+            case Constants.negationIntro:
+                return new NegationIntro();
+            case Constants.premise:
+                return new Premise();
+            case Constants.assumption:
+                return new Assumption();
+            case Constants.freshVar:
+                return new FreshVar();
+            case Constants.modusTollens:
+                return new ModusTollens();
+            case Constants.proofByContradiction:
+                return new ProofByContradiction();
+            case Constants.lawOfExcludedMiddle:
+                return new LawOfExcludedMiddle();
+            case Constants.doubleNegationIntro:
+                return new DoubleNegationIntro();
+            case Constants.copy:
+                return new Copy();
+            default:
+                if (rule.matches("(∃|∀)[a-z](i|e)")) {
+                    if (rule.charAt(0) == '∃') {
+                        if (rule.charAt(2) == 'i') {
+                            return new ExistsIntro(rule.charAt(1));
+                        }
+                    } else {
+                        if (rule.charAt(2) == 'i') {
+                            return new ForallIntro(rule.charAt(1));
+                        } else {
+                            return new ForallElim(rule.charAt(1));
+                        }
+                    }
+                }
+                return new FreshVar();
         }
-        return null;
     }
-//    public static Rule getRule(String rule) {
-//        switch(rule){
-//            case "∨I1":     return new DisjunctionIntro(1);
-//            case "∨I2":     return new DisjunctionIntro(2);
-//            case "∧I":      return new ConjunctionIntro();
-//            case "∧E1":     return new ConjunctionElim(1);
-//            case "∧E2":     return new ConjunctionElim(2);
-//            case "→I":      return new ImplicationIntro();
-//            case "¬¬E":     return new DoubleNegationElim();
-//            case "=I":      return new EqualityIntro();
-//            case "Premise": return new Premise();
-//            default:        return null;
-//        }
-//    }
 }

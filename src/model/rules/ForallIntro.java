@@ -9,6 +9,12 @@ import start.Constants;
 
 public class ForallIntro extends Rule {
     private Interval intervalRef;
+    private String var = null;
+
+    public ForallIntro() {}
+    public ForallIntro(char var) {
+        this.var = Character.toString(var);
+    }
 
     @Override
     public boolean hasCompleteInfo() {
