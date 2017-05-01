@@ -7,18 +7,10 @@ import java.util.ArrayList;
 
 // Only GUI no logic"
 public class RulePane extends FlowPane {
-    private TextField rule;
-    private ArrayList<TextField> rulePrompts;
-    public TextField getRulePrompt(int i) {
-        return rulePrompts.get(i);
-    }
-    public TextField getRule() {
-        return rule;
-    }
     public RulePane() {
-        rulePrompts = new ArrayList<TextField>(3);
+        ArrayList<TextField> rulePrompts = new ArrayList<TextField>(3);
         this.setMaxWidth(340);
-        rule = new TextField();
+        TextField rule = new TextField();
         rule.getStyleClass().add("myText");
         rule.setPromptText("Rule");
         rule.setId("rightTextField");
