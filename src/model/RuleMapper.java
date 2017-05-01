@@ -71,7 +71,7 @@ public class RuleMapper {
                         }
                     }
                 }
-                return new FreshVar(); // Might want this with empty rulefield.
+                return null;
         }
     }
 }

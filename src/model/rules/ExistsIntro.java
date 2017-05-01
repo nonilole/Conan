@@ -3,6 +3,7 @@ package model.rules;
 import model.Box;
 import model.formulas.Formula;
 import model.formulas.QuantifiedFormula;
+import model.formulas.Term;
 import start.Constants;
 
 public class ExistsIntro extends Rule {
@@ -53,9 +54,15 @@ public class ExistsIntro extends Rule {
 
     @Override
     public Formula generateRow(Box data) {
-//        if (var == null)
+        if (var == null)
             return null;
-//        return new QuantifiedFormula(data.getRow(rowRef).getFormula(),var,'∃');
+        QuantifiedFormula trick = new QuantifiedFormula(data.getRow(rowRef).getFormula(),var,'∃');
+        for (Term t : Formula.findTermDifference(trick.instantiate("z"), data.getRow(rowRef).getFormula())) {
+            System.out.println(t);
+        }
+        return null;
+
+
 //         We can generate if we referenced row only has a function of one variable, which we assume is the one we want to replace.
 //        How to check for this case?
     }
