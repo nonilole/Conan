@@ -12,6 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import model.BoxReference;
+import start.Constants;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -42,45 +43,45 @@ public class RowPane extends BorderPane {
         List<Integer> imE = Arrays.asList(0, -1, 0);
         List<Integer> mt = Arrays.asList(-1, 0, 0);
         ruleBox = new HashMap<>();
-        ruleBox.put("∨E", ft);
-        ruleBox.put("→I", tf);
-        ruleBox.put("→E", imE);
-        ruleBox.put("¬I", tf);
-        ruleBox.put("∀I", tf);
-        ruleBox.put("∃E", ft);
-        ruleBox.put("=I", ft);
-        ruleBox.put("MT", mt);
-        ruleBox.put("PBC", tf);
+        ruleBox.put(Constants.disjunctionElim, ft);
+        ruleBox.put(Constants.implicationIntro, tf);
+        ruleBox.put(Constants.implicationElim, imE);
+        ruleBox.put(Constants.negationIntro, tf);
+        ruleBox.put(Constants.forallIntro, tf);
+        ruleBox.put(Constants.existsElim, ft);
+        ruleBox.put(Constants.equalityIntro, ft);
+        ruleBox.put(Constants.modusTollens, mt);
+        ruleBox.put(Constants.proofByContradiction, tf);
     }
 
     static {
         ruleMap = new HashMap<String, Integer>();
-        ruleMap.put("∧I", 2);
-        ruleMap.put("∧E1", 1);
-        ruleMap.put("∧E2", 1);
-        ruleMap.put("∨I1", 1);
-        ruleMap.put("∨I2", 1);
-        ruleMap.put("∨E", 3);
-        ruleMap.put("→I", 1);
-        ruleMap.put("→E", 2);
-        ruleMap.put("⊥E", 1);
-        ruleMap.put("¬I", 1);
-        ruleMap.put("¬E", 2);
-        ruleMap.put("¬¬E", 1);
-        ruleMap.put("Premise", 0);
-        ruleMap.put("∀I", 1);
-        ruleMap.put("∀E", 1);
-        ruleMap.put("∃I", 1);
-        ruleMap.put("∃E", 2);
-        ruleMap.put("=E", 2);
-        ruleMap.put("=I", 0);
-        ruleMap.put("Ass.", 0);
-        ruleMap.put("Fresh", 0);
-        ruleMap.put("MT", 2);
-        ruleMap.put("LEM", 0);
-        ruleMap.put("PBC", 1);
-        ruleMap.put("¬¬I", 1);
-        ruleMap.put("Copy", 1);
+        ruleMap.put(Constants.conjunctionIntro, 2);
+        ruleMap.put(Constants.conjunctionElim1, 1);
+        ruleMap.put(Constants.conjunctionElim2, 1);
+        ruleMap.put(Constants.disjunctionIntro1, 1);
+        ruleMap.put(Constants.disjunctionIntro2, 1);
+        ruleMap.put(Constants.disjunctionElim, 3);
+        ruleMap.put(Constants.implicationIntro, 1);
+        ruleMap.put(Constants.implicationElim, 2);
+        ruleMap.put(Constants.contradictionElim, 1);
+        ruleMap.put(Constants.negationIntro, 1);
+        ruleMap.put(Constants.negationElim, 2);
+        ruleMap.put(Constants.doubleNegationElim, 1);
+        ruleMap.put(Constants.premise, 0);
+        ruleMap.put(Constants.forallIntro, 1);
+        ruleMap.put(Constants.forallElim, 1);
+        ruleMap.put(Constants.existsIntro, 1);
+        ruleMap.put(Constants.existsElim, 2);
+        ruleMap.put(Constants.equalityElim, 2);
+        ruleMap.put(Constants.equalityIntro, 0);
+        ruleMap.put(Constants.assumption, 0);
+        ruleMap.put(Constants.freshVar, 0);
+        ruleMap.put(Constants.modusTollens, 2);
+        ruleMap.put(Constants.lawOfExcludedMiddle, 0);
+        ruleMap.put(Constants.proofByContradiction, 1);
+        ruleMap.put(Constants.doubleNegationIntro, 1);
+        ruleMap.put(Constants.copy, 1);
     }
 
     private int numberOfPrompts;
@@ -263,11 +264,11 @@ public class RowPane extends BorderPane {
     private void setPromptsPromptText(List<Integer> isBoxRef) {
         for (int i = 0; i < 3; i++) {
             if (isBoxRef.get(i).equals(1))
-                getRulePrompt(i).setPromptText("123-456");
+                getRulePrompt(i).setPromptText(Constants.intervalPromptText);
             else if (isBoxRef.get(i).equals(-1))
-                getRulePrompt(i).setPromptText("φ→ψ");
+                getRulePrompt(i).setPromptText(Constants.implicationPromptText);
             else
-                getRulePrompt(i).setPromptText("Row");
+                getRulePrompt(i).setPromptText(Constants.rowPromptText);
         }
     }
 

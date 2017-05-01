@@ -1,6 +1,7 @@
 package model;
 
 import model.rules.*;
+import start.Constants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,32 +11,32 @@ public class RuleMapper {
 
     static {
         ruleToClass = new HashMap<String, Class<?>>();
-        ruleToClass.put("∧E1", ConjunctionElim1.class);
-        ruleToClass.put("∧E2", ConjunctionElim2.class);
-        ruleToClass.put("∧I", ConjunctionIntro.class);
-        ruleToClass.put("∨I1", DisjunctionIntro1.class);
-        ruleToClass.put("∨I2", DisjunctionIntro2.class);
-        ruleToClass.put("∨E", DisjunctionElim.class);
-        ruleToClass.put("¬¬E", DoubleNegationElim.class);
-        ruleToClass.put("=I", EqualityIntro.class);
-        ruleToClass.put("=E", EqualityElim.class);
-        ruleToClass.put("→I", ImplicationIntro.class);
-        ruleToClass.put("→E", ImplicationElim.class);
-        ruleToClass.put("⊥E",ContradictionElim.class);
-        ruleToClass.put("∃E", ExistsElim.class);
-        ruleToClass.put("∃I", ExistsIntro.class);
-        ruleToClass.put("∀E", ForallElim.class);
-        ruleToClass.put("∀I", ForallIntro.class);
-        ruleToClass.put("¬E", NegationElim.class);
-        ruleToClass.put("¬I", NegationIntro.class);
-        ruleToClass.put("Premise", Premise.class);
-        ruleToClass.put("Ass.", Assumption.class);
-        ruleToClass.put("Fresh", FreshVar.class);
-        ruleToClass.put("MT", ModusTollens.class);
-        ruleToClass.put("PBC", ProofByContradiction.class);
-        ruleToClass.put("LEM", LawOfExcludedMiddle.class);
-        ruleToClass.put("¬¬I", DoubleNegationIntro.class);
-        ruleToClass.put("Copy", Copy.class);
+        ruleToClass.put(Constants.conjunctionElim1, ConjunctionElim1.class);
+        ruleToClass.put(Constants.conjunctionElim2, ConjunctionElim2.class);
+        ruleToClass.put(Constants.conjunctionIntro, ConjunctionIntro.class);
+        ruleToClass.put(Constants.disjunctionIntro1, DisjunctionIntro1.class);
+        ruleToClass.put(Constants.disjunctionIntro2, DisjunctionIntro2.class);
+        ruleToClass.put(Constants.disjunctionElim, DisjunctionElim.class);
+        ruleToClass.put(Constants.doubleNegationElim, DoubleNegationElim.class);
+        ruleToClass.put(Constants.equalityIntro, EqualityIntro.class);
+        ruleToClass.put(Constants.equalityElim, EqualityElim.class);
+        ruleToClass.put(Constants.implicationIntro, ImplicationIntro.class);
+        ruleToClass.put(Constants.implicationElim, ImplicationElim.class);
+        ruleToClass.put(Constants.contradictionElim, ContradictionElim.class);
+        ruleToClass.put(Constants.existsElim, ExistsElim.class);
+        ruleToClass.put(Constants.existsIntro, ExistsIntro.class);
+        ruleToClass.put(Constants.forallElim, ForallElim.class);
+        ruleToClass.put(Constants.forallIntro, ForallIntro.class);
+        ruleToClass.put(Constants.negationElim, NegationElim.class);
+        ruleToClass.put(Constants.negationIntro, NegationIntro.class);
+        ruleToClass.put(Constants.premise, Premise.class);
+        ruleToClass.put(Constants.assumption, Assumption.class);
+        ruleToClass.put(Constants.freshVar, FreshVar.class);
+        ruleToClass.put(Constants.modusTollens, ModusTollens.class);
+        ruleToClass.put(Constants.proofByContradiction, ProofByContradiction.class);
+        ruleToClass.put(Constants.lawOfExcludedMiddle, LawOfExcludedMiddle.class);
+        ruleToClass.put(Constants.doubleNegationIntro, DoubleNegationIntro.class);
+        ruleToClass.put(Constants.copy, Copy.class);
     }
 
     public static Rule getRule(String rule) {
