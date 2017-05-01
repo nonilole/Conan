@@ -19,16 +19,16 @@ public class ExportLatex {
         unicodeToLaTeX.put('∃', "\\exists ");
         unicodeToLaTeX.put('∀', "\\forall ");
         unicodeToLaTeX.put('⊥', "\\bot ");
-        unicodeToLaTeX.put('₀', "_0");
-        unicodeToLaTeX.put('₁', "_1");
-        unicodeToLaTeX.put('₂', "_2");
-        unicodeToLaTeX.put('₃', "_3");
-        unicodeToLaTeX.put('₄', "_4");
-        unicodeToLaTeX.put('₅', "_5");
-        unicodeToLaTeX.put('₆', "_6");
-        unicodeToLaTeX.put('₇', "_7");
-        unicodeToLaTeX.put('₈', "_8");
-        unicodeToLaTeX.put('₉', "_9");
+        unicodeToLaTeX.put('₀', "0");
+        unicodeToLaTeX.put('₁', "1");
+        unicodeToLaTeX.put('₂', "2");
+        unicodeToLaTeX.put('₃', "3");
+        unicodeToLaTeX.put('₄', "4");
+        unicodeToLaTeX.put('₅', "5");
+        unicodeToLaTeX.put('₆', "6");
+        unicodeToLaTeX.put('₇', "7");
+        unicodeToLaTeX.put('₈', "8");
+        unicodeToLaTeX.put('₈', "9");
     }
 
     public static void export(Proof proof, String file) throws IOException {
@@ -57,7 +57,7 @@ public class ExportLatex {
                 output += "\\end{subproof}\n";
                 --curDepth;
             }
-            output += replaceAllUnicode(info[1]).replaceAll("null","");
+            output += attachIndex(replaceAllUnicode(info[1])).replaceAll("null", "");
             // Everything before the &, is in a math environment.
             output += "&";
             // We surround the crucial part in $ in the rule and references.
@@ -76,6 +76,9 @@ public class ExportLatex {
         Files.write(Paths.get(file), output.getBytes());
     }
 
+    private static String attachIndex(String s) {
+        return s.replaceAll("(\\d+)","_\\{$1\\}");
+    }
     private static String replaceAllUnicode(String s) {
         String ret = "";
         for (int i = 0; i < s.length(); i++) {
