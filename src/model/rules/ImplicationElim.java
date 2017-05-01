@@ -59,9 +59,7 @@ public class ImplicationElim extends Rule {
 
     @Override
     public boolean verifyRow(Box data, int rowIndex) {
-        Formula referencedRow2 = data.getRow(rowRef2).getFormula();
-        Implication implRef = (Implication) referencedRow2;
-        return implRef.rhs.equals(data.getRow(rowIndex).getFormula());
+        return implication.rhs.equals(data.getRow(rowIndex).getFormula());
     }
 
     @Override
