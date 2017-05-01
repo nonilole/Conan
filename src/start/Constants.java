@@ -40,6 +40,6 @@ public class Constants {
     public static final String doubleNegationIntro = negation + negation + introduction;
     public static final String copy = "Copy";
 
-    public static final String intervalPromptText = "123-456";
+    public static final String intervalPromptText = "12-34";
     public static final String rowPromptText = "Row";
 }

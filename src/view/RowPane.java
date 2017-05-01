@@ -171,6 +171,7 @@ public class RowPane extends BorderPane {
             } catch (InstantiationException e) {
                 e.printStackTrace();
             }
+            newValue = newValue.replaceAll("^(∃|∀)[a-z](i|e)$", "$1$2");
             setPrompts(ruleMap.getOrDefault(newValue, 0));
             setPromptsPromptText(ruleBox.getOrDefault(newValue, Arrays.asList(false, false, true)));
         });

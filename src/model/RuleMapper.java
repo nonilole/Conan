@@ -57,9 +57,10 @@ public class RuleMapper {
             case Constants.copy:
                 return new Copy();
             default:
-                if (rule.matches("(∃|∀)[a-z](i|e)")) {
+                if (rule.matches("^(∃|∀)[a-z](i|e)$")) {
                     if (rule.charAt(0) == '∃') {
                         if (rule.charAt(2) == 'i') {
+                            System.out.println("Hello");
                             return new ExistsIntro(rule.charAt(1));
                         }
                     } else {
@@ -70,7 +71,7 @@ public class RuleMapper {
                         }
                     }
                 }
-                return new FreshVar();
+                return new FreshVar(); // Might want this with empty rulefield.
         }
     }
 }
