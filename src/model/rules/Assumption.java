@@ -3,6 +3,7 @@ package model.rules;
 import model.Box;
 import model.ProofRow;
 import model.formulas.Formula;
+import start.Constants;
 
 public class Assumption extends Rule {
     @Override
@@ -50,6 +51,6 @@ public class Assumption extends Rule {
 
 	@Override
 	public String getDisplayName() {
-		return "Ass.";
+		return Constants.assumption;
 	}
 }

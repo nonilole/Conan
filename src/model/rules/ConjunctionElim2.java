@@ -1,11 +1,13 @@
 package model.rules;
 
+import start.Constants;
+
 public class ConjunctionElim2 extends ConjunctionElim {
 
     public ConjunctionElim2() { super(2); }
     
     @Override
 	public String getDisplayName() {
-		return "∧E2";
+		return Constants.conjunctionElim2;
 	}
 }
