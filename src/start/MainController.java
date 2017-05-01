@@ -510,13 +510,12 @@ public class MainController implements Initializable {
 
         if (prefs.getBoolean("verify", true)) {
             verification.setSelected(true);
-        }else{
-            verification.setSelected(false);
         }
         if (prefs.getBoolean("generate", true)) {
             generation.setSelected(true);
-            generationToggle(new ActionEvent());
         }
+        verificationToggle(null);
+        generationToggle(null);
         tabPane.getSelectionModel().selectedItemProperty().addListener((ov, oldTab, newTab) -> {
             if (newTab instanceof ViewTab) {
                 currentTab = (ViewTab) newTab;
