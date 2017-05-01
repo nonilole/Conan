@@ -138,7 +138,7 @@ public class InstructionsView extends ViewTab {
     			+ "Presented below are example instructions for proving A∧B ⊢ B∧A (B and A from A and B). Feel free to create a new proof and imitate every step."), 0, 0);
         instructionGrid.add(configreLabel("First, locate the toolbox at the left part of the interface. This tool box provides easy access to frequently used proof components, such as rules of inference and unicode symbols used in logic."), 0, 1);
         instructionGrid.add(configureImage("exampleToolBox.png"), 0, 2);
-        instructionGrid.add(configreLabel("Next, fil in the sequent A∧B ⊢ B∧A in the proof header."), 0, 3);
+        instructionGrid.add(configreLabel("Next, fill in the sequent A∧B ⊢ B∧A in the proof header."), 0, 3);
         instructionGrid.add(configureImage("exampleSequent.png"), 0, 4);
         instructionGrid.add(configreLabel("Having filled in the proof header, the next step is to actually construct the proof. This is done by entering one deduction step per row in the proof sheet. Note in particular that each row consists of two or more lines.\n\n"
         		+ "On the first line, the mathematical expression of the deduction step is filled in. On the second, the inference rule is filled in. If the rule is dependent on previous rows, these are filled in on the third and fourth line.\n\n"
