@@ -40,6 +40,7 @@ public class ViewUtil {
         newValue = newValue.replaceAll("or", "∨");
         newValue = newValue.replaceAll("ex|te|th", "∃");
         newValue = newValue.replaceAll("co|bo", "⊥");
+        newValue = newValue.replaceAll("Ass", "ass");
         newValue = newValue.replaceAll("0", "₀");
         newValue = newValue.replaceAll("1", "₁");
         newValue = newValue.replaceAll("2", "₂");
