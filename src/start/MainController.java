@@ -557,11 +557,9 @@ public class MainController implements Initializable {
         Scene scene = tabPane.getScene();
         scene.setOnKeyPressed(key -> {
             if (ctrlF1.match(key))
-                if (tabPane.getTabs().size() > 1)
-                    tabPane.getSelectionModel().select(0);
+                selectTab(0);
             else if (ctrlF2.match(key))
-                if (tabPane.getTabs().size() > 1)
-                tabPane.getSelectionModel().select(1);
+                selectTab(1);
         });
     }
     private void selectTab(int index) {
