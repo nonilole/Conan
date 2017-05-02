@@ -1,5 +1,7 @@
 package model;
 
-public interface ProofEntry {
+import java.io.Serializable;
+
+public interface ProofEntry extends Serializable{
 	public Box getParent();
 }

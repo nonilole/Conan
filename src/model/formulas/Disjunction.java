@@ -12,6 +12,11 @@ public class Disjunction extends Formula {
     }
     
     @Override
+    public Formula replace(String newId,String oldId){
+    	return new Disjunction(lhs.replace(newId, oldId), rhs.replace(newId, oldId));
+    }
+    
+    @Override
     public boolean equals(Object o){
     	if(o instanceof Disjunction){
     		Disjunction other = (Disjunction) o;
@@ -28,4 +33,14 @@ public class Disjunction extends Formula {
     	strB.append( rhs.getPrecedence() < 3 ? "("+rhs+")" : rhs+"" );
     	return strB.toString();
     }
+    
+    @Override
+	public boolean containsObjectId(String id) {
+		return lhs.containsObjectId(id) ||  rhs.containsObjectId(id);
+	}
+
+	@Override
+	public Formula replace(Term newTerm, Term oldTerm) {
+		return new Disjunction(lhs.replace(newTerm, oldTerm), rhs.replace(newTerm, oldTerm));
+	}
 }

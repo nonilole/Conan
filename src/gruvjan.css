@@ -1,0 +1,77 @@
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('FontAwesome.otf');
+}
+.myText {
+  -fx-background-color: linear-gradient(to bottom, derive(-fx-text-box-border, -10%), -fx-text-box-border),
+   linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
+  -fx-font-family: Monospace;
+  -fx-font-size: 16px;
+  -fx-background-insets: 0 4 0 4, 0 4 1 4;
+  -fx-background-radius: 0, 0;
+  -fx-text-fill: #ebdbb2;
+  -fx-prompt-text-fill: #ebdbb2;
+  -fx-text-box-border: #928374;
+  -fx-control-inner-background: #282828;
+  -fx-font-smoothing-type: gray;
+}
+.infoText {
+  -fx-font-size: 16px;
+  -fx-line-height: 1.4;
+  -fx-padding: 0 100px 0 100px;
+}
+.myTitle {
+  -fx-font-size: 25px;
+}
+.fit {
+  -fx-fit-to-height: true;
+  -fx-fit-to-width: true;
+}
+.openBox, .closedBox {
+  -fx-padding: 1 0 3 3;
+  -fx-border-style: solid;
+  -fx-border-color: #fff;
+  -fx-border-width: 2 2 0 2;
+}
+.closedBox {
+  -fx-border-width: 2px;
+}
+.lineNo {
+  -fx-font-family: Monospace;
+  -fx-font-size: 16px;
+  -fx-text-box-border: transparent;
+}
+.bad {
+  -fx-control-inner-background: #cc241d;
+}
+.unVerified {
+  -fx-control-inner-background: #cc241d;
+}
+.conclusionReached {
+  -fx-control-inner-background: #98971a;
+}
+.root .button {
+  -fx-text-fill: #ebdbb2;
+}
+.menuButtons {
+  -fx-font-family: FontAwesome;
+  -fx-font-size: 18px;
+}
+.root .tab {
+  -fx-background-color: #3A3A3A;
+}
+.root .tab:selected {
+  -fx-background-color: #282828;
+}
+.root {
+  -fx-focus-color: #458588;
+  -fx-background: #282828;
+  -fx-base: #282828;
+}
+.rulesView {
+  -fx-background: #fff;
+}
+.tooltip{
+-fx-font-family: System;
+-fx-font-size: 10px;
+}

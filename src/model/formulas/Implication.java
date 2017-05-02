@@ -10,6 +10,16 @@ public class Implication extends Formula {
         this.rhs = rhs;
         super.precedence = 1;
     }
+    
+    @Override
+    public Formula replace(String newId,String oldId){
+    	return new Implication(lhs.replace(newId, oldId), rhs.replace(newId, oldId));
+    }
+    
+    @Override
+    public Formula replace(Term newTerm, Term oldTerm){
+    	return new Implication(lhs.replace(newTerm, oldTerm), rhs.replace(newTerm, oldTerm));
+    }
 
     @Override
     public boolean equals(Object o){
@@ -29,4 +39,9 @@ public class Implication extends Formula {
     		return lhs+" → "+rhs;
     	}
     }
+    
+    @Override
+	public boolean containsObjectId(String id) {
+		return lhs.containsObjectId(id) ||  rhs.containsObjectId(id);
+	}
 }

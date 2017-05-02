@@ -24,7 +24,10 @@ public class ProofRow implements ProofEntry{
     public Box getParent(){
     	return parent;
     }
-    
+    public void setParent(Box parent) {
+        this.parent = parent;
+    }
+
     public void setFormula(Formula formula) {
         this.formula = formula;
     }
@@ -54,14 +57,19 @@ public class ProofRow implements ProofEntry{
         return this.rule;
     }
     
-    @Override //TODO: also represent the rule...
+    @Override 
     public String toString(){
+    	StringBuilder strB = new StringBuilder();
     	if(formula == null){
-    		return getUserInput();
+    		strB.append(getUserInput());
     	}
     	else{
-    		return formula.toString();
+    		strB.append(formula.toString());
     	}
+    	strB.append(" :: "+(rule == null ? "no rule" : rule)); // ✓
+    	strB.append(" :: Verified: " + (isVerified ? "✓" : "x"));
+        strB.append(" ::" + (!getParent().isTopLevelBox() && getParent().entries.get(0).equals(this) ? "1" : "0")); //For latex to indicate start of a box
+    	return strB+"";
     }
 
 	public String getUserInput() {

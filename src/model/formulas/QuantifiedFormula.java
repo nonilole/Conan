@@ -18,13 +18,34 @@ public class QuantifiedFormula extends Formula{
         this.var = var;
         super.precedence = 3;
     }
+    
+    //return the subformula of this quantifiedformula with the quantified variable instantiated to id
+    public Formula instantiate(String id){
+    	return formula.replace(id, var);
+    }
+    
+  //return the subformula of this quantifiedformula with the quantified variable instantiated to id
+    public Formula instantiate(Term term){
+    	return formula.replace(term, new LogicObject(var));
+    }
+    
+    @Override 
+    public Formula replace(String newId,String oldId){
+    	return var.equals(oldId) ? this : new QuantifiedFormula(formula.replace(newId, oldId), var, type);
+    }
+    
+    @Override 
+    public Formula replace(Term newTerm,Term oldTerm){
+    	return new LogicObject(var).equals(oldTerm) ? 
+    			this : new QuantifiedFormula(formula.replace(newTerm, oldTerm), var, type);
+    }
 
     @Override
     public boolean equals(Object o){
     	if(o instanceof QuantifiedFormula){
     		QuantifiedFormula other = (QuantifiedFormula) o;
     		if(this.type != other.type) return false;
-    		if(this.var != other.var) return false;
+    		if(this.var.equals(other.var) == false) return false;
     		return this.formula.equals(other.formula);
     	}
     	return false;
@@ -34,7 +55,12 @@ public class QuantifiedFormula extends Formula{
     public String toString(){
     	StringBuilder strB = new StringBuilder();
     	strB.append(type+var);
-    	strB.append( formula.getPrecedence() < 3 ? "("+formula+")" : formula+"");
+    	strB.append( formula.getPrecedence() < 3 || formula instanceof Equality ? "("+formula+")" : formula+"");
     	return strB.toString();
     }
+    
+    @Override
+	public boolean containsObjectId(String id) {
+		return formula.containsObjectId(id);
+	}
 }
