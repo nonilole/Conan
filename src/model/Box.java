@@ -350,7 +350,7 @@ public class Box implements ProofEntry, Serializable{
 	}
 	
 	public void fillList(ArrayList<ProofListener.RowInfo> list){
-		boolean startOfBox = true;
+		boolean startOfBox = this.isTopLevelBox() ? false : true;
 		for(ProofEntry entry : this.entries){
 			if(entry instanceof Box){
 				((Box)entry).fillList(list);

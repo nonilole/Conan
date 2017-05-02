@@ -17,7 +17,7 @@ public abstract class Formula implements Serializable{
 	
 	public abstract Formula replace(Term newTerm,Term oldTerm);
 	
-	public abstract boolean containsObjectId(String id);
+	public abstract boolean containsFreeObjectId(String id);
 	
 	public static boolean isInstantiationOf(Formula instantiation, QuantifiedFormula quant){ 
 		Term[] diff = findTermDifference(instantiation, quant.formula);

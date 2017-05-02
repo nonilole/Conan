@@ -40,7 +40,7 @@ public class Conjunction extends Formula {
     }
 
 	@Override
-	public boolean containsObjectId(String id) {
-		return lhs.containsObjectId(id) ||  rhs.containsObjectId(id);
+	public boolean containsFreeObjectId(String id) {
+		return lhs.containsFreeObjectId(id) ||  rhs.containsFreeObjectId(id);
 	}
 }

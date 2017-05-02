@@ -13,7 +13,7 @@ public class FreshVarFormula extends Formula {
 	}
 
 	@Override
-	public boolean containsObjectId(String id) {
+	public boolean containsFreeObjectId(String id) {
 		return id.equals(var);
 	}
 	

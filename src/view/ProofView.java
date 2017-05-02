@@ -605,7 +605,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
         //Add boxes and rows
         for (int i = 1; i <= proofInfo.size(); i++) {
             RowInfo rowInfo = proofInfo.get(i - 1);
-            if (rowInfo.startBox && i != 1) {
+            if (rowInfo.startBox  && i != 1) {
                 this.openBoxInView();
             }
             rowAdded();
