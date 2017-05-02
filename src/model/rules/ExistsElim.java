@@ -55,7 +55,7 @@ public class ExistsElim extends Rule {
         if (!(refBox.getRow(0).getRule() instanceof FreshVar)) return false;
         String freshVar = ((FreshVarFormula) refBox.getRow(0).getFormula()).var;
         if (!refBox.getRow(1).getFormula().equals(refdQuant.instantiate(freshVar))) return false;
-        if (refBox.getRow(refBox.size() - 1).getFormula().containsObjectId(freshVar)) return false;
+        if (refBox.getRow(refBox.size() - 1).getFormula().containsFreeObjectId(freshVar)) return false;
         return true;
     }
 

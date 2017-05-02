@@ -34,8 +34,8 @@ public class Negation extends Formula{
     }
     
     @Override
-	public boolean containsObjectId(String id) {
-		return formula.containsObjectId(id);
+	public boolean containsFreeObjectId(String id) {
+		return formula.containsFreeObjectId(id);
 	}
 
 }
