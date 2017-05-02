@@ -10,12 +10,12 @@
     -fx-border-radius: 0;
     -fx-border-size: 0;
   	-fx-background-color: black , white;
-   	-fx-background-insets: 0 5 -1 5, 0 0 0 0;
+   	-fx-background-insets: 0 5 0 5, 0 0 1 0;
 }
 
 .myText:focused {
-	/*-fx-background-color: black , white;*/
-	-fx-background-insets: 0 5 -1 5, 0 -1 0 0;
+	/*-fx-background-insets: 0 5 -1 5, 0 0 0 0;*/
+	  /*	-fx-background-insets: 0 5 0 5, 0 0 1 0;*/
 }
 
 .infoText {
