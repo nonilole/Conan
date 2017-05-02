@@ -7,6 +7,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
@@ -22,7 +25,11 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
 
+import static javafx.scene.input.KeyCombination.SHORTCUT_DOWN;
+
 public class MainController implements Initializable {
+    final static KeyCombination ctrlF1 = new KeyCodeCombination(KeyCode.F1, SHORTCUT_DOWN);
+    final static KeyCombination ctrlF2 = new KeyCodeCombination(KeyCode.F2, SHORTCUT_DOWN);
     @FXML
     private CheckBox verification;
     @FXML
@@ -547,6 +554,19 @@ public class MainController implements Initializable {
             newProof(null);
         }
         createTooltip();
+        Scene scene = tabPane.getScene();
+        scene.setOnKeyPressed(key -> {
+            if (ctrlF1.match(key))
+                if (tabPane.getTabs().size() > 1)
+                    tabPane.getSelectionModel().select(0);
+            else if (ctrlF2.match(key))
+                if (tabPane.getTabs().size() > 1)
+                tabPane.getSelectionModel().select(1);
+        });
+    }
+    private void selectTab(int index) {
+        if (index+1 <= tabPane.getTabs().size())
+            tabPane.getSelectionModel().select(index);
     }
 
     //Get the view corresponding to the currently active tab
