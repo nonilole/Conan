@@ -235,11 +235,13 @@ public class ProofView extends Symbolic implements ProofListener, View {
     public void rowAdded() {
         RowPane rp;
         if (curBoxDepth.isEmpty()) {
+        	System.out.println("rowAdded! curBoxDepth.isEmpty");
             rp = new RowPane(false, 0);
             rList.add(rp);
             rp.init(this, rList);
             rows.getChildren().add(rp);
         } else {
+        	System.out.println("rowAdded!");
             VBox box = curBoxDepth.peek();
             List<Node> children = box.getChildren();
             boolean isFirstRowInBox = (children.isEmpty()) ? true : false;
@@ -605,7 +607,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
         //Add boxes and rows
         for (int i = 1; i <= proofInfo.size(); i++) {
             RowInfo rowInfo = proofInfo.get(i - 1);
-            if (rowInfo.startBox && i != 1) {
+            if (rowInfo.startBox) {
                 this.openBoxInView();
             }
             rowAdded();
