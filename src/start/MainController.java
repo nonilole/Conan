@@ -554,19 +554,7 @@ public class MainController implements Initializable {
             newProof(null);
         }
         createTooltip();
-        Scene scene = tabPane.getScene();
-        scene.setOnKeyPressed(key -> {
-            if (ctrlF1.match(key))
-                selectTab(0);
-            else if (ctrlF2.match(key))
-                selectTab(1);
-        });
     }
-    private void selectTab(int index) {
-        if (index+1 <= tabPane.getTabs().size())
-            tabPane.getSelectionModel().select(index);
-    }
-
     //Get the view corresponding to the currently active tab
     private View getCurrentView() {
         if (currentTab != null)
