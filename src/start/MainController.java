@@ -1,6 +1,5 @@
 package start;
 
-import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,11 +24,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
 
-import static javafx.scene.input.KeyCombination.SHORTCUT_DOWN;
 
 public class MainController implements Initializable {
-    final static KeyCombination ctrlF1 = new KeyCodeCombination(KeyCode.F1, SHORTCUT_DOWN);
-    final static KeyCombination ctrlF2 = new KeyCodeCombination(KeyCode.F2, SHORTCUT_DOWN);
     @FXML
     private CheckBox verification;
     @FXML
@@ -555,6 +551,7 @@ public class MainController implements Initializable {
         }
         createTooltip();
     }
+
     //Get the view corresponding to the currently active tab
     private View getCurrentView() {
         if (currentTab != null)
