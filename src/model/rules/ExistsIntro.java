@@ -64,7 +64,7 @@ public class ExistsIntro extends Rule {
 
     @Override
     public String toString() {
-        return String.format("∃e, %s", rowRef == null ? "" : new Integer(rowRef+1));
+        return String.format("∃i, %s", rowRef == null ? "" : new Integer(rowRef+1));
     }
     
     @Override
