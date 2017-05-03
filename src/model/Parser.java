@@ -37,6 +37,7 @@ public class Parser{
     boolean isObjectId(String str){
     	if(str.length() == 0) return false;
     	str = str.trim();
+    	if(str.length() < 1) return false;
     	String subDigits = "₀₁₂₃₄₅₆₇₈₉";
     	if( str.charAt(0) < 'a' || str.charAt(0) > 'z' ) return false;
     	for(int i = 1; i < str.length(); i++){
