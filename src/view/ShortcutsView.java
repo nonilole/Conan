@@ -48,12 +48,12 @@ public class ShortcutsView implements View {
     private String loadInstructions() {
     	StringBuilder filedata = new StringBuilder();
     	try{
-	        Scanner scr = new Scanner(new File("resources/shortcuts.txt"));
+	        Scanner scr = new Scanner(getClass().getResourceAsStream("/shortcuts.txt"));
 	        while(scr.hasNext()){
 	        	filedata.append(scr.nextLine() + System.lineSeparator());
 	        }
 	        scr.close();
-	    } catch(FileNotFoundException e){
+	    } catch(/*FileNotFound*/Exception e){
 	    	System.out.println("User instructions could not be located.");
 	        System.out.println(e);
 	    }
