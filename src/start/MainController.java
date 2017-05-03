@@ -460,7 +460,7 @@ public class MainController implements Initializable {
         undoButton.setTooltip(new Tooltip("Undo (CTRL+Z)"));
         redoButton.setTooltip(new Tooltip("Redo (CTRL+Y/CTRL+SHIFT+Z)"));
         openBoxButton.setTooltip(new Tooltip("Open Box (CTRL+B)"));
-        appendRowButton.setTooltip(new Tooltip("Add row after current row (Shift+Enter)"));
+        appendRowButton.setTooltip(new Tooltip("Add row after current row or box (Shift+Enter)"));
         insertRowButton.setTooltip(new Tooltip("Insert row (Enter)"));
         deleteRowButton.setTooltip(new Tooltip("Delete current row/box (CTRL+D)"));
         verification.setTooltip(new Tooltip("Turn on/off verification"));
