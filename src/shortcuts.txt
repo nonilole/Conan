@@ -16,13 +16,13 @@ Ctrl+B      	Open box on row
 Tab			Move to right textfield or move down
 
 Symbols
--> | im    		Implication
-an | &     		And
-or       		Or
-ne | no | !  	Negation
-fo | fa    		For all
-ex | te | th 	There exists
-bo | co    		Contradiction/Bottom
+-> | im    		Implication (→)
+an | &     		And (∧)
+or       		Or (∨)
+ne | no | !  	Negation (¬)
+fo | fa    		For all (∀)
+ex | te | th 	There exists (∃)
+bo | co    		Contradiction/Bottom (⊥)
 
 File/Help
 F1     		Instructions
