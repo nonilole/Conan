@@ -64,6 +64,8 @@ public class RuleMapper {
                         if (rule.charAt(2) == 'i') {
                             System.out.println("Hello");
                             return new ExistsIntro(rule.charAt(1));
+                        } else {
+                            return new ExistsElim(rule.charAt(1));
                         }
                     } else {
                         if (rule.charAt(2) == 'i') {

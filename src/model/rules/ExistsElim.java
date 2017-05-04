@@ -10,6 +10,14 @@ import start.Constants;
 public class ExistsElim extends Rule {
     private Integer rowRef;
     private Interval intervalRef;
+    private String var = null;
+
+    public ExistsElim() {
+    }
+
+    public ExistsElim(char var) {
+        this.var = Character.toString(var);
+    }
 
     @Override
     public boolean hasCompleteInfo() {
@@ -47,6 +55,7 @@ public class ExistsElim extends Rule {
         if (referencedRowFormula instanceof QuantifiedFormula) {
             QuantifiedFormula quant = (QuantifiedFormula) referencedRowFormula;
             if (quant.type != '∃') return false;
+            if (var != null && !quant.var.equals(var)) return false;
         } else return false;
         QuantifiedFormula refdQuant = (QuantifiedFormula) referencedRowFormula;
         Box refBox = data.getBox(intervalRef);
