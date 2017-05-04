@@ -65,7 +65,7 @@ public class FreshVar extends Rule {
 
     @Override
     public String toString() {
-        return "Fresh";
+        return "fresh";
     }
 
 	@Override
