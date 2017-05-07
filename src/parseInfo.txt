@@ -1,0 +1,23 @@
+
+If the parser is unable to parse an inputted formula, the row will turn red.
+
+Inputted formulas are interpreted as follows:
+Predicates use upper-case letters for identifiers, terms use lower-case.
+Objects can be indexed, so x0 or a17 are valid objects.
+
+Precedence: 
+Unary binds most strongly: ¬,∀,∃
+Conjunction/Disjunction comes second: ∧,∨
+Implication binds weakest: →
+
+Associativity:
+∧ and ∨ are both left-associative, → is right associative
+
+Whitespace is ignored by the parser so it can be freely used for readability.
+
+Examples:
+∀x P(x) ∧ Q(x)  would be parsed as: (∀x P(x)) ∧ Q(x) 
+A ∨ B ∧ C  would be parsed as: (A ∨ B) ∧ C
+A → B → C  would be parsed as: (A → (B → C))
+A → B → C ∧ D would be parsed as: A → ((B ∧ C) → D)
+ 

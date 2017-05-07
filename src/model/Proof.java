@@ -56,6 +56,7 @@ public class Proof implements Serializable{
         for (ProofListener listener : this.listeners) {
             listener.rowDeleted(rowNumber);
         }
+        verifyProof();
         printProof("Row deleted");
         return delDepth;
     }
@@ -79,7 +80,8 @@ public class Proof implements Serializable{
         for (ProofListener pl : listeners) {
             pl.rowInserted(rowNumber, br, depth);
         }
-        verifyProof(rowNumber-1 + (br == BoxReference.BEFORE ? 0 : 1));
+//        verifyProof(rowNumber-1 + (br == BoxReference.BEFORE ? 0 : 1));
+        verifyProof();
         printProof("Inserted new row");
         return true;
     }
@@ -92,6 +94,7 @@ public class Proof implements Serializable{
         for (ProofListener pl : listeners) {
             pl.deletedRowAfterBox(rowNumber);
         }
+        verifyProof();
         printProof("Deleted row");
         return true;
     }
@@ -125,7 +128,8 @@ public class Proof implements Serializable{
         for (ProofListener listener : this.listeners) {
             listener.rowUpdated(null, wellFormed, rowNumber);
         }
-        verifyProof(rowIndex); //should use verifyProof later probably, to verify rows lower in the proof aswell
+//        verifyProof(rowIndex); //should use verifyProof later probably, to verify rows lower in the proof aswell
+        verifyProof();
         printProof("Updated formula in row");
     }
 
@@ -135,7 +139,8 @@ public class Proof implements Serializable{
         ProofRow pr = proofData.getRow(rowIndex);
         Rule rule = RuleMapper.getRule(ruleString);
         pr.setRule(rule);
-        verifyProof(rowIndex);
+//        verifyProof(rowIndex);
+        verifyProof();
         printProof("Updated rule in row");
     }
 
@@ -147,6 +152,9 @@ public class Proof implements Serializable{
     }
 
     //should verify each line in the proof from line startIndex
+    public boolean verifyProof() {
+        return verifyProof(0);
+    }
     public boolean verifyProof(int startIndex) {
         assert (startIndex < proofData.size()) : "Proof.verifyProof: index out of bounds";
         boolean returnValue = true;
@@ -188,7 +196,8 @@ public class Proof implements Serializable{
         for (ProofListener listener : this.listeners) {
             listener.boxInserted(rowIndex + 1);
         }
-        verifyProof(rowIndex);
+//        verifyProof(rowIndex);
+        verifyProof();
         printProof("inserted box");
         return true;
     }
@@ -199,6 +208,7 @@ public class Proof implements Serializable{
         for (ProofListener listener : this.listeners) {
             listener.boxRemoved(rowIndex + 1);
         }
+        verifyProof();
         return true;
     }
 
@@ -293,7 +303,8 @@ public class Proof implements Serializable{
             System.out.println("Invalid argument for " + rule.getClass().getSimpleName());
         }
         generateRow(rowIndex);
-        verifyProof(rowIndex);
+//        verifyProof(rowIndex);
+        verifyProof();
         printProof("rulePromptUpdate");
     }
 

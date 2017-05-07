@@ -38,7 +38,7 @@ public class Equality extends Formula {
     }
     
     @Override
-	public boolean containsObjectId(String id) {
+	public boolean containsFreeObjectId(String id) {
 		return lhs.containsObjectId(id) ||  rhs.containsObjectId(id);
 	}
 

@@ -69,7 +69,7 @@ public class Predicate extends Formula{
     }
     
     @Override
-	public boolean containsObjectId(String id) {
+	public boolean containsFreeObjectId(String id) {
     	for(Term arg : args){
 			if(arg.containsObjectId(id)) return true;
 		}

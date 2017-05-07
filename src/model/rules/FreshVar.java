@@ -52,7 +52,7 @@ public class FreshVar extends Rule {
         	else{
         		Formula f = prow.getFormula();
         		if(f == null) continue;
-        		if(f.containsObjectId(freshVar)) return false;
+        		if(f.containsFreeObjectId(freshVar)) return false;
         	}
         }
         return true;
@@ -65,7 +65,7 @@ public class FreshVar extends Rule {
 
     @Override
     public String toString() {
-        return "";
+        return "fresh";
     }
 
 	@Override

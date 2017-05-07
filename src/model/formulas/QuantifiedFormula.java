@@ -60,7 +60,8 @@ public class QuantifiedFormula extends Formula{
     }
     
     @Override
-	public boolean containsObjectId(String id) {
-		return formula.containsObjectId(id);
+	public boolean containsFreeObjectId(String id) {
+    	if(id.equals(var)) return false;
+    	else return formula.containsFreeObjectId(id);
 	}
 }

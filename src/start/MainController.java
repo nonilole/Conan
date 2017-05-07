@@ -451,6 +451,11 @@ public class MainController implements Initializable {
     void showShortcuts(ActionEvent event) {
         new ShortcutsView(tabPane);
     }
+    
+    @FXML
+    void showParseInfo(ActionEvent event) {
+    	new ParseInfoView(tabPane);
+    }
 
     public void createTooltip() {
         //Toolbar

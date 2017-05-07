@@ -11,7 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Screen;
 
 
-public class ShortcutsView implements View {
+public class ParseInfoView implements View {
     //The tab object of this view
     private ViewTab tab;
 
@@ -20,7 +20,7 @@ public class ShortcutsView implements View {
      * @param tabPane
      *
      */
-    public ShortcutsView(TabPane tabPane) {
+    public ParseInfoView(TabPane tabPane) {
 
     	Label label = new Label(loadInstructions());
     	label.getStyleClass().add("infoText");
@@ -48,7 +48,7 @@ public class ShortcutsView implements View {
     private String loadInstructions() {
     	StringBuilder filedata = new StringBuilder();
     	try{
-	        Scanner scr = new Scanner(getClass().getResourceAsStream("/shortcuts.txt"));
+	        Scanner scr = new Scanner(getClass().getResourceAsStream("/parseInfo.txt"));
 	        while(scr.hasNext()){
 	        	filedata.append(scr.nextLine() + System.lineSeparator());
 	        }

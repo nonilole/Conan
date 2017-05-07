@@ -13,7 +13,7 @@ public class Contradiction extends Formula {
 	}
 
 	@Override
-	public boolean containsObjectId(String id) {
+	public boolean containsFreeObjectId(String id) {
 		return false;
 	}
 	

@@ -3,6 +3,7 @@ package model.rules;
 import model.Box;
 import model.formulas.Formula;
 import model.formulas.FreshVarFormula;
+import model.formulas.LogicObject;
 import model.formulas.QuantifiedFormula;
 import start.Constants;
 
@@ -50,13 +51,13 @@ public class ForallIntro extends Rule {
     @Override
     public boolean verifyRow(Box data, int rowIndex) {
         Box refBox = data.getBox(intervalRef);
-        String freshVarId = ((FreshVarFormula) refBox.getRow(0).getFormula()).var;
+        LogicObject freshVar = new LogicObject(((FreshVarFormula) refBox.getRow(0).getFormula()).var);
         Formula lastRowInRefBox = refBox.getRow(refBox.size() - 1).getFormula();
         QuantifiedFormula toVerify;
         if (data.getRow(rowIndex).getFormula() instanceof QuantifiedFormula == false) return false;
         toVerify = (QuantifiedFormula) data.getRow(rowIndex).getFormula();
         if(toVerify.type != '∀') return false;
-        return toVerify.instantiate(freshVarId).equals(lastRowInRefBox);
+        return toVerify.formula.equals(lastRowInRefBox.replace(new LogicObject(toVerify.var), freshVar));
     }
 
     @Override
