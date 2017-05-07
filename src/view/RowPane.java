@@ -110,10 +110,10 @@ public class RowPane extends BorderPane {
     private void setMenu(ProofView pv, List<RowPane> rList) {
         ContextMenu contextMenu = new ContextMenu();
         MenuItem insertAbove = new MenuItem("Insert above");
-        MenuItem insertHere = new MenuItem("Insert here");
-        MenuItem insertBelow = new MenuItem("Insert below");
-        MenuItem insertBox = new MenuItem("Insert box");
-        MenuItem delete = new MenuItem("Delete");
+        MenuItem insertHere = new MenuItem("Insert here (Enter)");
+        MenuItem insertBelow = new MenuItem("Insert below box (Shift+Enter)");
+        MenuItem insertBox = new MenuItem("Insert box (CTRL+B)");
+        MenuItem delete = new MenuItem("Delete (CTRL+D)");
         contextMenu.getItems().add(delete);
         contextMenu.getItems().add(insertAbove);
         contextMenu.getItems().add(insertHere);
