@@ -100,6 +100,6 @@ public class ConjunctionIntro extends Rule {
     public String toString() {
         String p1 = premise1 == null ? "" : new Integer(premise1+1).toString();
         String p2 = premise2 == null ? "" : new Integer(premise2+1).toString();
-        return String.format("∧i, %s,s", p1, p2);
+        return String.format("∧i, %s,%s", p1, p2);
     }
 }
