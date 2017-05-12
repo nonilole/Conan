@@ -62,7 +62,8 @@ public class Box implements ProofEntry, Serializable{
         closedBox.incSize();
         boxToInsertInto.decSize();
         referenceRow.setParent(closedBox);
-		boxToInsertInto.entries.remove(internalReferenceIndex);
+		//boxToInsertInto.entries.remove(internalReferenceIndex);
+        boxToInsertInto.entries.remove(referenceRow);
 		boxToInsertInto.entries.add(internalReferenceIndex, closedBox);
 	}
     public void removeBox(int index){
@@ -200,6 +201,10 @@ public class Box implements ProofEntry, Serializable{
 		if( theBox == null) return false;
 		Box parentOfIntervalBox = theBox.getParent();
 		//System.out.println("theBox == null : false");
+		
+		//TODO:
+		//Check that the box doesn't end with a box
+		if(theBox.entries.get(theBox.entries.size()-1) instanceof Box) return false;
 		
 		//check if the box is an ancestor of the referencingRow
 		Box referencingRowAncestorBox = getRow(referencingRow).getParent();
