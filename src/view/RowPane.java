@@ -35,7 +35,9 @@ public class RowPane extends BorderPane {
     final static KeyCombination ctrlY = new KeyCodeCombination(Y, SHORTCUT_DOWN);
     private static final HashMap<String, List<Boolean>> ruleBox;
     private static final HashMap<String, Integer> ruleMap;
-    static Pattern p = Pattern.compile("^([1-9]\\d*-?([1-9]\\d*)?)?$");
+//    static Pattern p = Pattern.compile("^([1-9]\\d*-?([1-9]\\d*)?)?$");
+    static Pattern p = Pattern.compile("^(([1-9]\\d*)?-?([1-9]\\d*)?)?$");
+
 
     static {
         List<Boolean> ft = Arrays.asList(false, true, true);
