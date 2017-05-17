@@ -336,7 +336,7 @@ public class Proof implements Serializable{
         assert (rowIndex < proofData.size());
         ProofRow row = proofData.getRow(rowIndex);
         Rule rule = row.getRule();
-        if (rule == null || rule.hasCompleteInfo() == false) {
+        if (rule == null || rule.hasCompleteInfo() == false || row.getFormula() != null) {
             return;
         }
         Formula generated = null;
