@@ -4,7 +4,7 @@
 }
 .myText {
   -fx-background-color: linear-gradient(to bottom, derive(-fx-text-box-border, -10%), -fx-text-box-border),
-   linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
+  linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
   -fx-font-family: Monospace;
   -fx-font-size: 16px;
   -fx-background-insets: 0 4 0 4, 0 4 1 4;
@@ -72,6 +72,10 @@
   -fx-background: #fff;
 }
 .tooltip{
--fx-font-family: System;
--fx-font-size: 10px;
+  -fx-font-family: System;
+  -fx-font-size: 10px;
+}
+.status {
+  -fx-font-size: 30px;
+  -fx-text-fill: #ebdbb2;
 }
