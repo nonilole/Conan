@@ -33,7 +33,8 @@ public class Proof implements Serializable{
         for (ProofListener listener : this.listeners) {
             listener.rowAdded();
         }
-        verifyRow(proofData.size() - 1);
+        verifyProof();
+        //verifyRow(proofData.size() - 1);
         printProof("Row added");
     }
 
@@ -148,7 +149,8 @@ public class Proof implements Serializable{
     public void addRule(int rowNr, Rule rule) {
         System.out.println("addRule: " + rowNr + ", Rule: " + rule);
         proofData.getRow(rowNr - 1).setRule(rule);
-        verifyRow(rowNr - 1);
+       // verifyRow(rowNr - 1);
+        verifyProof();
     }
 
     //should verify each line in the proof from line startIndex
@@ -164,7 +166,6 @@ public class Proof implements Serializable{
                 else {
                     for (ProofListener listener : this.listeners) {
                         listener.updateErrorStatus(i + 1, "");
-                        ;
                     }
                 }
             } catch (VerificationInputException e) {
@@ -174,6 +175,10 @@ public class Proof implements Serializable{
             }
             //TODO: inform listeners about each row
         }
+        for (ProofListener listener : this.listeners) {
+            listener.updateStatus();
+        }
+
         return returnValue;
     }
 
@@ -183,9 +188,13 @@ public class Proof implements Serializable{
         assert (rowIndex < proofData.size()) : "Proof.verifyRow: index out of bounds";
         ProofRow row = proofData.getRow(rowIndex);
         Rule rule = row.getRule();
-        boolean isVerified;
-        if (rule == null || row.getFormula() == null || rule.hasCompleteInfo() == false) {
-            isVerified = false;
+        boolean isVerified = false;
+        if (rule == null) {
+            throw new VerificationInputException("No/incorrect justification specified.");
+        } else if ( row.getFormula() == null ) {
+            throw new VerificationInputException("No/incorrect formula specified.");
+        } else if (rule.hasCompleteInfo() == false) {
+            throw new VerificationInputException("A reference is empty.");
         } else {
             isVerified = rule.verify(proofData, rowIndex);
         }

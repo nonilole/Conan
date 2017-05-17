@@ -443,6 +443,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
         int rowNo = getRowNumberLastFocusedTF();
         if (rowNo != -1) {
             RowPane rp = rList.get(rowNo-1);
+            System.out.println(rp.getErrorMessage());
             setLeftStatus(rp.getErrorMessage());
         }
     }
@@ -454,7 +455,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
         if (newText != null)
             expression.setText(newText);
         applyStyleIf(expression, !wellFormed, "bad");
-        updateStatus();
     }
 
     public void conclusionReached(boolean correct, int lineNo) {
@@ -467,7 +467,6 @@ public class ProofView extends Symbolic implements ProofListener, View {
     public void rowVerified(boolean verified, int lineNo) {
         TextField rule = (TextField) rList.get(lineNo - 1).getRule();
         applyStyleIf(rule, !verified, "unVerified");
-        updateStatus();
     }
 
     //update view to reflect that row with nr rowNr has been deleted
