@@ -28,12 +28,14 @@ public class ConjunctionIntro extends Rule {
         Integer ref;
         try {
             ref = ReferenceParser.parseIntegerReference(refStr);
+            if (refNr == 1) setPremise1(ref);
+            else/*refNr == 2*/ setPremise2(ref);
         } catch (NumberFormatException e) {
             ref = null;
+            if (refNr == 1) setPremise1(ref);
+            else/*refNr == 2*/ setPremise2(ref);
             throw new NumberFormatException(); //Still want this to propagate up
         }
-        if (refNr == 1) setPremise1(ref);
-        else/*refNr == 2*/ setPremise2(ref);
     }
 
     @Override

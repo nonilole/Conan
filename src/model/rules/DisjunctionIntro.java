@@ -32,11 +32,12 @@ public class DisjunctionIntro extends Rule {
         Integer ref;
         try {
             ref = ReferenceParser.parseIntegerReference(refStr);
+            setPremise(ref);
         } catch (NumberFormatException e) {
             ref = null;
+            setPremise(ref);
             throw new NumberFormatException(); //Still want this to propagate up
         }
-        setPremise(ref);
     }
 
     @Override

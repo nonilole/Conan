@@ -33,11 +33,12 @@ public class ImplicationIntro extends Rule {
         Interval ref;
         try {
             ref = ReferenceParser.parseIntervalReference(refStr);
+            setPremiseInterval(ref);
         } catch (NumberFormatException e) {
             ref = null;
+            setPremiseInterval(ref);
             throw new NumberFormatException(); //Still want this to propagate up
         }
-        setPremiseInterval(ref);
     }
 
     @Override

@@ -29,11 +29,12 @@ public class DoubleNegationIntro extends Rule {
         Integer ref;
         try {
             ref = ReferenceParser.parseIntegerReference(refStr);
+            setPremise1(ref);
         } catch (NumberFormatException e) {
             ref = null;
+            setPremise1(ref);
             throw new NumberFormatException(); //Still want this to propagate up
         }
-        setPremise1(ref);
     }
 
     @Override
