@@ -156,16 +156,16 @@ public class Box implements ProofEntry, Serializable{
 	 * @param referencingRowIndex
 	 * @return
 	 */
-	public boolean isInScopeOf(int referenceRowIndex, int referencingRowIndex){
-		if( referenceRowIndex >= referencingRowIndex) return false;
+	public boolean isInScopeOf(int referenceRowIndex, int referencingRowIndex) throws VerificationInputException {
+		if( referenceRowIndex >= referencingRowIndex) throw new VerificationInputException("Out of scope.");
 		ProofRow referenceRow = getRow(referenceRowIndex);
 		ProofRow referencingRow = getRow(referencingRowIndex);
 		Box referenceParent = referenceRow.getParent();
 		Box referencingRowAncestorBox = referencingRow.getParent();
 		
 		//check if the reference is verified to be correct
-		if( referenceRow.isVerified() == false ) return false;
-		
+		if( referenceRow.isVerified() == false ) throw new VerificationInputException("Reference is not verified.");
+
 		//For referenceRow to be in scope of the referencingRow, the parent of the referenceRow must be 
 		//in the ancestral hierarchy of the referencingRow. A simpler way to put it: The innermost box 
 		//containing the referenceRow must also contain the referencingRow
@@ -175,7 +175,7 @@ public class Box implements ProofEntry, Serializable{
 			}
 			referencingRowAncestorBox = referencingRowAncestorBox.getParent();
 		}
-		return false;
+		throw new VerificationInputException("Out of scope.");
 	}
 	
 	/**
@@ -187,33 +187,32 @@ public class Box implements ProofEntry, Serializable{
 	public boolean isInScopeOf(Interval interval, int referencingRow){
 		int start = interval.startIndex;
 		int end = interval.endIndex;
-		if( end < start || referencingRow <= end) return false;
+		if (end < start || referencingRow <= end) throw new VerificationInputException("Out of scope.");
 		//System.out.println("end < start || referencingRow <= end : true");
 		
 		//check if the rows inthe box are verified
-		for(int i = start; i <= end; i++){
-			if( getRow(i).isVerified() == false ) return false;
+		for (int i = start; i <= end; i++) {
+			if (getRow(i).isVerified() == false) throw new VerificationInputException("References are not verified.");
 		}
 		
 		//ProofRow row1 = getRow(start);
 		//ProofRow row2 = getRow(end);
 		Box theBox = getBox(interval);
-		if( theBox == null) return false;
+		if( theBox == null) throw new VerificationInputException("Interval needs to specify an entire box.");
 		Box parentOfIntervalBox = theBox.getParent();
 		//System.out.println("theBox == null : false");
 		
 		//TODO:
 		//Check that the box doesn't end with a box
-		if(theBox.entries.get(theBox.entries.size()-1) instanceof Box) return false;
-		
+		if(theBox.entries.get(theBox.entries.size()-1) instanceof Box) throw new VerificationInputException("Box may not end in a box.");
+
 		//check if the box is an ancestor of the referencingRow
 		Box referencingRowAncestorBox = getRow(referencingRow).getParent();
 		while(referencingRowAncestorBox != null){
 			if( parentOfIntervalBox == referencingRowAncestorBox) return true;
 			referencingRowAncestorBox = referencingRowAncestorBox.getParent();
 		}
-		System.out.println("reached the end");
-		return false;
+		throw new VerificationInputException("Out of scope.");
 	}
 	
 	/**
