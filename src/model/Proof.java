@@ -189,21 +189,18 @@ public class Proof implements Serializable{
         ProofRow row = proofData.getRow(rowIndex);
         Rule rule = row.getRule();
         boolean isVerified = false;
+        VerificationInputException exceptionToThrow = null;
         if (rule == null) {
-            throw new VerificationInputException("No/incorrect justification specified.");
+            exceptionToThrow = new VerificationInputException("No/incorrect justification specified.");
         } else if ( row.getFormula() == null ) {
-            throw new VerificationInputException("No/incorrect formula specified.");
+            exceptionToThrow = new VerificationInputException("No/incorrect formula specified.");
         } else if (rule.hasCompleteInfo() == false) {
-            throw new VerificationInputException("A reference is empty.");
+            exceptionToThrow = new VerificationInputException("A reference is empty.");
         } else {
             try {
                 isVerified = rule.verify(proofData, rowIndex);
             } catch (VerificationInputException e) {
-                row.setVerified(isVerified);
-                for (ProofListener listener : this.listeners) {
-                    listener.rowVerified(isVerified, rowIndex + 1);
-                }
-                throw e;
+                exceptionToThrow = e;
             }
         }
         row.setVerified(isVerified);
@@ -211,6 +208,8 @@ public class Proof implements Serializable{
             listener.rowVerified(isVerified, rowIndex + 1);
         }
         verifyConclusion(rowIndex);
+        if (exceptionToThrow != null)
+            throw exceptionToThrow;
         return isVerified;
     }
 
