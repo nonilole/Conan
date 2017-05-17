@@ -2,6 +2,7 @@ package model.rules;
 
 import model.Box;
 import model.ProofRow;
+import model.VerificationInputException;
 import model.formulas.Formula;
 import model.formulas.FreshVarFormula;
 import start.Constants;
@@ -31,7 +32,7 @@ public class Assumption extends Rule {
     public boolean verifyRow(Box data, int rowIndex) {
         ProofRow rowToVerify = data.getRow(rowIndex);
         if (rowToVerify.getFormula() instanceof FreshVarFormula)
-            return false;
+            throw new VerificationInputException("A term is not a formula.");
         // Check if first row of box and box is an actual box.
         Box parent = rowToVerify.getParent();
         if (parent.isTopLevelBox())

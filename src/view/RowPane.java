@@ -35,6 +35,7 @@ public class RowPane extends BorderPane {
     final static KeyCombination ctrlY = new KeyCodeCombination(Y, SHORTCUT_DOWN);
     private static final HashMap<String, List<Boolean>> ruleBox;
     private static final HashMap<String, Integer> ruleMap;
+    private String errorStatus;
 //    static Pattern p = Pattern.compile("^([1-9]\\d*-?([1-9]\\d*)?)?$");
     static Pattern p = Pattern.compile("^(([1-9]\\d*)?-?([1-9]\\d*)?)?$");
 
@@ -85,6 +86,13 @@ public class RowPane extends BorderPane {
     private int numberOfPrompts;
     private boolean isFirstRowInBox;
     private int nrOfClosingBoxes;
+
+    public void setErrorMessage(String s) {
+        this.errorStatus = s;
+    }
+    public String getErrorMessage() {
+        return this.errorStatus;
+    }
 
     // Always call init after adding RowPane to rList
     public RowPane(boolean isFirstRowInBox, int nrOfClosingBoxes) {

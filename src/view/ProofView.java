@@ -231,6 +231,9 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
 
     // PROOF LISTENER METHODS
+    public void updateErrorStatus(int lineNo, String errorMessage) {
+        rList.get(lineNo-1).setErrorMessage(errorMessage);
+    }
     //Adds a new row at the end of the proof
     public void rowAdded() {
         RowPane rp;

@@ -106,7 +106,7 @@ public class Proof implements Serializable{
     /**
      * Alert the listeners about the row.
      *
-     * @param formula
+     * @param strFormula
      * @param rowNumber
      */
     public void updateFormulaRow(String strFormula, int rowNumber) {
@@ -159,7 +159,16 @@ public class Proof implements Serializable{
         assert (startIndex < proofData.size()) : "Proof.verifyProof: index out of bounds";
         boolean returnValue = true;
         for (int i = startIndex; i < proofData.size(); i++) {
-            if (verifyRow(i) == false) returnValue = false;
+            try {
+                if (verifyRow(i) == false) returnValue = false;
+                for (ProofListener listener : this.listeners) {
+                    listener.updateErrorStatus(i+1, "");;
+                }
+            } catch (VerificationInputException e) {
+                for (ProofListener listener : this.listeners) {
+                    listener.updateErrorStatus(i+1, e.getMessage());
+                }
+            }
             //TODO: inform listeners about each row
         }
         return returnValue;
