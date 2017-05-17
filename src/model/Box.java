@@ -157,7 +157,8 @@ public class Box implements ProofEntry, Serializable{
 	 * @return
 	 */
 	public boolean isInScopeOf(int referenceRowIndex, int referencingRowIndex) throws VerificationInputException {
-		if( referenceRowIndex >= referencingRowIndex) throw new VerificationInputException("A row is out of scope.");
+		if( referenceRowIndex > referencingRowIndex) throw new VerificationInputException("A row is out of scope.");
+		if( referenceRowIndex == referencingRowIndex) throw new VerificationInputException("A row may not reference itself.");
 		ProofRow referenceRow = getRow(referenceRowIndex);
 		ProofRow referencingRow = getRow(referencingRowIndex);
 		Box referenceParent = referenceRow.getParent();
