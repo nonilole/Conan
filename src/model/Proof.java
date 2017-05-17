@@ -196,7 +196,15 @@ public class Proof implements Serializable{
         } else if (rule.hasCompleteInfo() == false) {
             throw new VerificationInputException("A reference is empty.");
         } else {
-            isVerified = rule.verify(proofData, rowIndex);
+            try {
+                isVerified = rule.verify(proofData, rowIndex);
+            } catch (VerificationInputException e) {
+                row.setVerified(isVerified);
+                for (ProofListener listener : this.listeners) {
+                    listener.rowVerified(isVerified, rowIndex + 1);
+                }
+                throw e;
+            }
         }
         row.setVerified(isVerified);
         for (ProofListener listener : this.listeners) {
