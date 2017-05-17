@@ -3,6 +3,7 @@ package model.rules;
 import model.Box;
 import model.ProofRow;
 import model.formulas.Formula;
+import model.formulas.FreshVarFormula;
 import start.Constants;
 
 public class Assumption extends Rule {
@@ -29,6 +30,8 @@ public class Assumption extends Rule {
     @Override
     public boolean verifyRow(Box data, int rowIndex) {
         ProofRow rowToVerify = data.getRow(rowIndex);
+        if (rowToVerify.getFormula() instanceof FreshVarFormula)
+            return false;
         // Check if first row of box and box is an actual box.
         Box parent = rowToVerify.getParent();
         if (parent.isTopLevelBox())
