@@ -161,8 +161,11 @@ public class Proof implements Serializable{
         for (int i = startIndex; i < proofData.size(); i++) {
             try {
                 if (verifyRow(i) == false) returnValue = false;
-                for (ProofListener listener : this.listeners) {
-                    listener.updateErrorStatus(i+1, "");;
+                else {
+                    for (ProofListener listener : this.listeners) {
+                        listener.updateErrorStatus(i + 1, "");
+                        ;
+                    }
                 }
             } catch (VerificationInputException e) {
                 for (ProofListener listener : this.listeners) {
@@ -330,9 +333,6 @@ public class Proof implements Serializable{
         Formula generated = null;
         try {
             generated = rule.generateFormula(proofData, rowIndex);
-            for (ProofListener listener : this.listeners) {
-                listener.updateErrorStatus(rowIndex+1, "");;
-            }
         } catch (VerificationInputException e) {
             for (ProofListener listener : this.listeners) {
                 listener.updateErrorStatus(rowIndex+1, e.getMessage());
@@ -340,6 +340,10 @@ public class Proof implements Serializable{
         }
         if (generated == null)
             return;
+
+        for (ProofListener listener : this.listeners) {
+            listener.updateErrorStatus(rowIndex+1, "");;
+        }
         row.setFormula(generated);
         for (ProofListener listener : this.listeners) {
             listener.rowUpdated(generated.toString(), true, rowIndex + 1);
