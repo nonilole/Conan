@@ -1,6 +1,7 @@
 package model.rules;
 
 import model.Box;
+import model.VerificationInputException;
 import model.formulas.Formula;
 import model.formulas.FreshVarFormula;
 import start.Constants;
@@ -19,7 +20,7 @@ public class Premise extends Rule {
 
     @Override
     public boolean verifyRow(Box data, int rowIndex) {
-    	if( data.getRow(rowIndex).getFormula() instanceof FreshVarFormula ) return false;
+    	if( data.getRow(rowIndex).getFormula() instanceof FreshVarFormula ) throw new VerificationInputException("A term is not a formula.");
         return true;
     }
 
