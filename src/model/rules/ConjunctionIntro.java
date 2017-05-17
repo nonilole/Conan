@@ -74,7 +74,7 @@ public class ConjunctionIntro extends Rule {
         return premise1;
     }
 
-    public void setPremise1(int premise1) {
+    public void setPremise1(Integer premise1) {
         this.premise1 = premise1;
     }
 
@@ -82,7 +82,7 @@ public class ConjunctionIntro extends Rule {
         return premise2;
     }
 
-    public void setPremise2(int premise2) {
+    public void setPremise2(Integer premise2) {
         this.premise2 = premise2;
     }
 	

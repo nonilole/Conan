@@ -19,7 +19,7 @@ public class DoubleNegationElim extends Rule {
         return premise1;
     }
 
-    public void setPremise1(int premise1) {
+    public void setPremise1(Integer premise1) {
         this.premise1 = premise1;
     }
 

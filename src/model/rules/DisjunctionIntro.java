@@ -99,7 +99,7 @@ public class DisjunctionIntro extends Rule {
         return premise;
     }
 
-    public void setPremise(int premise) {
+    public void setPremise(Integer premise) {
         this.premise = premise;
     }
 
