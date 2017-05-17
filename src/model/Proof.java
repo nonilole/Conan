@@ -327,7 +327,17 @@ public class Proof implements Serializable{
         if (rule == null || rule.hasCompleteInfo() == false) {
             return;
         }
-        Formula generated = rule.generateFormula(proofData, rowIndex);
+        Formula generated = null;
+        try {
+            generated = rule.generateFormula(proofData, rowIndex);
+            for (ProofListener listener : this.listeners) {
+                listener.updateErrorStatus(rowIndex+1, "");;
+            }
+        } catch (VerificationInputException e) {
+            for (ProofListener listener : this.listeners) {
+                listener.updateErrorStatus(rowIndex+1, e.getMessage());
+            }
+        }
         if (generated == null)
             return;
         row.setFormula(generated);

@@ -6,6 +6,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import model.ProofRow;
 
 import java.util.prefs.Preferences;
 
@@ -21,6 +22,11 @@ public class ViewUtil {
         tf.focusedProperty().addListener((observable, oldValue, newValue) -> {
             pv.lastFocusedTf = tf;
             pv.caretPosition = tf.getCaretPosition();
+            int rowNo = pv.getRowNumberLastFocusedTF();
+            if (rowNo != -1) {
+                RowPane rp = pv.getRowList().get(rowNo-1);
+                pv.setLeftStatus(rp.getErrorMessage());
+            }
         });
     }
     public static void applyStyleIf(TextField expression, boolean bool, String style) {
