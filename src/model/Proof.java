@@ -189,9 +189,9 @@ public class Proof implements Serializable{
         boolean isVerified = false;
         VerificationInputException exceptionToThrow = null;
         if (rule == null) {
-            exceptionToThrow = new VerificationInputException("No/incorrect justification specified.");
+            exceptionToThrow = new VerificationInputException("Rule is incorrect.");
         } else if ( row.getFormula() == null ) {
-            exceptionToThrow = new VerificationInputException("No/incorrect formula specified.");
+            exceptionToThrow = new VerificationInputException("Formula is incorrect.");
         } else if (rule.hasCompleteInfo() == false) {
             exceptionToThrow = new VerificationInputException("A reference is empty.");
         } else {
