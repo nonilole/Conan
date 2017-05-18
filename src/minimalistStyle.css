@@ -131,3 +131,7 @@
     -fx-font-family: FontAwesome;
     -fx-font-size: 18px;
 }
+.status {
+    -fx-font-size: 18px;
+    -fx-text-fill: black;
+}

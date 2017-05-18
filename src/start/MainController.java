@@ -508,7 +508,7 @@ public class MainController implements Initializable {
         negButton.setTooltip(new Tooltip("Negation (type ne to insert)"));
         forallButton.setTooltip(new Tooltip("For All (type fa to insert)"));
         existsButton.setTooltip(new Tooltip("There Exists (type te to insert)"));
-        contraButton.setTooltip(new Tooltip("Contradiction (type co to insert)"));
+        contraButton.setTooltip(new Tooltip("Bottom (type bo to insert)"));
     }
 
     @FXML

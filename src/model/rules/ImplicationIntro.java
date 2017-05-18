@@ -45,6 +45,8 @@ public class ImplicationIntro extends Rule {
     public boolean verifyReferences(Box data, int rowIndex) {
         Interval premiseInterval = getPremiseInterval();
         if (!(data.isInScopeOf(premiseInterval, rowIndex))) return false;
+        Rule rule = data.getRow(premiseInterval.startIndex).getRule();
+        if (rule instanceof Assumption == false) return false;
         return true;
     }
 

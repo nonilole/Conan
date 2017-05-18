@@ -21,8 +21,13 @@ public class FreshVarFormula extends Formula {
 	public String toString(){
 		return var;
 	}
-
 	@Override
+	public String parenthesize() {
+	    return toString();
+	}
+
+
+		@Override
 	public Formula replace(Term newId, Term oldId) {
 		throw new RuntimeException("This shouldn't be called");
 	}

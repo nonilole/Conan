@@ -18,7 +18,8 @@ public abstract class Formula implements Serializable{
 	public abstract Formula replace(Term newTerm,Term oldTerm);
 	
 	public abstract boolean containsFreeObjectId(String id);
-	
+	public abstract String parenthesize();
+
 	public static boolean isInstantiationOf(Formula instantiation, QuantifiedFormula quant){ 
 		Term[] diff = findTermDifference(instantiation, quant.formula);
 		if(diff == null) {

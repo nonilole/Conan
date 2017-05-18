@@ -35,6 +35,8 @@ public class RowPane extends BorderPane {
     final static KeyCombination ctrlY = new KeyCodeCombination(Y, SHORTCUT_DOWN);
     private static final HashMap<String, List<Boolean>> ruleBox;
     private static final HashMap<String, Integer> ruleMap;
+    private String errorStatus;
+    private String parsingStatus;
 //    static Pattern p = Pattern.compile("^([1-9]\\d*-?([1-9]\\d*)?)?$");
     static Pattern p = Pattern.compile("^(([1-9]\\d*)?-?([1-9]\\d*)?)?$");
 
@@ -86,7 +88,19 @@ public class RowPane extends BorderPane {
     private boolean isFirstRowInBox;
     private int nrOfClosingBoxes;
 
-    // Always call init after adding RowPane to rList
+    public void setErrorStatus(String s) {
+        this.errorStatus = s;
+    }
+    public String getErrorStatus() {
+        return this.errorStatus;
+    }
+    public void setParsingStatus(String s) {
+        this.parsingStatus = s;
+    }
+    public String getParsingStatus() {return this.parsingStatus;}
+
+
+        // Always call init after adding RowPane to rList
     public RowPane(boolean isFirstRowInBox, int nrOfClosingBoxes) {
         super();
         this.isFirstRowInBox = isFirstRowInBox;
@@ -160,7 +174,7 @@ public class RowPane extends BorderPane {
         });
         new RuleFocus(getRule(), pv, rList);
         getRule().textProperty().addListener((ov, oldValue, newValue) -> {
-            newValue = checkShortcut(newValue);
+            newValue = checkShortcut(newValue, true);
             setRule(newValue);
             int rpIndex = rList.indexOf(this);
 //            if (newValue.equals("Ass.") || newValue.equals("Fresh")) {

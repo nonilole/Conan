@@ -1,6 +1,7 @@
 package model.rules;
 
 import model.Box;
+import model.VerificationInputException;
 import model.formulas.Formula;
 import model.formulas.FreshVarFormula;
 import model.formulas.LogicObject;
@@ -44,7 +45,7 @@ public class ForallIntro extends Rule {
         //check that the second row in box isn't an assumption
         if(refBox.size() < 2 ) return false;
         if ((refBox.getRow(1).getRule() instanceof Assumption) && refBox.getRow(1).getParent() == refBox) 
-        	return false;
+        	throw new VerificationInputException("Second row may not be an assumption for this rule.");
         return true;
     }
 
