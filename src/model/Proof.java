@@ -191,11 +191,11 @@ public class Proof implements Serializable{
         boolean isVerified = false;
         VerificationInputException exceptionToThrow = null;
         if (rule == null) {
-            exceptionToThrow = new VerificationInputException("Rule is incorrect.");
+            exceptionToThrow = new VerificationInputException("Invalid rule syntax.");
         } else if (rule.hasCompleteInfo() == false) {
             exceptionToThrow = new VerificationInputException("A reference is empty.");
         } else if ( row.getFormula() == null ) {
-            exceptionToThrow = new VerificationInputException("Formula is incorrect.");
+            exceptionToThrow = new VerificationInputException("Invalid formula syntax.");
         } else {
             try {
                 isVerified = rule.verify(proofData, rowIndex);
