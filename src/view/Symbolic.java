@@ -10,7 +10,7 @@ public abstract class Symbolic {
      * @param event, the pressed unicode button.
      */
     public void addSymbol(javafx.event.ActionEvent event){
-        if(lastFocusedTf != null && lastFocusedTf.getId() == "expression"){
+        if(lastFocusedTf != null && (lastFocusedTf.getId().equals("expression") || lastFocusedTf.getId().equals("rightTextField"))){
             int tmpCaretPosition = caretPosition;
             String[] parts = event.toString().split("'");
             lastFocusedTf.setText(lastFocusedTf.getText().substring(0, caretPosition) + parts[1]

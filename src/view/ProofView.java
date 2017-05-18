@@ -447,9 +447,11 @@ public class ProofView extends Symbolic implements ProofListener, View {
         int rowNo = getRowNumberLastFocusedTF();
         if (rowNo != -1) {
             RowPane rp = rList.get(rowNo-1);
-            System.out.println(rp.getErrorStatus());
             setLeftStatus(rp.getErrorStatus());
             setRightStatus(rp.getParsingStatus());
+        } else {
+            setLeftStatus("");
+            setRightStatus("");
         }
     }
 
