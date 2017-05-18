@@ -174,7 +174,7 @@ public class RowPane extends BorderPane {
         });
         new RuleFocus(getRule(), pv, rList);
         getRule().textProperty().addListener((ov, oldValue, newValue) -> {
-            newValue = checkShortcut(newValue);
+            newValue = checkShortcut(newValue, true);
             setRule(newValue);
             int rpIndex = rList.indexOf(this);
 //            if (newValue.equals("Ass.") || newValue.equals("Fresh")) {

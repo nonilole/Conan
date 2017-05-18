@@ -31,17 +31,15 @@ public class ViewUtil {
         }
     }
     public static String checkShortcut(String newValue) {
+        return checkShortcut(newValue, false);
+    }
+    public static String checkShortcut(String newValue, Boolean extraShortcuts) {
         newValue = newValue.replaceAll("!|ne|no", "¬");
         newValue = newValue.replaceAll("&|an|\\^", "∧");
         newValue = newValue.replaceAll("->|im", "→");
         newValue = newValue.replaceAll("fa|fo", "∀");
         newValue = newValue.replaceAll("or|\\|", "∨");
         newValue = newValue.replaceAll("ex|te|th", "∃");
-        newValue = newValue.replaceAll("bo", "⊥");
-        newValue = newValue.replaceAll("co", "Copy");
-        newValue = newValue.replaceAll("pr", "Premise");
-        newValue = newValue.replaceAll("as", "Ass.");
-        newValue = newValue.replaceAll("fr", "Fresh");
         newValue = newValue.replaceAll("0", "₀");
         newValue = newValue.replaceAll("1", "₁");
         newValue = newValue.replaceAll("2", "₂");
@@ -52,6 +50,13 @@ public class ViewUtil {
         newValue = newValue.replaceAll("7", "₇");
         newValue = newValue.replaceAll("8", "₈");
         newValue = newValue.replaceAll("9", "₉");
+        if (extraShortcuts) {
+            newValue = newValue.replaceAll("bo", "⊥");
+            newValue = newValue.replaceAll("co", "Copy");
+            newValue = newValue.replaceAll("pr", "Premise");
+            newValue = newValue.replaceAll("as", "Ass.");
+            newValue = newValue.replaceAll("fr", "Fresh");
+        }
         return newValue;
     }
     public static void consumeKeys(TextField tf) {
