@@ -1,6 +1,5 @@
 package view;
 
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -15,7 +14,6 @@ import model.Proof;
 import model.ProofListener;
 import view.Command.*;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,6 +27,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
     ScrollPane sp;
 
     private Label leftStatus;
+    private Label rightStatus;
     private TextField premises;
     private TextField conclusion;
     private Stack<VBox> curBoxDepth = new Stack<>();
@@ -97,7 +96,8 @@ public class ProofView extends Symbolic implements ProofListener, View {
         HBox tempHBox = (HBox) ((VBox)(tabPane.getParent().getParent().getParent())).getChildren().get(3);
         this.leftStatus = (Label) tempHBox.getChildren().get(0);
         this.leftStatus.getStyleClass().add("status");
-        System.out.println(this.leftStatus.getText());
+        this.rightStatus = (Label) tempHBox.getChildren().get(2);
+        this.rightStatus.getStyleClass().add("status");
         AnchorPane cp = createProofPane();
         SplitPane sp = new SplitPane(premisesAndConclusion, cp);
         sp.setOrientation(Orientation.VERTICAL);
@@ -120,6 +120,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
     public void setLeftStatus(String s) {
         leftStatus.setText(s);
     }
+    public void setRightStatus(String s) { rightStatus.setText(s); }
     public void focusFirst() {
         rList.get(0).getExpression().requestFocus();
     }
@@ -240,7 +241,10 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
     // PROOF LISTENER METHODS
     public void updateErrorStatus(int lineNo, String errorMessage) {
-        rList.get(lineNo-1).setErrorMessage(errorMessage);
+        rList.get(lineNo-1).setErrorStatus(errorMessage);
+    }
+    public void updateParsingStatus(int lineNo, String parsingResult) {
+        rList.get(lineNo-1).setParsingStatus(parsingResult);
     }
     //Adds a new row at the end of the proof
     public void rowAdded() {
@@ -443,8 +447,9 @@ public class ProofView extends Symbolic implements ProofListener, View {
         int rowNo = getRowNumberLastFocusedTF();
         if (rowNo != -1) {
             RowPane rp = rList.get(rowNo-1);
-            System.out.println(rp.getErrorMessage());
-            setLeftStatus(rp.getErrorMessage());
+            System.out.println(rp.getErrorStatus());
+            setLeftStatus(rp.getErrorStatus());
+            setRightStatus(rp.getParsingStatus());
         }
     }
 

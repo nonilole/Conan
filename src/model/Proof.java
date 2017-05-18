@@ -122,11 +122,13 @@ public class Proof implements Serializable{
         } catch (ParseException e) {
             wellFormed = false;
         }
+        String parsedString = parsedFormula == null ? "" : parsedFormula.toString();
         toBeUpdated.setFormula(parsedFormula);
         toBeUpdated.setUserInput((strFormula == null ? "" : strFormula));
         toBeUpdated.setWellformed(wellFormed);
 
         for (ProofListener listener : this.listeners) {
+            listener.updateParsingStatus(rowNumber, parsedString);
             listener.rowUpdated(null, wellFormed, rowNumber);
         }
 //        verifyProof(rowIndex); //should use verifyProof later probably, to verify rows lower in the proof aswell
