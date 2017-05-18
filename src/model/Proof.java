@@ -192,10 +192,10 @@ public class Proof implements Serializable{
         VerificationInputException exceptionToThrow = null;
         if (rule == null) {
             exceptionToThrow = new VerificationInputException("Rule is incorrect.");
-        } else if ( row.getFormula() == null ) {
-            exceptionToThrow = new VerificationInputException("Formula is incorrect.");
         } else if (rule.hasCompleteInfo() == false) {
             exceptionToThrow = new VerificationInputException("A reference is empty.");
+        } else if ( row.getFormula() == null ) {
+            exceptionToThrow = new VerificationInputException("Formula is incorrect.");
         } else {
             try {
                 isVerified = rule.verify(proofData, rowIndex);
