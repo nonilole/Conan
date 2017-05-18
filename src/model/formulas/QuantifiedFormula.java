@@ -58,7 +58,15 @@ public class QuantifiedFormula extends Formula{
     	strB.append( formula.getPrecedence() < 3 || formula instanceof Equality ? "("+formula+")" : formula+"");
     	return strB.toString();
     }
-    
+
+    @Override
+    public String parenthesize(){
+        StringBuilder strB = new StringBuilder();
+        strB.append("("+type+var);
+        strB.append(formula.parenthesize()+")");
+        return strB.toString();
+    }
+
     @Override
 	public boolean containsFreeObjectId(String id) {
     	if(id.equals(var)) return false;

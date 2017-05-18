@@ -36,6 +36,7 @@ public class RowPane extends BorderPane {
     private static final HashMap<String, List<Boolean>> ruleBox;
     private static final HashMap<String, Integer> ruleMap;
     private String errorStatus;
+    private String parsingStatus;
 //    static Pattern p = Pattern.compile("^([1-9]\\d*-?([1-9]\\d*)?)?$");
     static Pattern p = Pattern.compile("^(([1-9]\\d*)?-?([1-9]\\d*)?)?$");
 
@@ -87,14 +88,19 @@ public class RowPane extends BorderPane {
     private boolean isFirstRowInBox;
     private int nrOfClosingBoxes;
 
-    public void setErrorMessage(String s) {
+    public void setErrorStatus(String s) {
         this.errorStatus = s;
     }
-    public String getErrorMessage() {
+    public String getErrorStatus() {
         return this.errorStatus;
     }
+    public void setParsingStatus(String s) {
+        this.parsingStatus = s;
+    }
+    public String getParsingStatus() {return this.parsingStatus;}
 
-    // Always call init after adding RowPane to rList
+
+        // Always call init after adding RowPane to rList
     public RowPane(boolean isFirstRowInBox, int nrOfClosingBoxes) {
         super();
         this.isFirstRowInBox = isFirstRowInBox;

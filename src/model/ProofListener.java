@@ -11,6 +11,7 @@ public interface ProofListener {
     public void deletedRowAfterBox(int rowNo);
     public void rowAdded();
     public void updateErrorStatus(int lineNo, String message);
+	public void updateParsingStatus(int lineNo, String message);
 	public void updateStatus();
 
     static class RowInfo{

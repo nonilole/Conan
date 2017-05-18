@@ -67,7 +67,12 @@ public class Predicate extends Formula{
         }
         return strB.toString();
     }
-    
+
+	@Override
+	public String parenthesize(){
+        return toString();
+	}
+
     @Override
 	public boolean containsFreeObjectId(String id) {
     	for(Term arg : args){
