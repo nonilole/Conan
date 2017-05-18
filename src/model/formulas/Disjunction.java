@@ -33,7 +33,15 @@ public class Disjunction extends Formula {
     	strB.append( rhs.getPrecedence() < 3 ? "("+rhs+")" : rhs+"" );
     	return strB.toString();
     }
-    
+	@Override
+	public String parenthesize(){
+		StringBuilder strB = new StringBuilder();
+		strB.append("("+lhs.parenthesize());
+		strB.append( " ∨ " );
+		strB.append(rhs.parenthesize() +")");
+		return strB.toString();
+	}
+
     @Override
 	public boolean containsFreeObjectId(String id) {
 		return lhs.containsFreeObjectId(id) ||  rhs.containsFreeObjectId(id);

@@ -25,7 +25,7 @@ public class LogicObject implements Term{
     public String toString(){
         return id;
     }
-    
+
     @Override
 	public boolean containsObjectId(String id) {
 		return this.id.equals(id);

@@ -20,7 +20,10 @@ public class Contradiction extends Formula {
 	public String toString() {
 		return "⊥";
 	}
-	
+	public String parenthesize() {
+		return "⊥";
+	}
+
 	@Override
 	public boolean equals(Object o){
 		return o instanceof Contradiction;

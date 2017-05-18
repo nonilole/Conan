@@ -36,8 +36,13 @@ public class Equality extends Formula {
     public String toString(){	
     	return lhs+" = "+rhs;
     }
-    
     @Override
+    public String parenthesize() {
+        return toString();
+    }
+
+
+        @Override
 	public boolean containsFreeObjectId(String id) {
 		return lhs.containsObjectId(id) ||  rhs.containsObjectId(id);
 	}

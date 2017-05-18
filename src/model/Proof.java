@@ -122,7 +122,7 @@ public class Proof implements Serializable{
         } catch (ParseException e) {
             wellFormed = false;
         }
-        String parsedString = parsedFormula == null ? "" : parsedFormula.toString();
+        String parsedString = parsedFormula == null ? "" : parsedFormula.parenthesize();
         toBeUpdated.setFormula(parsedFormula);
         toBeUpdated.setUserInput((strFormula == null ? "" : strFormula));
         toBeUpdated.setWellformed(wellFormed);

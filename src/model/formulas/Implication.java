@@ -39,7 +39,12 @@ public class Implication extends Formula {
     		return lhs+" → "+rhs;
     	}
     }
-    
+
+    @Override
+    public String parenthesize(){
+        return "("+lhs.parenthesize()+" → "+rhs.parenthesize()+")";
+    }
+
     @Override
 	public boolean containsFreeObjectId(String id) {
 		return lhs.containsFreeObjectId(id) ||  rhs.containsFreeObjectId(id);
