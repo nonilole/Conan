@@ -2,6 +2,7 @@ package model.rules;
 
 import model.Box;
 import model.ProofRow;
+import model.VerificationInputException;
 import model.formulas.Formula;
 import model.formulas.FreshVarFormula;
 import start.Constants;
@@ -27,11 +28,13 @@ public class FreshVar extends Rule {
     public boolean verifyRow(Box data, int rowIndex) {
         ProofRow row = data.getRow(rowIndex);
         //check that this rule is applied on the first row of the box
-        if (row.getParent().getRow(0) != row) return false;
+        if(row.getParent().isTopLevelBox()) throw new VerificationInputException("Fresh needs to be in a box.");
+
+        if (row.getParent().getRow(0) != row) throw new VerificationInputException("Fresh needs to be first in a box.");
         //check that this is inside a box
-        if(row.getParent().isTopLevelBox()) return false;
         //check that the formula is of the correct type
         if (row.getFormula() instanceof FreshVarFormula == false) return false;
+
         //check that the variable is actually fresh
         String freshVar = ((FreshVarFormula)row.getFormula()).var;
         for(int i = 0; i < data.size(); i++){
@@ -52,7 +55,7 @@ public class FreshVar extends Rule {
         	else{
         		Formula f = prow.getFormula();
         		if(f == null) continue;
-        		if(f.containsFreeObjectId(freshVar)) return false;
+        		if(f.containsFreeObjectId(freshVar)) throw new VerificationInputException("Variable is used elsewhere.");
         	}
         }
         return true;
