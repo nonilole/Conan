@@ -176,7 +176,7 @@ public class Box implements ProofEntry, Serializable{
 			}
 			referencingRowAncestorBox = referencingRowAncestorBox.getParent();
 		}
-		throw new VerificationInputException("An interval is out of scope.");
+		throw new VerificationInputException("A row is out of scope.");
 	}
 	
 	/**
@@ -213,7 +213,7 @@ public class Box implements ProofEntry, Serializable{
 			if( parentOfIntervalBox == referencingRowAncestorBox) return true;
 			referencingRowAncestorBox = referencingRowAncestorBox.getParent();
 		}
-		throw new VerificationInputException("A row is out of scope.");
+		throw new VerificationInputException("A interval is out of scope.");
 	}
 	
 	/**
