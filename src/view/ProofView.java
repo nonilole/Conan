@@ -117,6 +117,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
         tabPane.getTabs().add(this.tab);
         tabPane.getSelectionModel().select(this.tab);
         this.premises.setEditable(false);
+        this.premises.setFocusTraversable(false);
     }
     public void setLeftStatus(String s) {
         leftStatus.setText(s);
