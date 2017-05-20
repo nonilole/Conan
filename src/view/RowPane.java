@@ -2,9 +2,9 @@ package view;
 
 import javafx.event.EventHandler;
 import javafx.scene.CacheHint;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -17,6 +17,7 @@ import start.Constants;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.prefs.Preferences;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,7 +38,6 @@ public class RowPane extends BorderPane {
     private static final HashMap<String, Integer> ruleMap;
     private String errorStatus;
     private String parsingStatus;
-//    static Pattern p = Pattern.compile("^([1-9]\\d*-?([1-9]\\d*)?)?$");
     static Pattern p = Pattern.compile("^(([1-9]\\d*)?-?([1-9]\\d*)?)?$");
 
 
@@ -188,7 +188,7 @@ public class RowPane extends BorderPane {
                 e.printStackTrace();
             }
             newValue = newValue.replaceAll("^(∃|∀)[a-z](i|e)$", "$1$2");
-            setPrompts(ruleMap.getOrDefault(newValue, 0));
+            setPrompts(ruleMap.getOrDefault(newValue, -1));
             setPromptsPromptText(ruleBox.getOrDefault(newValue, Arrays.asList(false, false, true)));
         });
         for (int i = 0; i < 3; i++) {
@@ -299,7 +299,42 @@ public class RowPane extends BorderPane {
             default:
                 break;
         }
-        getClosestPromptFromLeft(0).requestFocus();
+        if (n > 0) {
+            getClosestPromptFromLeft(0).requestFocus();
+            Preferences prefs = Preferences.userRoot().node("General");
+            if (prefs.getBoolean("generate", true) && prefs.getBoolean("generateHelp", true)) {
+                Alert popup = new Alert(Alert.AlertType.CONFIRMATION);
+                popup.setDialogPane(new DialogPane() {
+                    @Override
+                    protected Node createDetailsButton() {
+                        CheckBox doNotShowMeThis = new CheckBox();
+                        doNotShowMeThis.setText("Please stop annoying me.");
+                        doNotShowMeThis.setOnAction(e -> {
+                            if (doNotShowMeThis.isSelected()) {
+                                prefs.putBoolean("generateHelp", false);
+                            } else {
+                                prefs.putBoolean("generateHelp", true);
+                            }
+                        });
+                        return doNotShowMeThis;
+                    }
+                });
+                popup.setTitle("Generate");
+                popup.setHeaderText("Generating expressions");
+                popup.getDialogPane().getButtonTypes().addAll(ButtonType.OK);
+                popup.getDialogPane().setContentText("You may generate an expression by leaving the expression field empty and inputting valid and verified references.\n\n"
+                + Constants.forallIntro + " may generate if you type the variable name between " + Constants.forall + " and " + Constants.introduction + "\n\n"
+                + Constants.existsIntro + " may not generate\n\n"
+                + Constants.equalityIntro + " may not generate\n\n"
+                + Constants.equalityElim + " may not generate\n"
+                );
+                // Fool the dialog into thinking there is some expandable content
+                // a Group won't take up any space if it has no children
+                popup.getDialogPane().setExpandableContent(new Group());
+                popup.getDialogPane().setExpanded(true);
+                popup.show();
+            }
+        }
     }
 
     private abstract class HotkeyMapper {
