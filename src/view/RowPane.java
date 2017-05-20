@@ -296,10 +296,10 @@ public class RowPane extends BorderPane {
                 getRulePrompt(1).setVisible(true);
             case 1:
                 getRulePrompt(0).setVisible(true);
-                break;
             default:
                 break;
         }
+        getClosestPromptFromLeft(0).requestFocus();
     }
 
     private abstract class HotkeyMapper {
