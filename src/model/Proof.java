@@ -134,9 +134,6 @@ public class Proof implements Serializable{
         toBeUpdated.setFormula(parsedFormula);
         toBeUpdated.setUserInput((strFormula == null ? "" : strFormula));
         toBeUpdated.setWellformed(wellFormed);
-        if(wellFormed && toBeUpdated.getRule() instanceof Premise){
-        	this.updatedPremises();
-        }
 
         for (ProofListener listener : this.listeners) {
             listener.updateParsingStatus(rowNumber, parsedString);
@@ -144,6 +141,9 @@ public class Proof implements Serializable{
         }
 //        verifyProof(rowIndex); //should use verifyProof later probably, to verify rows lower in the proof aswell
         verifyProof();
+        if(toBeUpdated.getRule() instanceof Premise){
+        	this.updatedPremises();
+        }
         printProof("Updated formula in row");
     }
 
