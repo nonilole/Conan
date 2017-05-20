@@ -469,7 +469,7 @@ public class MainController implements Initializable {
         insertRowButton.setTooltip(new Tooltip("Insert row (Enter)"));
         deleteRowButton.setTooltip(new Tooltip("Delete current row/box (CTRL+D)"));
         verification.setTooltip(new Tooltip("Turn on/off verification"));
-        generation.setTooltip(new Tooltip("Turn on/off automatic rule application"));
+        generation.setTooltip(new Tooltip("Turn on/off generation of formula after rule application"));
 
         //Inference Rules
         andIntroButton.setTooltip(new Tooltip("And-Introduction"));
