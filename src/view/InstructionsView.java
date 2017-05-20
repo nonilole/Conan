@@ -23,7 +23,7 @@ public class InstructionsView extends ViewTab {
     
     private TabPane tabPane;
 	
-	private final static String tabName = "Proof example";
+	private final static String tabName = "Instructions";
     
     public InstructionsView(TabPane tabPane) {
     	super(tabName, null);
