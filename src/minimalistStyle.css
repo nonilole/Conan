@@ -26,6 +26,15 @@
     -fx-padding: 0 100px 0 100px;
 }
 
+.infoTextHeader {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-line-height: 1.4;
+    -fx-border-radius: 0;
+    -fx-border-size: 0;
+    -fx-padding: 0 100px 0 100px;
+}
+
 
 .myTitle {
     -fx-font-size: 32px;
