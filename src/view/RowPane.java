@@ -179,8 +179,6 @@ public class RowPane extends BorderPane {
                 setRule(changedValue);
                 return;
             }
-            System.out.println("oldValue: " + oldValue);
-            System.out.println("newValue: " + newValue);
             int rpIndex = rList.indexOf(this);
 //            if (newValue.equals("Ass.") || newValue.equals("Fresh")) {
 //                pv.insertNewBox(rpIndex + 1);
