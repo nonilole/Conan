@@ -328,8 +328,6 @@ public class RowPane extends BorderPane {
                 + Constants.equalityIntro + " may not generate\n\n"
                 + Constants.equalityElim + " may not generate\n"
                 );
-                // Fool the dialog into thinking there is some expandable content
-                // a Group won't take up any space if it has no children
                 popup.getDialogPane().setExpandableContent(new Group());
                 popup.getDialogPane().setExpanded(true);
                 popup.show();
