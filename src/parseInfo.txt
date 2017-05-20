@@ -1,5 +1,6 @@
 
 If the parser is unable to parse an inputted formula, the row will turn red.
+When a formula has been inputted correctly, the parser's interpretation will be displayed in the bottom right corner.
 
 Inputted formulas are interpreted as follows:
 Predicates use upper-case letters for identifiers, terms use lower-case.
