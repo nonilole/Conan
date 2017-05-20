@@ -308,7 +308,7 @@ public class RowPane extends BorderPane {
             getClosestPromptFromLeft(0).requestFocus();
             Preferences prefs = Preferences.userRoot().node("General");
             //if generate is checked and if popup has not been disabled. 
-            if (prefs.getBoolean("generate", true) && prefs.getBoolean("generateHelp", true)) {
+            if (prefs.getBoolean("generate", true) && prefs.getBoolean("generateHelp", true)) { 
                 Alert popup = new Alert(Alert.AlertType.CONFIRMATION);
                 popup.setDialogPane(new DialogPane() {
                     @Override
@@ -329,8 +329,8 @@ public class RowPane extends BorderPane {
                 popup.setHeaderText("Generating expressions");
                 popup.getDialogPane().getButtonTypes().addAll(ButtonType.OK);
                 popup.getDialogPane().setContentText("You may generate an expression by leaving the expression field empty and inputting valid and verified references.\n\n"
-                + Constants.forallIntro + " may generate if you type the variable name between " + Constants.forall + " and " + Constants.introduction + "\n\n"
-                + Constants.existsIntro + ", " + Constants.equalityIntro + " and " + Constants.equalityElim + " may not generate\n\n"
+                + Constants.forallIntro + " may generate if you type the variable name between " + Constants.forall + " and " + Constants.introduction + ". E.g." + Constants.forall + "x" + Constants.introduction +"\n\n"
+                + "The rules" + Constants.existsIntro + ", " + Constants.equalityIntro + " and " + Constants.equalityElim + " may not generate\n\n"
                 //+ Constants.equalityIntro + " may not generate\n\n"
                 //+ Constants.equalityElim + " may not generate\n"
                 );
