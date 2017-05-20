@@ -116,6 +116,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
         }
         tabPane.getTabs().add(this.tab);
         tabPane.getSelectionModel().select(this.tab);
+        this.premises.setEditable(false);
     }
     public void setLeftStatus(String s) {
         leftStatus.setText(s);
@@ -268,6 +269,10 @@ public class ProofView extends Symbolic implements ProofListener, View {
         lineNo.getChildren().add(createLabel());
         updateLabelPaddings(rList.size());
         scroll = true;
+    }
+    
+    public void premisesUpdated(String newPremisesStr){
+    	this.premises.setText(newPremisesStr);
     }
 
     public void rowInserted(int rowNo, BoxReference br, int depth) {

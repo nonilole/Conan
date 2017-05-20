@@ -13,6 +13,7 @@ public interface ProofListener {
     public void updateErrorStatus(int lineNo, String message);
 	public void updateParsingStatus(int lineNo, String message);
 	public void updateStatus();
+	public void premisesUpdated(String newPremisesStr);
 
     static class RowInfo{
     	public final String expression;

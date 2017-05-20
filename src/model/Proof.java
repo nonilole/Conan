@@ -3,6 +3,7 @@ package model;
 import model.formulas.Formula;
 import model.rules.Premise;
 import model.rules.Rule;
+import start.Constants;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -50,12 +51,19 @@ public class Proof implements Serializable{
         if (rowNumber < 1 || rowNumber > proofData.size() || proofData.size() == 1) {
             return -1;
         }
+        boolean updatedPremises = false;
+        if(proofData.getRow(rowNumber-1).getRule() instanceof Premise){
+        	updatedPremises = true;
+        }
         System.out.println(proofData.size());
         int delDepth = (proofData.deleteRow(rowNumber - 1));
         if (delDepth == -1)
             return -1;
         for (ProofListener listener : this.listeners) {
             listener.rowDeleted(rowNumber);
+        }
+        if(updatedPremises){
+        	this.updatedPremises();
         }
         verifyProof();
         printProof("Row deleted");
@@ -126,6 +134,9 @@ public class Proof implements Serializable{
         toBeUpdated.setFormula(parsedFormula);
         toBeUpdated.setUserInput((strFormula == null ? "" : strFormula));
         toBeUpdated.setWellformed(wellFormed);
+        if(wellFormed && toBeUpdated.getRule() instanceof Premise){
+        	this.updatedPremises();
+        }
 
         for (ProofListener listener : this.listeners) {
             listener.updateParsingStatus(rowNumber, parsedString);
@@ -139,11 +150,22 @@ public class Proof implements Serializable{
     public void updateRuleRow(String ruleString, int rowNumber) throws IllegalAccessException, InstantiationException {
         //System.out.println("updateRuleRow: rule=" + ruleString + ", rowNr=" + rowNumber);
         int rowIndex = rowNumber - 1;
+        boolean premiseUpdate = false;
         ProofRow pr = proofData.getRow(rowIndex);
         Rule rule = RuleMapper.getRule(ruleString);
+        
+        if(rule instanceof Premise){
+        	premiseUpdate = true;
+        }
+        if(ruleString.equals(Constants.premise)){
+        	premiseUpdate = true;
+        }
         pr.setRule(rule);
 //        verifyProof(rowIndex);
         verifyProof();
+        if(premiseUpdate){
+        	this.updatedPremises();
+        }
         printProof("Updated rule in row");
     }
 
@@ -403,5 +425,11 @@ public class Proof implements Serializable{
     	int x = zeroBasedNumbering ? 0 : 1;
         proofData.printRows(1, x);
         System.out.println("===========================================================");
+    }
+    
+    public void updatedPremises(){
+    	for(ProofListener pl : this.listeners){
+    		pl.premisesUpdated(this.getPremisesStr());
+    	}
     }
 }
