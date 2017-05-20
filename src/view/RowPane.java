@@ -179,8 +179,6 @@ public class RowPane extends BorderPane {
                 setRule(changedValue);
                 return;
             }
-            System.out.println("oldValue: " + oldValue);
-            System.out.println("newValue: " + newValue);
             int rpIndex = rList.indexOf(this);
 //            if (newValue.equals("Ass.") || newValue.equals("Fresh")) {
 //                pv.insertNewBox(rpIndex + 1);
@@ -304,10 +302,12 @@ public class RowPane extends BorderPane {
             default:
                 break;
         }
+      //if the rule has rule promps
         if (n > 0) {
             System.out.println(n);
             getClosestPromptFromLeft(0).requestFocus();
             Preferences prefs = Preferences.userRoot().node("General");
+            //if generate is checked and if popup has not been disabled. 
             if (prefs.getBoolean("generate", true) && prefs.getBoolean("generateHelp", true)) {
                 Alert popup = new Alert(Alert.AlertType.CONFIRMATION);
                 popup.setDialogPane(new DialogPane() {
@@ -330,9 +330,9 @@ public class RowPane extends BorderPane {
                 popup.getDialogPane().getButtonTypes().addAll(ButtonType.OK);
                 popup.getDialogPane().setContentText("You may generate an expression by leaving the expression field empty and inputting valid and verified references.\n\n"
                 + Constants.forallIntro + " may generate if you type the variable name between " + Constants.forall + " and " + Constants.introduction + "\n\n"
-                + Constants.existsIntro + " may not generate\n\n"
-                + Constants.equalityIntro + " may not generate\n\n"
-                + Constants.equalityElim + " may not generate\n"
+                + Constants.existsIntro + ", " + Constants.equalityIntro + " and " + Constants.equalityElim + " may not generate\n\n"
+                //+ Constants.equalityIntro + " may not generate\n\n"
+                //+ Constants.equalityElim + " may not generate\n"
                 );
                 popup.getDialogPane().setExpandableContent(new Group());
                 popup.getDialogPane().setExpanded(true);
