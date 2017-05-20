@@ -152,11 +152,10 @@ public class Proof implements Serializable{
         int rowIndex = rowNumber - 1;
         boolean premiseUpdate = false;
         ProofRow pr = proofData.getRow(rowIndex);
-        Rule rule = RuleMapper.getRule(ruleString);
-        
-        if(rule instanceof Premise){
-        	premiseUpdate = true;
+        if(pr.getRule() instanceof Premise){
+            premiseUpdate = true;
         }
+        Rule rule = RuleMapper.getRule(ruleString);
         if(ruleString.equals(Constants.premise)){
         	premiseUpdate = true;
         }
