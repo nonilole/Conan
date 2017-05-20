@@ -515,6 +515,11 @@ public class MainController implements Initializable {
     void showWelcome(ActionEvent event) {
         new WelcomeView(tabPane);
     }
+    
+    @FXML
+    void showHelp(ActionEvent event) {
+        new HelpView(tabPane);
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
