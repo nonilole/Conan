@@ -174,8 +174,13 @@ public class RowPane extends BorderPane {
         });
         new RuleFocus(getRule(), pv, rList);
         getRule().textProperty().addListener((ov, oldValue, newValue) -> {
-            newValue = checkShortcut(newValue, true);
-            setRule(newValue);
+            String changedValue = checkShortcut(newValue, true);
+            if (!changedValue.equals(newValue)) {
+                setRule(changedValue);
+                return;
+            }
+            System.out.println("oldValue: " + oldValue);
+            System.out.println("newValue: " + newValue);
             int rpIndex = rList.indexOf(this);
 //            if (newValue.equals("Ass.") || newValue.equals("Fresh")) {
 //                pv.insertNewBox(rpIndex + 1);
@@ -300,6 +305,7 @@ public class RowPane extends BorderPane {
                 break;
         }
         if (n > 0) {
+            System.out.println(n);
             getClosestPromptFromLeft(0).requestFocus();
             Preferences prefs = Preferences.userRoot().node("General");
             if (prefs.getBoolean("generate", true) && prefs.getBoolean("generateHelp", true)) {
