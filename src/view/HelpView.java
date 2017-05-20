@@ -24,14 +24,19 @@ public class HelpView extends Symbolic implements View {
         gridPane.setPadding(new Insets(20.0, 20.0, 20.0, 20.0));
         String sTitle = "Learn more about Conan";
         String sWelcomeText = "Conan is a tool developed for providing assistance when constructing proofs in natural deduction for first-order logic.\n\n"
-        		+ "If you want to learn more about how construct a proof, please follow the link below.";
+        		+ "If you want to learn more about how to construct a proof, please follow the link below.";
+        String sParserText = "If you want to learn more about how expressions are parsed and how the editor intrepreds what you type into the expression field, please follow the link below.\n\n";
         String sTab = "Help";
         Label title = new Label(sTitle);
         title.getStyleClass().add("myTitle");
         Label welcomeText = new Label(sWelcomeText);
+        Label parserText = new Label(sParserText);
         welcomeText.getStyleClass().add("infoText");
         welcomeText.setWrapText(true);
+        parserText.getStyleClass().add("infoText");
+        parserText.setWrapText(true);
 
+        //link to a proof example
         Hyperlink help = new Hyperlink("short example of a proof in Conan");
         help.getStyleClass().add("infoText");
 
@@ -42,15 +47,28 @@ public class HelpView extends Symbolic implements View {
             }
         });
         
+        Hyperlink parser = new Hyperlink("Parser information");
+        parser.getStyleClass().add("infoText");
+
+        parser.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                new ParseInfoView(tabPane);
+            }
+        });
+        
         gridPane.add(title, 0, 0);
         gridPane.add(welcomeText, 0, 1);
         gridPane.add(help, 0, 2);
+        gridPane.add(parserText, 0, 3);
+        gridPane.add(parser, 0, 4);
         //lägg till fler
         
         
         GridPane.setHalignment(title, HPos.CENTER);
         GridPane.setValignment(title, VPos.CENTER);
         GridPane.setHalignment(help, HPos.CENTER);
+        GridPane.setHalignment(parser, HPos.CENTER);
 
         ScrollPane scrollPane = new ScrollPane(gridPane);
         scrollPane.setFitToWidth(true);
