@@ -25,7 +25,7 @@
 
 <VBox prefHeight="824.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1" fx:controller="start.MainController">
   <children>
-    <MenuBar VBox.vgrow="NEVER">
+    <MenuBar focusTraversable="false" VBox.vgrow="NEVER">
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
@@ -70,28 +70,28 @@
     </MenuBar>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-            <Button fx:id="newProofButton" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#newProof" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
-            <Button fx:id="loadButton" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openProof" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
-            <Button fx:id="saveButton" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveProof" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
-            <Button fx:id="undoButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#undo" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
-            <Button fx:id="redoButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#redo" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
-            <Button fx:id="openBoxButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openBox" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
-            <Button fx:id="appendRowButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#insertBelowAfterMenu" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
-            <Button fx:id="insertRowButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#insertBelowMenu" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
-            <Button fx:id="deleteRowButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteRowMenu" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
-            <CheckBox fx:id="verification" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#verificationToggle" prefHeight="38.0" text="Verify">
+            <Button fx:id="newProofButton" contentDisplay="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#newProof" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
+            <Button fx:id="loadButton" contentDisplay="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openProof" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
+            <Button fx:id="saveButton" contentDisplay="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveProof" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
+            <Button fx:id="undoButton" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#undo" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
+            <Button fx:id="redoButton" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#redo" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
+            <Button fx:id="openBoxButton" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openBox" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
+            <Button fx:id="appendRowButton" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#insertBelowAfterMenu" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
+            <Button fx:id="insertRowButton" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#insertBelowMenu" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
+            <Button fx:id="deleteRowButton" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteRowMenu" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
+            <CheckBox fx:id="verification" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#verificationToggle" prefHeight="38.0" text="Verify">
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </CheckBox>
-            <CheckBox fx:id="generation" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#generationToggle" prefHeight="38.0" text="Generate">
+            <CheckBox fx:id="generation" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#generationToggle" prefHeight="38.0" text="Generate">
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </CheckBox>
         </items>
       </ToolBar>
-    <SplitPane dividerPositions="0.2" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" scaleShape="false" VBox.vgrow="ALWAYS">
+    <SplitPane dividerPositions="0.2" focusTraversable="false" prefHeight="-1.0" prefWidth="-1.0" scaleShape="false" VBox.vgrow="ALWAYS">
       <items>
         <AnchorPane maxWidth="250.0" minWidth="250.0">
                <children>
@@ -103,7 +103,7 @@
                                  <children>
                                     <VBox prefWidth="221.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <TitledPane animated="false" styleClass="rulesSymbols" text="Rules of inference">
+                                          <TitledPane animated="false" focusTraversable="false" styleClass="rulesSymbols" text="Rules of inference">
                                              <content>
                                                 <GridPane hgap="2.0" styleClass="rulesSymbols" vgap="3.0">
                                                   <columnConstraints>
@@ -124,131 +124,131 @@
                                                    <children>
                                                       <AnchorPane>
                                                          <children>
-                                                            <Button fx:id="andIntroButton" layoutX="27.0" layoutY="6.0" mnemonicParsing="false" onAction="#ruleButtonPressed" prefHeight="27.0" prefWidth="74.0" text="∧i" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Button fx:id="andIntroButton" focusTraversable="false" layoutX="27.0" layoutY="6.0" mnemonicParsing="false" onAction="#ruleButtonPressed" prefHeight="27.0" prefWidth="74.0" text="∧i" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             </Button>
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane GridPane.columnIndex="1">
                                                          <children>
-                                                            <Button fx:id="andElim1Button" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="∧e₁" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Button fx:id="andElim1Button" focusTraversable="false" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="∧e₁" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             </Button>
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane GridPane.columnIndex="2">
                                                          <children>
-                                                            <Button fx:id="andElim2Button" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="∧e₂" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Button fx:id="andElim2Button" focusTraversable="false" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="∧e₂" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             </Button>
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane GridPane.rowIndex="1">
                                                          <children>
-                                                            <Button fx:id="orIntro1Button" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="∨i₁" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Button fx:id="orIntro1Button" focusTraversable="false" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="∨i₁" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             </Button>
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                          <children>
-                                                            <Button fx:id="orIntro2Button" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="∨i₂" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Button fx:id="orIntro2Button" focusTraversable="false" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="∨i₂" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                </Button>
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="1">
                                                          <children>
-                                                            <Button fx:id="orElimButton" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="∨e" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Button fx:id="orElimButton" focusTraversable="false" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="∨e" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             </Button>
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                                                          <children>
-                                                            <Button fx:id="impIntroButton" mnemonicParsing="false" onAction="#ruleButtonPressed" text="→i" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Button fx:id="impIntroButton" focusTraversable="false" mnemonicParsing="false" onAction="#ruleButtonPressed" text="→i" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             </Button>
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                          <children>
-                                                            <Button fx:id="impElimButton" mnemonicParsing="false" onAction="#ruleButtonPressed" text="→e" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Button fx:id="impElimButton" focusTraversable="false" mnemonicParsing="false" onAction="#ruleButtonPressed" text="→e" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             </Button>
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                                          <children>
-                                                            <Button fx:id="contraElimButton" mnemonicParsing="false" onAction="#ruleButtonPressed" text="⊥e" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Button fx:id="contraElimButton" focusTraversable="false" mnemonicParsing="false" onAction="#ruleButtonPressed" text="⊥e" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             </Button>
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
                                                          <children>
-                                                            <Button fx:id="negIntroButton" layoutX="7.0" layoutY="2.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="¬i" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Button fx:id="negIntroButton" focusTraversable="false" layoutX="7.0" layoutY="2.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="¬i" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             </Button>
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                          <children>
-                                                            <Button fx:id="negElimButton" layoutY="2.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="¬e" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Button fx:id="negElimButton" focusTraversable="false" layoutY="2.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="¬e" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             </Button>
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                                          <children>
-                                                            <Button fx:id="doubleNegElimButton" layoutX="7.0" layoutY="4.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="¬¬e" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Button fx:id="doubleNegElimButton" focusTraversable="false" layoutX="7.0" layoutY="4.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="¬¬e" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             </Button>
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
                                                          <children>
-                                                            <Button fx:id="eqIntroButton" layoutX="16.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="=i" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Button fx:id="eqIntroButton" focusTraversable="false" layoutX="16.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="=i" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             </Button>
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                                          <children>
-                                                            <Button fx:id="forallIntroButton" layoutX="16.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="∀i" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Button fx:id="forallIntroButton" focusTraversable="false" layoutX="16.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="∀i" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             </Button>
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
                                                          <children>
-                                                            <Button fx:id="forallElimButton" layoutX="-1.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="∀e" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
+                                                            <Button fx:id="forallElimButton" focusTraversable="false" layoutX="-1.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="∀e" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
                                                             </Button>
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5">
                                                          <children>
-                                                            <Button fx:id="eqElimButton" layoutX="21.0" layoutY="1.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="=e" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Button fx:id="eqElimButton" focusTraversable="false" layoutX="21.0" layoutY="1.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="=e" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             </Button>
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                                          <children>
-                                                            <Button fx:id="existsIntroButton" layoutX="19.0" layoutY="3.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="∃i" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Button fx:id="existsIntroButton" focusTraversable="false" layoutX="19.0" layoutY="3.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="∃i" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             </Button>
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
                                                          <children>
-                                                            <Button fx:id="existsElimButton" layoutX="-11.0" layoutY="-2.0" mnemonicParsing="false" onAction="#ruleButtonPressed" prefHeight="27.0" prefWidth="74.0" text="∃e" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Button fx:id="existsElimButton" focusTraversable="false" layoutX="-11.0" layoutY="-2.0" mnemonicParsing="false" onAction="#ruleButtonPressed" prefHeight="27.0" prefWidth="74.0" text="∃e" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             </Button>
                                                          </children></AnchorPane>
                                                       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="6">
                                                          <children>
-                                                            <Button fx:id="copyButton" layoutX="7.0" layoutY="6.0" mnemonicParsing="false" onAction="#ruleButtonPressed" prefHeight="27.0" prefWidth="74.0" text="Copy" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Button fx:id="copyButton" focusTraversable="false" layoutX="7.0" layoutY="6.0" mnemonicParsing="false" onAction="#ruleButtonPressed" prefHeight="27.0" prefWidth="74.0" text="Copy" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             </Button>
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane layoutX="20.0" layoutY="218.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                                          <children>
-                                                            <Button fx:id="assButton" layoutX="7.0" layoutY="6.0" mnemonicParsing="false" onAction="#ruleButtonPressed" prefHeight="27.0" prefWidth="74.0" text="Ass." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Button fx:id="assButton" focusTraversable="false" layoutX="7.0" layoutY="6.0" mnemonicParsing="false" onAction="#ruleButtonPressed" prefHeight="27.0" prefWidth="74.0" text="Ass." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             </Button>
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
                                                          <children>
-                                                            <Button fx:id="freshButton" layoutY="1.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="Fresh" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0" />
+                                                            <Button fx:id="freshButton" focusTraversable="false" layoutY="1.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="Fresh" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0" />
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="7">
                                                          <children>
-                                                            <Button fx:id="premiseButton" mnemonicParsing="false" onAction="#ruleButtonPressed" prefHeight="27.0" prefWidth="74.0" text="Premise">
+                                                            <Button fx:id="premiseButton" focusTraversable="false" mnemonicParsing="false" onAction="#ruleButtonPressed" prefHeight="27.0" prefWidth="74.0" text="Premise">
                                                             </Button>
                                                          </children>
                                                       </AnchorPane>
@@ -256,7 +256,7 @@
                                                 </GridPane>
                                              </content>
                                           </TitledPane>
-                                          <TitledPane animated="false" text="Derived rules">
+                                          <TitledPane animated="false" focusTraversable="false" text="Derived rules">
                                              <content>
                                                 <GridPane hgap="2.0" vgap="3.0">
                                                    <columnConstraints>
@@ -271,29 +271,29 @@
                                                    <children>
                                                       <AnchorPane>
                                                          <children>
-                                                            <Button fx:id="mtButton" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="MT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                            <Button fx:id="mtButton" focusTraversable="false" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="MT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane GridPane.columnIndex="1">
                                                          <children>
-                                                            <Button fx:id="doubleNegButton" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="¬¬i" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                            <Button fx:id="doubleNegButton" focusTraversable="false" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="¬¬i" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane GridPane.columnIndex="2">
                                                          <children>
-                                                            <Button fx:id="pbcButton" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="PBC" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                            <Button fx:id="pbcButton" focusTraversable="false" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="PBC" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane GridPane.rowIndex="1">
                                                          <children>
-                                                            <Button fx:id="lemButton" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="LEM" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                            <Button fx:id="lemButton" focusTraversable="false" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#ruleButtonPressed" text="LEM" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                          </children>
                                                       </AnchorPane>
                                                    </children>
                                                 </GridPane>
                                              </content>
                                           </TitledPane>
-                                          <TitledPane animated="false" text="Symbols">
+                                          <TitledPane animated="false" focusTraversable="false" text="Symbols">
                                              <content>
                                                 <GridPane hgap="2.0" prefWidth="233.0" vgap="3.0">
                                                    <columnConstraints>
@@ -309,37 +309,37 @@
                                                    <children>
                                                       <AnchorPane>
                                                          <children>
-                                                            <Button fx:id="impButton" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#symbolButtonPressed" text="→" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                            <Button fx:id="impButton" focusTraversable="false" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#symbolButtonPressed" text="→" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane GridPane.columnIndex="1">
                                                          <children>
-                                                            <Button fx:id="andButton" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#symbolButtonPressed" text="∧" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                            <Button fx:id="andButton" focusTraversable="false" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#symbolButtonPressed" text="∧" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane GridPane.columnIndex="2">
                                                          <children>
-                                                            <Button fx:id="orButton" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#symbolButtonPressed" text="∨" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                            <Button fx:id="orButton" focusTraversable="false" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#symbolButtonPressed" text="∨" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane GridPane.rowIndex="1">
                                                          <children>
-                                                            <Button fx:id="negButton" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#symbolButtonPressed" text="¬" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                            <Button fx:id="negButton" focusTraversable="false" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#symbolButtonPressed" text="¬" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                          <children>
-                                                            <Button fx:id="forallButton" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#symbolButtonPressed" text="∀" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                            <Button fx:id="forallButton" focusTraversable="false" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#symbolButtonPressed" text="∀" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="1">
                                                          <children>
-                                                            <Button fx:id="existsButton" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#symbolButtonPressed" text="∃" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                            <Button fx:id="existsButton" focusTraversable="false" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#symbolButtonPressed" text="∃" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                          </children>
                                                       </AnchorPane>
                                                       <AnchorPane GridPane.rowIndex="2">
                                                          <children>
-                                                            <Button fx:id="contraButton" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#symbolButtonPressed" text="⊥" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                            <Button fx:id="contraButton" focusTraversable="false" layoutX="28.0" layoutY="60.0" mnemonicParsing="false" onAction="#symbolButtonPressed" text="⊥" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                          </children>
                                                       </AnchorPane>
                                                    </children>
