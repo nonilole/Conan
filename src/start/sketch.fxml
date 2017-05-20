@@ -8,7 +8,6 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TabPane?>
@@ -22,6 +21,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <VBox prefHeight="824.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="start.MainController">
@@ -73,13 +73,14 @@
             <Button fx:id="newProofButton" contentDisplay="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#newProof" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
             <Button fx:id="loadButton" contentDisplay="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openProof" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
             <Button fx:id="saveButton" contentDisplay="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveProof" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
-            <Separator orientation="VERTICAL" />
+            <Line endY="15.0" startY="-15.0" />
             <Button fx:id="undoButton" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#undo" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
             <Button fx:id="redoButton" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#redo" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
             <Button fx:id="openBoxButton" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openBox" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
             <Button fx:id="appendRowButton" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#insertBelowAfterMenu" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
             <Button fx:id="insertRowButton" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#insertBelowMenu" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
             <Button fx:id="deleteRowButton" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteRowMenu" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
+            <Line endY="15.0" startY="-15.0" />
             <CheckBox fx:id="verification" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#verificationToggle" prefHeight="38.0" text="Verify">
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
