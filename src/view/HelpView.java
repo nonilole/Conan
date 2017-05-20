@@ -24,8 +24,8 @@ public class HelpView extends Symbolic implements View {
         gridPane.setPadding(new Insets(20.0, 20.0, 20.0, 20.0));
         String sTitle = "Learn more about Conan";
         String sWelcomeText = "Conan is a tool developed for providing assistance when constructing proofs in natural deduction for first-order logic.\n\n"
-        		+ "If you want to learn more about how to construct a proof, please follow the link below.";
-        String sParserText = "If you want to learn more about how expressions are parsed and how the editor intrepreds what you type into the expression field, please follow the link below.\n\n";
+        		+ "If you want to learn more about how to construct a proof and how Conan works, please follow the link below.";
+        String sParserText = "If you want to learn more about how expressions are parsed and how the editor interpreters what the user types into the expression field, please follow the link below.\n\n";
         String sTab = "Help";
         Label title = new Label(sTitle);
         title.getStyleClass().add("myTitle");
@@ -37,7 +37,7 @@ public class HelpView extends Symbolic implements View {
         parserText.setWrapText(true);
 
         //link to a proof example
-        Hyperlink help = new Hyperlink("short example of a proof in Conan");
+        Hyperlink help = new Hyperlink("Instructions on how to use Conan");
         help.getStyleClass().add("infoText");
 
         help.setOnAction(new EventHandler<ActionEvent>() {
