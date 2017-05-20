@@ -8,6 +8,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TabPane?>
@@ -31,6 +32,7 @@
           <items>
             <MenuItem accelerator="Shortcut+N" mnemonicParsing="false" onAction="#newProof" text="New" />
             <MenuItem accelerator="Shortcut+O" mnemonicParsing="false" onAction="#openProof" text="Open…" />
+                  <MenuItem mnemonicParsing="false" onAction="#showWelcome" text="Welcome tab" />
               <MenuItem accelerator="Shortcut+W" mnemonicParsing="false" onAction="#closeTab" text="Close tab" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem accelerator="Shortcut+S" mnemonicParsing="false" onAction="#saveProof" text="Save" />
@@ -59,11 +61,8 @@
             </Menu>
         <Menu mnemonicParsing="false" text="Help">
           <items>
-                  <MenuItem accelerator="F1" mnemonicParsing="false" onAction="#showUserInstructions" text="Instructions" />
-                  <MenuItem mnemonicParsing="false" onAction="#showWelcome" text="Welcome tab" />
                   <MenuItem accelerator="Shortcut+I" mnemonicParsing="false" onAction="#showInferenceRules" text="Show Inference Rules" />
                   <MenuItem mnemonicParsing="false" onAction="#showShortcuts" text="Show Shortcuts" />
-                  <MenuItem mnemonicParsing="false" onAction="#showParseInfo" text="Show parsing info" />
                   <MenuItem mnemonicParsing="false" onAction="#showHelp" text="Help tab" />
           </items>
         </Menu>
@@ -74,6 +73,7 @@
             <Button fx:id="newProofButton" contentDisplay="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#newProof" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
             <Button fx:id="loadButton" contentDisplay="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openProof" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
             <Button fx:id="saveButton" contentDisplay="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveProof" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
+            <Separator orientation="VERTICAL" />
             <Button fx:id="undoButton" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#undo" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
             <Button fx:id="redoButton" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#redo" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
             <Button fx:id="openBoxButton" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openBox" prefHeight="38.0" prefWidth="48.0" styleClass="menuButtons" text="" />
