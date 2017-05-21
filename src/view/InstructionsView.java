@@ -163,6 +163,7 @@ public class InstructionsView extends ViewTab {
         instructionGrid.add(configureLabel(introtxt,false), 0, ++rowNr);
         instructionGrid.add(configureLabel("Input:",true), 0, ++rowNr);
         instructionGrid.add(configureLabel(inputtxt,false), 0, ++rowNr);
+        instructionGrid.add(getParserlink(),0,++rowNr);
         instructionGrid.add(configureLabel("Conclusion verification:",true), 0, ++rowNr);
         instructionGrid.add(configureLabel(conclusiontxt,false), 0, ++rowNr);
         instructionGrid.add(configureImage("ConclusionEntry.png"), 0, ++rowNr);
@@ -186,6 +187,19 @@ public class InstructionsView extends ViewTab {
             }
         });
     	return help;
+    }
+    
+    private Hyperlink getParserlink(){
+    	Hyperlink parser = new Hyperlink("Show me parser info");
+        parser.getStyleClass().add("infoText");
+
+        parser.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                new ParseInfoView(tabPane);
+            }
+        });
+    	return parser;
     }
     
     private Label configureLabel(String contents, boolean isHeader) {
@@ -257,10 +271,11 @@ public class InstructionsView extends ViewTab {
     		"This text will explain how to use Conan to write proofs.\n";
     	
     String inputtxt = 
-    		"In the left-hand menu you will find buttons for all the available rules and relevant logic symbols."+
-    	    "Hovering over the logic symbols will show you a tooltip for how they can be easily added with simple text shortcuts."+
-    	    "For all the available shortcuts, check the shortcuts link in the help section, found in the menu."+
-    	    "If you want more information on the syntax for entering formula, check the Parse info, also in the help section.\n\n";
+    		"In the left-hand menu you will find buttons for all the available rules and relevant logic symbols. "+
+    	    "Hovering over the logic symbols will show you a tooltip for text shortcuts. "+
+    	    "For all the available shortcuts, check the shortcuts link in the help section, found in the menu or follow the link below. "+
+    	    "When writing an expression, you have to use lower case letters for variables and upper case letters for propositions and functions. "+
+    	    "If you want more information on the syntax for entering a formula, check the Parse info, also in the help section.\n\n";
 
     String conclusiontxt =
     		"In order for the program to be able to verify if you have reached your conclusion, you need to enter it in the appropriate textfield, as can be seen in the image below. ";
@@ -274,7 +289,7 @@ public class InstructionsView extends ViewTab {
     String addingrowstxt =
     		"To add a new row after the current one, simply press ENTER. "+
     		"If you're at the end of a box and wish to continue outside of that box, press SHIFT+ENTER. "+
-    		"You can find more input options under...";
+    		"You can find more input options if you follow the link below. ";
     
     String TEXT6 =
     		"";
