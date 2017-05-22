@@ -33,17 +33,20 @@ public class ImplicationIntro extends Rule {
         Interval ref;
         try {
             ref = ReferenceParser.parseIntervalReference(refStr);
+            setPremiseInterval(ref);
         } catch (NumberFormatException e) {
             ref = null;
+            setPremiseInterval(ref);
             throw new NumberFormatException(); //Still want this to propagate up
         }
-        setPremiseInterval(ref);
     }
 
     @Override
     public boolean verifyReferences(Box data, int rowIndex) {
         Interval premiseInterval = getPremiseInterval();
         if (!(data.isInScopeOf(premiseInterval, rowIndex))) return false;
+        Rule rule = data.getRow(premiseInterval.startIndex).getRule();
+        if (rule instanceof Assumption == false) return false;
         return true;
     }
 

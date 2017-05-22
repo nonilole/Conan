@@ -19,7 +19,7 @@ public class DoubleNegationIntro extends Rule {
         return premise1;
     }
 
-    public void setPremise1(int premise1) {
+    public void setPremise1(Integer premise1) {
         this.premise1 = premise1;
     }
 
@@ -29,11 +29,12 @@ public class DoubleNegationIntro extends Rule {
         Integer ref;
         try {
             ref = ReferenceParser.parseIntegerReference(refStr);
+            setPremise1(ref);
         } catch (NumberFormatException e) {
             ref = null;
+            setPremise1(ref);
             throw new NumberFormatException(); //Still want this to propagate up
         }
-        setPremise1(ref);
     }
 
     @Override

@@ -22,7 +22,13 @@ or       		Or (∨)
 ne | no | !  	Negation (¬)
 fo | fa    		For all (∀)
 ex | te | th 	There exists (∃)
-bo | co    		Contradiction/Bottom (⊥)
+bo    		Bottom (⊥)
+
+Rules
+pr 			Premise
+co			Copy
+as			Ass. 
+fr			Fresh
 
 File/Help
 F1     		Instructions

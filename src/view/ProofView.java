@@ -1,6 +1,5 @@
 package view;
 
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -15,7 +14,6 @@ import model.Proof;
 import model.ProofListener;
 import view.Command.*;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,6 +26,8 @@ import static view.ViewUtil.checkShortcut;
 public class ProofView extends Symbolic implements ProofListener, View {
     ScrollPane sp;
 
+    private Label leftStatus;
+    private Label rightStatus;
     private TextField premises;
     private TextField conclusion;
     private Stack<VBox> curBoxDepth = new Stack<>();
@@ -75,7 +75,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
         this.proof.registerProofListener(this);
         this.premises = premisesAndConclusion.getPremises();
         this.premises.setId("expression");
-        this.premises.setPromptText("Premises");
+        this.premises.setPromptText("Premises will update automatically");
         premises.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -93,6 +93,11 @@ public class ProofView extends Symbolic implements ProofListener, View {
         proof.updateConclusion(this.conclusion.getText());
         addFocusListener(premises, this);
         addFocusListener(conclusion, this);
+        HBox tempHBox = (HBox) ((VBox)(tabPane.getParent().getParent().getParent())).getChildren().get(3);
+        this.leftStatus = (Label) tempHBox.getChildren().get(0);
+        this.leftStatus.getStyleClass().add("status");
+        this.rightStatus = (Label) tempHBox.getChildren().get(2);
+        this.rightStatus.getStyleClass().add("status");
         AnchorPane cp = createProofPane();
         SplitPane sp = new SplitPane(premisesAndConclusion, cp);
         sp.setOrientation(Orientation.VERTICAL);
@@ -111,7 +116,13 @@ public class ProofView extends Symbolic implements ProofListener, View {
         }
         tabPane.getTabs().add(this.tab);
         tabPane.getSelectionModel().select(this.tab);
+        this.premises.setEditable(false);
+        this.premises.setFocusTraversable(false);
     }
+    public void setLeftStatus(String s) {
+        leftStatus.setText(s);
+    }
+    public void setRightStatus(String s) { rightStatus.setText(s); }
     public void focusFirst() {
         rList.get(0).getExpression().requestFocus();
     }
@@ -231,6 +242,12 @@ public class ProofView extends Symbolic implements ProofListener, View {
 
 
     // PROOF LISTENER METHODS
+    public void updateErrorStatus(int lineNo, String errorMessage) {
+        rList.get(lineNo-1).setErrorStatus(errorMessage);
+    }
+    public void updateParsingStatus(int lineNo, String parsingResult) {
+        rList.get(lineNo-1).setParsingStatus(parsingResult);
+    }
     //Adds a new row at the end of the proof
     public void rowAdded() {
         RowPane rp;
@@ -253,6 +270,10 @@ public class ProofView extends Symbolic implements ProofListener, View {
         lineNo.getChildren().add(createLabel());
         updateLabelPaddings(rList.size());
         scroll = true;
+    }
+    
+    public void premisesUpdated(String newPremisesStr){
+    	this.premises.setText(newPremisesStr);
     }
 
     public void rowInserted(int rowNo, BoxReference br, int depth) {
@@ -428,13 +449,25 @@ public class ProofView extends Symbolic implements ProofListener, View {
         }
     }
 
+    public void updateStatus() {
+        int rowNo = getRowNumberLastFocusedTF();
+        if (rowNo != -1) {
+            RowPane rp = rList.get(rowNo-1);
+            setLeftStatus(rp.getErrorStatus());
+            setRightStatus(rp.getParsingStatus());
+        } else {
+            setLeftStatus("");
+            setRightStatus("");
+        }
+    }
+
     public void rowUpdated(String newText, boolean wellFormed, int lineNo) {
-        TextField expression = (TextField) rList.get(lineNo - 1).getExpression();
+        TextField expression = rList.get(lineNo - 1).getExpression();
         if (expression.getText().isEmpty())
             wellFormed = true;
         if (newText != null)
             expression.setText(newText);
-            applyStyleIf(expression, !wellFormed, "bad");
+        applyStyleIf(expression, !wellFormed, "bad");
     }
 
     public void conclusionReached(boolean correct, int lineNo) {
@@ -584,7 +617,9 @@ public class ProofView extends Symbolic implements ProofListener, View {
             Node check  = lastFocusedTf.getParent();
             if (!(check instanceof RowPane))
                 check = check.getParent();
-            return rList.indexOf(check) + 1;
+            int idx = rList.indexOf(check);
+            if (idx != -1)
+                return idx + 1;
         }
         return -1;
     }

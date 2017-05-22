@@ -2,9 +2,9 @@ package view;
 
 import javafx.event.EventHandler;
 import javafx.scene.CacheHint;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -17,6 +17,7 @@ import start.Constants;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.prefs.Preferences;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,7 +36,10 @@ public class RowPane extends BorderPane {
     final static KeyCombination ctrlY = new KeyCodeCombination(Y, SHORTCUT_DOWN);
     private static final HashMap<String, List<Boolean>> ruleBox;
     private static final HashMap<String, Integer> ruleMap;
-    static Pattern p = Pattern.compile("^([1-9]\\d*-?([1-9]\\d*)?)?$");
+    private String errorStatus;
+    private String parsingStatus;
+    static Pattern p = Pattern.compile("^(([1-9]\\d*)?-?([1-9]\\d*)?)?$");
+
 
     static {
         List<Boolean> ft = Arrays.asList(false, true, true);
@@ -84,7 +88,19 @@ public class RowPane extends BorderPane {
     private boolean isFirstRowInBox;
     private int nrOfClosingBoxes;
 
-    // Always call init after adding RowPane to rList
+    public void setErrorStatus(String s) {
+        this.errorStatus = s;
+    }
+    public String getErrorStatus() {
+        return this.errorStatus;
+    }
+    public void setParsingStatus(String s) {
+        this.parsingStatus = s;
+    }
+    public String getParsingStatus() {return this.parsingStatus;}
+
+
+        // Always call init after adding RowPane to rList
     public RowPane(boolean isFirstRowInBox, int nrOfClosingBoxes) {
         super();
         this.isFirstRowInBox = isFirstRowInBox;
@@ -158,8 +174,11 @@ public class RowPane extends BorderPane {
         });
         new RuleFocus(getRule(), pv, rList);
         getRule().textProperty().addListener((ov, oldValue, newValue) -> {
-            newValue = checkShortcut(newValue);
-            setRule(newValue);
+            String changedValue = checkShortcut(newValue, true);
+            if (!changedValue.equals(newValue)) {
+                setRule(changedValue);
+                return;
+            }
             int rpIndex = rList.indexOf(this);
 //            if (newValue.equals("Ass.") || newValue.equals("Fresh")) {
 //                pv.insertNewBox(rpIndex + 1);
@@ -172,7 +191,7 @@ public class RowPane extends BorderPane {
                 e.printStackTrace();
             }
             newValue = newValue.replaceAll("^(∃|∀)[a-z](i|e)$", "$1$2");
-            setPrompts(ruleMap.getOrDefault(newValue, 0));
+            setPrompts(ruleMap.getOrDefault(newValue, -1));
             setPromptsPromptText(ruleBox.getOrDefault(newValue, Arrays.asList(false, false, true)));
         });
         for (int i = 0; i < 3; i++) {
@@ -280,10 +299,47 @@ public class RowPane extends BorderPane {
                 getRulePrompt(1).setVisible(true);
             case 1:
                 getRulePrompt(0).setVisible(true);
-                break;
             default:
                 break;
         }
+      //if the rule has rule promps
+        /*
+        if (n > 0) {
+            System.out.println(n);
+            getClosestPromptFromLeft(0).requestFocus();
+            Preferences prefs = Preferences.userRoot().node("General");
+            //if generate is checked and if popup has not been disabled. 
+            if (prefs.getBoolean("generate", true) && prefs.getBoolean("generateHelp", true)) { 
+                Alert popup = new Alert(Alert.AlertType.CONFIRMATION);
+                popup.setDialogPane(new DialogPane() {
+                    @Override
+                    protected Node createDetailsButton() {
+                        CheckBox doNotShowMeThis = new CheckBox();
+                        doNotShowMeThis.setSelected(true);
+                        doNotShowMeThis.setText("Please stop annoying me.");
+                        doNotShowMeThis.setOnAction(e -> {
+                            if (doNotShowMeThis.isSelected()) {
+                                prefs.putBoolean("generateHelp", false);
+                            } else {
+                                prefs.putBoolean("generateHelp", true);
+                            }
+                        });
+                        return doNotShowMeThis;
+                    }
+                });
+                popup.setTitle("Generate");
+                popup.setHeaderText("Generating expressions");
+                popup.getDialogPane().getButtonTypes().addAll(ButtonType.OK);
+                popup.getDialogPane().setContentText("You may generate an expression by leaving the expression field empty and inputting valid and verified references.\n\n"
+                + Constants.forallIntro + " may generate if you type the variable name between " + Constants.forall + " and " + Constants.introduction + ". E.g." + Constants.forall + "x" + Constants.introduction +"\n\n"
+                + "The rules " + Constants.existsIntro + ", " + Constants.equalityIntro + " and " + Constants.equalityElim + " may not generate\n\n"
+                );
+                popup.getDialogPane().setExpandableContent(new Group());
+                popup.getDialogPane().setExpanded(true);
+                popup.show();
+            }
+        }
+       */ 
     }
 
     private abstract class HotkeyMapper {

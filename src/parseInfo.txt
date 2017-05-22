@@ -1,5 +1,7 @@
 
 If the parser is unable to parse an inputted formula, the row will turn red.
+When a formula has been inputted correctly, the parser's interpretation 
+will be displayed in the bottom right corner.
 
 Inputted formulas are interpreted as follows:
 Predicates use upper-case letters for identifiers, terms use lower-case.
@@ -19,5 +21,5 @@ Examples:
 ∀x P(x) ∧ Q(x)  would be parsed as: (∀x P(x)) ∧ Q(x) 
 A ∨ B ∧ C  would be parsed as: (A ∨ B) ∧ C
 A → B → C  would be parsed as: (A → (B → C))
-A → B → C ∧ D would be parsed as: A → ((B ∧ C) → D)
+A → B ∧ C → D would be parsed as: A → ((B ∧ C) → D)
  

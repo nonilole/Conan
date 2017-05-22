@@ -1,11 +1,8 @@
 package view;
 
-import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
 
 import java.util.prefs.Preferences;
 
@@ -21,6 +18,7 @@ public class ViewUtil {
         tf.focusedProperty().addListener((observable, oldValue, newValue) -> {
             pv.lastFocusedTf = tf;
             pv.caretPosition = tf.getCaretPosition();
+            pv.updateStatus();
         });
     }
     public static void applyStyleIf(TextField expression, boolean bool, String style) {
@@ -33,17 +31,15 @@ public class ViewUtil {
         }
     }
     public static String checkShortcut(String newValue) {
+        return checkShortcut(newValue, false);
+    }
+    public static String checkShortcut(String newValue, Boolean extraShortcuts) {
         newValue = newValue.replaceAll("!|ne|no", "¬");
         newValue = newValue.replaceAll("&|an|\\^", "∧");
         newValue = newValue.replaceAll("->|im", "→");
         newValue = newValue.replaceAll("fa|fo", "∀");
         newValue = newValue.replaceAll("or|\\|", "∨");
         newValue = newValue.replaceAll("ex|te|th", "∃");
-        newValue = newValue.replaceAll("co|bo", "⊥");
-        newValue = newValue.replaceAll("⊥py", "Copy");
-        newValue = newValue.replaceAll("premise", "Premise");
-        newValue = newValue.replaceAll("ass", "Ass.");
-        newValue = newValue.replaceAll("fresh", "Fresh");
         newValue = newValue.replaceAll("0", "₀");
         newValue = newValue.replaceAll("1", "₁");
         newValue = newValue.replaceAll("2", "₂");
@@ -54,6 +50,13 @@ public class ViewUtil {
         newValue = newValue.replaceAll("7", "₇");
         newValue = newValue.replaceAll("8", "₈");
         newValue = newValue.replaceAll("9", "₉");
+        newValue = newValue.replaceAll("bo", "⊥");
+        if (extraShortcuts) {
+            newValue = newValue.replaceAll("co", "Copy");
+            newValue = newValue.replaceAll("pr", "Premise");
+            newValue = newValue.replaceAll("as", "Ass.");
+            newValue = newValue.replaceAll("fr", "Fresh");
+        }
         return newValue;
     }
     public static void consumeKeys(TextField tf) {

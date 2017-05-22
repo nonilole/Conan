@@ -53,6 +53,10 @@ public class Function implements Term{
         return strB.toString();
     }
 
+    public String parenthesize(){
+        return toString();
+    }
+
 	@Override
 	public boolean containsObjectId(String id) {
 		for(Term arg : args){

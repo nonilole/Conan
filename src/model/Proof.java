@@ -3,6 +3,7 @@ package model;
 import model.formulas.Formula;
 import model.rules.Premise;
 import model.rules.Rule;
+import start.Constants;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,7 +34,8 @@ public class Proof implements Serializable{
         for (ProofListener listener : this.listeners) {
             listener.rowAdded();
         }
-        verifyRow(proofData.size() - 1);
+        verifyProof();
+        //verifyRow(proofData.size() - 1);
         printProof("Row added");
     }
 
@@ -49,12 +51,19 @@ public class Proof implements Serializable{
         if (rowNumber < 1 || rowNumber > proofData.size() || proofData.size() == 1) {
             return -1;
         }
+        boolean updatedPremises = false;
+        if(proofData.getRow(rowNumber-1).getRule() instanceof Premise){
+        	updatedPremises = true;
+        }
         System.out.println(proofData.size());
         int delDepth = (proofData.deleteRow(rowNumber - 1));
         if (delDepth == -1)
             return -1;
         for (ProofListener listener : this.listeners) {
             listener.rowDeleted(rowNumber);
+        }
+        if(updatedPremises){
+        	this.updatedPremises();
         }
         verifyProof();
         printProof("Row deleted");
@@ -106,7 +115,7 @@ public class Proof implements Serializable{
     /**
      * Alert the listeners about the row.
      *
-     * @param formula
+     * @param strFormula
      * @param rowNumber
      */
     public void updateFormulaRow(String strFormula, int rowNumber) {
@@ -121,26 +130,41 @@ public class Proof implements Serializable{
         } catch (ParseException e) {
             wellFormed = false;
         }
+        String parsedString = parsedFormula == null ? "" : parsedFormula.parenthesize();
         toBeUpdated.setFormula(parsedFormula);
         toBeUpdated.setUserInput((strFormula == null ? "" : strFormula));
         toBeUpdated.setWellformed(wellFormed);
 
         for (ProofListener listener : this.listeners) {
+            listener.updateParsingStatus(rowNumber, parsedString);
             listener.rowUpdated(null, wellFormed, rowNumber);
         }
 //        verifyProof(rowIndex); //should use verifyProof later probably, to verify rows lower in the proof aswell
         verifyProof();
+        if(toBeUpdated.getRule() instanceof Premise){
+        	this.updatedPremises();
+        }
         printProof("Updated formula in row");
     }
 
     public void updateRuleRow(String ruleString, int rowNumber) throws IllegalAccessException, InstantiationException {
         //System.out.println("updateRuleRow: rule=" + ruleString + ", rowNr=" + rowNumber);
         int rowIndex = rowNumber - 1;
+        boolean premiseUpdate = false;
         ProofRow pr = proofData.getRow(rowIndex);
+        if(pr.getRule() instanceof Premise){
+            premiseUpdate = true;
+        }
         Rule rule = RuleMapper.getRule(ruleString);
+        if(ruleString.equals(Constants.premise)){
+        	premiseUpdate = true;
+        }
         pr.setRule(rule);
 //        verifyProof(rowIndex);
         verifyProof();
+        if(premiseUpdate){
+        	this.updatedPremises();
+        }
         printProof("Updated rule in row");
     }
 
@@ -148,7 +172,8 @@ public class Proof implements Serializable{
     public void addRule(int rowNr, Rule rule) {
         System.out.println("addRule: " + rowNr + ", Rule: " + rule);
         proofData.getRow(rowNr - 1).setRule(rule);
-        verifyRow(rowNr - 1);
+       // verifyRow(rowNr - 1);
+        verifyProof();
     }
 
     //should verify each line in the proof from line startIndex
@@ -159,9 +184,22 @@ public class Proof implements Serializable{
         assert (startIndex < proofData.size()) : "Proof.verifyProof: index out of bounds";
         boolean returnValue = true;
         for (int i = startIndex; i < proofData.size(); i++) {
-            if (verifyRow(i) == false) returnValue = false;
+            try {
+                if (verifyRow(i) == false) returnValue = false;
+                for (ProofListener listener : this.listeners) {
+                    listener.updateErrorStatus(i + 1, "");
+                }
+            } catch (VerificationInputException e) {
+                for (ProofListener listener : this.listeners) {
+                    listener.updateErrorStatus(i+1, e.getMessage());
+                }
+            }
             //TODO: inform listeners about each row
         }
+        for (ProofListener listener : this.listeners) {
+            listener.updateStatus();
+        }
+
         return returnValue;
     }
 
@@ -171,17 +209,28 @@ public class Proof implements Serializable{
         assert (rowIndex < proofData.size()) : "Proof.verifyRow: index out of bounds";
         ProofRow row = proofData.getRow(rowIndex);
         Rule rule = row.getRule();
-        boolean isVerified;
-        if (rule == null || row.getFormula() == null || rule.hasCompleteInfo() == false) {
-            isVerified = false;
+        boolean isVerified = false;
+        VerificationInputException exceptionToThrow = null;
+        if (rule == null) {
+            exceptionToThrow = new VerificationInputException("Invalid rule syntax.");
+        } else if (rule.hasCompleteInfo() == false) {
+            exceptionToThrow = new VerificationInputException("A reference is empty.");
+        } else if ( row.getFormula() == null ) {
+            exceptionToThrow = new VerificationInputException("Invalid formula syntax.");
         } else {
-            isVerified = rule.verify(proofData, rowIndex);
+            try {
+                isVerified = rule.verify(proofData, rowIndex);
+            } catch (VerificationInputException e) {
+                exceptionToThrow = e;
+            }
         }
         row.setVerified(isVerified);
         for (ProofListener listener : this.listeners) {
             listener.rowVerified(isVerified, rowIndex + 1);
         }
         verifyConclusion(rowIndex);
+        if (exceptionToThrow != null)
+            throw exceptionToThrow;
         return isVerified;
     }
 
@@ -315,10 +364,15 @@ public class Proof implements Serializable{
         assert (rowIndex < proofData.size());
         ProofRow row = proofData.getRow(rowIndex);
         Rule rule = row.getRule();
-        if (rule == null || rule.hasCompleteInfo() == false) {
+        if (rule == null || rule.hasCompleteInfo() == false || row.getFormula() != null) {
             return;
         }
-        Formula generated = rule.generateFormula(proofData, rowIndex);
+        Formula generated = null;
+        try {
+            generated = rule.generateFormula(proofData, rowIndex);
+        } catch (VerificationInputException e) {
+            return;
+        }
         if (generated == null)
             return;
         row.setFormula(generated);
@@ -370,5 +424,11 @@ public class Proof implements Serializable{
     	int x = zeroBasedNumbering ? 0 : 1;
         proofData.printRows(1, x);
         System.out.println("===========================================================");
+    }
+    
+    public void updatedPremises(){
+    	for(ProofListener pl : this.listeners){
+    		pl.premisesUpdated(this.getPremisesStr());
+    	}
     }
 }

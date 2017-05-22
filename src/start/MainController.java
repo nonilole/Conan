@@ -469,7 +469,7 @@ public class MainController implements Initializable {
         insertRowButton.setTooltip(new Tooltip("Insert row (Enter)"));
         deleteRowButton.setTooltip(new Tooltip("Delete current row/box (CTRL+D)"));
         verification.setTooltip(new Tooltip("Turn on/off verification"));
-        generation.setTooltip(new Tooltip("Turn on/off automatic rule application"));
+        generation.setTooltip(new Tooltip("Turn on/off generation of formula after rule application"));
 
         //Inference Rules
         andIntroButton.setTooltip(new Tooltip("And-Introduction"));
@@ -508,12 +508,17 @@ public class MainController implements Initializable {
         negButton.setTooltip(new Tooltip("Negation (type ne to insert)"));
         forallButton.setTooltip(new Tooltip("For All (type fa to insert)"));
         existsButton.setTooltip(new Tooltip("There Exists (type te to insert)"));
-        contraButton.setTooltip(new Tooltip("Contradiction (type co to insert)"));
+        contraButton.setTooltip(new Tooltip("Bottom (type bo to insert)"));
     }
 
     @FXML
     void showWelcome(ActionEvent event) {
         new WelcomeView(tabPane);
+    }
+    
+    @FXML
+    void showHelp(ActionEvent event) {
+        new HelpView(tabPane);
     }
 
     @Override

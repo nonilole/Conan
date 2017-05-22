@@ -28,7 +28,7 @@ public class ParseInfoView implements View {
         //putting the image on a scrollpane
         ScrollPane sp = new ScrollPane();
         sp.getStyleClass().add("rulesView");
-        tab = new ViewTab("Shortcuts",this);
+        tab = new ViewTab("Parse info",this);
         sp.setContent(label);
         tabPane.getTabs().add(tab);
         tab.setContent(sp);

@@ -71,7 +71,7 @@ public class PremisesAndConclusion extends HBox {
     public TextField getConclusion() {
         return this.conclusion;
     }
-
+    
     public PremisesAndConclusion(String sPremises, String sConclusion) {
         premises = new TextField(sPremises);
         premises.textProperty().addListener((ov, oldValue, newValue) -> {
@@ -98,4 +98,5 @@ public class PremisesAndConclusion extends HBox {
     public PremisesAndConclusion() {
         this("","");
     }
+    
 }
