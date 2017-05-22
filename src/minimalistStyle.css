@@ -75,7 +75,7 @@
 -fx-font-size: 10px;
 }
 .unVerified {
-   -fx-background-color: pink, white, white;
+   -fx-background-color: red, white, white;
    -fx-background-insets: 0, 2;
 }
 .conclusionReached {
