@@ -24,7 +24,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="824.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1" fx:controller="start.MainController">
+<VBox prefHeight="824.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="start.MainController">
   <children>
     <MenuBar focusTraversable="false" VBox.vgrow="NEVER">
       <menus>
@@ -63,7 +63,7 @@
           <items>
                   <MenuItem accelerator="Shortcut+I" mnemonicParsing="false" onAction="#showInferenceRules" text="Show Inference Rules" />
                   <MenuItem mnemonicParsing="false" onAction="#showShortcuts" text="Show Shortcuts" />
-                  <MenuItem mnemonicParsing="false" onAction="#showHelp" text="Show Help" />
+                  <MenuItem mnemonicParsing="false" onAction="#showUserInstructions" text="Show Instructions" />
           </items>
         </Menu>
       </menus>

@@ -18,6 +18,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import start.Constants;
 
 public class InstructionsView extends ViewTab {
     
@@ -131,28 +132,6 @@ public class InstructionsView extends ViewTab {
     	return heading;
     }
     
-    /**
-     * Constructs the user instructions.
-     */
-    private Node constructInstructionsBackup() {
-    	GridPane instructionGrid = new GridPane();
-    	instructionGrid.setVgap(20.0);
-    	instructionGrid.setPadding(new Insets(20.0, 20.0, 20.0, 20.0));
-        /*
-        instructionGrid.add(configureLabel("Conan is a tool developed for aiding students learning natural deduction. Because of this, Conan strives to replicate the notation most commonly used in textbooks.\n\n"
-    			+ "Presented below are example instructions for proving A∧B ⊢ B∧A (B and A from A and B). Feel free to create a new proof and imitate every step.",false), 0, 0);
-        instructionGrid.add(configureLabel("First, locate the toolbox at the left part of the interface. This tool box provides easy access to frequently used proof components, such as rules of inference and unicode symbols used in logic.",false), 0, 1);
-        instructionGrid.add(configureImage("exampleToolBox.png"), 0, 2);
-        instructionGrid.add(configureLabel("Next, fill in the sequent A∧B ⊢ B∧A in the proof header.",false), 0, 3);
-        instructionGrid.add(configureImage("exampleSequent.png",false), 0, 4);
-        instructionGrid.add(configureLabel("Having filled in the proof header, the next step is to actually construct the proof. This is done by entering one deduction step per row in the proof sheet. Note in particular that each row consists of two or more lines.\n\n"
-        		+ "On the first line, the mathematical expression of the deduction step is filled in. On the second, the inference rule is filled in. If the rule is dependent on previous rows, these are filled in on the third and fourth line.\n\n"
-        		+ "Pay attention to the colours that indicate that you have reached your conclusion, or if you have made an error."), 0, 5);
-        instructionGrid.add(configureImage("exampleProof.png"), 0, 6);
-        instructionGrid.add(configureLabel("Congratulations! You have now completed the proof."), 0, 7);*/
-        return instructionGrid;
-	}
-    
     private Node constructInstructions() {
     	GridPane instructionGrid = new GridPane();
     	instructionGrid.setVgap(20.0);
@@ -163,6 +142,7 @@ public class InstructionsView extends ViewTab {
         instructionGrid.add(configureLabel(introtxt,false), 0, ++rowNr);
         instructionGrid.add(configureLabel("Input:",true), 0, ++rowNr);
         instructionGrid.add(configureLabel(inputtxt,false), 0, ++rowNr);
+        instructionGrid.add(getParserlink(),0,++rowNr);
         instructionGrid.add(configureLabel("Conclusion verification:",true), 0, ++rowNr);
         instructionGrid.add(configureLabel(conclusiontxt,false), 0, ++rowNr);
         instructionGrid.add(configureImage("ConclusionEntry.png"), 0, ++rowNr);
@@ -172,6 +152,20 @@ public class InstructionsView extends ViewTab {
         instructionGrid.add(configureLabel("Adding rows and navigation:",true), 0,++rowNr);
         instructionGrid.add(configureLabel(addingrowstxt,false), 0, ++rowNr);
         instructionGrid.add(getShortcutlink(),0,++rowNr);
+        
+        instructionGrid.add(configureLabel("Proof example:",true), 0, ++rowNr);
+        instructionGrid.add(configureLabel("Presented below are example instructions for proving A∧B ⊢ B∧A (B and A from A and B). Feel free to create a new proof and imitate every step.",false), 0, ++rowNr);
+        instructionGrid.add(configureLabel("First, locate the toolbox at the left part of the interface. This tool box provides easy access to frequently used proof components, such as rules of inference and unicode symbols used in logic.",false), 0, ++rowNr);
+        instructionGrid.add(configureImage("exampleToolBox.png"), 0, ++rowNr);
+        instructionGrid.add(configureLabel("Next, fill in the sequent A∧B ⊢ B∧A in the proof header.",false), 0, ++rowNr);
+        instructionGrid.add(configureImage("exampleSequent.png"), 0, ++rowNr);
+        instructionGrid.add(configureLabel("Having filled in the proof header, the next step is to actually construct the proof. This is done by entering one deduction step per row in the proof sheet. Note in particular that each row consists of two or more lines.\n\n"
+        		+ "On the first line, the mathematical expression of the deduction step is filled in. On the second, the inference rule is filled in. If the rule is dependent on previous rows, these are filled in on the third and fourth line.\n\n"
+        		+ "Pay attention to the colours that indicate that you have reached your conclusion, or if you have made an error.", false), 0, ++rowNr);
+        instructionGrid.add(configureImage("exampleProof.png"), 0, ++rowNr);
+        instructionGrid.add(configureLabel("Congratulations! You have now completed the proof.", false), 0, ++rowNr);
+        
+        
         return instructionGrid;
 	}
     
@@ -186,6 +180,19 @@ public class InstructionsView extends ViewTab {
             }
         });
     	return help;
+    }
+    
+    private Hyperlink getParserlink(){
+    	Hyperlink parser = new Hyperlink("Show me parser info");
+        parser.getStyleClass().add("infoText");
+
+        parser.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                new ParseInfoView(tabPane);
+            }
+        });
+    	return parser;
     }
     
     private Label configureLabel(String contents, boolean isHeader) {
@@ -257,24 +264,32 @@ public class InstructionsView extends ViewTab {
     		"This text will explain how to use Conan to write proofs.\n";
     	
     String inputtxt = 
-    		"In the left-hand menu you will find buttons for all the available rules and relevant logic symbols."+
-    	    "Hovering over the logic symbols will show you a tooltip for how they can be easily added with simple text shortcuts."+
-    	    "For all the available shortcuts, check the shortcuts link in the help section, found in the menu."+
-    	    "If you want more information on the syntax for entering formula, check the Parse info, also in the help section.\n\n";
+    		"In the left-hand menu you will find buttons for all the available rules and relevant logic symbols. "+
+    	    "Hovering over the logic symbols will show you a tooltip for text shortcuts. "+
+    	    "For all the available shortcuts, check the shortcuts link in the help section, found in the menu or follow the link below. "+
+    	    "When writing an expression, you have to use lower case letters for variables and upper case letters for propositions and functions. "+
+    	    "If you want more information on the syntax for entering a formula, check the Parse info, also in the help section.\n\n";
 
     String conclusiontxt =
     		"In order for the program to be able to verify if you have reached your conclusion, you need to enter it in the appropriate textfield, as can be seen in the image below. ";
     		
     
     String toggletxt =
-    		"In the toolbar you will find checkboxes for toggling verification and generation. Verification means that the program will verify each step in your proof. "+
-    	    "Generation means that the program can, in most cases, generate the formula after you apply a rule so that less typing is needed from you.\n\n";
+    		"In the toolbar you will find checkboxes for toggling verification and generation. "
+    		+ "Verification means that the program will verify each step in your proof. "
+    		+ "When a rule is incorrectly applied, the rule box turns red and an error message will appear in the bottom left corner. \n\n" +
+    	    "Generation means that the program can, in most cases, generate the formula after you apply a rule so that less typing is needed from you. " + 
+    	    "You may generate an expression by leaving the expression field empty and inputting valid and verified references." + "\n\n" + 
+    	    Constants.forallIntro + " may generate if you type the variable name between " + Constants.forall + " and " + Constants.introduction +  
+    	    " (e.g. " + Constants.forall + "x" + Constants.introduction + "). " + 
+            "The rules " + Constants.existsIntro + ", " + Constants.equalityIntro + " and " + Constants.equalityElim + " may not generate.\n\n";
+                    
 
     
     String addingrowstxt =
     		"To add a new row after the current one, simply press ENTER. "+
     		"If you're at the end of a box and wish to continue outside of that box, press SHIFT+ENTER. "+
-    		"You can find more input options under...";
+    		"You can find more input options if you follow the link below. ";
     
     String TEXT6 =
     		"";
