@@ -61,9 +61,9 @@
             </Menu>
         <Menu mnemonicParsing="false" text="Help">
           <items>
-                  <MenuItem accelerator="Shortcut+I" mnemonicParsing="false" onAction="#showInferenceRules" text="Show Inference Rules" />
-                  <MenuItem mnemonicParsing="false" onAction="#showShortcuts" text="Show Shortcuts" />
-                  <MenuItem mnemonicParsing="false" onAction="#showUserInstructions" text="Show Instructions" />
+                  <MenuItem accelerator="Shortcut+I" mnemonicParsing="false" onAction="#showInferenceRules" text="Inference Rules" />
+                  <MenuItem mnemonicParsing="false" onAction="#showShortcuts" text="Shortcuts" />
+                  <MenuItem mnemonicParsing="false" onAction="#showUserInstructions" text="Instructions" />
           </items>
         </Menu>
       </menus>
