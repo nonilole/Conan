@@ -18,6 +18,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import start.Constants;
 
 public class InstructionsView extends ViewTab {
     
@@ -130,28 +131,6 @@ public class InstructionsView extends ViewTab {
     	heading.getStyleClass().add("myTitle");
     	return heading;
     }
-    
-    /**
-     * Constructs the user instructions.
-     */
-    private Node constructInstructionsBackup() {
-    	GridPane instructionGrid = new GridPane();
-    	instructionGrid.setVgap(20.0);
-    	instructionGrid.setPadding(new Insets(20.0, 20.0, 20.0, 20.0));
-        /*
-        instructionGrid.add(configureLabel("Conan is a tool developed for aiding students learning natural deduction. Because of this, Conan strives to replicate the notation most commonly used in textbooks.\n\n"
-    			+ "Presented below are example instructions for proving A∧B ⊢ B∧A (B and A from A and B). Feel free to create a new proof and imitate every step.",false), 0, 0);
-        instructionGrid.add(configureLabel("First, locate the toolbox at the left part of the interface. This tool box provides easy access to frequently used proof components, such as rules of inference and unicode symbols used in logic.",false), 0, 1);
-        instructionGrid.add(configureImage("exampleToolBox.png"), 0, 2);
-        instructionGrid.add(configureLabel("Next, fill in the sequent A∧B ⊢ B∧A in the proof header.",false), 0, 3);
-        instructionGrid.add(configureImage("exampleSequent.png",false), 0, 4);
-        instructionGrid.add(configureLabel("Having filled in the proof header, the next step is to actually construct the proof. This is done by entering one deduction step per row in the proof sheet. Note in particular that each row consists of two or more lines.\n\n"
-        		+ "On the first line, the mathematical expression of the deduction step is filled in. On the second, the inference rule is filled in. If the rule is dependent on previous rows, these are filled in on the third and fourth line.\n\n"
-        		+ "Pay attention to the colours that indicate that you have reached your conclusion, or if you have made an error."), 0, 5);
-        instructionGrid.add(configureImage("exampleProof.png"), 0, 6);
-        instructionGrid.add(configureLabel("Congratulations! You have now completed the proof."), 0, 7);*/
-        return instructionGrid;
-	}
     
     private Node constructInstructions() {
     	GridPane instructionGrid = new GridPane();
@@ -296,8 +275,13 @@ public class InstructionsView extends ViewTab {
     		
     
     String toggletxt =
-    		"In the toolbar you will find checkboxes for toggling verification and generation. Verification means that the program will verify each step in your proof. "+
-    	    "Generation means that the program can, in most cases, generate the formula after you apply a rule so that less typing is needed from you.\n\n";
+    		"In the toolbar you will find checkboxes for toggling verification and generation. Verification means that the program will verify each step in your proof.\n\n" +
+    	    "Generation means that the program can, in most cases, generate the formula after you apply a rule so that less typing is needed from you. " + 
+    	    "You may generate an expression by leaving the expression field empty and inputting valid and verified references." + "\n\n" + 
+    	    Constants.forallIntro + " may generate if you type the variable name between " + Constants.forall + " and " + Constants.introduction +  
+    	    " (e.g. " + Constants.forall + "x" + Constants.introduction + "). " + 
+            "The rules " + Constants.existsIntro + ", " + Constants.equalityIntro + " and " + Constants.equalityElim + " may not generate.\n\n";
+                    
 
     
     String addingrowstxt =

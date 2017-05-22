@@ -330,7 +330,7 @@ public class RowPane extends BorderPane {
                 popup.getDialogPane().getButtonTypes().addAll(ButtonType.OK);
                 popup.getDialogPane().setContentText("You may generate an expression by leaving the expression field empty and inputting valid and verified references.\n\n"
                 + Constants.forallIntro + " may generate if you type the variable name between " + Constants.forall + " and " + Constants.introduction + ". E.g." + Constants.forall + "x" + Constants.introduction +"\n\n"
-                + "The rules" + Constants.existsIntro + ", " + Constants.equalityIntro + " and " + Constants.equalityElim + " may not generate\n\n"
+                + "The rules " + Constants.existsIntro + ", " + Constants.equalityIntro + " and " + Constants.equalityElim + " may not generate\n\n"
                 //+ Constants.equalityIntro + " may not generate\n\n"
                 //+ Constants.equalityElim + " may not generate\n"
                 );
