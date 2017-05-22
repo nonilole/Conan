@@ -16,7 +16,7 @@ public class ParseInfoView implements View {
     private ViewTab tab;
 
     /**
-     * Adds the content for showing the shortcuts to the TabPane in the proof
+     * Adds the content for showing the parser info to the TabPane
      * @param tabPane
      *
      */
@@ -42,7 +42,7 @@ public class ParseInfoView implements View {
     }
     
     /**
-     * Returns the contents of the user instructions file.
+     * Returns the contents of the parser file.
      * @return The contents of resources/userInstructions.txt
      */
     private String loadInstructions() {
