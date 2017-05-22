@@ -314,7 +314,6 @@ public class RowPane extends BorderPane {
                     @Override
                     protected Node createDetailsButton() {
                         CheckBox doNotShowMeThis = new CheckBox();
-                        doNotShowMeThis.setMinHeight(10);
                         doNotShowMeThis.setSelected(true);
                         doNotShowMeThis.setText("Please stop annoying me.");
                         doNotShowMeThis.setOnAction(e -> {
