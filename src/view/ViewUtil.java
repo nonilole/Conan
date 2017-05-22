@@ -50,8 +50,8 @@ public class ViewUtil {
         newValue = newValue.replaceAll("7", "₇");
         newValue = newValue.replaceAll("8", "₈");
         newValue = newValue.replaceAll("9", "₉");
+        newValue = newValue.replaceAll("bo", "⊥");
         if (extraShortcuts) {
-            newValue = newValue.replaceAll("bo", "⊥");
             newValue = newValue.replaceAll("co", "Copy");
             newValue = newValue.replaceAll("pr", "Premise");
             newValue = newValue.replaceAll("as", "Ass.");
