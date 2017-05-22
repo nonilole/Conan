@@ -275,7 +275,9 @@ public class InstructionsView extends ViewTab {
     		
     
     String toggletxt =
-    		"In the toolbar you will find checkboxes for toggling verification and generation. Verification means that the program will verify each step in your proof.\n\n" +
+    		"In the toolbar you will find checkboxes for toggling verification and generation. "
+    		+ "Verification means that the program will verify each step in your proof. "
+    		+ "When a rule is incorrectly applied, the rule box turns red and an error message will appear in the bottom left corner. \n\n" +
     	    "Generation means that the program can, in most cases, generate the formula after you apply a rule so that less typing is needed from you. " + 
     	    "You may generate an expression by leaving the expression field empty and inputting valid and verified references." + "\n\n" + 
     	    Constants.forallIntro + " may generate if you type the variable name between " + Constants.forall + " and " + Constants.introduction +  
