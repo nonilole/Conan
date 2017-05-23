@@ -303,12 +303,13 @@ public class RowPane extends BorderPane {
                 break;
         }
       //if the rule has rule promps
+        /*
         if (n > 0) {
             System.out.println(n);
             getClosestPromptFromLeft(0).requestFocus();
             Preferences prefs = Preferences.userRoot().node("General");
             //if generate is checked and if popup has not been disabled. 
-            if (prefs.getBoolean("generate", true) ) { //&& prefs.getBoolean("generateHelp", true)
+            if (prefs.getBoolean("generate", true) && prefs.getBoolean("generateHelp", true)) { 
                 Alert popup = new Alert(Alert.AlertType.CONFIRMATION);
                 popup.setDialogPane(new DialogPane() {
                     @Override
@@ -338,6 +339,7 @@ public class RowPane extends BorderPane {
                 popup.show();
             }
         }
+       */ 
     }
 
     private abstract class HotkeyMapper {

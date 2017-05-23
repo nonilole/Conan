@@ -75,7 +75,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
         this.proof.registerProofListener(this);
         this.premises = premisesAndConclusion.getPremises();
         this.premises.setId("dummy");
-        this.premises.setPromptText("Premises");
+        this.premises.setPromptText("Premises will update automatically");
         premises.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
