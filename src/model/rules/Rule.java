@@ -3,6 +3,7 @@ package model.rules;
 import java.io.Serializable;
 
 import model.Box;
+import model.VerificationInputException;
 import model.formulas.Formula;
 
 
@@ -28,7 +29,11 @@ public abstract class Rule implements Serializable{
     }
 
     public boolean verify(Box data, int rowIndex) {
-        return (verifyReferences(data, rowIndex) && verifyRow(data, rowIndex));
+        if (verifyReferences(data, rowIndex) == false)
+            return false;
+        if (data.getRow(rowIndex).getFormula() == null)
+            throw new VerificationInputException("Invalid formula syntax.");
+        return verifyRow(data, rowIndex);
     }
     
     public abstract String[] getReferenceStrings();

@@ -215,8 +215,6 @@ public class Proof implements Serializable{
             exceptionToThrow = new VerificationInputException("Invalid rule syntax.");
         } else if (rule.hasCompleteInfo() == false) {
             exceptionToThrow = new VerificationInputException("A reference is empty.");
-        } else if ( row.getFormula() == null ) {
-            exceptionToThrow = new VerificationInputException("Invalid formula syntax.");
         } else {
             try {
                 isVerified = rule.verify(proofData, rowIndex);
