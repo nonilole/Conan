@@ -107,7 +107,7 @@ public class RowPane extends BorderPane {
         this.setNrOfClosingBoxes(nrOfClosingBoxes);
         this.numberOfPrompts = 0;
         TextField tfExpression = new TextField();
-        tfExpression.setPromptText("Expression");
+        tfExpression.setPromptText("Formula");
         tfExpression.setId("expression");
         tfExpression.getStyleClass().add("myText");
         tfExpression.setPrefWidth(580);
