@@ -79,6 +79,9 @@
 .rulesView {
   -fx-background: #fff;
 }
+.shortcutsView {
+  -fx-background: #282828;
+}
 .tooltip{
   -fx-font-family: System;
   -fx-font-size: 10px;
