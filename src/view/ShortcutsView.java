@@ -27,7 +27,7 @@ public class ShortcutsView implements View {
 
         //putting the image on a scrollpane
         ScrollPane sp = new ScrollPane();
-        sp.getStyleClass().add("rulesView");
+        sp.getStyleClass().add("shortcutsView");
         tab = new ViewTab("Shortcuts",this);
         sp.setContent(label);
         tabPane.getTabs().add(tab);

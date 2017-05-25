@@ -546,7 +546,9 @@ public class MainController implements Initializable {
 
                         @Override
                         public void succeeded() {
-                            getCurrentView().focusFirst();
+                            View view = getCurrentView();
+                            if (view != null)
+                                view.focusFirst();
                         }
 
                     }).start();
