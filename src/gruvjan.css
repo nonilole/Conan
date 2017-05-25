@@ -16,11 +16,13 @@
   -fx-font-smoothing-type: gray;
 }
 .infoText {
+  -fx-text-fill: #ebdbb2;
   -fx-font-size: 16px;
   -fx-line-height: 1.4;
   -fx-padding: 0 100px 0 100px;
 }
 .infoTextHeader {
+  -fx-text-fill: #ebdbb2;
   -fx-font-size: 18px;
   -fx-font-weight: bold;
   -fx-line-height: 1.4;
