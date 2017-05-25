@@ -32,7 +32,7 @@
           <items>
             <MenuItem accelerator="Shortcut+N" mnemonicParsing="false" onAction="#newProof" text="New" />
             <MenuItem accelerator="Shortcut+O" mnemonicParsing="false" onAction="#openProof" text="Open…" />
-                  <MenuItem mnemonicParsing="false" onAction="#showWelcome" text="Welcome tab" />
+                  <MenuItem mnemonicParsing="false" onAction="#showWelcome" text="Welcome page" />
               <MenuItem accelerator="Shortcut+W" mnemonicParsing="false" onAction="#closeTab" text="Close tab" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem accelerator="Shortcut+S" mnemonicParsing="false" onAction="#saveProof" text="Save" />
@@ -61,9 +61,9 @@
             </Menu>
         <Menu mnemonicParsing="false" text="Help">
           <items>
+                  <MenuItem accelerator="F1" mnemonicParsing="false" onAction="#showUserInstructions" text="Instructions" />
                   <MenuItem accelerator="Shortcut+I" mnemonicParsing="false" onAction="#showInferenceRules" text="Inference Rules" />
                   <MenuItem mnemonicParsing="false" onAction="#showShortcuts" text="Shortcuts" />
-                  <MenuItem mnemonicParsing="false" onAction="#showUserInstructions" text="Instructions" />
           </items>
         </Menu>
       </menus>
