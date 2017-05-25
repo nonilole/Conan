@@ -372,15 +372,13 @@ public class MainController implements Initializable {
     void saveProofAs(ActionEvent event) {
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().addAll(
-                new ExtensionFilter("Proofs", "*.proof"),
+                new ExtensionFilter(".proof", "*.proof"),
                 new ExtensionFilter("All Files", "*.*"));
+        fc.setInitialFileName("proofName.proof");
         File file = fc.showSaveDialog(tabPane.getScene().getWindow());
         if (file == null) {
             System.out.println("Path not set, file not saved");
             return;
-        }
-        if (file.getAbsolutePath().endsWith(".proof") == false) {
-            file = new File(file.getAbsolutePath() + ".proof");
         }
 
         View view = getCurrentView();
