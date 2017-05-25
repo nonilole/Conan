@@ -24,7 +24,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="824.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1" fx:controller="start.MainController">
+<VBox prefHeight="824.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="start.MainController">
   <children>
     <MenuBar focusTraversable="false" VBox.vgrow="NEVER">
       <menus>
@@ -45,12 +45,12 @@
             <MenuItem accelerator="Shortcut+Z" mnemonicParsing="false" onAction="#undo" text="Undo" />
             <MenuItem accelerator="Shortcut+Y" mnemonicParsing="false" onAction="#redo" text="Redo" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem accelerator="Shortcut+R" mnemonicParsing="false" onAction="#newRow" text="Add row to end" />
                   <MenuItem mnemonicParsing="false" onAction="#insertAboveMenu" text="Insert row above" />
-                  <MenuItem accelerator="Enter" mnemonicParsing="false" onAction="#insertBelowMenu" text="Insert row here" />
-                  <MenuItem accelerator="Shift+Enter" mnemonicParsing="false" onAction="#insertBelowAfterMenu" text="Insert row below box" />
-                  <MenuItem accelerator="Shortcut+B" mnemonicParsing="false" onAction="#openBox" text="Insert box" />
-                  <MenuItem accelerator="Shortcut+D" mnemonicParsing="false" onAction="#deleteRowMenu" text="Delete row/box" />
+                  <MenuItem accelerator="Enter" mnemonicParsing="false" onAction="#insertBelowMenu" text="Insert row" />
+                  <MenuItem accelerator="Shift+Enter" mnemonicParsing="false" onAction="#insertBelowAfterMenu" text="Insert row below current box" />
+                  <MenuItem accelerator="Shortcut+R" mnemonicParsing="false" onAction="#newRow" text="Add row to end" />
+                  <MenuItem accelerator="Shortcut+B" mnemonicParsing="false" onAction="#openBox" text="Open box" />
+                  <MenuItem accelerator="Shortcut+D" mnemonicParsing="false" onAction="#deleteRowMenu" text="Delete current row or box" />
           </items>
         </Menu>
             <Menu mnemonicParsing="false" text="Preferences">
