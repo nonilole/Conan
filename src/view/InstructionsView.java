@@ -183,7 +183,7 @@ public class InstructionsView extends ViewTab {
     }
     
     private Hyperlink getParserlink(){
-    	Hyperlink parser = new Hyperlink("Show me parser info");
+    	Hyperlink parser = new Hyperlink("Show me logic input format");
         parser.getStyleClass().add("infoText");
 
         parser.setOnAction(new EventHandler<ActionEvent>() {
@@ -268,7 +268,7 @@ public class InstructionsView extends ViewTab {
     	    "Hovering over the logic symbols will show you a tooltip for text shortcuts. "+
     	    "For all the available shortcuts, check the shortcuts link in the help section, found in the menu or follow the link below. "+
     	    "When writing an expression, you have to use lower case letters for variables and upper case letters for propositions and functions. "+
-    	    "If you want more information on the syntax for entering a formula, check the Parse info, also in the help section.\n\n";
+    	    "If you want more information on the syntax for entering a formula, check the link below, also in the help section.\n\n";
 
     String conclusiontxt =
     		"In order for the program to be able to verify if you have reached your conclusion, you need to enter it in the appropriate textfield, as can be seen in the image below. ";
