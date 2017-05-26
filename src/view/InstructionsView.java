@@ -266,12 +266,12 @@ public class InstructionsView extends ViewTab {
     String inputtxt = 
     		"In the left-hand menu you will find buttons for all the available rules and relevant logic symbols. "+
     	    "Hovering over the logic symbols will show you a tooltip for text shortcuts. "+
-    	    "For all the available shortcuts, check the shortcuts link in the help section, found in the menu or follow the link below. "+
+    	    "For all the available shortcuts, check the shortcuts link in the help section, found in the menu. "+
     	    "When writing an expression, you have to use lower case letters for variables and upper case letters for propositions and functions. "+
     	    "If you want more information on the syntax for entering a formula, check the link below, also in the help section.\n\n";
 
     String conclusiontxt =
-    		"In order for the program to be able to verify if you have reached your conclusion, you need to enter it in the appropriate textfield, as can be seen in the image below. ";
+    		"In order for the program to be able to verify if you have reached your conclusion, you need to enter the conclusion in the appropriate textfield, as can be seen in the image below. ";
     		
     
     String toggletxt =
