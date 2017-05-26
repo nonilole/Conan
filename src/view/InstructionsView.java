@@ -145,7 +145,7 @@ public class InstructionsView extends ViewTab {
         instructionGrid.add(getParserlink(),0,++rowNr);
         instructionGrid.add(configureLabel("Conclusion verification:",true), 0, ++rowNr);
         instructionGrid.add(configureLabel(conclusiontxt,false), 0, ++rowNr);
-        instructionGrid.add(configureImage("ConclusionEntry.png"), 0, ++rowNr);
+        instructionGrid.add(configureImage("ConclusionEntry2.png"), 0, ++rowNr);
         instructionGrid.add(configureLabel("Verification and formula generation:",true), 0,++rowNr);
         instructionGrid.add(configureLabel(toggletxt,false), 0, ++rowNr);
         instructionGrid.add(configureImage("Toggles.png"), 0, ++rowNr);
@@ -158,7 +158,7 @@ public class InstructionsView extends ViewTab {
         instructionGrid.add(configureLabel("First, locate the toolbox at the left part of the interface. This tool box provides easy access to frequently used proof components, such as rules of inference and unicode symbols used in logic.",false), 0, ++rowNr);
         instructionGrid.add(configureImage("exampleToolBox.png"), 0, ++rowNr);
         instructionGrid.add(configureLabel("Next, fill in the sequent A∧B ⊢ B∧A in the proof header.",false), 0, ++rowNr);
-        instructionGrid.add(configureImage("exampleSequent.png"), 0, ++rowNr);
+        instructionGrid.add(configureImage("exampleSequent2.png"), 0, ++rowNr);
         instructionGrid.add(configureLabel("Having filled in the proof header, the next step is to actually construct the proof. This is done by entering one deduction step per row in the proof sheet. Note in particular that each row consists of two or more lines.\n\n"
         		+ "On the first line, the mathematical expression of the deduction step is filled in. On the second, the inference rule is filled in. If the rule is dependent on previous rows, these are filled in on the third and fourth line.\n\n"
         		+ "Pay attention to the colours that indicate that you have reached your conclusion, or if you have made an error.", false), 0, ++rowNr);
