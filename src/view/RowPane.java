@@ -302,11 +302,13 @@ public class RowPane extends BorderPane {
             default:
                 break;
         }
+        if (n > 0) {
+            getClosestPromptFromLeft(0).requestFocus();
+        }
       //if the rule has rule promps
         /*
         if (n > 0) {
             System.out.println(n);
-            getClosestPromptFromLeft(0).requestFocus();
             Preferences prefs = Preferences.userRoot().node("General");
             //if generate is checked and if popup has not been disabled. 
             if (prefs.getBoolean("generate", true) && prefs.getBoolean("generateHelp", true)) { 
