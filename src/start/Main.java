@@ -54,7 +54,7 @@ public class Main extends Application {
 	private EventHandler<WindowEvent> confirmCloseEventHandler = event -> {
         Alert closeConfirmation = new Alert(
                 Alert.AlertType.CONFIRMATION,
-                "You may have unsaved proofs, are you sure you want to exit?"
+                "You may have unsaved proofs,\nare you sure you want to exit?"
         );
         Button exitButton = (Button) closeConfirmation.getDialogPane().lookupButton(
                 ButtonType.OK
