@@ -1,4 +1,7 @@
 # Conan
+
+![Verification](pictures/verification.gif)
+
 A proof editor for first order logic, made for students, by students.
 
 ## Short overview
@@ -36,3 +39,9 @@ For this proof, we may also generate the formula of the third row by first input
 ![Conan](pictures/conan08.png)
 
 The status bars are located at the bottom of the program. The left status field is used to indicate errors and the right status field shows how the formula is interpreted in the program. The errors in the status bar are minimal and only indicate basic slips, instead of indicating errors in proof strategy or faulty reasoning.
+
+## Videos
+
+![Wellformed](pictures/wellformed.gif)
+
+![Export to LaTeX](pictures/exportlatex.gif)
