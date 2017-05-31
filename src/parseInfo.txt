@@ -1,6 +1,6 @@
 
-If the parser is unable to parse an inputted formula, the row will turn red.
-When a formula has been inputted correctly, the parser's interpretation 
+If the program is unable to interpret an inputted formula, the row will turn red.
+When a formula has been inputted correctly, the program's interpretation 
 will be displayed in the bottom right corner.
 
 Inputted formulas are interpreted as follows:

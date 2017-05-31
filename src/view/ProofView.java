@@ -74,7 +74,7 @@ public class ProofView extends Symbolic implements ProofListener, View {
         this.proof = proof;
         this.proof.registerProofListener(this);
         this.premises = premisesAndConclusion.getPremises();
-        this.premises.setId("expression");
+        this.premises.setId("dummy");
         this.premises.setPromptText("Premises will update automatically");
         premises.textProperty().addListener(new ChangeListener<String>() {
             @Override

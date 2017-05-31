@@ -22,7 +22,7 @@ public class IOHandler {
 		Window window = tabPane.getScene().getWindow();
 		FileChooser fc = new FileChooser();
     	fc.getExtensionFilters().addAll(
-    	         new ExtensionFilter("Proofs", "*.proof"),
+    	         new ExtensionFilter(".proof", "*.proof"),
     	         new ExtensionFilter("All Files", "*"));
     	
     	File file = fc.showOpenDialog(window);

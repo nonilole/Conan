@@ -157,10 +157,10 @@ public class InstructionsView extends ViewTab {
         instructionGrid.add(configureLabel("Presented below are example instructions for proving A∧B ⊢ B∧A (B and A from A and B). Feel free to create a new proof and imitate every step.",false), 0, ++rowNr);
         instructionGrid.add(configureLabel("First, locate the toolbox at the left part of the interface. This tool box provides easy access to frequently used proof components, such as rules of inference and unicode symbols used in logic.",false), 0, ++rowNr);
         instructionGrid.add(configureImage("exampleToolBox.png"), 0, ++rowNr);
-        instructionGrid.add(configureLabel("Next, fill in the sequent A∧B ⊢ B∧A in the proof header.",false), 0, ++rowNr);
+        instructionGrid.add(configureLabel("Next, enter the conclusion B∧A in the proof header and the premise A∧B as the first row.",false), 0, ++rowNr);
         instructionGrid.add(configureImage("exampleSequent.png"), 0, ++rowNr);
-        instructionGrid.add(configureLabel("Having filled in the proof header, the next step is to actually construct the proof. This is done by entering one deduction step per row in the proof sheet. Note in particular that each row consists of two or more lines.\n\n"
-        		+ "On the first line, the mathematical expression of the deduction step is filled in. On the second, the inference rule is filled in. If the rule is dependent on previous rows, these are filled in on the third and fourth line.\n\n"
+        instructionGrid.add(configureLabel("The next step is to actually construct the proof. This is done by entering one deduction step per row in the proof sheet. Note in particular that each row consists of two or more columns.\n\n"
+        		+ "In the first column, the formula of the deduction step is entered. In the second, the inference rule is entered. If the rule is dependent on previous rows, these are entered in the third and fourth columns.\n\n"
         		+ "Pay attention to the colours that indicate that you have reached your conclusion, or if you have made an error.", false), 0, ++rowNr);
         instructionGrid.add(configureImage("exampleProof.png"), 0, ++rowNr);
         instructionGrid.add(configureLabel("Congratulations! You have now completed the proof.", false), 0, ++rowNr);
@@ -183,7 +183,7 @@ public class InstructionsView extends ViewTab {
     }
     
     private Hyperlink getParserlink(){
-    	Hyperlink parser = new Hyperlink("Show me parser info");
+    	Hyperlink parser = new Hyperlink("Show me logic input format");
         parser.getStyleClass().add("infoText");
 
         parser.setOnAction(new EventHandler<ActionEvent>() {
@@ -266,12 +266,12 @@ public class InstructionsView extends ViewTab {
     String inputtxt = 
     		"In the left-hand menu you will find buttons for all the available rules and relevant logic symbols. "+
     	    "Hovering over the logic symbols will show you a tooltip for text shortcuts. "+
-    	    "For all the available shortcuts, check the shortcuts link in the help section, found in the menu or follow the link below. "+
+    	    "For all the available shortcuts, check the shortcuts link in the help section, found in the menu. "+
     	    "When writing an expression, you have to use lower case letters for variables and upper case letters for propositions and functions. "+
-    	    "If you want more information on the syntax for entering a formula, check the Parse info, also in the help section.\n\n";
+    	    "If you want more information on the syntax for entering a formula, check the link below, also in the help section.\n\n";
 
     String conclusiontxt =
-    		"In order for the program to be able to verify if you have reached your conclusion, you need to enter it in the appropriate textfield, as can be seen in the image below. ";
+    		"In order for the program to be able to verify if you have reached your conclusion, you need to enter the conclusion in the appropriate textfield, as can be seen in the image below. ";
     		
     
     String toggletxt =

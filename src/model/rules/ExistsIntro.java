@@ -53,13 +53,9 @@ public class ExistsIntro extends Rule {
 
     @Override
     public Formula generateRow(Box data) {
-        return null;
-//        if (var == null)
-//            return null;
-
-
-//         We can generate if we referenced row only has a function of one variable, which we assume is the one we want to replace.
-//        How to check for this case?
+        if (var == null)
+            return null;
+        return new QuantifiedFormula(data.getRow(this.rowRef).getFormula(), var, '∃');
     }
 
     @Override

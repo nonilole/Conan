@@ -107,7 +107,7 @@ public class RowPane extends BorderPane {
         this.setNrOfClosingBoxes(nrOfClosingBoxes);
         this.numberOfPrompts = 0;
         TextField tfExpression = new TextField();
-        tfExpression.setPromptText("Expression");
+        tfExpression.setPromptText("Formula");
         tfExpression.setId("expression");
         tfExpression.getStyleClass().add("myText");
         tfExpression.setPrefWidth(580);
@@ -125,11 +125,11 @@ public class RowPane extends BorderPane {
 
     private void setMenu(ProofView pv, List<RowPane> rList) {
         ContextMenu contextMenu = new ContextMenu();
-        MenuItem insertAbove = new MenuItem("Insert above");
-        MenuItem insertHere = new MenuItem("Insert here (Enter)");
-        MenuItem insertBelow = new MenuItem("Insert below box (Shift+Enter)");
-        MenuItem insertBox = new MenuItem("Insert box (CTRL+B)");
-        MenuItem delete = new MenuItem("Delete (CTRL+D)");
+        MenuItem insertAbove = new MenuItem("Insert row above");
+        MenuItem insertHere = new MenuItem("Insert row (Enter)");
+        MenuItem insertBelow = new MenuItem("Insert row below current box (Shift+Enter)");
+        MenuItem insertBox = new MenuItem("Open box (CTRL+B)");
+        MenuItem delete = new MenuItem("Delete current row or box (CTRL+D)");
         contextMenu.getItems().add(delete);
         contextMenu.getItems().add(insertAbove);
         contextMenu.getItems().add(insertHere);
@@ -302,11 +302,13 @@ public class RowPane extends BorderPane {
             default:
                 break;
         }
+        if (n > 0) {
+            getClosestPromptFromLeft(0).requestFocus();
+        }
       //if the rule has rule promps
         /*
         if (n > 0) {
             System.out.println(n);
-            getClosestPromptFromLeft(0).requestFocus();
             Preferences prefs = Preferences.userRoot().node("General");
             //if generate is checked and if popup has not been disabled. 
             if (prefs.getBoolean("generate", true) && prefs.getBoolean("generateHelp", true)) { 

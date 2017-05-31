@@ -6,9 +6,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
@@ -372,15 +369,13 @@ public class MainController implements Initializable {
     void saveProofAs(ActionEvent event) {
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().addAll(
-                new ExtensionFilter("Proofs", "*.proof"),
+                new ExtensionFilter(".proof", "*.proof"),
                 new ExtensionFilter("All Files", "*.*"));
+        fc.setInitialFileName("proofName.proof");
         File file = fc.showSaveDialog(tabPane.getScene().getWindow());
         if (file == null) {
             System.out.println("Path not set, file not saved");
             return;
-        }
-        if (file.getAbsolutePath().endsWith(".proof") == false) {
-            file = new File(file.getAbsolutePath() + ".proof");
         }
 
         View view = getCurrentView();
@@ -465,9 +460,9 @@ public class MainController implements Initializable {
         undoButton.setTooltip(new Tooltip("Undo (CTRL+Z)"));
         redoButton.setTooltip(new Tooltip("Redo (CTRL+Y/CTRL+SHIFT+Z)"));
         openBoxButton.setTooltip(new Tooltip("Open Box (CTRL+B)"));
-        appendRowButton.setTooltip(new Tooltip("Add row after current row or box (Shift+Enter)"));
+        appendRowButton.setTooltip(new Tooltip("Insert row below current box (Shift+Enter)"));
         insertRowButton.setTooltip(new Tooltip("Insert row (Enter)"));
-        deleteRowButton.setTooltip(new Tooltip("Delete current row/box (CTRL+D)"));
+        deleteRowButton.setTooltip(new Tooltip("Delete current row or box (CTRL+D)"));
         verification.setTooltip(new Tooltip("Turn on/off verification"));
         generation.setTooltip(new Tooltip("Turn on/off generation of formula after rule application"));
 
@@ -546,7 +541,9 @@ public class MainController implements Initializable {
 
                         @Override
                         public void succeeded() {
-                            getCurrentView().focusFirst();
+                            View view = getCurrentView();
+                            if (view != null)
+                                view.focusFirst();
                         }
 
                     }).start();
