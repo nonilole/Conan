@@ -2,7 +2,7 @@
 
 ![Verification](pictures/verification.gif)
 
-A proof editor for first order logic, made for students, by students.
+**A proof editor for first order logic made for students learning first order logic.**
 
 ## Short overview
 
@@ -42,6 +42,10 @@ The status bars are located at the bottom of the program. The left status field 
 
 ## Videos
 
+Wellformedness
+
 ![Wellformed](pictures/wellformed.gif)
+
+Export to LaTeX
 
 ![Export to LaTeX](pictures/exportlatex.gif)
