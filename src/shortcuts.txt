@@ -6,7 +6,7 @@ Ctrl+Z 		Undo
 Ctrl+Y 		Redo
 Enter         	New row inside a box/New row
 Shift+Enter   	New row after box/New row
-Ctrl+G			New row above row
+Ctrl+G		New row above row
 Ctrl+R        	New row at end of proof
 Down          	New row after box/new row or move down to textfield below
 Up            	Move up to textfield above
