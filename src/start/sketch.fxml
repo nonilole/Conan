@@ -45,7 +45,7 @@
             <MenuItem accelerator="Shortcut+Z" mnemonicParsing="false" onAction="#undo" text="Undo" />
             <MenuItem accelerator="Shortcut+Y" mnemonicParsing="false" onAction="#redo" text="Redo" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#insertAboveMenu" text="Insert row above" />
+                  <MenuItem accelerator="Shortcut+G" mnemonicParsing="false" onAction="#insertAboveMenu" text="Insert row above" />
                   <MenuItem accelerator="Enter" mnemonicParsing="false" onAction="#insertBelowMenu" text="Insert row" />
                   <MenuItem accelerator="Shift+Enter" mnemonicParsing="false" onAction="#insertBelowAfterMenu" text="Insert row below current box" />
                   <MenuItem accelerator="Shortcut+R" mnemonicParsing="false" onAction="#newRow" text="Add row to end" />
