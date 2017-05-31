@@ -1,6 +1,8 @@
 # Conan
 A proof editor for first order logic, made for students, by students.
 
+## Short overview
+
 ![Conan](pictures/conan01.png)
 
 Conan offers a design that is akin to text editors, which allows the user to familiarise themselves with the program faster from their common use of the former. The user is allowed to jump to any row of the proof and is able to insert new rows or delete and edit old rows to correct mistakes or even introduce new ones.
