@@ -62,7 +62,7 @@ public class ExportLatex {
             output += "&";
             // We surround the crucial part in $ in the rule and references.
             output += replaceAllUnicode(info[2]).replaceAll(
-                    "(\\\\land |\\\\lor |\\\\to |\\\\forall |\\\\exists |\\\\bot |\\\\neg )(i|e)(_\\{(\\d)\\})?","\\$$1\\\\mathrm\\{$2\\}$3\\$").replaceAll("null", "");
+                    "(\\\\land |\\\\lor |\\\\to |\\\\forall |\\\\exists |\\\\bot |\\\\neg \\\\neg |\\\\neg )(i|e)(_\\{(\\d)\\})?","\\$$1\\\\mathrm\\{$2\\}$3\\$").replaceAll("null", "");
             output += "\\\\\n";
 
         }
