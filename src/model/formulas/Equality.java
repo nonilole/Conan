@@ -18,8 +18,8 @@ public class Equality extends Formula {
     
     @Override
     public Formula replace(Term newTerm,Term oldTerm){
-    	Term lhsRet = this.lhs.equals(oldTerm) ? newTerm : oldTerm;
-    	Term rhsRet = this.rhs.equals(oldTerm) ? newTerm : oldTerm;
+    	Term lhsRet = this.lhs.equals(oldTerm) ? newTerm : this.lhs;
+    	Term rhsRet = this.rhs.equals(oldTerm) ? newTerm : this.rhs;
     	return new Equality(lhsRet, rhsRet);
     }
     
